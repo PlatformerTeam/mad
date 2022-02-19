@@ -1,2 +1,2 @@
-# insert-game-name
+# MAD
 A platformer game
