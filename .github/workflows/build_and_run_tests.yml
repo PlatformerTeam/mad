@@ -17,7 +17,7 @@ jobs:
           - command: g++-10
             os: ubuntu-latest
             install: sudo apt-get install libsfml-dev
-            flags:
+            flags: null
           - command: clang++
             install: brew install sfml
             os: macos-latest
