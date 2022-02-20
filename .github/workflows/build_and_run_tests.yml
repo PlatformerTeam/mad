@@ -32,7 +32,7 @@ jobs:
       - name: Build
         run: |
           cmake --version
-          cmake . -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}
+          cmake . -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}"
           cmake --build .
       - name: Run tests
         run: ./tests
