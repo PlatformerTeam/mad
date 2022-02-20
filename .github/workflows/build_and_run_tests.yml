@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  compile-run:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        include:
+          - command: g++-10
+            os: ubuntu-latest
+            install: sudo apt-get install libsfml-dev
+            flags: ''
+          - command: clang++
+            install: brew install sfml
+            os: macos-latest
+            flags: -stdlib=libstdc++
+    steps:
+  
+      - uses: actions/checkout@v2
+  
+      - name: Install
+        run: ${{ matrix.install }}
+        
+      - name: Build
+        run: |
+          cmake --version
+          cmake . -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}
+          cmake --build .
+      - name: Run tests
+        run: ./tests
+    
+
