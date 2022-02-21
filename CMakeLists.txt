@@ -22,11 +22,12 @@ message(STATUS "Box2d include: ${INCLUDE_BOX2D}")
 message(STATUS "Box2d library: ${LIBRARY_BOX2D}")
 
 # ImGui framework
-#set(DIRECTORY_IMGUI ${PROJECT_SOURCE_DIR}/deps/imgui)
-#set(INCLUDE_IMGUI ${DIRECTORY_IMGUI})
-#
-#add_subdirectory(${DIRECTORY_IMGUI})
-#message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
+set(DIRECTORY_IMGUI ${PROJECT_SOURCE_DIR}/deps/box2d/extern/imgui)
+set(INCLUDE_IMGUI ${DIRECTORY_IMGUI})
+set(LIBRARY_IMGUI imgui)
+
+message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
+message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
 
 # Core library
 set(DIRECTORY_CORE ${PROJECT_SOURCE_DIR}/core)
