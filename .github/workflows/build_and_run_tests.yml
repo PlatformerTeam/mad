@@ -17,7 +17,6 @@ jobs:
           - command: g++-10
             os: ubuntu-latest
             install: sudo apt-get install libsfml-dev
-            flags: null
           - command: clang++
             install: brew install sfml
             os: macos-latest
@@ -32,9 +31,10 @@ jobs:
       - name: Build
         run: |
           cmake --version
-          cmake . -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}"
-          cmake --build .
+          mkdir build
+          cmake -S . -B build -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}"
+          cmake --build build/
       - name: Run tests
-        run: ./tests
+          ctest build/
     
 
