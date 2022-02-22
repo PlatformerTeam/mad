@@ -22,7 +22,7 @@ message(STATUS "Box2d include: ${INCLUDE_BOX2D}")
 message(STATUS "Box2d library: ${LIBRARY_BOX2D}")
 
 # ImGui library
-set(DIRECTORY_IMGUI ${PROJECT_SOURCE_DIR}/deps/box2d/extern/imgui)
+set(DIRECTORY_IMGUI ${PROJECT_SOURCE_DIR}/deps/imgui)
 set(INCLUDE_IMGUI ${DIRECTORY_IMGUI})
 set(LIBRARY_IMGUI imgui)
 
