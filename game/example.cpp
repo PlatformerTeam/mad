@@ -4,6 +4,6 @@
 
 int main() {
     std::cout << "Hello from example" << '\n';
-    core::Core obj;
+    mad::core::Core obj;
     std::cout << obj.hello();
 }
