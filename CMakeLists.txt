@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Testing framework
 set(DIRECTORY_GTEST ${PROJECT_SOURCE_DIR}/deps/googletest)
-set(INCLUDE_GTEST ${DIRECTORY_GTEST}/googletest/include)
+set(INCLUDE_GTEST ${DIRECTORY_GTEST})
 set(LIBRARY_GTEST gtest_main)
 
 add_subdirectory(${DIRECTORY_GTEST})
