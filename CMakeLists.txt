@@ -49,5 +49,6 @@ message(STATUS "Game executable: ${EXECUTABLE_GAME}")
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)
 set(EXECUTABLE_TEST test)
 
+
 add_subdirectory(${DIRECTORY_TEST})
 message(STATUS "Test executable: ${EXECUTABLE_TEST}")
