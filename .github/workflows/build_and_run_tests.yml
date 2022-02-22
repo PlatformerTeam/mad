@@ -4,7 +4,7 @@ name: CI
 
 on:
   push:
-    branches: [ main, 20-handle-action ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
