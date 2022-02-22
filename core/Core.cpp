@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace core {
+namespace mad::core {
 
 std::string Core::hello() {
     return "Hello from Core\n";

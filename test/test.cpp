@@ -5,7 +5,7 @@
 using namespace testing;
 
 TEST(Core, a_plus_b_simple) {
-core::Core obj;
+mad::core::Core obj;
 
 EXPECT_EQ("Hello from Core\n", obj.hello());
 }

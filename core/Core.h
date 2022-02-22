@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace core {
+namespace mad::core {
 
 struct Core {
 public:
