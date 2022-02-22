@@ -19,3 +19,7 @@ target_link_libraries(${EXECUTABLE_TEST} sfml-graphics sfml-audio)
 target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_BOX2D})
 target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_BOX2D})
 
+# test check use box2d for physics
+target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_IM})
+target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_BOX2D})
+

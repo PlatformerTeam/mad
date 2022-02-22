@@ -36,7 +36,6 @@ int main(int argc, char **argv) {
     groundBody->CreateFixture(&groundBox, 0.0f);
     b2Body* body;
     b2Body* body1;
-    body.
     {
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
@@ -50,6 +49,7 @@ int main(int argc, char **argv) {
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.3f;
+        fixtureDef.restitution = 1.0f;
 
         body->CreateFixture(&fixtureDef);
     }
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
-        fixtureDef.density = 1.0f;
+        fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.3f;
 
         body1->CreateFixture(&fixtureDef);
@@ -80,7 +80,11 @@ int main(int argc, char **argv) {
 
 
 
-    float r = 0;
+    /*ImGui::Text("Hello, world %d", 123);
+    if (ImGui::Button("Save"))
+        MySaveFunction();
+    ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
+    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);*/
     while (window.isOpen()) {
         world.Step(timeStep, velocityIterations, positionIterations);
         {
