@@ -4,8 +4,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -38,6 +37,4 @@ jobs:
           cmake -S . -B build -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}"
           cmake --build build/
       - name: Run tests
-          ctest build/
-    
-
+        run: ctest build/
