@@ -18,7 +18,7 @@ jobs:
         include:
           - command: g++-10
             os: ubuntu-latest
-            install: sudo apt-get install libsfml-dev
+            install: sudo apt-get install libsfml-dev xorg-dev libglu1-mesa-dev
           - command: clang++
             install: brew install sfml
             os: macos-latest
