@@ -1,8 +1,9 @@
 [submodule "deps/box2d"]
 	path = deps/box2d
 	url = https://github.com/erincatto/box2d/
-	branch = v2.4.1
 [submodule "deps/googletest"]
 	path = deps/googletest
 	url = https://github.com/google/googletest
-	branch = release-1.11.0
+# [submodule "deps/spdlog"]
+# 	path = deps/spdlog
+# 	url = https://github.com/gabime/spdlog
