@@ -15,3 +15,7 @@ target_link_libraries(${LIBRARY_CORE} ${LIBRARY_BOX2D})
 # Core library uses imgui for interface
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI})
+
+# Core library uses spdlog for logging
+target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SPDLOG})
+target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SPDLOG})

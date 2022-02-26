@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "box2d/box2d.h"
 #include <math.h>
+#include <spdlog/spdlog.h>
 
 using namespace testing;
 
@@ -15,6 +16,7 @@ EXPECT_EQ("Hello from Core\n", obj.hello());
 }
 
 inline float dt;
+
 
 
 int main(int argc, char **argv) {

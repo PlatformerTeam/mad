@@ -29,6 +29,14 @@ set(LIBRARY_IMGUI imgui)
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
 
+# Spdlog library
+set(DIRECTORY_SPDLOG ${PROJECT_SOURCE_DIR}/deps/spdlog)
+set(INCLUDE_SPDLOG ${DIRECTORY_SPDLOG}/include)
+set(LIBRARY_SPDLOG spdlog)
+
+message(STATUS "Spdlog include: ${INCLUDE_SPDLOG}")
+message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")
+
 # Core library
 set(DIRECTORY_CORE ${PROJECT_SOURCE_DIR}/core)
 set(INCLUDE_CORE ${DIRECTORY_CORE})
