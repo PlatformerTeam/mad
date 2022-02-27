@@ -1,6 +1,7 @@
 set(
         SOURCES_CORE
         Core.cpp
+        common/Error.cpp
 )
 
 add_library(${LIBRARY_CORE} STATIC ${SOURCES_CORE})
