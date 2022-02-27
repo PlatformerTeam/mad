@@ -36,7 +36,7 @@ set(INCLUDE_SPDLOG ${DIRECTORY_SPDLOG}/include)
 if(NOT TARGET spdlog)
     find_package(spdlog REQUIRED)
 endif()
-set(LIBRARY_SPDLOG spdlog::spdlog)
+set(LIBRARY_SPDLOG spdlog)
 
 message(STATUS "Spdlog include: ${INCLUDE_SPDLOG}")
 message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")
