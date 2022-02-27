@@ -49,7 +49,6 @@ set(DIRECTORY_IMGUI_SFML ${PROJECT_SOURCE_DIR}/deps/imgui-sfml)
 set(INCLUDE_IMGUI_SFML ${DIRECTORY_IMGUI_SFML})
 set(SOURCES_IMGUI_SFML ${DIRECTORY_IMGUI_SFML}/imgui-SFML.cpp)
 
-add_subdirectory(${DIRECTORY_IMGUI_SFML})
 message(STATUS "ImGui-sfml include: ${INCLUDE_IMGUI_SFML}")
 message(STATUS "ImGui-sfml library: ${LIBRARY_IMGUI_SFML}")
 

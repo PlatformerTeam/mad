@@ -26,4 +26,4 @@ target_link_libraries(${EXECUTABLE_TEST}  ${OPENGL_LIBRARIES})
 
 # uncomment ONE for open test windows
 #add_definitions(-DBOX2D_TEST_WINDOW)
-#add_definitions(-DIMGUI_TEST_WINDOW)
+add_definitions(-DIMGUI_TEST_WINDOW)
