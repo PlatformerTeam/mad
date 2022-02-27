@@ -5,7 +5,13 @@
 #include <SFML/Graphics.hpp>
 #include "box2d/box2d.h"
 #include <math.h>
+
+#include <imgui.h>
 #include <spdlog/spdlog.h>
+#include <iostream>
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/rotating_file_sink.h>
 
 using namespace testing;
 
@@ -17,9 +23,17 @@ EXPECT_EQ("Hello from Core\n", obj.hello());
 
 inline float dt;
 
-
-
 int main(int argc, char **argv) {
+    try {
+        // Create basic file logger (not rotated)
+        auto my_logger = spdlog::basic_logger_mt("basic_logger", "logs/basic.txt");
+
+        // create a file rotating logger with 5mb size max and 3 rotated files
+        auto file_logger = spdlog::rotating_logger_mt("file_logger", "myfilename", 1024 * 1024 * 5, 3);
+    } catch (const spdlog::spdlog_ex& ex) {
+        std::cout << "Log initialization failed: " << ex.what() << std::endl;
+    }
+
     ::testing::InitGoogleTest(&argc, argv);
     float w = 1500;
     float h = 1000;
