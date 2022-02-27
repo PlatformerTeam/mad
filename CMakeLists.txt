@@ -32,7 +32,11 @@ message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
 # Spdlog library
 set(DIRECTORY_SPDLOG ${PROJECT_SOURCE_DIR}/deps/spdlog)
 set(INCLUDE_SPDLOG ${DIRECTORY_SPDLOG}/include)
-set(LIBRARY_SPDLOG spdlog)
+
+if(NOT TARGET)
+    find_package(spdlog REQUIRED)
+endif()
+set(LIBRARY_SPDLOG spdlog::spdlog)
 
 message(STATUS "Spdlog include: ${INCLUDE_SPDLOG}")
 message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")

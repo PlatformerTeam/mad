@@ -28,6 +28,7 @@ target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_BOX2D})
 # test check use box2d for physics
 target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_IM})
 target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_BOX2D})
+
 # test check use spdlog for logging
 target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_SPDLOG})
 target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_SPDLOG})
