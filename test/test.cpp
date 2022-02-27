@@ -19,14 +19,14 @@ int main(int argc, char **argv) {
     /// simple testing of included libraries
     {
         sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3"); // SFML
-        bool test = ImGui::SFML::Init(window);
+        ImGui::SFML::Init(window);
         ImGui::GetFont(); // IMGUI
     }
 
 #ifdef IMGUI_TEST_WINDOW
     sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3");
     window.setFramerateLimit(60);
-    bool test = ImGui::SFML::Init(window);
+    ImGui::SFML::Init(window);
 
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
