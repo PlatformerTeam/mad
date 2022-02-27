@@ -16,7 +16,14 @@ inline float dt;
 
 
 int main(int argc, char **argv) {
+    /// simple testing of included libraries
+    {
+        sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3"); // SFML
+        bool test = ImGui::SFML::Init(window);
+        ImGui::GetFont(); // IMGUI
+    }
 
+#ifdef IMGUI_TEST_WINDOW
     sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3");
     window.setFramerateLimit(60);
     bool test = ImGui::SFML::Init(window);
@@ -50,11 +57,12 @@ int main(int argc, char **argv) {
     }
 
     ImGui::SFML::Shutdown();
+#endif
 
-    return 0;
 
+#ifdef BOX2D_TEST_WINDOW
 
-    /*float w = 1500;
+    float w = 1500;
     float h = 1000;
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "SFML window");
     //ImGui::SFML::
@@ -187,5 +195,8 @@ int main(int argc, char **argv) {
         double fps = 1 / (time.asSeconds() - lastTime);
         lastTime = time.asSeconds();
         window.setTitle(std::to_string(fps));
-    }*/
+    }
+#endif
+
+    return 0;
 }
