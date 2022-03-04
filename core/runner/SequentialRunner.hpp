@@ -6,6 +6,7 @@
 #include <visual/Renderable.hpp>
 
 #include <vector>
+#include <memory>
 
 
 namespace mad::core {
