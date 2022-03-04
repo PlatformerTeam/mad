@@ -5,9 +5,15 @@ set(CMAKE_CXX_STANDARD 17)
 
 #SFML
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+set(
+        LIBRARY_SFML
+        sfml-graphics
+        sfml-audio
+)
 
 #OpenGL
 find_package(OpenGL REQUIRED)
+set(LIBRARY_OPENGL ${OPENGL_LIBRARIES})
 
 # Testing framework
 set(DIRECTORY_GTEST ${PROJECT_SOURCE_DIR}/deps/googletest)
@@ -80,6 +86,4 @@ message(STATUS "Game executable: ${EXECUTABLE_GAME}")
 # Tests
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)
 set(EXECUTABLE_TEST test)
-
 add_subdirectory(${DIRECTORY_TEST})
-message(STATUS "Test executable: ${EXECUTABLE_TEST}")
