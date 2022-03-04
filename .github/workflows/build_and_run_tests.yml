@@ -39,4 +39,4 @@ jobs:
           cmake -S . -B build -DCMAKE_CXX_COMPILER="${{ matrix.command }}" -DEXTRA_CXX_FLAGS="${{ matrix.flags }}"
           cmake --build build/
       - name: Run tests
-        run: ctest build/
+        run: ./build/test/test
