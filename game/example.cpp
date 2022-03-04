@@ -1,9 +1,8 @@
 #include <Core.h>
 
-#include <imgui.h>
 #include <iostream>
 
-int main() {
+int main(int argc, char *argv[]) {
     std::cout << "Hello from example" << '\n';
     mad::core::Core obj;
     std::cout << obj.hello();

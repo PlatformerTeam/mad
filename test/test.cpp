@@ -57,7 +57,6 @@ int main(int argc, char **argv) {
     }
 
     ImGui::SFML::Shutdown();
-#endif
 
 
 #ifdef BOX2D_TEST_WINDOW
