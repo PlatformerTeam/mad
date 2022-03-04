@@ -1,4 +1,4 @@
-#include <common/Error.h>
+#include <common/Error.hpp>
 
 namespace mad::core {
 

@@ -1,45 +1,49 @@
+function(test_executable EXECUTABLE_TEST_NAME EXECUTABLE_SOURCES)
+    message(STATUS "Test executable: '${EXECUTABLE_TEST_NAME}' is built with ${EXECUTABLE_SOURCES}")
+
+    add_executable(
+            ${EXECUTABLE_TEST_NAME}
+            ${EXECUTABLE_SOURCES}
+            ${SOURCES_IMGUI}
+            ${SOURCES_IMGUI_SFML}
+    )
+
+    target_include_directories(
+            ${EXECUTABLE_TEST_NAME} PUBLIC
+
+            ${PROJECT_SOURCE_DIR}
+            ${INCLUDE_GTEST}
+            ${INCLUDE_SPDLOG}
+            ${INCLUDE_BOX2D}
+            ${INCLUDE_IMGUI}
+            ${INCLUDE_IMGUI_SFML}
+    )
+
+    target_link_libraries(
+            ${EXECUTABLE_TEST_NAME}
+
+            ${LIBRARY_SFML}
+            ${LIBRARY_CORE}
+            ${LIBRARY_GTEST}
+            ${LIBRARY_SPDLOG}
+            ${LIBRARY_BOX2D}
+            ${LIBRARY_OPENGL}
+    )
+endfunction()
+
 set(
-        SOURCES_TEST
-        test.cpp
+        SOURCES_TEST_CORE
+
+        core/TestCore.cpp
 )
 
-add_executable(${EXECUTABLE_TEST} ${SOURCES_TEST} ${SOURCES_IMGUI} ${SOURCES_IMGUI_SFML})
+set(
+        SOURCES_TEST
 
-target_link_libraries(${EXECUTABLE_TEST}  sfml-graphics sfml-audio)
+        test.cpp
+        ${SOURCES_TEST_CORE}
+)
 
-# Core library
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_CORE})
-target_link_libraries(${EXECUTABLE_TEST} ${LIBRARY_CORE})
+test_executable(${EXECUTABLE_TEST} "${SOURCES_TEST}")
 
-# Gtest library
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_GTEST})
-target_link_libraries(${EXECUTABLE_TEST} ${LIBRARY_GTEST})
-
-# Spdlog library
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_SPDLOG})
-target_link_libraries(${EXECUTABLE_TEST} ${LIBRARY_SPDLOG})
-
-#SFML
-find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
-target_link_libraries(${EXECUTABLE_TEST} sfml-graphics sfml-audio)
-
-# test check use box2d for physics
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_BOX2D})
-target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_BOX2D})
-
-# test check use imgui
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_IMGUI})
-
-# test check use imgui-sfml
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_IMGUI_SFML})
-
-# OpenGL
-target_link_libraries(${EXECUTABLE_TEST}  ${OPENGL_LIBRARIES})
-
-# uncomment ONE for open test windows
-#add_definitions(-DBOX2D_TEST_WINDOW)
-add_definitions(-DIMGUI_TEST_WINDOW)
-
-# test check use spdlog for logging
-target_include_directories(${EXECUTABLE_TEST} PUBLIC ${INCLUDE_SPDLOG})
-target_link_libraries(${EXECUTABLE_TEST}  ${LIBRARY_SPDLOG})
+add_subdirectory(deps)
