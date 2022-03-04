@@ -1,3 +1,5 @@
+#include <core/Core.hpp>
+
 #include <box2d/box2d.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>

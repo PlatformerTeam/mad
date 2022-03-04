@@ -1,10 +1,9 @@
+#include <core/Core.hpp>
+
 #include <gtest/gtest.h>
 
 TEST(Core, hello) {
-    ASSERT_EQ(2 + 2, 4);
-}
+    mad::core::Core object;
 
-TEST(Core, other) {
-    ASSERT_GE(2 + 2, 4);
+    ASSERT_EQ(object.hello(), "Hello from Core\n");
 }
-
