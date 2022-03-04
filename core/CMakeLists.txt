@@ -6,6 +6,7 @@ set(
         common/Color.cpp common/Color.hpp
 
         visual/Renderable.hpp
+        visual/Camera.cpp visual/Camera.hpp
 
         event/Event.cpp
         event/management/EventDispatcher.hpp
@@ -13,11 +14,21 @@ set(
         event/management/EventProducer.cpp event/management/EventProducer.hpp
 
         world/World.hpp
+        world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
-        system/KeyboardListener.cpp system/KeyboardListener.hpp world/entity/Entity.hpp world/entity/Entity.cpp visual/Camera.cpp visual/Camera.hpp runner/GameRunner.hpp runner/SequentialRunner.cpp runner/SequentialRunner.hpp world/LocalWorld.cpp world/LocalWorld.hpp)
+
+        system/KeyboardListener.cpp system/KeyboardListener.hpp
+
+        world/entity/Entity.hpp world/entity/Entity.cpp
+
+        runner/GameRunner.hpp
+        runner/SequentialRunner.cpp runner/SequentialRunner.hpp
+        visual/image/Image.hpp
+        visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
+)
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 
