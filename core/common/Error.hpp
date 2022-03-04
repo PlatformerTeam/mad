@@ -10,44 +10,49 @@
 
 namespace mad::core {
 
-void my_assert(bool value, const std::string& condition, const std::string& message, const std::string& file, int line);
+    void my_assert(bool value,
+                   const std::string &condition,
+                   const std::string &message,
+                   const std::string &file,
+                   int line);
 
-enum class Status {
-    Error,
-    OutOfRange,
-    InvalidArgument
-};
+    enum class Status {
+        Error,
+        OutOfRange,
+        InvalidArgument,
+        NotImplemented,
+    };
 
-struct Error : std::exception {
-public:
-    Error(Status status, std::string condition, std::string message, std::string file, int line);
+    struct Error : std::exception {
+    public:
+        Error(Status status, std::string condition, std::string message, std::string file, int line);
 
-    [[nodiscard]] const char *what() const noexcept override;
+        [[nodiscard]] const char *what() const noexcept override;
 
-    Status status() const;
+        Status status() const;
 
-    std::string message() const;
+        std::string message() const;
 
-    std::string condition() const;
+        std::string condition() const;
 
-    std::string where() const;
+        std::string where() const;
 
-private:
-    Status status_;
-    std::string condition_;
-    std::string message_;
-    std::string file_;
-    int line_;
-    mutable std::string what_;
-};
+    private:
+        Status status_;
+        std::string condition_;
+        std::string message_;
+        std::string file_;
+        int line_;
+        mutable std::string what_;
+    };
 
-template <Status status_throw>
-struct ThrowError : Error {
-public:
-    ThrowError(std::string condition, std::string message, std::string file, int line) :
-    Error(status_throw, std::move(condition), std::move(message), std::move(file), line) {
-    }
-};
+    template<Status status_throw>
+    struct ThrowError : Error {
+    public:
+        ThrowError(std::string condition, std::string message, std::string file, int line) :
+                Error(status_throw, std::move(condition), std::move(message), std::move(file), line) {
+        }
+    };
 
 } // namespace mad::core
 
@@ -61,5 +66,9 @@ public:
         }                                                                                                           \
     } while (0)
 
-#endif //MAD_ERROR_H
 
+#define NOT_IMPLEMENTED \
+    std::cerr << __PRETTY_FUNCTION__ << " in " << __FILE__ << ":" << __LINE__ << " is not implemented yet." << std::endl; \
+    std::exit(1);
+
+#endif //MAD_ERROR_H

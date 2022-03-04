@@ -1,17 +1,36 @@
 set(
-        SOURCES_CORE_COMMON
-
-        common/Error.cpp
-)
-
-set(
         SOURCES_CORE
 
-        Core.cpp
-        ${SOURCES_CORE_COMMON}
+        common/Error.cpp common/Error.hpp
+        common/FVec2D.cpp common/FVec2D.hpp
+        common/Color.cpp common/Color.hpp
+
+        visual/Renderable.hpp
+        visual/Camera.cpp visual/Camera.hpp
+
+        event/Event.cpp
+        event/management/EventDispatcher.hpp
+        event/management/EventHandler.hpp
+        event/management/EventProducer.cpp event/management/EventProducer.hpp
+
+        world/World.hpp
+        world/LocalWorld.cpp world/LocalWorld.hpp
+        world/filter/Filter.hpp
+        world/intent/Intent.cpp world/intent/Intent.hpp
+        world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
+        world/intent/Intent.cpp world/intent/Intent.hpp
+
+        system/KeyboardListener.cpp system/KeyboardListener.hpp
+
+        world/entity/Entity.hpp world/entity/Entity.cpp
+
+        runner/GameRunner.hpp
+        runner/SequentialRunner.cpp runner/SequentialRunner.hpp
+        visual/image/Image.hpp
+        visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
 )
 
-add_library(${LIBRARY_CORE} STATIC ${SOURCES_CORE})
+add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 
 # Core headers
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_CORE})
