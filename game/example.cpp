@@ -31,6 +31,4 @@ namespace dummy {
 }
 
 int main(int argc, char *argv[]) {
-    mad::core::SequentialRunner runner;
-    runner.run();
 }
