@@ -29,6 +29,15 @@ set(LIBRARY_IMGUI imgui)
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
 
+# Spdlog library
+set(DIRECTORY_SPDLOG ${PROJECT_SOURCE_DIR}/deps/spdlog)
+set(INCLUDE_SPDLOG ${DIRECTORY_SPDLOG}/include)
+set(LIBRARY_SPDLOG spdlog)
+
+add_subdirectory(${DIRECTORY_SPDLOG})
+message(STATUS "Spdlog include: ${INCLUDE_SPDLOG}")
+message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")
+
 # Core library
 set(DIRECTORY_CORE ${PROJECT_SOURCE_DIR}/core)
 set(INCLUDE_CORE ${DIRECTORY_CORE})
@@ -48,7 +57,6 @@ message(STATUS "Game executable: ${EXECUTABLE_GAME}")
 # Tests
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)
 set(EXECUTABLE_TEST test)
-
 
 add_subdirectory(${DIRECTORY_TEST})
 message(STATUS "Test executable: ${EXECUTABLE_TEST}")
