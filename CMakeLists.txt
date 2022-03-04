@@ -3,6 +3,12 @@ project(mad)
 
 set(CMAKE_CXX_STANDARD 17)
 
+#SFML
+find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+
+#OpenGL
+find_package(OpenGL REQUIRED)
+
 # Testing framework
 set(DIRECTORY_GTEST ${PROJECT_SOURCE_DIR}/deps/googletest)
 set(INCLUDE_GTEST ${DIRECTORY_GTEST}/googletest/include)
@@ -21,13 +27,30 @@ add_subdirectory(${DIRECTORY_BOX2D})
 message(STATUS "Box2d include: ${INCLUDE_BOX2D}")
 message(STATUS "Box2d library: ${LIBRARY_BOX2D}")
 
+
 # ImGui library
 set(DIRECTORY_IMGUI ${PROJECT_SOURCE_DIR}/deps/imgui)
 set(INCLUDE_IMGUI ${DIRECTORY_IMGUI})
-set(LIBRARY_IMGUI imgui)
+set(SOURCES_IMGUI
+        ${DIRECTORY_IMGUI}/imgui.cpp
+        ${DIRECTORY_IMGUI}/imgui_widgets.cpp
+        ${DIRECTORY_IMGUI}/imgui_draw.cpp
+        ${DIRECTORY_IMGUI}/imgui_tables.cpp
+        ${DIRECTORY_IMGUI}/imgui_demo.cpp)
+
+
 
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
+
+# ImGui-sfml library
+set(IMGUI_DIR ${DIRECTORY_IMGUI})
+set(DIRECTORY_IMGUI_SFML ${PROJECT_SOURCE_DIR}/deps/imgui-sfml)
+set(INCLUDE_IMGUI_SFML ${DIRECTORY_IMGUI_SFML})
+set(SOURCES_IMGUI_SFML ${DIRECTORY_IMGUI_SFML}/imgui-SFML.cpp)
+
+message(STATUS "ImGui-sfml include: ${INCLUDE_IMGUI_SFML}")
+message(STATUS "ImGui-sfml library: ${LIBRARY_IMGUI_SFML}")
 
 # Spdlog library
 set(DIRECTORY_SPDLOG ${PROJECT_SOURCE_DIR}/deps/spdlog)

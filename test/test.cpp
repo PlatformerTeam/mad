@@ -1,42 +1,70 @@
-#include <gtest/gtest.h>
 
 #include <Core.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/Window/Event.hpp>
 #include "box2d/box2d.h"
-#include <math.h>
-
-#include <imgui.h>
+#include "imgui.h"
+#include <imgui-SFML.h>
+#include <cmath>
 #include <iostream>
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/sinks/rotating_file_sink.h>
-
-using namespace testing;
-
-TEST(Core, a_plus_b_simple) {
-mad::core::Core obj;
-
-EXPECT_EQ("Hello from Core\n", obj.hello());
-}
 
 inline float dt;
 
-int main(int argc, char **argv) {
-    try {
-        // Create basic file logger (not rotated)
-        auto my_logger = spdlog::basic_logger_mt("basic_logger", "logs/basic.txt");
 
-        // create a file rotating logger with 5mb size max and 3 rotated files
-        auto file_logger = spdlog::rotating_logger_mt("file_logger", "myfilename", 1024 * 1024 * 5, 3);
-    } catch (const spdlog::spdlog_ex& ex) {
-        std::cout << "Log initialization failed: " << ex.what() << std::endl;
+int main(int argc, char **argv) {
+    /// simple testing of included libraries
+    {
+        sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3"); // SFML
+        ImGui::SFML::Init(window);
+        ImGui::GetFont(); // IMGUI
     }
 
-    ::testing::InitGoogleTest(&argc, argv);
+#ifdef IMGUI_TEST_WINDOW
+    sf::RenderWindow window(sf::VideoMode(640, 480), "ImGui + SFML = <3");
+    window.setFramerateLimit(60);
+    ImGui::SFML::Init(window);
+
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+
+    sf::Clock deltaClock;
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            ImGui::SFML::ProcessEvent(window, event);
+
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+        }
+
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        ImGui::ShowDemoWindow();
+
+        ImGui::Begin("Hello, world!");
+        ImGui::Button("Look at this pretty button");
+        ImGui::End();
+
+        window.clear();
+        window.draw(shape);
+        ImGui::SFML::Render(window);
+        window.display();
+    }
+
+    ImGui::SFML::Shutdown();
+
+
+#ifdef BOX2D_TEST_WINDOW
+
     float w = 1500;
     float h = 1000;
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "SFML window");
+    //ImGui::SFML::
     sf::Clock clock;
     float lastTime = 0;
 
@@ -95,11 +123,6 @@ int main(int argc, char **argv) {
 
 
 
-    /*ImGui::Text("Hello, world %d", 123);
-    if (ImGui::Button("Save"))
-        MySaveFunction();
-    ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
-    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);*/
     while (window.isOpen()) {
         world.Step(timeStep, velocityIterations, positionIterations);
         {
@@ -172,5 +195,7 @@ int main(int argc, char **argv) {
         lastTime = time.asSeconds();
         window.setTitle(std::to_string(fps));
     }
-    return RUN_ALL_TESTS();
+#endif
+
+    return 0;
 }
