@@ -2,7 +2,7 @@
 
 namespace mad::core {
 
-    Vec2d::Vec2d(float x_, float y_) : m_x(x_), m_y(y_) { }
+    Vec2d::Vec2d(float x, float y) : m_x(x), m_y(y) { }
 
     Vec2d &Vec2d::operator+=(const Vec2d &v) {
         m_x += v.m_x;
