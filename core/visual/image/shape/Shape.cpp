@@ -1,5 +1,11 @@
 #include "Shape.hpp"
 
-mad::core::Shape::Geometry mad::core::Shape::get_geometry() const noexcept {
-    return m_geometry;
+namespace mad::core {
+
+    Shape::Geometry Shape::get_geometry() const noexcept {
+        return m_geometry;
+    }
+
+
+
 }

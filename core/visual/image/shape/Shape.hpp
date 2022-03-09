@@ -2,6 +2,7 @@
 #define MAD_CORE_VISUAL_IMAGE_SHAPE_HPP
 
 #include <visual/image/Image.hpp>
+#include <common/Color.hpp>
 
 
 namespace mad::core {
@@ -14,8 +15,9 @@ namespace mad::core {
 
         [[nodiscard]] Geometry get_geometry() const noexcept;
 
-    private:
+    protected:
         const Geometry m_geometry;
+        Color m_color;
     };
 
 }
