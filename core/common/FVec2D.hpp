@@ -5,7 +5,7 @@ namespace mad::core {
 
     class Vec2d {
     public:
-        Vec2d(float x_, float y_);
+        Vec2d(float x, float y);
 
         Vec2d &operator+=(const Vec2d &v);
 
