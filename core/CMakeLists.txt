@@ -12,6 +12,8 @@ set(
         event/management/EventDispatcher.hpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
+        event/visual/VisualEvent.hpp
+        event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
 
         world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp

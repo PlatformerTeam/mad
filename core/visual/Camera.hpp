@@ -19,7 +19,7 @@ namespace mad::core {
         void handle(const Event &event) override;
 
     private:
-        std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr</*Position*/Vec2d>>> m_scene_list;
+        std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list;
 
         Vec2d m_position;
 

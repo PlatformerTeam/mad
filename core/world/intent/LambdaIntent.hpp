@@ -10,11 +10,7 @@ namespace mad::core {
 
     struct LambdaIntent : public Intent {
     public:
-        LambdaIntent() : Intent(Intent::Type::Lambda) {
-        }
-
-        void fun(const Entity &entity, const EventDispatcher &event_dispatcher) {
-        }
+        LambdaIntent();
     };
 
 }

@@ -9,8 +9,7 @@ namespace mad::core {
             Lambda
         };
 
-        explicit Intent(Type new_type) : type(new_type) {
-        }
+        explicit Intent(Type new_type);
 
         const Type type;
     };

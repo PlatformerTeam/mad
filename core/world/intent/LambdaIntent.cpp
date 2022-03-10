@@ -2,7 +2,8 @@
 
 namespace mad::core {
 
-
+    LambdaIntent::LambdaIntent() : Intent(Intent::Type::Lambda) {
+    }
 
 }
 
