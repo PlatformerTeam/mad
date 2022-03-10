@@ -2,11 +2,15 @@
 #define MAD_CORE_VISUAL_CAMERA_HPP
 
 #include <visual/Renderable.hpp>
+#include <visual/image/Image.hpp>
 #include <event/management/EventHandler.hpp>
+#include <event/visual/PositionalAppearance.hpp>
 #include <world/filter/TrueFilter.hpp>
 #include <world/World.hpp>
-#include <visual/image/Image.hpp>
 #include <common/FVec2D.hpp>
+#include <common/Error.hpp>
+
+#include <imgui.h>
 
 #include <vector>
 
