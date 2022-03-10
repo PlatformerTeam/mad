@@ -33,7 +33,7 @@ set(
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
-        visual/PositionalAppearance.hpp
+        visual/PositionalAppearance.cpp visual/PositionalAppearance.hpp
 
 )
 
