@@ -10,7 +10,7 @@ namespace mad::core {
         TrueFilter() : Filter(Filter::Type::True) {
         }
 
-        std::vector<Entity::Id> filter(const EntityStorage &entity_storage) const override {
+        [[nodiscard]] std::vector<Entity::Id> filter(const EntityStorage &entity_storage) const override {
             std::vector<Entity::Id> entities_ids;
             for (const auto& entity : entity_storage.get_list_entities()) {
                 entities_ids.push_back(entity->get_id());
