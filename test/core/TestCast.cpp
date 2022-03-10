@@ -25,7 +25,7 @@ TEST(Cast, EntityCast) {
         void accept(mad::core::World &world,
                     mad::core::Intent &intent,
                     mad::core::EventDispatcher &dispatcher
-                    ) override {
+        ) override {
         }
 
     public:
@@ -38,11 +38,11 @@ TEST(Cast, EntityCast) {
 
     {
         const mad::core::Entity &const_entity = *entity_1;
-        const auto &const_mock_entity = mad::core::const_cast_entity<MockEntity_1>(const_entity);
+        const auto &const_mock_entity = mad::core::const_cast_to<MockEntity_1>(const_entity);
     }
 
     {
         const mad::core::Entity &const_entity = *entity_1;
-        EXPECT_ANY_THROW(mad::core::try_const_cast_entity<MockEntity_2>(const_entity));
+        EXPECT_ANY_THROW(mad::core::try_const_cast_to<MockEntity_2>(const_entity));
     }
 }
