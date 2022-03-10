@@ -1,6 +1,9 @@
 #ifndef MAD_CORE_WORLD_FILTER_FILTER_HPP
 #define MAD_CORE_WORLD_FILTER_FILTER_HPP
 
+#include <world/entity/Entity.hpp>
+#include <world/entity/EntityStorage.hpp>
+#include <memory>
 
 namespace mad::core {
 
@@ -14,6 +17,8 @@ namespace mad::core {
 
         explicit Filter(Type new_type) : type(new_type) {
         }
+
+        virtual std::vector<Entity::Id> filter(std::shared_ptr<EntityStorage> entity_storage) = 0;
 
         const Type type;
     };
