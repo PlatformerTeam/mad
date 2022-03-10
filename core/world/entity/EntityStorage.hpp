@@ -7,11 +7,10 @@
 #include <world/filter/Filter.hpp>
 
 namespace mad::core {
-    struct Filter;
 
     class EntityStorage {
     public:
-        std::vector<Entity::Id> extract(const Filter &filter);
+        std::vector<Entity::Id> extract(const Filter &filter) const;
 
         [[nodiscard]] std::vector<std::shared_ptr<Entity>> get_list_entities() const noexcept;
 
