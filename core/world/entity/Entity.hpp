@@ -24,10 +24,10 @@ namespace mad::core {
 
         [[nodiscard]] Id get_id() const noexcept;
 
-        virtual ~Entity() = 0;
+        virtual ~Entity() = default;
 
     private:
-        const Id m_id;
+        const Id m_id{};
     };
 
 }
