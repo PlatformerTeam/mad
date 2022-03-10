@@ -5,35 +5,31 @@
 
 
 namespace mad::core {
-    class Entity;
-}
-
-namespace mad::core {
-    template<typename T>
-    static inline T &cast_entity(Entity &e) {
-        T *upcasted_ptr = dynamic_cast<T *>(&e);
+    template<typename To, typename From>
+    static inline To &cast_to(From &e) {
+        To *upcasted_ptr = dynamic_cast<To *>(&e);
         ASSERT(upcasted_ptr != nullptr, "Illegal dynamic cast");
         return *upcasted_ptr;
     }
 
-    template<typename T>
-    static inline const T &const_cast_entity(const Entity &e) {
-        const T *upcasted_ptr = dynamic_cast<const T *>(&e);
-        ASSERT(upcasted_ptr != nullptr, "Illegal dynamic const cast");
+    template<typename To, typename From>
+    static inline const To &const_cast_to(const From &e) {
+        const To *upcasted_ptr = dynamic_cast<const To *>(&e);
+        ASSERT(upcasted_ptr != nullptr, "Illegal dynamic cast");
         return *upcasted_ptr;
     }
 
-    template<typename T>
-    static inline T &try_cast_entity(Entity &e) {
-        T *upcasted_ptr = dynamic_cast<T *>(&e);
-        CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal entity dynamic upcast");
+    template<typename To, typename From>
+    static inline To &try_cast_to(From &e) {
+        To *upcasted_ptr = dynamic_cast<To *>(&e);
+        CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal dynamic cast");
         return *upcasted_ptr;
     }
 
-    template<typename T>
-    static inline const T &try_const_cast_entity(const Entity &e) {
-        const T *upcasted_ptr = dynamic_cast<const T *>(&e);
-        CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal entity dynamic const upcast");
+    template<typename To, typename From>
+    static inline const To &try_const_cast_to(const From &e) {
+        const To *upcasted_ptr = dynamic_cast<const To *>(&e);
+        CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal dynamic cast");
         return *upcasted_ptr;
     }
 }
