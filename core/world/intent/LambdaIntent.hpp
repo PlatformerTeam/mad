@@ -5,12 +5,16 @@
 #include <world/entity/Entity.hpp>
 
 #include <memory>
+#include <functional>
 
 namespace mad::core {
 
     struct LambdaIntent : public Intent {
     public:
-        LambdaIntent();
+        explicit LambdaIntent(std::function<void (const Entity &entity, const EventDispatcher &event_dispatcher)> func);
+
+    private:
+        std::function<void (const Entity &entity, const EventDispatcher &event_dispatcher)> m_func;
     };
 
 }
