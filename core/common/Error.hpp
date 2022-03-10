@@ -21,6 +21,7 @@ namespace mad::core {
         OutOfRange,
         InvalidArgument,
         NotImplemented,
+        IllegalEntityUpcast,
     };
 
     struct Error : std::exception {

@@ -35,6 +35,7 @@ set(
         SOURCES_TEST_CORE
 
         core/TestCore.cpp
+        core/TestCast.cpp
 )
 
 set(
