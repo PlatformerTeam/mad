@@ -5,7 +5,7 @@
 
 namespace mad::core {
 
-    struct Square : Shape {
+    class Square : Shape {
     public:
         explicit Square(std::uint32_t side, Color color);
 
