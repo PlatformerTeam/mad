@@ -14,13 +14,17 @@ set(
         event/management/EventDispatcher.hpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
+        event/visual/VisualEvent.hpp
+        event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
 
         world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
+        world/filter/TrueFilter.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
+        world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
 
         system/KeyboardListener.cpp system/KeyboardListener.hpp
 
@@ -30,7 +34,7 @@ set(
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
-        visual/image/shape/Square.cpp visual/image/shape/Square.hpp
+
 )
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
