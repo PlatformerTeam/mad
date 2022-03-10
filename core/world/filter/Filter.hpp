@@ -9,7 +9,11 @@ namespace mad::core {
             Lambda,
             Id,
             Tag,
+            True
         };
+
+        explicit Filter(Type new_type) : type(new_type) {
+        }
 
         const Type type;
     };
