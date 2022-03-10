@@ -5,7 +5,7 @@
 namespace mad::core {
 
     std::vector<Entity::Id> EntityStorage::extract(const Filter &filter) const {
-        filter.filter(*this);
+        return filter.filter(*this);
     }
 
     std::vector<std::shared_ptr<Entity>> EntityStorage::get_list_entities() const noexcept {
