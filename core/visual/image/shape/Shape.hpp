@@ -13,9 +13,13 @@ namespace mad::core {
             Square
         };
 
+        Shape(Geometry geometry, Color color);
+
+        [[nodiscard]] Color get_color() const noexcept;
+
         [[nodiscard]] Geometry get_geometry() const noexcept;
 
-    protected:
+    private:
         const Geometry m_geometry;
         Color m_color;
     };

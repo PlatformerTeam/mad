@@ -6,6 +6,11 @@ namespace mad::core {
         return m_geometry;
     }
 
+    Color Shape::get_color() const noexcept {
+        return m_color;
+    }
 
+    Shape::Shape(Geometry geometry, Color color) : Image(Image::Type::Shape), m_geometry(geometry), m_color(color) {
+    }
 
 }
