@@ -9,7 +9,8 @@ set(
         visual/Camera.cpp visual/Camera.hpp
 
         event/Event.cpp
-        event/VisualEvent.cpp event/VisualEvent.hpp
+        event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
+        event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
         event/management/EventDispatcher.hpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
@@ -33,7 +34,6 @@ set(
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
-        visual/PositionalAppearance.cpp visual/PositionalAppearance.hpp
 
 )
 

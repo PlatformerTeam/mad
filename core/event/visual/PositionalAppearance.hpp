@@ -1,16 +1,19 @@
 #ifndef MAD_POSITIONALAPPEARANCE_HPP
 #define MAD_POSITIONALAPPEARANCE_HPP
 
-#include "VisualEvent.hpp"
-#include <common/FVec2D.hpp>
-#include <visual/image/Image.hpp>
+#include "common/FVec2D.hpp"
+#include "event/visual/VisualEvent.hpp"
+#include "visual/image/Image.hpp"
 
 #include <memory>
 
+
 namespace mad::core {
 
-    struct PositionalAppearance : VisualEvent {
+    class PositionalAppearance : public VisualEvent {
     public:
+        PositionalAppearance(std::shared_ptr<Vec2d> pos, std::shared_ptr<Image> img, int z_index);
+
         [[nodiscard]] std::shared_ptr<Image> get_image() const noexcept;
 
         [[nodiscard]] std::shared_ptr<Vec2d> get_position() const noexcept;
@@ -19,12 +22,10 @@ namespace mad::core {
 
     private:
         std::shared_ptr<Vec2d> m_position;
-
         std::shared_ptr<Image> m_image;
-
-        [[maybe_unused]] int z_index;
+        int m_z_index;
     };
 
-}
+}// namespace mad::core
 
-#endif //MAD_POSITIONALAPPEARANCE_HPP
+#endif//MAD_POSITIONALAPPEARANCE_HPP

@@ -1,23 +1,21 @@
-#ifndef MAD_VISUALEVENT_HPP
-#define MAD_VISUALEVENT_HPP
+#ifndef MAD_VISUALEVENT_H
+#define MAD_VISUALEVENT_H
 
 #include <event/Event.hpp>
 
+
 namespace mad::core {
 
-    struct VisualEvent : Event {
+    struct VisualEvent : public Event {
         enum class Type {
-            PositionalAppearance,
-            Appearance,
-            Disappearance
+            PositionalAppearance
         };
 
-        explicit VisualEvent(Type new_type) : Event(Event::Type::Visual), type(new_type) {
-        }
+        explicit VisualEvent(Type new_type);
 
         const Type type;
     };
 
 }
 
-#endif //MAD_VISUALEVENT_HPP
+#endif //MAD_VISUALEVENT_H
