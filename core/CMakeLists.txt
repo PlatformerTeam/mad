@@ -9,6 +9,7 @@ set(
         visual/Camera.cpp visual/Camera.hpp
 
         event/Event.cpp
+        event/VisualEvent.cpp event/VisualEvent.hpp
         event/management/EventDispatcher.hpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
@@ -29,6 +30,7 @@ set(
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/Square.cpp visual/image/shape/Square.hpp
+        visual/PositionalAppearance.cpp visual/PositionalAppearance.hpp
 )
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
