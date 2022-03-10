@@ -6,10 +6,8 @@
 #include <memory>
 
 namespace mad::core {
-    class EntityStorage;
-}
 
-namespace mad::core {
+    class EntityStorage;
 
     struct Filter {
         enum class Type {

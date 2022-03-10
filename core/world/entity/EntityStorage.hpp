@@ -7,6 +7,7 @@
 #include <world/filter/Filter.hpp>
 
 namespace mad::core {
+    struct Filter;
 
     class EntityStorage {
     public:
