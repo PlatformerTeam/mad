@@ -8,6 +8,17 @@ namespace mad::core {
 
     class Color {
     public:
+        Color(std::uint8_t red, std::uint8_t green, std::uint8_t blue);
+
+        static Color Blue();
+
+        static Color Green();
+
+        static Color Red();
+
+        static Color Black();
+
+        static Color White();
 
     private:
         std::uint8_t m_red, m_green, m_blue;

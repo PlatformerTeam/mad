@@ -11,6 +11,9 @@ namespace mad::core {
             AnimatedImage,
         };
 
+        explicit Image(Type new_type) : type(new_type) {
+        }
+
         const Type type;
     };
 }
