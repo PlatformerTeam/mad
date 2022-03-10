@@ -12,6 +12,8 @@ namespace mad::core {
             Keystroke,
         };
 
+        explicit Event(Type new_type);
+
         const Type type;
     };
 
