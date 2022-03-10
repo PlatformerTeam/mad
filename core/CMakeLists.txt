@@ -21,6 +21,7 @@ set(
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
         world/filter/TrueFilter.hpp
+        world/filter/IdFilter.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp

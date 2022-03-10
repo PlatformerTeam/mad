@@ -18,7 +18,7 @@ namespace mad::core {
         explicit Filter(Type new_type) : type(new_type) {
         }
 
-        virtual std::vector<Entity::Id> filter(const EntityStorage &entity_storage) = 0;
+        virtual std::vector<Entity::Id> filter(const EntityStorage &entity_storage) const = 0;
 
         const Type type;
     };
