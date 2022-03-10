@@ -4,18 +4,18 @@
 #include <vector>
 
 #include <world/entity/Entity.hpp>
-
-
-namespace mad::core {
-    class Filter;
-}
-
+#include <world/filter/Filter.hpp>
 
 namespace mad::core {
 
     class EntityStorage {
     public:
-        std::vector<Entity::Id> extract(const Filter&);
+        std::vector<Entity::Id> extract(const Filter &filter);
+
+        [[nodiscard]] std::vector<std::shared_ptr<Entity>> get_list_entities() const noexcept;
+
+    private:
+        std::vector<std::shared_ptr<Entity>> m_list_entities;
     };
 
 }

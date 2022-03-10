@@ -2,6 +2,14 @@
 
 #include <common/Error.hpp>
 
-std::vector<mad::core::Entity::Id> mad::core::EntityStorage::extract(const mad::core::Filter &) {
-    NOT_IMPLEMENTED
+namespace mad::core {
+
+    std::vector<Entity::Id> EntityStorage::extract(const Filter &filter) {
+        filter.filter(this);
+    }
+
+    std::vector<std::shared_ptr<Entity>> EntityStorage::get_list_entities() const noexcept {
+        return m_list_entities;
+    }
+
 }
