@@ -3,6 +3,8 @@
 
 #include <visual/Renderable.hpp>
 #include <visual/image/Image.hpp>
+#include <visual/image/shape/Shape.hpp>
+#include <visual/image/shape/Square.hpp>
 #include <event/management/EventHandler.hpp>
 #include <event/management/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
@@ -14,8 +16,7 @@
 #include <world/intent/LambdaIntent.hpp>
 #include <common/Cast.hpp>
 
-#include <imgui.h>
-#include <imgui-SFML.h>
+#include <SFML/Graphics.hpp>
 
 #include <vector>
 
@@ -25,12 +26,14 @@ namespace mad::core {
     public:
         void turn_on(const EventDispatcher &event_dispatcher);
 
-        void render() override;
+        void render(sf::RenderWindow &window) override;
 
         void handle(const Event &event) override;
 
+        void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) const;
+
     private:
-        std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list{};
+        std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list;
 
         Vec2d m_position;
 

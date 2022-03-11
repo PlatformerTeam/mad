@@ -10,6 +10,12 @@ namespace mad::core {
     public:
         Color(std::uint8_t red, std::uint8_t green, std::uint8_t blue);
 
+        [[nodiscard]] std::uint8_t get_red() const;
+
+        [[nodiscard]] std::uint8_t get_green() const;
+
+        [[nodiscard]] std::uint8_t get_blue() const;
+
         static Color Blue();
 
         static Color Green();
