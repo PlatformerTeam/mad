@@ -11,6 +11,7 @@ set(
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
+        event/system/Keystroke.hpp event/system/Keystroke.cpp
         event/management/EventDispatcher.hpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
