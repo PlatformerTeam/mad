@@ -20,6 +20,8 @@ namespace mad::core {
         explicit Filter(Type new_type) : type(new_type) {
         }
 
+        virtual ~Filter() = default;
+
         const Type type;
     };
 
