@@ -1,5 +1,8 @@
 #include "Camera.hpp"
 
+#include <common/Cast.hpp>
+
+
 namespace mad::core {
 
     void Camera::turn_on(const EventDispatcher &event_dispatcher) {
@@ -15,7 +18,7 @@ namespace mad::core {
     }
 
     void Camera::handle(const Event &event) {
-        const PositionalAppearance &positional_appearance = static_cast<const PositionalAppearance&>(event);
+        const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
         m_scene_list.emplace_back(positional_appearance.get_image(), positional_appearance.get_position());
     }
 
