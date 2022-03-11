@@ -5,7 +5,6 @@
 
 namespace mad::core {
 
-
     void SystemListener::produce(EventDispatcher &dispatcher) {
 
     }
