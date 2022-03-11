@@ -10,6 +10,7 @@ set(
 
         event/Event.cpp
         event/VisualEvent.cpp event/VisualEvent.hpp
+        event/Keystroke.cpp event/Keystroke.hpp
         event/management/EventDispatcher.hpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
