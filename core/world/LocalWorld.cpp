@@ -3,10 +3,14 @@
 #include <common/Error.hpp>
 
 
-void mad::core::LocalWorld::manipulate(const mad::core::Filter &filter, const mad::core::Intent &intent) {
-    NOT_IMPLEMENTED
-}
+namespace mad::core {
 
-void mad::core::LocalWorld::produce_impl(mad::core::EventDispatcher &dispatcher) {
-    NOT_IMPLEMENTED
+    void LocalWorld::manipulate(const mad::core::Filter &filter, const mad::core::Intent &intent) {
+        NOT_IMPLEMENTED
+    }
+
+    void LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
+        NOT_IMPLEMENTED
+    }
+
 }

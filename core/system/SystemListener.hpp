@@ -9,7 +9,7 @@ namespace mad::core {
 
     class SystemListener : public EventProducer {
     public:
-        void produce(EventDispatcher &event_dispatcher) override;
+        void produce(EventDispatcher &dispatcher) override;
     };
 
 }

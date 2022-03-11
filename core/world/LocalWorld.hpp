@@ -10,12 +10,7 @@ namespace mad::core {
     public:
         void manipulate(const Filter &filter, const Intent &intent) override;
 
-    protected:
-        void produce_impl(EventDispatcher &dispatcher) override;
-
-    public:
-
-    private:
+        void produce(EventDispatcher &dispatcher) override;
     };
 
 }
