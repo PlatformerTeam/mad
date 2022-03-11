@@ -12,8 +12,10 @@
 #include <common/FVec2D.hpp>
 #include <common/Error.hpp>
 #include <world/intent/LambdaIntent.hpp>
+#include <common/Cast.hpp>
 
 #include <imgui.h>
+#include <imgui-SFML.h>
 
 #include <vector>
 

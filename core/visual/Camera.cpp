@@ -1,13 +1,10 @@
 #include "Camera.hpp"
 
-#include <common/Cast.hpp>
-
-
 namespace mad::core {
 
     void Camera::turn_on(const EventDispatcher &event_dispatcher) {
         auto start_appearance = [](const Entity &entity, const EventDispatcher &event_dispatcher) {
-            NOT_IMPLEMENTED // entity.appear(event_dispatcher);
+            entity.appear(event_dispatcher);
         };
         m_world->manipulate(TrueFilter(), LambdaIntent(start_appearance));
     }
