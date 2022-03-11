@@ -45,6 +45,10 @@ target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_CORE})
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_BOX2D})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_BOX2D})
 
+# Core library uses SFML for interface
+target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SFML})
+target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
+
 # Core library uses imgui for interface
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI})
