@@ -2,12 +2,12 @@
 #define MAD_CORE_WORLD_FILTER_FILTER_HPP
 
 #include <world/entity/Entity.hpp>
-#include <world/entity/EntityStorage.hpp>
+
 #include <memory>
+#include <vector>
+
 
 namespace mad::core {
-
-    class EntityStorage;
 
     struct Filter {
         enum class Type {
@@ -19,8 +19,6 @@ namespace mad::core {
 
         explicit Filter(Type new_type) : type(new_type) {
         }
-
-        virtual std::vector<Entity::Id> filter(const EntityStorage &entity_storage) const = 0;
 
         const Type type;
     };

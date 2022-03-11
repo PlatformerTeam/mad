@@ -1,22 +1,26 @@
 #ifndef MAD_CORE_WORLD_ENTITY_ENTITYSTORAGE_HPP
 #define MAD_CORE_WORLD_ENTITY_ENTITYSTORAGE_HPP
 
-#include <vector>
+#include "Entity.hpp"
 
-#include <world/entity/Entity.hpp>
+#include <common/Error.hpp>
+#include <common/Cast.hpp>
 #include <world/filter/Filter.hpp>
+#include <world/filter/IdFilter.hpp>
+
+#include <vector>
+#include <unordered_map>
 
 namespace mad::core {
-    struct Filter;
 
     class EntityStorage {
     public:
-        std::vector<Entity::Id> extract(const Filter &filter) const;
-
-        [[nodiscard]] std::vector<std::shared_ptr<Entity>> get_list_entities() const noexcept;
+        [[nodiscard]] std::vector<Entity::Id> extract(const Filter &filter) const;
 
     private:
-        std::vector<std::shared_ptr<Entity>> m_list_entities;
+        std::unordered_map<Entity::Id, std::unique_ptr<Entity>> m_map_entities;
+
+        std::vector<Entity::Id> m_list_ids;
     };
 
 }

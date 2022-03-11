@@ -1,15 +1,17 @@
 #include "EntityStorage.hpp"
 
-#include <common/Error.hpp>
-
 namespace mad::core {
 
     std::vector<Entity::Id> EntityStorage::extract(const Filter &filter) const {
-        return filter.filter(*this);
-    }
+        switch (filter.type) {
+            case Filter::Type::Id: {
+                IdFilter id_filter = cast_to<IdFilter>(filter);
+                return id_filter.get_filter_ids();
+            }
 
-    std::vector<std::shared_ptr<Entity>> EntityStorage::get_list_entities() const noexcept {
-        return m_list_entities;
+            case Filter::Type::True: {
+                return m_list_ids;
+            }
+        }
     }
-
 }
