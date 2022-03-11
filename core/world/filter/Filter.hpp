@@ -1,6 +1,11 @@
 #ifndef MAD_CORE_WORLD_FILTER_FILTER_HPP
 #define MAD_CORE_WORLD_FILTER_FILTER_HPP
 
+#include <world/entity/Entity.hpp>
+
+#include <memory>
+#include <vector>
+
 
 namespace mad::core {
 
@@ -9,7 +14,13 @@ namespace mad::core {
             Lambda,
             Id,
             Tag,
+            True
         };
+
+        explicit Filter(Type new_type) : type(new_type) {
+        }
+
+        virtual ~Filter() = default;
 
         const Type type;
     };
