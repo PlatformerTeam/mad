@@ -23,7 +23,7 @@ set(
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
 
-        system/KeyboardListener.cpp system/KeyboardListener.hpp
+        system/SystemListener.cpp system/SystemListener.hpp
 
         world/entity/Entity.hpp world/entity/Entity.cpp
 
