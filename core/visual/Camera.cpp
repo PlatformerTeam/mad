@@ -45,7 +45,9 @@ namespace mad::core {
         m_scene_list.emplace_back(positional_appearance.get_image(), positional_appearance.get_position());
     }
 
-
+    std::unordered_set<Event::Type> Camera::handled_types() {
+        return {Event::Type::Visual, Event::Type::Movement};
+    }
 
 } // namespace mad::core
 

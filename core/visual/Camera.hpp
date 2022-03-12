@@ -30,6 +30,8 @@ namespace mad::core {
 
         void handle(const Event &event) override;
 
+        std::unordered_set<Event::Type> handled_types() override;
+
         void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) const;
 
     private:
