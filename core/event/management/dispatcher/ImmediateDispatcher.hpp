@@ -17,7 +17,7 @@ namespace mad::core {
         void dispatch(std::shared_ptr<Event> event) override;
 
     private:
-        std::unordered_map<Event::Type, std::vector<EventHandler>> m_
+        std::unordered_map<Event::Type, std::vector<std::shared_ptr<EventHandler>>> m_handlers_for_types;
     };
 
 }
