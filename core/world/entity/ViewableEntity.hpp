@@ -23,7 +23,7 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        void accept(World &world, Intent &intent, EventDispatcher &dispatcher) override;
+        void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
         Vec2d get_image_position();
         void set_image_position(Vec2d new_position);
         void move(Vec2d move_delta);
