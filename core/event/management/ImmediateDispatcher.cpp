@@ -1,5 +1,5 @@
 
-#include "ImmediateDispatcher.h"
+#include "ImmediateDispatcher.hpp"
 #include "common/Error.hpp"
 
 void mad::core::ImmediateDispatcher::registry(std::shared_ptr<EventHandler> handler) {

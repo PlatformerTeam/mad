@@ -2,7 +2,7 @@
 #define MAD_CORE_WORLD_LOCALWORLD_HPP
 
 #include <world/World.hpp>
-#include "event/management/ImmediateDispatcher.h"
+#include "event/management/ImmediateDispatcher.hpp"
 
 
 namespace mad::core {
