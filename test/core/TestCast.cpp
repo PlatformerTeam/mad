@@ -1,5 +1,5 @@
-#include <world/entity/Entity.hpp>
 #include <common/Cast.hpp>
+#include <world/entity/Entity.hpp>
 
 #include <gtest/gtest.h>
 
@@ -10,9 +10,8 @@ TEST(Cast, EntityCast) {
     class MockEntity_1 : public mad::core::Entity {
     public:
         void accept(mad::core::World &world,
-                    mad::core::Intent &intent,
-                    mad::core::EventDispatcher &dispatcher
-        ) override {
+                    const mad::core::Intent &intent,
+                    mad::core::EventDispatcher &dispatcher) override {
         }
 
     public:
@@ -23,9 +22,8 @@ TEST(Cast, EntityCast) {
     class MockEntity_2 : public mad::core::Entity {
     public:
         void accept(mad::core::World &world,
-                    mad::core::Intent &intent,
-                    mad::core::EventDispatcher &dispatcher
-        ) override {
+                    const mad::core::Intent &intent,
+                    mad::core::EventDispatcher &dispatcher) override {
         }
 
     public:
