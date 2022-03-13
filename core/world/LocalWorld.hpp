@@ -2,13 +2,14 @@
 #define MAD_CORE_WORLD_LOCALWORLD_HPP
 
 #include <world/World.hpp>
+#include "event/management/ImmediateDispatcher.h"
 
 
 namespace mad::core {
 
     class LocalWorld : public World {
     public:
-        void manipulate(const Filter &filter, const Intent &intent) override;
+        bool manipulate(const Filter &filter, const Intent &intent) override;
 
     protected:
         void produce_impl(EventDispatcher &dispatcher) override;
@@ -16,6 +17,7 @@ namespace mad::core {
     public:
 
     private:
+        ImmediateDispatcher dispatcher;
     };
 
 }

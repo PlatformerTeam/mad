@@ -13,7 +13,7 @@ namespace mad::core {
 
     class World : public EventProducer {
     public:
-        virtual void manipulate(const Filter &filter, const Intent &intent) = 0;
+        virtual bool manipulate(const Filter &filter, const Intent &intent) = 0;
     };
 
 }
