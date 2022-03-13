@@ -12,7 +12,7 @@ namespace mad::core {
         bool manipulate(const Filter &filter, const Intent &intent) override;
 
     protected:
-        void produce_impl(EventDispatcher &dispatcher) override;
+
 
     public:
 

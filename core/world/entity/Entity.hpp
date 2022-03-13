@@ -22,7 +22,7 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        virtual void accept(World &world, Intent &intent, EventDispatcher &dispatcher) = 0;
+        virtual void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) = 0;
 
         [[nodiscard]] Id get_id() const noexcept;
 
