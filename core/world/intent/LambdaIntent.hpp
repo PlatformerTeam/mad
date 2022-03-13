@@ -12,6 +12,7 @@ namespace mad::core {
     struct LambdaIntent : public Intent {
     public:
         explicit LambdaIntent(std::function<void (const Entity &entity, const EventDispatcher &event_dispatcher)> func);
+        void apply(const Entity &entity, const EventDispatcher &event_dispatcher);
 
     private:
         std::function<void (const Entity &entity, const EventDispatcher &event_dispatcher)> m_func;
