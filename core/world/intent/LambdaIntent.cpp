@@ -11,7 +11,7 @@ namespace mad::core {
               m_func(std::move(func)) {
     }
 
-    void LambdaIntent::apply(const Entity &entity, const EventDispatcher &event_dispatcher) {
+    void LambdaIntent::apply(const Entity &entity, const EventDispatcher &event_dispatcher) const{
         m_func(entity, event_dispatcher);
     }
 

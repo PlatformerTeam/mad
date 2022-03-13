@@ -27,7 +27,7 @@ namespace mad::core {
         Vec2d get_image_position();
         void set_image_position(Vec2d new_position);
         void move(Vec2d move_delta);
-        void appear(EventDispatcher dispatcher);
+        void appear(EventDispatcher &dispatcher);
 
         virtual ~ViewableEntity() = default;
 
