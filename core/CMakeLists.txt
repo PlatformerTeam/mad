@@ -34,7 +34,7 @@ set(
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/Square.cpp visual/image/shape/Square.hpp
-        common/Cast.hpp)
+        common/Cast.hpp event/management/ImmediateDispatcher.h event/management/ImmediateDispatcher.cpp)
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 
