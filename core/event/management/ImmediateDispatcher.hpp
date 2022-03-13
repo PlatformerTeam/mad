@@ -1,5 +1,5 @@
-#ifndef MAD_IMMEDIATEDISPATCHER_H
-#define MAD_IMMEDIATEDISPATCHER_H
+#ifndef MAD_IMMEDIATEDISPATCHER_HPP
+#define MAD_IMMEDIATEDISPATCHER_HPP
 #include "EventDispatcher.hpp"
 namespace mad::core {
 
@@ -12,4 +12,4 @@ namespace mad::core {
     };
 
 }
-#endif//MAD_IMMEDIATEDISPATCHER_H
+#endif//MAD_IMMEDIATEDISPATCHER_HPP
