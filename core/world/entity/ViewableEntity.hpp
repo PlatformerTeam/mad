@@ -5,6 +5,7 @@
 #include "common/FVec2D.hpp"
 #include "common/Error.hpp"
 #include "event/management/EventDispatcher.hpp"
+#include "visual/image/Image.hpp"
 
 namespace mad::core {
     class World;
@@ -32,7 +33,8 @@ namespace mad::core {
 
     private:
         const Id m_id{};
-        Vec2d position;
+        std::shared_ptr<Vec2d> position;
+        std::shared_ptr<Image> image;
     };
 
 }
