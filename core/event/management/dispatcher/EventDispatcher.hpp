@@ -10,7 +10,7 @@ namespace mad::core {
 
     class EventDispatcher {
     public:
-        virtual void registry(std::shared_ptr<EventHandler> handler) = 0;
+        virtual void register_d(std::shared_ptr<EventHandler> handler) = 0;
         virtual void dispatch(std::shared_ptr<Event> event) = 0;
 
         virtual ~EventDispatcher() = default;
