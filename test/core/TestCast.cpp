@@ -10,7 +10,7 @@ TEST(Cast, EntityCast) {
     class MockEntity_1 : public mad::core::Entity {
     public:
         void accept(mad::core::World &world,
-                    mad::core::Intent &intent,
+                    const mad::core::Intent &intent,
                     mad::core::EventDispatcher &dispatcher
         ) override {
         }
@@ -23,7 +23,7 @@ TEST(Cast, EntityCast) {
     class MockEntity_2 : public mad::core::Entity {
     public:
         void accept(mad::core::World &world,
-                    mad::core::Intent &intent,
+                    const mad::core::Intent &intent,
                     mad::core::EventDispatcher &dispatcher
         ) override {
         }
