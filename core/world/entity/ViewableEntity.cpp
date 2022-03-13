@@ -10,7 +10,7 @@
 
 
 
-void mad::core::ViewableEntity::accept(World &world, Intent &intent, EventDispatcher &dispatcher) {
+void mad::core::ViewableEntity::accept(World &world, const Intent &intent, EventDispatcher &dispatcher) {
     LambdaIntent in1 = cast_to<LambdaIntent>(intent);
     in1.apply(*this, dispatcher);
 }
