@@ -11,6 +11,8 @@ namespace mad::core {
 
         explicit Intent(Type new_type);
 
+        ~Intent() = default;
+
         const Type type;
     };
 
