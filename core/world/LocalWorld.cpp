@@ -18,7 +18,3 @@ bool mad::core::LocalWorld::manipulate(const mad::core::Filter &filter, const ma
     }
     return true;
 }
-
-void mad::core::LocalWorld::produce_impl(mad::core::EventDispatcher &dispatcher) {
-    NOT_IMPLEMENTED
-}
