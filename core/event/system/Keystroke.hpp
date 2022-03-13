@@ -6,7 +6,7 @@
 
 namespace mad::core {
 
-    struct Keystroke : Event {
+    struct Keystroke : public Event {
         explicit Keystroke(int new_key_id);
 
         const int key_id;
