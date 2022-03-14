@@ -11,10 +11,12 @@ namespace mad::core {
 
         explicit Intent(Type new_type);
 
+        virtual ~Intent() = default;
+
         const Type type;
     };
 
-}
+}// namespace mad::core
 
 
-#endif //MAD_CORE_WORLD_INTENT_INTENT_HPP
+#endif//MAD_CORE_WORLD_INTENT_INTENT_HPP
