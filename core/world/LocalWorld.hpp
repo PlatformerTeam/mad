@@ -5,6 +5,7 @@
 #include "event/management/dispatcher/ImmediateDispatcher.hpp"
 
 
+
 namespace mad::core {
 
     class LocalWorld : public World {
