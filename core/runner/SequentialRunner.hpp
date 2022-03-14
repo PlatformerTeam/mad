@@ -20,8 +20,7 @@ namespace mad::core {
         explicit SequentialRunner(
                 std::vector<std::shared_ptr<EventProducer>> producers,
                 std::vector<std::shared_ptr<Renderable>> renderables,
-                std::shared_ptr<EventDispatcher> dispatchers,
-                std::shared_ptr<Camera> camera
+                std::shared_ptr<EventDispatcher> dispatchers
         );
 
         void run(sf::RenderWindow &window) override;
@@ -32,7 +31,6 @@ namespace mad::core {
         std::vector<std::shared_ptr<EventProducer>> m_producers;
         std::vector<std::shared_ptr<Renderable>> m_renderables;
         std::shared_ptr<EventDispatcher> m_dispatcher;
-        std::shared_ptr<Camera> m_camera;
     };
 
 }

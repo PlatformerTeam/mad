@@ -21,6 +21,8 @@ namespace mad::core {
     public:
         virtual bool manipulate(const Filter &filter, const Intent &intent) = 0;
 
+        bool manipulate_entity_id(Entity::Id entity_id, const Intent &intent);
+
         virtual Entity::Id create_viewable_entity(int z_ind,
                                                   Vec2d initial_position,
                                                   std::shared_ptr<Image> image) = 0;

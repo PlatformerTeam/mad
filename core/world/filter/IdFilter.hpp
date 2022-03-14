@@ -6,7 +6,7 @@
 namespace mad::core {
 
     struct IdFilter : Filter {
-        explicit IdFilter(Entity::Id filter_id) : Filter(Filter::Type::Id), m_filter_id(filter_id) {
+        explicit IdFilter(Entity::Id filter_id) : Filter(Filter::Type::Id), m_filter_id({filter_id}) {
         }
 
         [[nodiscard]] std::vector<Entity::Id> get_filter_ids() const noexcept {

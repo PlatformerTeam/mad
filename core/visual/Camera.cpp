@@ -36,7 +36,6 @@ namespace mad::core {
         for (const auto &[image, position] : m_scene_list) {
             switch (image->type) {
                 case Image::Type::Shape: {
-                    SPDLOG_INFO("Rendering shape");
                     auto shape_image = pointer_cast_to<Shape>(image);
                     render_shape(window, *shape_image, *position);
                 }

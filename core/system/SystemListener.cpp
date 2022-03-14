@@ -1,7 +1,10 @@
 #include "SystemListener.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/system/Keystroke.hpp>
+
 
 namespace mad::core {
 
@@ -13,24 +16,7 @@ namespace mad::core {
 
         // Listen a keyboard
         if (ev.type == sf::Event::KeyPressed) {
-            if (ev.key.code == sf::Keyboard::A) {
-                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::A)));
-            }
-            if (ev.key.code == sf::Keyboard::D) {
-                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::D)));
-            }
-            if (ev.key.code == sf::Keyboard::W) {
-                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::W)));
-            }
-            if (ev.key.code == sf::Keyboard::S) {
-                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::S)));
-            }
-            if (ev.key.code == sf::Keyboard::LShift) {
-                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::LShift)));
-            }
-            if (ev.key.code == sf::Keyboard::Space) {
-                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::Space)));
-            }
+            dispatcher.dispatch(std::make_shared<Keystroke>(ev.key.code));
         }
 
         // ...

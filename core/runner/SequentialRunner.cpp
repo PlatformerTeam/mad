@@ -6,9 +6,8 @@
 
 
 void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
-    m_dispatcher->registry(m_camera);
-    m_camera->turn_on(*m_dispatcher);
     while (true) {
+        window.clear(sf::Color(0, 0, 0));
         for (const auto &producer : m_producers) {
             producer->produce(*m_dispatcher);
         }
@@ -22,9 +21,7 @@ void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
 mad::core::SequentialRunner::SequentialRunner(
         std::vector<std::shared_ptr<EventProducer>> producers,
         std::vector<std::shared_ptr<Renderable>> renderables,
-        std::shared_ptr<EventDispatcher> dispatchers,
-        std::shared_ptr<Camera> camera
+        std::shared_ptr<EventDispatcher> dispatchers
 ) : m_producers(std::move(producers)),
     m_renderables(std::move(renderables)),
-    m_dispatcher(std::move(dispatchers)),
-    m_camera(std::move(camera)) {}
+    m_dispatcher(std::move(dispatchers)) {}
