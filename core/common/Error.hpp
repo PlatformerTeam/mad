@@ -67,9 +67,12 @@ namespace mad::core {
         }                                                                                                           \
     } while (0)
 
-
 #define NOT_IMPLEMENTED \
     std::cerr << __PRETTY_FUNCTION__ << " in " << __FILE__ << ":" << __LINE__ << " is not implemented yet." << std::endl; \
+    std::exit(1);
+
+#define FAIL(message) \
+    std::cerr << "fail: " << __PRETTY_FUNCTION__ << " in " << __FILE__ << ":" << __LINE__ << " " << (message) << std::endl; \
     std::exit(1);
 
 #endif //MAD_ERROR_H

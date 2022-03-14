@@ -11,8 +11,7 @@ TEST(Cast, EntityCast) {
     public:
         void accept(mad::core::World &world,
                     const mad::core::Intent &intent,
-                    mad::core::EventDispatcher &dispatcher
-        ) override {
+                    mad::core::EventDispatcher &dispatcher) override {
         }
 
     public:
@@ -24,8 +23,7 @@ TEST(Cast, EntityCast) {
     public:
         void accept(mad::core::World &world,
                     const mad::core::Intent &intent,
-                    mad::core::EventDispatcher &dispatcher
-        ) override {
+                    mad::core::EventDispatcher &dispatcher) override {
         }
 
     public:

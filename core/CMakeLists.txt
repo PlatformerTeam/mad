@@ -4,6 +4,7 @@ set(
         common/Error.cpp common/Error.hpp
         common/FVec2D.cpp common/FVec2D.hpp
         common/Color.cpp common/Color.hpp
+        common/Cast.hpp
 
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
@@ -17,6 +18,7 @@ set(
         event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
+        event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
 
         world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
@@ -34,10 +36,12 @@ set(
 
         runner/GameRunner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
+
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/Square.cpp visual/image/shape/Square.hpp
-        common/Cast.hpp world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp)
+
+        world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp)
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 
