@@ -3,12 +3,12 @@
 #include <spdlog/spdlog.h>
 
 
-void mad::core::SequentialRunner::run() {
+void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
     for (const auto &producer : m_producers) {
         producer->produce(*m_dispatcher);
     }
     for (const auto &renderable : m_renderables) {
-        renderable->render();
+        renderable->render(window);
     }
 }
 

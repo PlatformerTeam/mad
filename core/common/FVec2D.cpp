@@ -4,6 +4,14 @@ namespace mad::core {
 
     Vec2d::Vec2d(float x, float y) : m_x(x), m_y(y) { }
 
+    float Vec2d::get_x() const noexcept {
+        return m_x;
+    }
+
+    float Vec2d::get_y() const noexcept {
+        return m_y;
+    }
+
     Vec2d &Vec2d::operator+=(const Vec2d &v) {
         m_x += v.m_x;
         m_y += v.m_y;

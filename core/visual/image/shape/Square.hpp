@@ -5,14 +5,14 @@
 
 namespace mad::core {
 
-    class Square : Shape {
+    class Square : public Shape {
     public:
-        explicit Square(std::uint32_t side, Color color);
+        explicit Square(float side, Color color);
 
-        [[nodiscard]] std::uint32_t get_side_length() const noexcept;
+        [[nodiscard]] float get_side_length() const noexcept;
 
     private:
-        std::uint32_t m_side;
+        float m_side;
     };
 
 }
