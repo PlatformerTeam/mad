@@ -33,6 +33,7 @@ namespace mad::core {
 
     private:
         const Id m_id{};
+        int z_ind;
         std::shared_ptr<Vec2d> position;
         std::shared_ptr<Image> image;
     };
