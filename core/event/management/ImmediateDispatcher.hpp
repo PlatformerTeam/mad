@@ -7,8 +7,6 @@ namespace mad::core {
     public:
         virtual void registry(std::shared_ptr<EventHandler> handler);
         virtual void dispatch(std::shared_ptr<Event> event);
-
-        virtual ~ImmediateDispatcher() = default;
     };
 
 }
