@@ -11,7 +11,9 @@ set(
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
-        event/management/EventDispatcher.hpp
+        event/management/dispatcher/EventDispatcher.hpp
+        event/management/dispatcher/ImmediateDispatcher.hpp
+        event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
 

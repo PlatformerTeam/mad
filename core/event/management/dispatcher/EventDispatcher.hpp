@@ -1,13 +1,10 @@
 #ifndef MAD_CORE_EVENT_MANAGEMENT_DISPATCHER_HPP
 #define MAD_CORE_EVENT_MANAGEMENT_DISPATCHER_HPP
 
+#include <event/Event.hpp>
+#include <event/management/EventHandler.hpp>
+
 #include <memory>
-
-
-namespace mad::core {
-    class EventHandler;
-    struct Event;
-}
 
 namespace mad::core {
 

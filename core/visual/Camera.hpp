@@ -6,7 +6,7 @@
 #include <visual/image/shape/Shape.hpp>
 #include <visual/image/shape/Square.hpp>
 #include <event/management/EventHandler.hpp>
-#include <event/management/EventDispatcher.hpp>
+#include "event/management/dispatcher/EventDispatcher.hpp"
 #include <event/visual/PositionalAppearance.hpp>
 #include <world/filter/TrueFilter.hpp>
 #include <world/World.hpp>
