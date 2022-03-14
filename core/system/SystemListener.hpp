@@ -15,14 +15,12 @@ namespace mad::core {
 
     class SystemListener : public EventProducer {
     public:
-        SystemListener();
-
         explicit SystemListener(std::shared_ptr<sf::RenderWindow> window);
 
         void produce(EventDispatcher &dispatcher) override;
 
     private:
-        std::shared_ptr<sf::RenderWindow> m_window = nullptr;
+        std::shared_ptr<sf::RenderWindow> m_window;
     };
 
 }
