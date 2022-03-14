@@ -15,6 +15,10 @@ namespace mad::core {
             case Filter::Type::True: {
                 return m_list_ids;
             }
+            case Filter::Type::Lambda:
+                break;
+            case Filter::Type::Tag:
+                break;
         }
     }
 

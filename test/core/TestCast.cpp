@@ -1,5 +1,5 @@
-#include <common/Cast.hpp>
 #include <world/entity/Entity.hpp>
+#include <common/Cast.hpp>
 
 #include <gtest/gtest.h>
 
