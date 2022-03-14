@@ -1,6 +1,6 @@
 #include "SystemListener.hpp"
 
-#include <event/management/EventDispatcher.hpp>
+#include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/system/Keystroke.hpp>
 
 namespace mad::core {
