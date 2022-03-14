@@ -17,6 +17,8 @@ namespace mad::core {
     public:
         [[nodiscard]] std::vector<Entity::Id> extract(const Filter &filter) const;
 
+        Entity &get_entity(Entity::Id id);
+
     private:
         std::unordered_map<Entity::Id, std::unique_ptr<Entity>> m_map_entities;
 

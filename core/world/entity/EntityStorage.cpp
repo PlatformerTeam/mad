@@ -1,5 +1,8 @@
 #include "EntityStorage.hpp"
 
+#include <common/Error.hpp>
+
+
 namespace mad::core {
 
     std::vector<Entity::Id> EntityStorage::extract(const Filter &filter) const {
@@ -13,5 +16,11 @@ namespace mad::core {
                 return m_list_ids;
             }
         }
+    }
+
+    Entity &EntityStorage::get_entity(Entity::Id id) {
+        auto entity_it = m_map_entities.find(id);
+        CHECK_THROW(entity_it != m_map_entities.end(), InvalidArgument, "Entity with given id does not exist");
+        return *entity_it->second;
     }
 }

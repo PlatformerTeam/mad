@@ -12,9 +12,7 @@ namespace mad::core {
 
     class EventProducer {
     public:
-        void produce(EventDispatcher &);
-
-        std::chrono::milliseconds step_duration();
+        virtual void produce(EventDispatcher &) = 0;
 
         virtual ~EventProducer() = default;
 

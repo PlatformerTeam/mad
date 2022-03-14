@@ -7,8 +7,6 @@ namespace mad::core {
     public:
         enum class Type {
             Shape,
-            StaticImage,
-            AnimatedImage,
         };
 
         explicit Image(Type new_type) : type(new_type) {

@@ -11,9 +11,7 @@ namespace mad::core {
 
     struct Filter {
         enum class Type {
-            Lambda,
             Id,
-            Tag,
             True
         };
 
