@@ -3,6 +3,7 @@
 
 #include <common/Error.hpp>
 
+#include <memory>
 
 namespace mad::core {
     template <typename To, typename Pointer, typename From = typename Pointer::element_type>

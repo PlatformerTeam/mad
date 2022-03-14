@@ -5,6 +5,7 @@
 #include <common/FVec2D.hpp>
 #include <world/entity/Entity.hpp>
 
+#include <memory>
 
 namespace mad::core {
     class Filter;
