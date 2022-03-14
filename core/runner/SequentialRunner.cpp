@@ -6,6 +6,7 @@
 
 
 void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
+    m_dispatcher->registry(m_camera);
     m_camera->turn_on(*m_dispatcher);
     while (true) {
         for (const auto &producer : m_producers) {

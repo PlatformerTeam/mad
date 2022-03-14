@@ -5,6 +5,13 @@
 
 
 namespace mad::core {
+    template <typename To, typename Pointer, typename From = typename Pointer::element_type>
+    static inline auto pointer_cast_to(Pointer ptr_from) {
+        auto ptr_to = std::dynamic_pointer_cast<To>(ptr_from);
+        ASSERT(ptr_to != nullptr, "Illegal dynamic pointer cast");
+        return ptr_to;
+    }
+
     template<typename To, typename From>
     static inline To &cast_to(From &e) {
         To *upcasted_ptr = dynamic_cast<To *>(&e);
@@ -15,7 +22,7 @@ namespace mad::core {
     template<typename To, typename From>
     static inline const To &const_cast_to(const From &e) {
         const To *upcasted_ptr = dynamic_cast<const To *>(&e);
-        ASSERT(upcasted_ptr != nullptr, "Illegal dynamic cast");
+        ASSERT(upcasted_ptr != nullptr, "Illegal dynamic const cast");
         return *upcasted_ptr;
     }
 
@@ -29,7 +36,7 @@ namespace mad::core {
     template<typename To, typename From>
     static inline const To &try_const_cast_to(const From &e) {
         const To *upcasted_ptr = dynamic_cast<const To *>(&e);
-        CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal dynamic cast");
+        CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal dynamic const cast");
         return *upcasted_ptr;
     }
 }

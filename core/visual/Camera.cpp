@@ -2,6 +2,8 @@
 
 #include <world/entity/ViewableEntity.hpp>
 
+#include <spdlog/spdlog.h>
+
 
 namespace mad::core {
 
@@ -33,17 +35,17 @@ namespace mad::core {
     void Camera::render(sf::RenderWindow &window) {
         for (const auto &[image, position] : m_scene_list) {
             switch (image->type) {
-
                 case Image::Type::Shape: {
-                    Shape shape_image = const_cast_to<Shape>(*image);
-                    render_shape(window, shape_image, *position);
+                    SPDLOG_INFO("Rendering shape");
+                    auto shape_image = pointer_cast_to<Shape>(image);
+                    render_shape(window, *shape_image, *position);
                 }
             }
         }
-
     }
 
     void Camera::handle(const Event &event) {
+        SPDLOG_INFO("Got positional appearance");
         const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
         m_scene_list.emplace_back(positional_appearance.get_image(), positional_appearance.get_position());
     }

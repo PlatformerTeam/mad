@@ -1,8 +1,11 @@
 #include "ViewableEntity.hpp"
-#include "common/Cast.hpp"
-#include "event/visual/VisualEvent.hpp"
-#include "world/intent/LambdaIntent.hpp"
+
+#include <common/Cast.hpp>
+#include <event/visual/VisualEvent.hpp>
+#include <world/intent/LambdaIntent.hpp>
 #include <event/visual/PositionalAppearance.hpp>
+
+#include <spdlog/spdlog.h>
 
 
 void mad::core::ViewableEntity::accept(World &world, const Intent &intent, EventDispatcher &dispatcher) {
@@ -22,7 +25,8 @@ void mad::core::ViewableEntity::move(mad::core::Vec2d move_delta) {
 }
 
 void mad::core::ViewableEntity::appear(mad::core::EventDispatcher &dispatcher) const {
-    dispatcher.dispatch(std::make_shared<Event>(PositionalAppearance(m_position, m_image, m_id)));
+    SPDLOG_INFO("create positional appearance");
+    dispatcher.dispatch(std::make_shared<PositionalAppearance>(m_position, m_image, m_id));
 }
 
 mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,

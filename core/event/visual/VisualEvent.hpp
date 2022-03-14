@@ -7,13 +7,13 @@
 namespace mad::core {
 
     struct VisualEvent : public Event {
-        enum class Type {
+        enum class Kind {
             PositionalAppearance
         };
 
-        explicit VisualEvent(Type new_type);
+        explicit VisualEvent(Kind new_type);
 
-        const Type type;
+        const Kind kind;
     };
 
 }
