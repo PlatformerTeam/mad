@@ -20,7 +20,7 @@ namespace dummy {
 
     class Dispatcher : public EventDispatcher {
     public:
-        void register_d(std::shared_ptr<EventHandler> handler) override {
+        void registry(std::shared_ptr<EventHandler> handler) override {
             NOT_IMPLEMENTED
         }
 
