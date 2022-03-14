@@ -2,7 +2,7 @@
 #define MAD_SYSTEMLISTENER_H
 
 #include <event/management/EventProducer.hpp>
-#include <event/management/EventDispatcher.hpp>
+#include <event/management/dispatcher/EventDispatcher.hpp>
 
 // SFML
 #include <SFML/System.hpp>
