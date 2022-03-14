@@ -12,16 +12,21 @@ set(
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
         event/system/Keystroke.hpp event/system/Keystroke.cpp
-        event/management/EventDispatcher.hpp
+        event/management/dispatcher/EventDispatcher.hpp
+        event/management/dispatcher/ImmediateDispatcher.hpp
+        event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/EventHandler.hpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
 
         world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
+        world/filter/TrueFilter.hpp
+        world/filter/IdFilter.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
+        world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
 
         system/SystemListener.cpp system/SystemListener.hpp
 
@@ -46,9 +51,17 @@ target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_BOX2D})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_BOX2D})
 
+# Core library uses SFML for interface
+target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SFML})
+target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
+
 # Core library uses imgui for interface
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI})
+
+# Core library uses imgui-SFML for interface
+target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI_SFML})
+target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI_SFML})
 
 # Core library uses spdlog for logging
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SPDLOG})

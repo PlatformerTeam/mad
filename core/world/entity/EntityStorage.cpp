@@ -1,7 +1,17 @@
 #include "EntityStorage.hpp"
 
-#include <common/Error.hpp>
+namespace mad::core {
 
-std::vector<mad::core::Entity::Id> mad::core::EntityStorage::extract(const mad::core::Filter &) {
-    NOT_IMPLEMENTED
+    std::vector<Entity::Id> EntityStorage::extract(const Filter &filter) const {
+        switch (filter.type) {
+            case Filter::Type::Id: {
+                IdFilter id_filter = const_cast_to<IdFilter>(filter);
+                return id_filter.get_filter_ids();
+            }
+
+            case Filter::Type::True: {
+                return m_list_ids;
+            }
+        }
+    }
 }

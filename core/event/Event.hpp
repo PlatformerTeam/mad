@@ -15,6 +15,8 @@ namespace mad::core {
         explicit Event(Type new_type);
 
         const Type type;
+
+        virtual ~Event() = default;
     };
 
 }

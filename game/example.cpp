@@ -1,5 +1,5 @@
 #include <event/management/EventProducer.hpp>
-#include <event/management/EventDispatcher.hpp>
+#include "event/management/dispatcher/EventDispatcher.hpp"
 #include <event/Event.hpp>
 #include <runner/SequentialRunner.hpp>
 #include <common/Error.hpp>

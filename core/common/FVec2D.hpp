@@ -7,6 +7,10 @@ namespace mad::core {
     public:
         Vec2d(float x, float y);
 
+        [[nodiscard]] float get_x() const noexcept;
+
+        [[nodiscard]] float get_y() const noexcept;
+
         Vec2d &operator+=(const Vec2d &v);
 
         Vec2d &operator-=(const Vec2d &v);

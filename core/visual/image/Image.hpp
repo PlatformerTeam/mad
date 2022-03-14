@@ -14,6 +14,8 @@ namespace mad::core {
         explicit Image(Type new_type) : type(new_type) {
         }
 
+        virtual ~Image() = default;
+
         const Type type;
     };
 }
