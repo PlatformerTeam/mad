@@ -11,6 +11,7 @@ set(
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
+        event/system/Keystroke.hpp event/system/Keystroke.cpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
@@ -27,7 +28,7 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
 
-        system/KeyboardListener.cpp system/KeyboardListener.hpp
+        system/SystemListener.cpp system/SystemListener.hpp
 
         world/entity/Entity.hpp world/entity/Entity.cpp
 
@@ -42,6 +43,9 @@ add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 
 # Core headers
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_CORE})
+
+# Core librayr uses sfml
+target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
 
 # Core library uses box2d for physics
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_BOX2D})

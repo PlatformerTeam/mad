@@ -10,8 +10,8 @@ namespace dummy {
     using namespace mad::core;
 
     class Producer : public EventProducer {
-    protected:
-        void produce_impl(EventDispatcher &dispatcher) override {
+    public:
+        void produce(EventDispatcher &dispatcher) override {
             dispatcher.dispatch(std::shared_ptr<Event>(
                     new Event{Event::Type::Movement}
             ));
