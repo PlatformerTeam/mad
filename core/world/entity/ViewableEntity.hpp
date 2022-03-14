@@ -4,8 +4,9 @@
 #include "Entity.hpp"
 #include "common/FVec2D.hpp"
 #include "common/Error.hpp"
-#include "event/management/EventDispatcher.hpp"
 #include "visual/image/Image.hpp"
+#include "memory"
+#include "event/management/dispatcher/EventDispatcher.hpp"
 
 namespace mad::core {
     class World;
