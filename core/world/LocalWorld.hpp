@@ -4,13 +4,10 @@
 #include <world/World.hpp>
 #include <world/entity/EntityStorage.hpp>
 #include <event/management/dispatcher/ImmediateDispatcher.hpp>
+#include <event/management/dispatcher/DelayedDispatcher.hpp>
 
 #include <queue>
 
-
-namespace mad::core {
-    class DelayedDispatcher;
-}
 
 namespace mad::core {
 
@@ -21,6 +18,8 @@ namespace mad::core {
         bool manipulate(const Filter &filter, const Intent &intent) override;
 
         void produce(EventDispatcher &dispatcher) override;
+
+        Entity::Id create_viewable_entity(int z_ind, Vec2d initial_position, std::shared_ptr<Image> image) override;
 
     private:
         std::shared_ptr<std::queue<std::shared_ptr<Event>>> m_step_events_queue;

@@ -1,6 +1,10 @@
 #include "EntityStorage.hpp"
+#include "ViewableEntity.hpp"
 
 #include <common/Error.hpp>
+#include <common/FVec2D.hpp>
+#include <visual/image/Image.hpp>
+#include <memory>
 
 
 namespace mad::core {
@@ -23,4 +27,12 @@ namespace mad::core {
         CHECK_THROW(entity_it != m_map_entities.end(), InvalidArgument, "Entity with given id does not exist");
         return *entity_it->second;
     }
+
+    Entity::Id EntityStorage::create_viewable_entity(int z_ind, Vec2d initial_position, std::shared_ptr<Image> image) {
+        auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
+        m_list_ids.push_back(new_entity_id);
+        m_map_entities[new_entity_id] = std::make_unique<ViewableEntity>(new_entity_id, z_ind, initial_position, image);
+        return new_entity_id;
+    }
+
 }

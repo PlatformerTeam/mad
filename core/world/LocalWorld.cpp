@@ -30,3 +30,8 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
         m_step_events_queue->pop();
     }
 }
+
+mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(int z_ind, mad::core::Vec2d initial_position,
+                                                                    std::shared_ptr<Image> image) {
+    return m_storage.create_viewable_entity(z_ind, initial_position, image);
+}

@@ -8,7 +8,7 @@ namespace mad::core {
     SystemListener::SystemListener(std::shared_ptr<sf::RenderWindow> window) : m_window(std::move(window)) {}
 
     void SystemListener::produce(EventDispatcher &dispatcher) {
-        sf::Event ev;
+        sf::Event ev{};
         m_window->pollEvent(ev);
 
         // Listen a keyboard
