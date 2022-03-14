@@ -29,8 +29,6 @@ namespace mad::core {
         void move(Vec2d move_delta);
         void appear(EventDispatcher &dispatcher);
 
-        virtual ~ViewableEntity() = default;
-
     private:
         const Id m_id{};
         std::shared_ptr<Vec2d> position;

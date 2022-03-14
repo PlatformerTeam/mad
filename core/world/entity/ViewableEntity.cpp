@@ -1,7 +1,3 @@
-//
-// Created by mirong on 13.03.2022.
-//
-
 #include "ViewableEntity.hpp"
 #include "common/Cast.hpp"
 #include "event/visual/VisualEvent.hpp"
