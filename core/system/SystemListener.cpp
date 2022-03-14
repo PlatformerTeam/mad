@@ -5,29 +5,32 @@
 
 namespace mad::core {
 
-    SystemListener::SystemListener() = default;
-
     SystemListener::SystemListener(std::shared_ptr<sf::RenderWindow> window) : m_window(std::move(window)) {}
 
     void SystemListener::produce(EventDispatcher &dispatcher) {
+        sf::Event ev;
+        m_window->pollEvent(ev);
+
         // Listen a keyboard
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::A)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::D)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::W)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::S)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift)) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::LShift)));
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::Space)));
+        if (ev.type == sf::Event::KeyPressed) {
+            if (ev.key.code == sf::Keyboard::A) {
+                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::A)));
+            }
+            if (ev.key.code == sf::Keyboard::D) {
+                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::D)));
+            }
+            if (ev.key.code == sf::Keyboard::W) {
+                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::W)));
+            }
+            if (ev.key.code == sf::Keyboard::S) {
+                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::S)));
+            }
+            if (ev.key.code == sf::Keyboard::LShift) {
+                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::LShift)));
+            }
+            if (ev.key.code == sf::Keyboard::Space) {
+                dispatcher.dispatch(std::make_shared<Keystroke>(Keystroke(sf::Keyboard::Key::Space)));
+            }
         }
 
         // ...
