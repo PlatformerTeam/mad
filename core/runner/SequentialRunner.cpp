@@ -1,14 +1,20 @@
 #include "SequentialRunner.hpp"
 
+#include <visual/Camera.hpp>
+
 #include <spdlog/spdlog.h>
 
 
 void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
-    for (const auto &producer : m_producers) {
-        producer->produce(*m_dispatcher);
-    }
-    for (const auto &renderable : m_renderables) {
-        renderable->render(window);
+    while (true) {
+        window.clear(sf::Color(0, 0, 0));
+        for (const auto &producer : m_producers) {
+            producer->produce(*m_dispatcher);
+        }
+        for (const auto &renderable : m_renderables) {
+            renderable->render(window);
+        }
+        window.display();
     }
 }
 

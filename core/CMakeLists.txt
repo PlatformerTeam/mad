@@ -6,9 +6,6 @@ set(
         common/Color.cpp common/Color.hpp
         common/Cast.hpp
 
-        visual/Renderable.hpp
-        visual/Camera.cpp visual/Camera.hpp
-
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
@@ -20,19 +17,19 @@ set(
         event/management/EventProducer.cpp event/management/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
 
-        world/World.hpp
+        world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
         world/filter/TrueFilter.hpp
         world/filter/IdFilter.hpp
-        world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
+        world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp
+        world/entity/Entity.hpp world/entity/Entity.cpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
+        world/intent/Intent.cpp world/intent/Intent.hpp
 
         system/SystemListener.cpp system/SystemListener.hpp
-
-        world/entity/Entity.hpp world/entity/Entity.cpp
 
         runner/GameRunner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
@@ -40,8 +37,9 @@ set(
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/Square.cpp visual/image/shape/Square.hpp
-
-        world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp)
+        visual/Renderable.hpp
+        visual/Camera.cpp visual/Camera.hpp
+)
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 

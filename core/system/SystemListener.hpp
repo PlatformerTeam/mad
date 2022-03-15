@@ -4,7 +4,6 @@
 #include <event/management/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 
-// SFML
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

@@ -24,7 +24,9 @@ namespace mad::core {
 
     class Camera : public Renderable, public EventHandler {
     public:
-        void turn_on(const EventDispatcher &event_dispatcher);
+        explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
+
+        void turn_on(EventDispatcher &event_dispatcher);
 
         void render(sf::RenderWindow &window) override;
 
@@ -32,7 +34,7 @@ namespace mad::core {
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) const;
+        static void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) ;
 
     private:
         std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list;

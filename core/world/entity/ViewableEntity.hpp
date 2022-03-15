@@ -5,9 +5,10 @@
 #include "common/FVec2D.hpp"
 #include "common/Error.hpp"
 #include "visual/image/Image.hpp"
-#include "memory"
 #include "event/management/dispatcher/EventDispatcher.hpp"
 
+
+#include <memory>
 
 namespace mad::core {
     class World;
@@ -20,22 +21,28 @@ namespace mad::core {
 
 namespace mad::core {
 
-    class ViewableEntity : Entity{
+    class ViewableEntity : public Entity {
     public:
         using Id = std::int32_t;
 
     public:
+        explicit ViewableEntity(Id id, int z_ind, Vec2d initial_position, std::shared_ptr<Image> image);
+
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
+
         Vec2d get_image_position();
+
         void set_image_position(Vec2d new_position);
+
         void move(Vec2d move_delta);
-        void appear(EventDispatcher &dispatcher);
+
+        void appear(EventDispatcher &dispatcher) const;
 
     private:
-        const Id m_id{};
-        int z_ind;
-        std::shared_ptr<Vec2d> position;
-        std::shared_ptr<Image> image;
+        const Id m_id;
+        int m_z_ind;
+        std::shared_ptr<Vec2d> m_position;
+        std::shared_ptr<Image> m_image;
     };
 
 }

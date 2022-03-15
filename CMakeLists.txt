@@ -3,6 +3,8 @@ project(mad)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 #SFML
 find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
 set(

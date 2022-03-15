@@ -1,8 +1,13 @@
 #include "Camera.hpp"
 
+#include <world/entity/ViewableEntity.hpp>
+
+#include <spdlog/spdlog.h>
+
+
 namespace mad::core {
 
-    void Camera::render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) const {
+    void Camera::render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) {
         switch (shape.get_geometry()) {
             case Shape::Geometry::Square: {
                 Square square = const_cast_to<Square>(shape);
@@ -20,9 +25,9 @@ namespace mad::core {
         }
     }
 
-    void Camera::turn_on(const EventDispatcher &event_dispatcher) {
-        auto start_appearance = [](const Entity &entity, const EventDispatcher &event_dispatcher) {
-            entity.appear(event_dispatcher);
+    void Camera::turn_on(EventDispatcher &event_dispatcher) {
+        auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
+            const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
         };
         m_world->manipulate(TrueFilter(), LambdaIntent(start_appearance));
     }
@@ -30,17 +35,16 @@ namespace mad::core {
     void Camera::render(sf::RenderWindow &window) {
         for (const auto &[image, position] : m_scene_list) {
             switch (image->type) {
-
                 case Image::Type::Shape: {
-                    Shape shape_image = const_cast_to<Shape>(*image);
-                    render_shape(window, shape_image, *position);
+                    auto shape_image = pointer_cast_to<Shape>(image);
+                    render_shape(window, *shape_image, *position);
                 }
             }
         }
-
     }
 
     void Camera::handle(const Event &event) {
+        SPDLOG_INFO("Got positional appearance");
         const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
         m_scene_list.emplace_back(positional_appearance.get_image(), positional_appearance.get_position());
     }
@@ -48,6 +52,10 @@ namespace mad::core {
     std::unordered_set<Event::Type> Camera::handled_types() {
         return {Event::Type::Visual, Event::Type::Movement};
     }
+
+    Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
+            : m_position(initial_position),
+              m_world(std::move(world)) {}
 
 } // namespace mad::core
 

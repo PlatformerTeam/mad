@@ -26,8 +26,6 @@ namespace mad::core {
 
         [[nodiscard]] Id get_id() const noexcept;
 
-        void appear(const EventDispatcher &) const;
-
         virtual ~Entity() = default;
 
     private:

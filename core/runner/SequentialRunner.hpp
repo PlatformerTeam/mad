@@ -10,6 +10,10 @@
 
 
 namespace mad::core {
+    class Camera;
+}
+
+namespace mad::core {
 
     class SequentialRunner : public GameRunner {
     public:

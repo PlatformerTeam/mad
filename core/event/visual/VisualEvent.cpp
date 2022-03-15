@@ -3,7 +3,7 @@
 
 namespace mad::core {
 
-    VisualEvent::VisualEvent(VisualEvent::Type new_type) : Event(Event::Type::Visual), type(new_type) {
+    VisualEvent::VisualEvent(VisualEvent::Kind new_kind) : Event(Event::Type::Visual), kind(new_kind) {
     }
 
 }
