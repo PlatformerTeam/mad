@@ -3,7 +3,7 @@
 #include <spdlog/spdlog.h>
 
 #include <event/management/dispatcher/EventDispatcher.hpp>
-#include <event/system/Keystroke.hpp>
+#include <event/system/KeyPressed.hpp>
 
 
 namespace mad::core {
@@ -16,7 +16,7 @@ namespace mad::core {
 
         // Listen a keyboard
         if (ev.type == sf::Event::KeyPressed) {
-            dispatcher.dispatch(std::make_shared<Keystroke>(ev.key.code));
+            dispatcher.dispatch(std::make_shared<KeyPressed>(ev.key.code));
         }
 
         // ...

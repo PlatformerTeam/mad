@@ -1,6 +1,6 @@
 #include <event/management/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
-#include <event/system/Keystroke.hpp>
+#include <event/system/KeyPressed.hpp>
 #include <runner/SequentialRunner.hpp>
 #include <system/SystemListener.hpp>
 #include <world/LocalWorld.hpp>
@@ -29,12 +29,12 @@ public:
                     });
         };
 
-        if (event.type == mad::core::Event::Type::Keystroke) {
-            const auto &keystroke = mad::core::const_cast_to<mad::core::Keystroke>(event);
+        if (event.type == mad::core::Event::Type::KeyPressed) {
+            const auto &keystroke = mad::core::const_cast_to<mad::core::KeyPressed>(event);
             if (keystroke.key_id == sf::Keyboard::Key::Up) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 1.0f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Down) {
                 m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, -1.0f}));
+            } else if (keystroke.key_id == sf::Keyboard::Key::Down) {
+                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 1.0f}));
             } else if (keystroke.key_id == sf::Keyboard::Key::Left) {
                 m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{-1.0f, 0.0f}));
             } else if (keystroke.key_id == sf::Keyboard::Key::Right) {
@@ -44,7 +44,7 @@ public:
     }
 
     std::unordered_set<mad::core::Event::Type> handled_types() override {
-        return {mad::core::Event::Type::Keystroke};
+        return {mad::core::Event::Type::KeyPressed};
     }
 
 private:
