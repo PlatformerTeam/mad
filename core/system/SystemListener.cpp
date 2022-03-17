@@ -18,17 +18,17 @@ namespace mad::core {
 
         // Listen a keyboard
         if (ev.type == sf::Event::KeyPressed) {
-            if (m_key_is_free.find(ev.key.code) == m_key_is_free.end()) {
+            if (m_key_held.find(ev.key.code) == m_key_held.end()) {
                 dispatcher.dispatch(std::make_shared<KeyPressed>(ev.key.code));
             }
-            m_key_is_free.insert(ev.key.code);
+            m_key_held.insert(ev.key.code);
         } else if (ev.type == sf::Event::KeyReleased) {
             dispatcher.dispatch(std::make_shared<KeyReleased>(ev.key.code));
-            m_key_is_free.erase(ev.key.code);
+            m_key_held.erase(ev.key.code);
         }
 
         // Check held keys
-        for (const auto &key : m_key_is_free) {
+        for (const auto &key : m_key_held) {
             if (sf::Keyboard::isKeyPressed(key)) {
                 dispatcher.dispatch(std::make_shared<KeyHeld>(key));
             }

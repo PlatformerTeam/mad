@@ -22,7 +22,7 @@ namespace mad::core {
 
     private:
         std::shared_ptr<sf::RenderWindow> m_window;
-        std::set<sf::Keyboard::Key> m_key_is_free;
+        std::set<sf::Keyboard::Key> m_key_held;
     };
 
 }
