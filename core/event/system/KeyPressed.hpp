@@ -1,5 +1,5 @@
-#ifndef MAD_KEYPRESSED_H
-#define MAD_KEYPRESSED_H
+#ifndef MAD_KEYPRESSED_HPP
+#define MAD_KEYPRESSED_HPP
 
 #include <event/Event.hpp>
 
@@ -15,4 +15,4 @@ namespace mad::core {
 }
 
 
-#endif //MAD_KEYPRESSED_H
+#endif //MAD_KEYPRESSED_HPP

@@ -1,5 +1,5 @@
-#ifndef MAD_KEYRELEASED_H
-#define MAD_KEYRELEASED_H
+#ifndef MAD_KEYRELEASED_HPP
+#define MAD_KEYRELEASED_HPP
 
 #include <event/Event.hpp>
 
@@ -15,4 +15,4 @@ namespace mad::core {
 }
 
 
-#endif //MAD_KEYRELEASED_H
+#endif //MAD_KEYRELEASED_HPP

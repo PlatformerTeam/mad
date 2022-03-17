@@ -1,5 +1,5 @@
-#ifndef MAD_KEYHELD_H
-#define MAD_KEYHELD_H
+#ifndef MAD_KEYHELD_HPP
+#define MAD_KEYHELD_HPP
 
 #include <event/Event.hpp>
 
@@ -15,4 +15,4 @@ namespace mad::core {
 }
 
 
-#endif //MAD_KEYHELD_H
+#endif //MAD_KEYHELD_HPP
