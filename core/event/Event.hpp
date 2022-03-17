@@ -9,7 +9,9 @@ namespace mad::core {
             Visual,
             Collision,
             Movement,
-            Keystroke,
+            KeyPressed,
+            KeyReleased,
+            KeyHeld,
         };
 
         explicit Event(Type new_type);

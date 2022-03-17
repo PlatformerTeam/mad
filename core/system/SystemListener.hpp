@@ -1,5 +1,5 @@
-#ifndef MAD_SYSTEMLISTENER_H
-#define MAD_SYSTEMLISTENER_H
+#ifndef MAD_SYSTEMLISTENER_HPP
+#define MAD_SYSTEMLISTENER_HPP
 
 #include <event/management/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
@@ -9,6 +9,8 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Network.hpp>
+
+#include <set>
 
 namespace mad::core {
 
@@ -20,9 +22,10 @@ namespace mad::core {
 
     private:
         std::shared_ptr<sf::RenderWindow> m_window;
+        std::set<sf::Keyboard::Key> m_key_held;
     };
 
 }
 
 
-#endif //MAD_SYSTEMLISTENER_H
+#endif //MAD_SYSTEMLISTENER_HPP
