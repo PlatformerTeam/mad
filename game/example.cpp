@@ -68,6 +68,12 @@ int main(int argc, char *argv[]) {
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
     );
 
+    mad::core::Entity::Id static_id = world->create_viewable_entity(
+            0,
+            mad::core::Vec2d{0.0f, 0.0f},
+            std::make_shared<mad::core::StaticImage>("../../game/resources/18plus.png")
+    );
+
     auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
     camera->turn_on(*dispatcher);

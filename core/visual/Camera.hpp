@@ -5,6 +5,7 @@
 #include <visual/image/Image.hpp>
 #include <visual/image/shape/Shape.hpp>
 #include <visual/image/shape/Square.hpp>
+#include <visual/image/static/StaticImage.hpp>
 #include <event/management/EventHandler.hpp>
 #include "event/management/dispatcher/EventDispatcher.hpp"
 #include <event/visual/PositionalAppearance.hpp>
@@ -19,6 +20,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <vector>
+#include <optional>
 
 namespace mad::core {
 
@@ -34,7 +36,10 @@ namespace mad::core {
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        static void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) ;
+        static void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position);
+
+        static void render_static(sf::RenderWindow &window, const StaticImage &static_image,
+                                  Vec2d position, std::optional<sf::IntRect> optional_rect);
 
     private:
         std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list;
