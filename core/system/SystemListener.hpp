@@ -10,8 +10,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Network.hpp>
 
-#include <map>
-#include <vector>
+#include <set>
 
 namespace mad::core {
 
@@ -23,13 +22,7 @@ namespace mad::core {
 
     private:
         std::shared_ptr<sf::RenderWindow> m_window;
-        std::map<sf::Keyboard::Key, bool> m_key_is_free;
-        std::vector<sf::Keyboard::Key> m_candidate_held_keys {
-            sf::Keyboard::Key::Up,
-            sf::Keyboard::Key::Down,
-            sf::Keyboard::Key::Left,
-            sf::Keyboard::Key::Right,
-        };
+        std::set<sf::Keyboard::Key> m_key_is_free;
     };
 
 }

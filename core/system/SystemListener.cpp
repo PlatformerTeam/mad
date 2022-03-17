@@ -10,11 +10,7 @@
 
 namespace mad::core {
 
-    SystemListener::SystemListener(std::shared_ptr<sf::RenderWindow> window) : m_window(std::move(window)) {
-        for (const auto &key : m_candidate_held_keys) {
-            m_key_is_free[key] = true;
-        }
-    }
+    SystemListener::SystemListener(std::shared_ptr<sf::RenderWindow> window) : m_window(std::move(window)) {}
 
     void SystemListener::produce(EventDispatcher &dispatcher) {
         sf::Event ev{};
@@ -22,17 +18,17 @@ namespace mad::core {
 
         // Listen a keyboard
         if (ev.type == sf::Event::KeyPressed) {
-            if (m_key_is_free[ev.key.code]) {
+            if (m_key_is_free.find(ev.key.code) == m_key_is_free.end()) {
                 dispatcher.dispatch(std::make_shared<KeyPressed>(ev.key.code));
             }
-            m_key_is_free[ev.key.code] = false;
+            m_key_is_free.insert(ev.key.code);
         } else if (ev.type == sf::Event::KeyReleased) {
             dispatcher.dispatch(std::make_shared<KeyReleased>(ev.key.code));
-            m_key_is_free[ev.key.code] = true;
+            m_key_is_free.erase(ev.key.code);
         }
 
         // Check held keys
-        for (const auto &key : m_candidate_held_keys) {
+        for (const auto &key : m_key_is_free) {
             if (sf::Keyboard::isKeyPressed(key)) {
                 dispatcher.dispatch(std::make_shared<KeyHeld>(key));
             }
