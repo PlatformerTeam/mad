@@ -12,6 +12,11 @@ namespace mad::core {
 
     class StaticImage : public Image {
     public:
+        enum class TransformType {
+            Fit,
+            Tile
+        };
+
         explicit StaticImage(std::filesystem::path path, Vec2d scale = {1.0, 1.0},
                              std::optional<sf::IntRect> rect = std::nullopt);
 
@@ -26,6 +31,8 @@ namespace mad::core {
         void set_scale(const Vec2d &scale);
 
         void set_rect(sf::IntRect rect);
+
+        void set_shape(std::uint32_t width, std::uint32_t height, TransformType transform_type);
 
     private:
         std::filesystem::path m_path;

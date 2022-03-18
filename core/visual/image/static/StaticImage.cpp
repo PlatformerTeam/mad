@@ -35,4 +35,23 @@ namespace mad::core {
         m_rect = rect;
     }
 
+    void StaticImage::set_shape(std::uint32_t width, std::uint32_t height, StaticImage::TransformType transform_type) {
+        switch (transform_type) {
+
+            case TransformType::Fit: {
+                auto[texture_width, texture_height] = m_texture.getSize();
+                m_scale = {static_cast<float>(width) / static_cast<float>(texture_width),
+                           static_cast<float>(height) / static_cast<float>(texture_height)};
+                break;
+            }
+
+            case TransformType::Tile: {
+                m_texture.setRepeated(true);
+                m_rect = {0, 0, static_cast<int>(width),
+                          static_cast<int>(height)};
+                break;
+            }
+        }
+    }
+
 }
