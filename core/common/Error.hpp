@@ -22,6 +22,7 @@ namespace mad::core {
         InvalidArgument,
         NotImplemented,
         IllegalEntityUpcast,
+        FileDoesNotExist
     };
 
     struct Error : std::exception {
