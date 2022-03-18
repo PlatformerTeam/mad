@@ -1,4 +1,5 @@
 #include "StaticImage.hpp"
+
 #include <common/Error.hpp>
 
 #include <utility>
