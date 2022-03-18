@@ -12,7 +12,7 @@
 mad::core::LocalWorld::LocalWorld()
     : m_step_events_queue(std::make_shared<std::queue<std::shared_ptr<Event>>>()),
       m_event_queue_dispatcher(std::make_unique<DelayedDispatcher>(m_step_events_queue)),
-      physicalWorld(b2World(b2Vec2(0.0f, 9.8f))) {
+      physicalWorld(b2World(b2Vec2(0.0f, 30.0f))) {
 }
 
 
@@ -33,7 +33,7 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     dt = time.asSeconds() - lastTime;
     double fps = 1 / (time.asSeconds() - lastTime);
     lastTime = time.asSeconds();
-    physicalWorld.Step(dt * render_scale, 2, 6);
+    physicalWorld.Step(dt * render_scale, 3, 10);
     for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
 
         if (cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {

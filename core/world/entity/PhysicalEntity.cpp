@@ -51,7 +51,15 @@ void mad::core::PhysicalEntity::accept(mad::core::World &world, const mad::core:
     cast_to<const LambdaIntent>(intent).apply(*this, dispatcher);
 }
 void mad::core::PhysicalEntity::apply_impulse(mad::core::Vec2d impulse, mad::core::EventDispatcher &dispatcher) {
-    NOT_IMPLEMENTED
+    //body->ApplyForceToCenter(b2Vec2(impulse.get_x(), -impulse.get_y()), true);
+    //body->ApplyLinearImpulseToCenter(b2Vec2(impulse.get_x(), impulse.get_y()), true);
+    //body->SetLinearVelocity(b2Vec2(impulse.get_x(), impulse.get_y()));
+    body->ApplyLinearImpulseToCenter(b2Vec2(impulse.get_x(), -impulse.get_y()), true);
+    //body->ApplyAngularImpulse(10, true);
+    //body.
+}
+void mad::core::PhysicalEntity::apply_force(mad::core::Vec2d force, mad::core::EventDispatcher &dispatcher) {
+    body->ApplyForceToCenter(b2Vec2(force.get_x(), -force.get_y()), true);
 }
 void mad::core::PhysicalEntity::rotate(float angle, mad::core::EventDispatcher &dispatcher) {
     NOT_IMPLEMENTED

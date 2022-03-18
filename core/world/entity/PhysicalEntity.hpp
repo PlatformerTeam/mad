@@ -38,6 +38,7 @@ namespace mad::core {
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
         void apply_impulse(Vec2d impulse, EventDispatcher &dispatcher);
+        void apply_force(Vec2d impulse, EventDispatcher &dispatcher);
 
         void rotate(float angle, EventDispatcher &dispatcher);
 
