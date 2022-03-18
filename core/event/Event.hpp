@@ -12,6 +12,7 @@ namespace mad::core {
             KeyPressed,
             KeyReleased,
             KeyHeld,
+            WindowClosed,
         };
 
         explicit Event(Type new_type);

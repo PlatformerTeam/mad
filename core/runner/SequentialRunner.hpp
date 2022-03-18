@@ -23,14 +23,15 @@ namespace mad::core {
                 std::shared_ptr<EventDispatcher> dispatchers
         );
 
-        void run(sf::RenderWindow &window) override;
+        [[noreturn]] void run(sf::RenderWindow &window) override;
 
-    public:
+        void stop() override;
 
     private:
         std::vector<std::shared_ptr<EventProducer>> m_producers;
         std::vector<std::shared_ptr<Renderable>> m_renderables;
         std::shared_ptr<EventDispatcher> m_dispatcher;
+        bool m_running;
     };
 
 }

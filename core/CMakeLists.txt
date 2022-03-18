@@ -11,6 +11,7 @@ set(
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
         event/system/KeyPressed.hpp event/system/KeyPressed.cpp
         event/system/KeyReleased.hpp event/system/KeyReleased.cpp
+        event/system/WindowClosing.hpp event/system/WindowClosing.cpp
         event/system/KeyHeld.hpp event/system/KeyHeld.cpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
