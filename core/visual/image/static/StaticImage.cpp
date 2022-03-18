@@ -5,7 +5,9 @@
 
 namespace mad::core {
 
-    StaticImage::StaticImage(std::filesystem::path path) : Image(Type::Static), m_path(std::move(path)) {
+    StaticImage::StaticImage(std::filesystem::path path, Vec2d scale, std::optional<sf::IntRect> rect) :
+                        Image(Type::Static), m_path(std::move(path)),
+                        m_scale(scale), m_rect(rect) {
         CHECK_THROW(m_texture.loadFromFile(m_path), FileDoesNotExist, "File with StaticImage doesn't exist");
     }
 
@@ -15,6 +17,22 @@ namespace mad::core {
 
     sf::Texture StaticImage::get_texture() const noexcept {
         return m_texture;
+    }
+
+    Vec2d StaticImage::get_scale() const noexcept {
+        return m_scale;
+    }
+
+    std::optional<sf::IntRect> StaticImage::get_rect() const noexcept {
+        return m_rect;
+    }
+
+    void StaticImage::set_scale(const Vec2d &scale) {
+        m_scale = scale;
+    }
+
+    void StaticImage::set_rect(sf::IntRect rect) {
+        m_rect = rect;
     }
 
 }

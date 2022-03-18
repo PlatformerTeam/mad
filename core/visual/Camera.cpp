@@ -25,8 +25,7 @@ namespace mad::core {
         }
     }
 
-    void Camera::render_static(sf::RenderWindow &window, const StaticImage &static_image,
-                               Vec2d position, std::optional<sf::IntRect> optional_rect = std::nullopt) {
+    void Camera::render_static(sf::RenderWindow &window, const StaticImage &static_image, Vec2d position) {
 
         sf::Sprite render_sprite;
         sf::Texture texture;
@@ -34,10 +33,12 @@ namespace mad::core {
         texture = static_image.get_texture();
         render_sprite.setTexture(texture);
 
+        render_sprite.setScale(static_image.get_scale().get_x(), static_image.get_scale().get_y());
+
         render_sprite.setPosition(position.get_x(), position.get_y());
 
-        if (optional_rect) {
-            render_sprite.setTextureRect(optional_rect.value());
+        if (static_image.get_rect()) {
+            render_sprite.setTextureRect(static_image.get_rect().value());
         }
 
         window.draw(render_sprite);

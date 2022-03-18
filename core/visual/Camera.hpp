@@ -38,8 +38,7 @@ namespace mad::core {
 
         static void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position);
 
-        static void render_static(sf::RenderWindow &window, const StaticImage &static_image,
-                                  Vec2d position, std::optional<sf::IntRect> optional_rect);
+        static void render_static(sf::RenderWindow &window, const StaticImage &static_image, Vec2d position);
 
     private:
         std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list;

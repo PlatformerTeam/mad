@@ -71,7 +71,9 @@ int main(int argc, char *argv[]) {
     mad::core::Entity::Id static_id = world->create_viewable_entity(
             0,
             mad::core::Vec2d{0.0f, 0.0f},
-            std::make_shared<mad::core::StaticImage>("../../game/resources/18plus.png")
+            std::make_shared<mad::core::StaticImage>("../../game/resources/18plus.png",
+                                                     mad::core::Vec2d(0.5, 0.9),
+                                                     sf::IntRect{0, 0, 200, 300})
     );
 
     auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
