@@ -35,7 +35,10 @@ namespace mad::core {
         m_rect = rect;
     }
 
-    void StaticImage::set_shape(std::uint32_t width, std::uint32_t height, StaticImage::TransformType transform_type) {
+    void StaticImage::set_shape(int width, int height, StaticImage::TransformType transform_type) {
+        CHECK_THROW(width > 0, InvalidArgument, "Negative width");
+        CHECK_THROW(height > 0, InvalidArgument, "Negative height");
+
         switch (transform_type) {
 
             case TransformType::Fit: {
@@ -47,8 +50,7 @@ namespace mad::core {
 
             case TransformType::Tile: {
                 m_texture.setRepeated(true);
-                m_rect = {0, 0, static_cast<int>(width),
-                          static_cast<int>(height)};
+                m_rect = {0, 0, width,height};
                 break;
             }
         }

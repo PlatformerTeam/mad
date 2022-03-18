@@ -32,7 +32,7 @@ namespace mad::core {
 
         void set_rect(sf::IntRect rect);
 
-        void set_shape(std::uint32_t width, std::uint32_t height, TransformType transform_type);
+        void set_shape(int width, int height, TransformType transform_type);
 
     private:
         std::filesystem::path m_path;
