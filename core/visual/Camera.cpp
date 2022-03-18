@@ -61,8 +61,7 @@ namespace mad::core {
             switch (image->type) {
                 case Image::Type::Shape: {
                     auto shape_image = pointer_cast_to<Shape>(image);
-                    render_shape(window, *shape_image, *position, *rotation);
-                    break;
+                    render_shape(window, *shape_image, *position);
                 }
                 case Image::Type::Static:
                     auto static_image = pointer_cast_to<StaticImage>(image);

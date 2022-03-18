@@ -76,24 +76,85 @@ int main(int argc, char *argv[]) {
 
     mad::core::Entity::Id square_id = world->create_viewable_entity(
             0,
-            mad::core::Vec2d{0.0f, 0.0f},
+            mad::core::Vec2d{0.0f, 0.0f}, 0,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
     );
 
-    mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/18plus.png");
-    st_im_1.set_shape(100, 100, mad::core::StaticImage::TransformType::Fit);
+    mad::core::StaticImage st_im = mad::core::StaticImage("../../game/resources/brick.png");
+    st_im.set_shape(50, 50, mad::core::StaticImage::TransformType::Tile);
     mad::core::Entity::Id static_id = world->create_viewable_entity(
             0,
-            mad::core::Vec2d{0.0f, 0.0f},
-            std::make_shared<mad::core::StaticImage>(st_im_1)
+            mad::core::Vec2d{0.0f, 0.0f}, 0,
+            std::make_shared<mad::core::StaticImage>(st_im)
     );
 
-    mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/18plus.png");
-    st_im_2.set_shape(400, 400, mad::core::StaticImage::TransformType::Tile);
-    mad::core::Entity::Id static_id_2 = world->create_viewable_entity(
+    mad::core::Entity::Id square_id1 = world->create_physical_entity(
             0,
-            mad::core::Vec2d{100.0f, 20.0f},
-            std::make_shared<mad::core::StaticImage>(st_im_2)
+            mad::core::Vec2d{100.0f, 25.0f},0,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
+    );
+    mad::core::StaticImage st_im1 = mad::core::StaticImage("../../game/resources/brick.png");
+    st_im1.set_shape(50, 50, mad::core::StaticImage::TransformType::Tile);
+    mad::core::Entity::Id static_id1 = world->create_viewable_entity(
+            0,
+            mad::core::Vec2d{100.0f, 25.0f}, 0,
+            std::make_shared<mad::core::StaticImage>(st_im1)
+    );
+
+    mad::core::Entity::Id square_id2 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{80.0f, 100.0f},0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+                    true
+    );
+    mad::core::StaticImage st_im2 = mad::core::StaticImage("../../game/resources/brick.png");
+    st_im2.set_shape(50, 50, mad::core::StaticImage::TransformType::Tile);
+    mad::core::Entity::Id static_id2 = world->create_viewable_entity(
+            0,
+            mad::core::Vec2d{80.0f, 100.0f}, 0.5,
+            std::make_shared<mad::core::StaticImage>(st_im2)
+    );
+
+    mad::core::Entity::Id square_id3 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{180.0f, 180.0f}, -0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+            true
+    );
+    mad::core::StaticImage st_im3 = mad::core::StaticImage("../../game/resources/brick.png");
+    st_im3.set_shape(50, 50, mad::core::StaticImage::TransformType::Tile);
+    mad::core::Entity::Id static_id3 = world->create_viewable_entity(
+            0,
+            mad::core::Vec2d{180.0f, 180.0f}, -0.5,
+            std::make_shared<mad::core::StaticImage>(st_im3)
+    );
+
+    mad::core::Entity::Id square_id4 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{80.0f, 260.0f},0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+            true
+    );
+    mad::core::StaticImage st_im4 = mad::core::StaticImage("../../game/resources/brick.png");
+    st_im4.set_shape(50, 50, mad::core::StaticImage::TransformType::Tile);
+    mad::core::Entity::Id static_id4 = world->create_viewable_entity(
+            0,
+            mad::core::Vec2d{80.0f, 260.0f}, 0.5,
+            std::make_shared<mad::core::StaticImage>(st_im4)
+    );
+
+    mad::core::Entity::Id square_id5 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{180.0f, 340.0f},-0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+            true
+    );
+    mad::core::StaticImage st_im5 = mad::core::StaticImage("../../game/resources/brick.png");
+    st_im5.set_shape(50, 50, mad::core::StaticImage::TransformType::Tile);
+    mad::core::Entity::Id static_id5 = world->create_viewable_entity(
+            0,
+            mad::core::Vec2d{180.0f, 340.0f},-0.5,
+            std::make_shared<mad::core::StaticImage>(st_im5)
     );
 
     auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
