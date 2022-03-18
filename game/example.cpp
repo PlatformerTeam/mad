@@ -76,8 +76,42 @@ int main(int argc, char *argv[]) {
 
     mad::core::Entity::Id square_id = world->create_viewable_entity(
             0,
-            mad::core::Vec2d{0.0f, 0.0f},
+            mad::core::Vec2d{25.0f, 25.0f},0,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
+    );
+
+    mad::core::Entity::Id square_id1 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{100.0f, 25.0f},0,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
+    );
+
+    mad::core::Entity::Id square_id2 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{80.0f, 100.0f},0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+                    true
+    );
+
+    mad::core::Entity::Id square_id3 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{180.0f, 180.0f},-0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+            true
+    );
+
+    mad::core::Entity::Id square_id4 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{80.0f, 260.0f},0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+            true
+    );
+
+    mad::core::Entity::Id square_id5 = world->create_physical_entity(
+            0,
+            mad::core::Vec2d{180.0f, 340.0f},-0.5,
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+            true
     );
 
     auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();

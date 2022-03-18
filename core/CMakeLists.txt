@@ -30,6 +30,7 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
+        world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
 
         system/SystemListener.cpp system/SystemListener.hpp
 
