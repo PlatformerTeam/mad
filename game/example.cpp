@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
     camera->turn_on(*dispatcher);
 
     dispatcher->registry(camera);
-    dispatcher->registry(std::make_shared<ArrowController>(world, square_id1));
+    dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
 
     mad::core::SequentialRunner runner(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
                                        std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
