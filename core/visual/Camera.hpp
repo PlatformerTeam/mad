@@ -21,6 +21,11 @@
 #include <vector>
 
 namespace mad::core {
+    struct info {
+        std::shared_ptr<Image> image;
+        std::shared_ptr<Vec2d> pos;
+        std::shared_ptr<float> angle;
+    };
 
     class Camera : public Renderable, public EventHandler {
     public:
@@ -34,10 +39,10 @@ namespace mad::core {
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        static void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) ;
+        static void render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position, float rotation);
 
     private:
-        std::vector<std::pair<std::shared_ptr<Image>, std::shared_ptr<Vec2d>>> m_scene_list;
+        std::vector<info> m_scene_list;
 
         Vec2d m_position;
 
