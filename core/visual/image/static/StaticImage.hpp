@@ -2,7 +2,6 @@
 #define MAD_STATICIMAGE_HPP
 
 #include <visual/image/Image.hpp>
-#include <common/Error.hpp>
 
 #include <SFML/Graphics.hpp>
 
