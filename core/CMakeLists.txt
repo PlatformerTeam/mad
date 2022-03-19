@@ -16,7 +16,8 @@ set(
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
-        event/management/EventHandler.hpp
+        event/management/handler/EventHandler.hpp
+        event/management/handler/ClosingController.hpp event/management/handler/ClosingController.cpp
         event/management/EventProducer.cpp event/management/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
 

@@ -1,5 +1,6 @@
 #include <event/management/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
+#include <event/management/handler/ClosingController.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <runner/SequentialRunner.hpp>
@@ -64,28 +65,6 @@ private:
     mad::core::Entity::Id m_entity_id;
 };
 
-class ClosingController : public mad::core::EventHandler {
-public:
-    explicit ClosingController(std::shared_ptr<mad::core::SequentialRunner> runner, std::shared_ptr<sf::RenderWindow> window) : m_runner(std::move(runner)), m_window(std::move(window)) {}
-
-    void handle(const mad::core::Event &event) override {
-        SPDLOG_INFO("handle window closing event");
-
-        if (event.type == mad::core::Event::Type::WindowClosed) {
-            m_window->close();
-            m_runner->stop();
-        }
-    }
-
-    std::unordered_set<mad::core::Event::Type> handled_types() override {
-        return {mad::core::Event::Type::WindowClosed};
-    }
-
-private:
-    std::shared_ptr<mad::core::SequentialRunner> m_runner;
-    std::shared_ptr<sf::RenderWindow> m_window;
-};
-
 int main(int argc, char *argv[]) {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
 
@@ -110,7 +89,7 @@ int main(int argc, char *argv[]) {
     auto runner = std::make_shared<mad::core::SequentialRunner>(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
                                                                 std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
                                                                 dispatcher);
-    dispatcher->registry(std::make_shared<ClosingController>(runner, window));
+    dispatcher->registry(std::make_shared<mad::core::ClosingController>(runner, window));
 
     runner->run(*window);
 }
