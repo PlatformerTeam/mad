@@ -16,17 +16,11 @@ namespace mad::core {
     SystemListener::SystemListener(std::shared_ptr<sf::RenderWindow> window) : m_window(std::move(window)) {}
 
     void SystemListener::produce(EventDispatcher &dispatcher) {
-        sf::Event ev{};
+        sf::Event ev;
         m_window->pollEvent(ev);
 
-//        if (ev.type == sf::Event::Closed) {
-//            SPDLOG_INFO("catch close event");
-//            endless :(
-//        }
-
         // Listen a window
-        if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Key::Escape) {
-            SPDLOG_INFO("catch close event");
+        if (ev.type == sf::Event::Closed) {
             dispatcher.dispatch(std::make_shared<WindowClosing>());
         }
 
