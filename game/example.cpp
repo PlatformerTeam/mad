@@ -1,24 +1,25 @@
 #include <event/management/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
-#include <event/system/KeyPressed.hpp>
+#include <event/management/handler/WindowCloseHandler.hpp>
+#include <event/management/handler/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
+#include <event/system/KeyPressed.hpp>
 #include <runner/SequentialRunner.hpp>
-#include <system/SystemListener.hpp>
+#include <visual/Camera.hpp>
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
-#include <visual/Camera.hpp>
 
-#include <spdlog/spdlog.h>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <spdlog/spdlog.h>
 
 
 class ArrowController : public mad::core::EventHandler {
 public:
     explicit ArrowController(std::shared_ptr<mad::core::World> world,
                              mad::core::Entity::Id entity_id)
-            : m_world(std::move(world)),
-              m_entity_id(entity_id) {}
+        : m_world(std::move(world)),
+          m_entity_id(entity_id) {}
 
     void handle(const mad::core::Event &event) override {
         SPDLOG_INFO("handle arrow event");
@@ -64,7 +65,6 @@ private:
     mad::core::Entity::Id m_entity_id;
 };
 
-
 int main(int argc, char *argv[]) {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
 
@@ -77,8 +77,7 @@ int main(int argc, char *argv[]) {
     mad::core::Entity::Id square_id = world->create_viewable_entity(
             0,
             mad::core::Vec2d{0.0f, 0.0f},
-            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
-    );
+            std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()));
 
 //    mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/18plus.png");
 //    st_im_1.set_shape(100, 100, mad::core::StaticImage::TransformType::Fit);
@@ -103,9 +102,10 @@ int main(int argc, char *argv[]) {
     dispatcher->registry(camera);
     dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
 
-    mad::core::SequentialRunner runner(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
-                                       std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
-                                       dispatcher);
+    auto runner = std::make_shared<mad::core::SequentialRunner>(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
+                                                                std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
+                                                                dispatcher);
+    dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(runner, window));
 
-    runner.run(*window);
+    runner->run(*window);
 }
