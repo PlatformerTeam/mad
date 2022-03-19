@@ -8,6 +8,8 @@
 #include <event/system/KeyHeld.hpp>
 #include <event/system/WindowClosing.hpp>
 
+#include <string>
+
 
 namespace mad::core {
 
@@ -17,8 +19,14 @@ namespace mad::core {
         sf::Event ev{};
         m_window->pollEvent(ev);
 
+//        if (ev.type == sf::Event::Closed) {
+//            SPDLOG_INFO("catch close event");
+//            endless :(
+//        }
+
         // Listen a window
-        if (ev.type == sf::Event::Closed) {
+        if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Key::Escape) {
+            SPDLOG_INFO("catch close event");
             dispatcher.dispatch(std::make_shared<WindowClosing>());
         }
 
