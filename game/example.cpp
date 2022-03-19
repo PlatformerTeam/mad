@@ -79,6 +79,22 @@ int main(int argc, char *argv[]) {
             mad::core::Vec2d{0.0f, 0.0f},
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()));
 
+//    mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/18plus.png");
+//    st_im_1.set_shape(100, 100, mad::core::StaticImage::TransformType::Fit);
+//    mad::core::Entity::Id static_id = world->create_viewable_entity(
+//            0,
+//            mad::core::Vec2d{0.0f, 0.0f},
+//            std::make_shared<mad::core::StaticImage>(st_im_1)
+//    );
+//
+//    mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/18plus.png");
+//    st_im_2.set_shape(400, 400, mad::core::StaticImage::TransformType::Tile);
+//    mad::core::Entity::Id static_id_2 = world->create_viewable_entity(
+//            0,
+//            mad::core::Vec2d{100.0f, 20.0f},
+//            std::make_shared<mad::core::StaticImage>(st_im_2)
+//    );
+
     auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
     camera->turn_on(*dispatcher);

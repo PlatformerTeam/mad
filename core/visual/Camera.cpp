@@ -25,6 +25,25 @@ namespace mad::core {
         }
     }
 
+    void Camera::render_static(sf::RenderWindow &window, const StaticImage &static_image, Vec2d position) {
+
+        sf::Sprite render_sprite;
+        sf::Texture texture;
+
+        texture = static_image.get_texture();
+        render_sprite.setTexture(texture);
+
+        render_sprite.setScale(static_image.get_scale().get_x(), static_image.get_scale().get_y());
+
+        render_sprite.setPosition(position.get_x(), position.get_y());
+
+        if (static_image.get_rect()) {
+            render_sprite.setTextureRect(static_image.get_rect().value());
+        }
+
+        window.draw(render_sprite);
+    }
+
     void Camera::turn_on(EventDispatcher &event_dispatcher) {
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
@@ -38,7 +57,12 @@ namespace mad::core {
                 case Image::Type::Shape: {
                     auto shape_image = pointer_cast_to<Shape>(image);
                     render_shape(window, *shape_image, *position);
+                    break;
                 }
+                case Image::Type::Static:
+                    auto static_image = pointer_cast_to<StaticImage>(image);
+                    render_static(window, *static_image, *position);
+                    break;
             }
         }
     }
