@@ -6,8 +6,6 @@
 #include <event/system/KeyHeld.hpp>
 #include <event/system/WindowClose.hpp>
 
-#include <string>
-
 
 namespace mad::core {
 
