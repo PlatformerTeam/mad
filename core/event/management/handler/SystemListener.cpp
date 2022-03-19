@@ -1,12 +1,10 @@
 #include "SystemListener.hpp"
 
-#include <spdlog/spdlog.h>
-
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <event/system/KeyReleased.hpp>
 #include <event/system/KeyHeld.hpp>
-#include <event/system/WindowClosing.hpp>
+#include <event/system/WindowClose.hpp>
 
 #include <string>
 
@@ -21,7 +19,7 @@ namespace mad::core {
 
         // Listen a window
         if (ev.type == sf::Event::Closed) {
-            dispatcher.dispatch(std::make_shared<WindowClosing>());
+            dispatcher.dispatch(std::make_shared<WindowClose>());
         }
 
         // Listen a keyboard

@@ -1,10 +1,10 @@
 #include <event/management/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
-#include <event/management/handler/ClosingController.hpp>
+#include <event/management/handler/WindowCloseHandler.hpp>
+#include <event/management/handler/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <runner/SequentialRunner.hpp>
-#include <system/SystemListener.hpp>
 #include <visual/Camera.hpp>
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     auto runner = std::make_shared<mad::core::SequentialRunner>(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
                                                                 std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
                                                                 dispatcher);
-    dispatcher->registry(std::make_shared<mad::core::ClosingController>(runner, window));
+    dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(runner, window));
 
     runner->run(*window);
 }

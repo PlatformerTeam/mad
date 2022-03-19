@@ -2,7 +2,7 @@
 #define MAD_CORE_EVENT_MANAGEMENT_DISPATCHER_HPP
 
 #include <event/Event.hpp>
-#include "event/management/handler/EventHandler.hpp"
+#include <event/management/handler/EventHandler.hpp>
 
 #include <memory>
 

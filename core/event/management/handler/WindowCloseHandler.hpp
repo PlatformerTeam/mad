@@ -13,10 +13,10 @@
 
 namespace mad::core {
 
-    class ClosingController : public EventHandler {
+    class WindowCloseHandler : public EventHandler {
     public:
-        explicit ClosingController(std::shared_ptr<SequentialRunner> runner,
-                                   std::shared_ptr<sf::RenderWindow> window);
+        explicit WindowCloseHandler(std::shared_ptr<SequentialRunner> runner,
+                                    std::shared_ptr<sf::RenderWindow> window);
 
         void handle(const Event &event) override;
 

@@ -1,7 +1,7 @@
 #ifndef MAD_CORE_EVENT_MANAGEMENT_EVENTHANDLER_HPP
 #define MAD_CORE_EVENT_MANAGEMENT_EVENTHANDLER_HPP
 
-#include "event/Event.hpp"
+#include <event/Event.hpp>
 
 #include <unordered_set>
 
