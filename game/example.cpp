@@ -1,7 +1,7 @@
-#include <event/management/EventProducer.hpp>
+#include <event/management/producer/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/handler/WindowCloseHandler.hpp>
-#include <event/management/handler/SystemListener.hpp>
+#include <event/management/producer/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <runner/SequentialRunner.hpp>

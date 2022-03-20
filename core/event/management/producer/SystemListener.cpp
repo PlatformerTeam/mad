@@ -6,7 +6,7 @@
 #include <event/system/KeyHeld.hpp>
 #include <event/system/WindowClose.hpp>
 
-#include <spdlog/spdlog.h>
+#include "spdlog/spdlog.h"
 
 
 namespace mad::core {
