@@ -18,8 +18,8 @@ set(
         event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/handler/EventHandler.hpp
         event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
-        event/management/handler/SystemListener.cpp event/management/handler/SystemListener.hpp
-        event/management/EventProducer.hpp
+        event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
+        event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
 
         world/World.cpp world/World.hpp

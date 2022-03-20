@@ -2,7 +2,7 @@
 #define MAD_CORE_RUNNER_SEQUENTIALRUNNER_HPP
 
 #include <runner/GameRunner.hpp>
-#include <event/management/EventProducer.hpp>
+#include <event/management/producer/EventProducer.hpp>
 #include <visual/Renderable.hpp>
 
 #include <vector>
