@@ -21,6 +21,12 @@ set(
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
+        event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
+        event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
+        event/menu/Continue.hpp event/menu/Continue.cpp
+        event/menu/ToMainMenu.hpp event/menu/ToMainMenu.cpp
+        event/menu/NewGame.hpp event/menu/NewGame.cpp
+        event/menu/Quit.hpp event/menu/Quit.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
