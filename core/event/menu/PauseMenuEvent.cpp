@@ -2,6 +2,6 @@
 
 namespace mad::core {
 
-    PauseMenuEvent::PauseMenuEvent(PauseMenuEvent::Kind new_type) : Event(Event::Type::PauseMenu), kind(new_type) {}
+    PauseMenuEvent::PauseMenuEvent(PauseMenuEvent::Type new_type) : MenuEvent(MenuEvent::Type::PauseMenu), type(new_type) {}
 
 }

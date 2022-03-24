@@ -1,20 +1,20 @@
 #ifndef MAD_PAUSEMENUEVENT_HPP
 #define MAD_PAUSEMENUEVENT_HPP
 
-#include <event/Event.hpp>
+#include <event/menu/MenuEvent.hpp>
 
 
 namespace mad::core {
 
-    struct PauseMenuEvent : public Event {
-        enum class Kind {
+    struct PauseMenuEvent : public MenuEvent {
+        enum class Type {
             Continue,
             ToMainMenu,
         };
 
-        explicit PauseMenuEvent(Kind new_type);
+        explicit PauseMenuEvent(Type new_type);
 
-        const Kind kind;
+        const Type type;
     };
 
 }

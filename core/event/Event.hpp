@@ -13,8 +13,7 @@ namespace mad::core {
             KeyReleased,
             KeyHeld,
             WindowClosed,
-            MainMenu,
-            PauseMenu,
+            Menu,
         };
 
         explicit Event(Type new_type);

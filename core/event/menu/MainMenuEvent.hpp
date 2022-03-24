@@ -1,20 +1,20 @@
 #ifndef MAD_MAINMENUEVENT_HPP
 #define MAD_MAINMENUEVENT_HPP
 
-#include <event/Event.hpp>
+#include <event/menu/MenuEvent.hpp>
 
 
 namespace mad::core {
 
-    struct MainMenuEvent : public Event {
-        enum class Kind {
+    struct MainMenuEvent : public MenuEvent {
+        enum class Type {
             Quit,
             NewGame,
         };
 
-        explicit MainMenuEvent(Kind new_type);
+        explicit MainMenuEvent(Type new_type);
 
-        const Kind kind;
+        const Type type;
     };
 
 }
