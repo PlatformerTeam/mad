@@ -1,7 +1,7 @@
 #ifndef MAD_CORE_RUNNER_SEQUENTIALRUNNER_HPP
 #define MAD_CORE_RUNNER_SEQUENTIALRUNNER_HPP
 
-#include <runner/GameRunner.hpp>
+#include <runner/Runner.hpp>
 #include <event/management/producer/EventProducer.hpp>
 #include <visual/Renderable.hpp>
 
@@ -15,7 +15,7 @@ namespace mad::core {
 
 namespace mad::core {
 
-    class SequentialRunner : public GameRunner {
+    class SequentialRunner : public Runner {
     public:
         explicit SequentialRunner(
                 std::vector<std::shared_ptr<EventProducer>> producers,

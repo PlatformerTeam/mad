@@ -34,7 +34,7 @@ set(
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
 
-        runner/GameRunner.hpp
+        runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
 
         visual/image/Image.hpp
