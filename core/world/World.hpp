@@ -1,6 +1,8 @@
 #ifndef MAD_CORE_WORLD_WORLD_HPP
 #define MAD_CORE_WORLD_WORLD_HPP
 
+
+#include <event/management/producer/EventProducer.hpp>
 #include <common/FVec2D.hpp>
 #include <event/management/EventProducer.hpp>
 #include <world/entity/Entity.hpp>

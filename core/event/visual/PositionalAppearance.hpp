@@ -1,9 +1,9 @@
 #ifndef MAD_POSITIONALAPPEARANCE_HPP
 #define MAD_POSITIONALAPPEARANCE_HPP
 
-#include "common/FVec2D.hpp"
-#include "event/visual/VisualEvent.hpp"
-#include "visual/image/Image.hpp"
+#include <common/FVec2D.hpp>
+#include <event/visual/VisualEvent.hpp>
+#include <visual/image/Image.hpp>
 
 #include <memory>
 

@@ -8,6 +8,8 @@ namespace mad::core {
     public:
         virtual void run(sf::RenderWindow &window) = 0;
 
+        virtual void stop() = 0;
+
         virtual ~GameRunner() = default;
     };
 }
