@@ -4,7 +4,6 @@
 
 #include <event/management/producer/EventProducer.hpp>
 #include <common/FVec2D.hpp>
-#include <event/management/EventProducer.hpp>
 #include <world/entity/Entity.hpp>
 
 #include <memory>
