@@ -8,7 +8,7 @@
 
 #include <utility>
 
-mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_Fixed)
+mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed)
     : ViewableEntity(id, z_ind, initial_position, initial_rotation, image) {
 
     //rect.setOrigin(300, 50);
@@ -16,7 +16,8 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
     float side_length = pointer_cast_to<Square>(image)->get_side_length();
 
 
-    if(is_Fixed){
+    if(is_fixed)
+    {
         b2BodyDef fixedBodyDef;
         fixedBodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&fixedBodyDef);
@@ -25,7 +26,8 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         body->CreateFixture(&groundBox, 0.0f);
         body->SetTransform(body->GetPosition(), initial_rotation);
     }
-    else{
+    else
+    {
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
@@ -64,7 +66,7 @@ void mad::core::PhysicalEntity::apply_force(mad::core::Vec2d force, mad::core::E
 void mad::core::PhysicalEntity::rotate(float angle, mad::core::EventDispatcher &dispatcher) {
     NOT_IMPLEMENTED
 }
-void mad::core::PhysicalEntity::update() {
+void mad::core::PhysicalEntity::synchronize_position_with_viewable() {
     set_image_position(Vec2d(body->GetPosition().x, body->GetPosition().y));
     set_image_rotation(body->GetAngle() * (180 / M_PI));
 }

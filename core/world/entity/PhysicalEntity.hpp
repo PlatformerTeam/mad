@@ -1,18 +1,15 @@
-//
-// Created by mirong on 18.03.2022.
-//
-
 #ifndef MAD_PHYSICALENTITY_HPP
 #define MAD_PHYSICALENTITY_HPP
 
 #include "Entity.hpp"
 #include "ViewableEntity.hpp"
-#include "box2d/box2d.h"
-#include "common/Error.hpp"
-#include "common/FVec2D.hpp"
-#include "event/management/dispatcher/EventDispatcher.hpp"
-#include "visual/image/Image.hpp"
-#include "visual/image/shape/Shape.hpp"
+
+#include <box2d/box2d.h>
+#include <common/Error.hpp>
+#include <common/FVec2D.hpp>
+#include <event/management/dispatcher/EventDispatcher.hpp>
+#include <visual/image/Image.hpp>
+#include <visual/image/shape/Shape.hpp>
 
 
 #include <memory>
@@ -33,7 +30,7 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        explicit PhysicalEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_Fixed);
+        explicit PhysicalEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed);
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
@@ -42,7 +39,7 @@ namespace mad::core {
 
         void rotate(float angle, EventDispatcher &dispatcher);
 
-        void update();
+        void synchronize_position_with_viewable();
 
 
     private:

@@ -21,7 +21,7 @@ namespace mad::core {
 
     class LocalWorld : public World {
     public:
-        LocalWorld();
+        explicit LocalWorld(Vec2d gravitation_scale = {0, 30.0f});
 
         bool manipulate(const Filter &filter, const Intent &intent) override;
 
@@ -39,7 +39,7 @@ namespace mad::core {
         float dt;
         float render_scale = 5;
         sf::Clock clock;
-        float lastTime = 0;
+        float last_time = 0;
     };
 
 }
