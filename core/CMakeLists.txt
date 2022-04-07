@@ -37,6 +37,9 @@ set(
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
 
+        menu/Menu.hpp menu/Menu.cpp
+        menu/PauseMenu.hpp menu/PauseMenu.cpp
+
         runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
 
