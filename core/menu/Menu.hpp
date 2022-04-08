@@ -18,16 +18,17 @@ namespace mad::core {
             Main,
         };
 
-    private:
-        std::shared_ptr<DelayedDispatcher> m_event_dispatcher;
-        Menu::Type m_menu_type;
-
     public:
-        Menu(Menu::Type type, std::shared_ptr<DelayedDispatcher> dispatcher);
+        explicit Menu(Menu::Type type, std::shared_ptr<DelayedDispatcher> dispatcher);
 
         virtual void process_menu_event(std::shared_ptr<MenuEvent> menu_event) = 0;
 
         virtual ~Menu() = default;
+
+    private:
+        std::shared_ptr<DelayedDispatcher> m_event_dispatcher;
+        Menu::Type m_menu_type;
+
     };
 
 }

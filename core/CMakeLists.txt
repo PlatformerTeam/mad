@@ -13,11 +13,13 @@ set(
         event/system/KeyReleased.hpp event/system/KeyReleased.cpp
         event/system/WindowClose.hpp event/system/WindowClose.cpp
         event/system/KeyHeld.hpp event/system/KeyHeld.cpp
+        event/system/LevelPause.hpp event/system/LevelPause.cpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/handler/EventHandler.hpp
         event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
+        event/management/handler/LevelPauseHandler.hpp event/management/handler/LevelPauseHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
@@ -42,6 +44,7 @@ set(
 
         runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
+        runner/LevelRunner.hpp runner/LevelRunner.cpp
 
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp

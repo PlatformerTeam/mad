@@ -8,7 +8,7 @@ namespace mad::core {
 
     class PauseMenu : public Menu {
     public:
-        PauseMenu(std::shared_ptr<DelayedDispatcher> dispatcher);
+        explicit PauseMenu(std::shared_ptr<DelayedDispatcher> dispatcher);
 
         virtual void exit_to_main_menu() = 0;
 

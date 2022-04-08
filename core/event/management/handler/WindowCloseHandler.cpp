@@ -10,14 +10,14 @@ namespace mad::core {
     void WindowCloseHandler::handle(const Event &event) {
         SPDLOG_INFO("handle window closing event");
 
-        if (event.type == Event::Type::WindowClosed) {
+        if (event.type == Event::Type::WindowClose) {
             m_window->close();
             m_runner->stop();
         }
     }
 
     std::unordered_set<Event::Type> WindowCloseHandler::handled_types() {
-        return {Event::Type::WindowClosed};
+        return {Event::Type::WindowClose};
     }
 
 }
