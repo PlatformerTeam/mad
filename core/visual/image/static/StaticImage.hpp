@@ -17,31 +17,24 @@ namespace mad::core {
             Tile
         };
 
-        explicit StaticImage(std::filesystem::path path, Vec2d scale = {1.0, 1.0},
-                             std::optional<sf::IntRect> rect = std::nullopt);
+        explicit StaticImage(std::filesystem::path path, float width, float height, TransformType transform_type);
 
         [[nodiscard]] std::filesystem::path get_path() const noexcept;
 
-        [[nodiscard]] sf::Texture get_texture() const noexcept;
+        [[nodiscard]] float get_height() const noexcept;
 
-        [[nodiscard]] Vec2d get_scale() const noexcept;
+        [[nodiscard]] float get_width() const noexcept;
 
-        [[nodiscard]] std::optional<sf::IntRect> get_rect() const noexcept;
-
-        void set_scale(const Vec2d &scale);
-
-        void set_rect(sf::IntRect rect);
-
-        void set_shape(int width, int height, TransformType transform_type);
+        [[nodiscard]] TransformType get_transform_type() const noexcept;
 
     private:
         std::filesystem::path m_path;
 
-        sf::Texture m_texture;
+        float m_height;
 
-        Vec2d m_scale;
+        float m_width;
 
-        std::optional<sf::IntRect> m_rect;
+        TransformType m_transform_type;
     };
 
 }
