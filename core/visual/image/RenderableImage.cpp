@@ -6,7 +6,8 @@ namespace mad::core {
 
     RenderableImage::RenderableImage(const std::shared_ptr<Image>& image, std::shared_ptr<Vec2d> position,
                                      std::shared_ptr<float> rotation)
-                                     : type(image->type), m_position(std::move(position)), m_rotation(std::move(rotation)) {
+                                     : type(image->type), m_position(std::move(position)), m_rotation(std::move(rotation)),
+                                     m_unique_number(image->get_unique_number()) {
         switch (type) {
             case Image::Type::Shape: {
                 m_shape = pointer_cast_to<Shape>(image);
@@ -51,7 +52,7 @@ namespace mad::core {
         }
     }
 
-    void RenderableImage::render(sf::RenderWindow &window) {
+    void RenderableImage::render(sf::RenderWindow &window) const {
         switch (type) {
 
             case Image::Type::Shape: {
@@ -69,7 +70,7 @@ namespace mad::core {
         }
     }
 
-    void RenderableImage::render_shape(sf::RenderWindow &window) {
+    void RenderableImage::render_shape(sf::RenderWindow &window) const {
         switch (m_shape->get_geometry()) {
 
             case Shape::Geometry::Square: {
@@ -91,7 +92,7 @@ namespace mad::core {
         }
     }
 
-    void RenderableImage::render_static(sf::RenderWindow &window) {
+    void RenderableImage::render_static(sf::RenderWindow &window) const {
         sf::Sprite render_sprite;
 
         render_sprite.setTexture(m_renderable_static.m_texture);
@@ -112,8 +113,12 @@ namespace mad::core {
         window.draw(render_sprite);
     }
 
-    void RenderableImage::render_animated(sf::RenderWindow &window) {
+    void RenderableImage::render_animated(sf::RenderWindow &window) const {
 
+    }
+
+    int RenderableImage::get_unique_number() const noexcept {
+        return m_unique_number;
     }
 
 

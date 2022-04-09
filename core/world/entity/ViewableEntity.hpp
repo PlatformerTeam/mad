@@ -42,9 +42,13 @@ namespace mad::core {
 
     protected:
         const Id m_id;
+
         int m_z_ind;
+
         std::shared_ptr<Vec2d> m_position;
+
         std::shared_ptr<float> m_rotation;
+
         std::shared_ptr<Image> m_image;
     };
 
