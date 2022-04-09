@@ -39,6 +39,7 @@ set(
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
 
         visual/image/Image.hpp
+        visual/image/RenderableImage.cpp visual/image/RenderableImage.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/Square.cpp visual/image/shape/Square.hpp
         visual/image/static/StaticImage.cpp visual/image/static/StaticImage.hpp

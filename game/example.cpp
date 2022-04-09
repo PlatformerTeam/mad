@@ -140,13 +140,12 @@ int main(int argc, char *argv[]) {
         );
     }
 
-    //mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/18plus.png");
-    /*st_im_1.set_shape(100, 100, mad::core::StaticImage::TransformType::Fit);
+    //mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/brick.png", 50, 50, mad::core::StaticImage::TransformType::Fit);
     mad::core::Entity::Id static_id_1 = world->create_viewable_entity(
             0,
-            mad::core::Vec2d{0.0f, 0.0f},0,
-            std::make_shared<mad::core::StaticImage>(st_im_1)
-    );*/
+            mad::core::Vec2d{180.0f, 340.0f},-0.5,
+            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/brick.png", 50.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
+    );
 
     /*mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/18plus.png");
     st_im_2.set_shape(400, 400, mad::core::StaticImage::TransformType::Tile);
