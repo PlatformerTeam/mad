@@ -34,21 +34,21 @@ public:
         auto impulse = [](mad::core::Vec2d dir) {
             return mad::core::LambdaIntent(
                     [=](mad::core::Entity &entity, mad::core::EventDispatcher &event_dispatcher) {
-                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_impulse(dir, event_dispatcher);
+                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_linear_impulse_to_center(dir, event_dispatcher);
                     });
         };
 
         auto force = [](mad::core::Vec2d dir) {
             return mad::core::LambdaIntent(
                     [=](mad::core::Entity &entity, mad::core::EventDispatcher &event_dispatcher) {
-                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_force(dir, event_dispatcher);
+                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_force_to_center(dir, event_dispatcher);
                     });
         };
 
         if (event.type == mad::core::Event::Type::KeyPressed) {
             const auto &keystroke = mad::core::const_cast_to<mad::core::KeyPressed>(event);
             if (keystroke.key_id == sf::Keyboard::Key::Space) {
-                m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, 200000.0f}));
+                m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, -200000.0f}));
             }
         } else if (event.type == mad::core::Event::Type::KeyHeld) {
             const auto &keystroke = mad::core::const_cast_to<mad::core::KeyHeld>(event);
