@@ -1,4 +1,3 @@
-#include <SFML/System/Vector2.hpp>
 #include "FVec2D.hpp"
 
 namespace mad::core {
