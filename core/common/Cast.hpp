@@ -40,6 +40,12 @@ namespace mad::core {
         CHECK_THROW(upcasted_ptr != nullptr, IllegalEntityUpcast, "Illegal dynamic const cast");
         return *upcasted_ptr;
     }
-}
+
+    template<typename To, typename From>
+    static inline To *cast_to_or_null(From &e) {
+        To *upcasted_ptr = dynamic_cast<To *>(&e);
+        return upcasted_ptr;
+    }
+}// namespace mad::core
 
 #endif //MAD_CORE_COMMON_CAST_HPP

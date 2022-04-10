@@ -11,12 +11,15 @@ set(
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
         event/system/KeyPressed.hpp event/system/KeyPressed.cpp
         event/system/KeyReleased.hpp event/system/KeyReleased.cpp
+        event/system/WindowClose.hpp event/system/WindowClose.cpp
         event/system/KeyHeld.hpp event/system/KeyHeld.cpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
-        event/management/EventHandler.hpp
-        event/management/EventProducer.cpp event/management/EventProducer.hpp
+        event/management/handler/EventHandler.hpp
+        event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
+        event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
+        event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
 
         world/World.cpp world/World.hpp
@@ -30,13 +33,13 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
-
-        system/SystemListener.cpp system/SystemListener.hpp
+        world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
 
         runner/GameRunner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
 
         visual/image/Image.hpp
+        visual/image/RenderableImage.cpp visual/image/RenderableImage.hpp
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/Square.cpp visual/image/shape/Square.hpp

@@ -5,8 +5,8 @@
 #include <spdlog/spdlog.h>
 
 
-void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
-    while (true) {
+[[noreturn]] void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
+    while (m_running) {
         window.clear(sf::Color(0, 0, 0));
         for (const auto &producer : m_producers) {
             producer->produce(*m_dispatcher);
@@ -18,10 +18,15 @@ void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
     }
 }
 
+void mad::core::SequentialRunner::stop() {
+    m_running = false;
+}
+
 mad::core::SequentialRunner::SequentialRunner(
         std::vector<std::shared_ptr<EventProducer>> producers,
         std::vector<std::shared_ptr<Renderable>> renderables,
         std::shared_ptr<EventDispatcher> dispatchers
 ) : m_producers(std::move(producers)),
     m_renderables(std::move(renderables)),
-    m_dispatcher(std::move(dispatchers)) {}
+    m_dispatcher(std::move(dispatchers)),
+    m_running(true) {}
