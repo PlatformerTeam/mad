@@ -15,7 +15,14 @@ namespace mad::core {
 
     class GameRunner : public Runner {
     public:
-        explicit GameRunner(std::vector<std::shared_ptr<LevelLoader>> level_loaders, std::shared_ptr<EventDispatcher> dispatcher, std::unique_ptr<Menu> main_menu, std::shared_ptr<SystemListener> system_listener);
+        explicit GameRunner(
+            std::vector<std::shared_ptr<LevelLoader>> level_loaders,
+            std::shared_ptr<EventDispatcher> dispatcher,
+            std::unique_ptr<Menu> main_menu,
+            std::shared_ptr<SystemListener> system_listener
+        );
+
+        void start_game();
 
         void run(sf::RenderWindow &window) override;
 
@@ -26,7 +33,9 @@ namespace mad::core {
         std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
         std::unique_ptr<Menu> m_main_menu;
         std::shared_ptr<SystemListener> m_system_listener;
-        bool m_in_main_menu;
+        std::unique_ptr<LevelRunner> m_current_level_runner = nullptr;
+        bool m_in_main_menu = true;
+        bool m_running = true;
     };
 
 }// namespace mad::core

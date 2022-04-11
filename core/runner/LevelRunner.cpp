@@ -8,8 +8,8 @@ namespace mad::core {
             std::shared_ptr<Camera> camera,
             std::shared_ptr<EventDispatcher> global_event_dispatcher,
             std::shared_ptr<EventDispatcher> level_event_dispatcher,
-            std::shared_ptr<World> world) :
-        m_system_listener(std::move(system_listener)),
+            std::shared_ptr<World> world
+    ) : m_system_listener(std::move(system_listener)),
         m_pause_menu(std::move(pause_menu)),
         m_camera(std::move(camera)),
         m_global_event_dispatcher(std::move(global_event_dispatcher)),
