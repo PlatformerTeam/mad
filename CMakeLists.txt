@@ -81,9 +81,11 @@ message(STATUS "Core library: ${LIBRARY_CORE}")
 # Game binaries
 set(DIRECTORY_GAME ${PROJECT_SOURCE_DIR}/game)
 set(EXECUTABLE_GAME example)
+set(EXECUTABLE_GAME_RUNNER game_runner_example)
 
 add_subdirectory(${DIRECTORY_GAME})
 message(STATUS "Game executable: ${EXECUTABLE_GAME}")
+message(STATUS "Game-runner executable ${EXECUTABLE_GAME_RUNNER}")
 
 # Tests
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)
