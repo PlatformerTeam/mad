@@ -13,11 +13,10 @@ namespace mad::core {
     public:
         explicit LevelLoader(std::shared_ptr<EventDispatcher> dispatcher);
 
-        std::unique_ptr<LevelRunner> load();
+        virtual std::unique_ptr<LevelRunner> load() = 0;
 
     private:
         std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
-
     };
 
 }
