@@ -45,7 +45,7 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         body->SetTransform(body->GetPosition(), initial_rotation);
     }
 
-
+    body->GetUserData().pointer = m_id;
 
 
 }

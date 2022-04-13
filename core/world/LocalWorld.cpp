@@ -5,14 +5,17 @@
 #include <common/Error.hpp>
 #include <event/management/dispatcher/DelayedDispatcher.hpp>
 #include <world/entity/Entity.hpp>
+#include <world/entity/ContactListener/ContactListener.hpp>
 
 #include <vector>
 
 
-mad::core::LocalWorld::LocalWorld(Vec2d gravitation_scale)
+mad::core::LocalWorld::LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravitation_scale)
     : m_step_events_queue(std::make_shared<std::queue<std::shared_ptr<Event>>>()),
       m_event_queue_dispatcher(std::make_unique<DelayedDispatcher>(m_step_events_queue)),
       physicalWorld(b2World(b2Vec2(gravitation_scale.get_x(), gravitation_scale.get_y()))) {
+    auto* l = new mad::core::MyContactListener(event_dispatcher); // утечка памяти
+    physicalWorld.SetContactListener(&*l);
 }
 
 
@@ -29,18 +32,38 @@ bool mad::core::LocalWorld::manipulate(const mad::core::Filter &filter, const ma
 
 
 void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
+    // calculating fps + dt
     sf::Time time = clock.getElapsedTime();
     dt = time.asSeconds() - last_time;
     double fps = 1 / (time.asSeconds() - last_time);
     last_time = time.asSeconds();
+
+    // simulating physics
     physicalWorld.Step(dt * render_scale, 3, 10);
     for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
-
         if (cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {
             auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id));
             physical_entity->synchronize_position_with_viewable();
         }
     }
+
+    // collision
+
+    /*for (b2Contact *contact = physicalWorld.GetContactList(); contact; contact = contact->GetNext()) {
+        contact->IsTouching()
+    }
+    for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
+        if (cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {
+            auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id));
+            for (b2ContactEdge *edge = physical_entity->body->GetContactList(); edge; edge = edge->next) {
+                if (edge.)
+            }
+            physical_entity->synchronize_position_with_viewable();
+        }
+    }*/
+
+
+    // dispatching events
     while (!m_step_events_queue->empty()) {
         dispatcher.dispatch(m_step_events_queue->front());
         m_step_events_queue->pop();

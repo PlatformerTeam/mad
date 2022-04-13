@@ -21,7 +21,7 @@ namespace mad::core {
 
     class LocalWorld : public World {
     public:
-        explicit LocalWorld(Vec2d gravitation_scale = {0, 30.0f});
+        explicit LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravitation_scale = {0, 30.0f});
 
         bool manipulate(const Filter &filter, const Intent &intent) override;
 
