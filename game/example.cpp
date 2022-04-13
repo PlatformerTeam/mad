@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
     mad::core::Entity::Id static_id_1 = world->create_viewable_entity(
             0,
             mad::core::Vec2d{180.0f, 340.0f},-0.5,
-            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/brick.png", 50.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
+            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/static/brick.png", 50.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
     );
 
     /*mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/18plus.png");
