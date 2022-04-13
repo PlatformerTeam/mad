@@ -19,7 +19,8 @@ namespace mad::core {
             std::shared_ptr<Camera> camera,
             std::shared_ptr<EventDispatcher> global_event_dispatcher,
             std::shared_ptr<EventDispatcher> level_event_dispatcher,
-            std::shared_ptr<World> world
+            std::shared_ptr<World> world,
+            std::shared_ptr<sf::RenderWindow> window
         );
 
         void run(sf::RenderWindow &window) override;
@@ -37,6 +38,7 @@ namespace mad::core {
         std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
         std::shared_ptr<EventDispatcher> m_level_event_dispatcher;
         std::shared_ptr<World> m_world;
+        std::shared_ptr<sf::RenderWindow> m_window;
         bool m_level_is_running;
         bool m_is_in_pause;
     };
