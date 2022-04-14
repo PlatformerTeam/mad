@@ -46,7 +46,7 @@ set(
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
         runner/LevelRunner.hpp runner/LevelRunner.cpp
         runner/GameRunner.hpp runner/GameRunner.cpp
-        loader/LevelLoader.hpp loader/LevelLoader.cpp
+        loader/LevelLoader.hpp
 
         visual/image/Image.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp

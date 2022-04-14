@@ -2,6 +2,7 @@
 #define MAD_LEVELLOADER_HPP
 
 #include <event/management/dispatcher/EventDispatcher.hpp>
+#include <event/management/producer/SystemListener.hpp>
 #include <runner/LevelRunner.hpp>
 
 #include <memory>
@@ -11,12 +12,9 @@ namespace mad::core {
 
     class LevelLoader {
     public:
-        explicit LevelLoader(std::shared_ptr<EventDispatcher> dispatcher);
-
-        virtual std::unique_ptr<LevelRunner> load() = 0;
-
-    private:
-        std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
+        virtual std::unique_ptr<LevelRunner> load(
+                std::shared_ptr<EventDispatcher> global_dispatcher,
+                std::shared_ptr<SystemListener> system_listener) = 0;
     };
 
 }

@@ -25,7 +25,7 @@ namespace mad::core {
             if (!m_running) {
                 return;
             }
-            m_current_level_runner = loader->load();
+            m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
             m_current_level_runner->run(window);
         }
     }

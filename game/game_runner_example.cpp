@@ -1,5 +1,6 @@
 #include <event/management/producer/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
+#include <event/management/handler/LevelPauseHandler.hpp>
 #include <event/management/handler/WindowCloseHandler.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
@@ -68,10 +69,9 @@ private:
 
 class ExampleLevelLoader : public mad::core::LevelLoader {
 public:
-    std::unique_ptr<mad::core::LevelRunner> load() override {
-        auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
-        auto system_listener = std::make_shared<mad::core::SystemListener>(window);
-
+    std::unique_ptr<mad::core::LevelRunner> load(
+            std::shared_ptr<mad::core::EventDispatcher> global_dispatcher,
+            std::shared_ptr<mad::core::SystemListener> system_listener) override {
         auto world = std::make_shared<mad::core::LocalWorld>();
 
         auto camera = std::make_shared<mad::core::Camera>(mad::core::Vec2d{0.0f, 0.0f}, world);
@@ -81,24 +81,30 @@ public:
                 mad::core::Vec2d{0.0f, 0.0f},
                 std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()));
 
-        auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+        camera->turn_on(*level_dispatcher);
+        level_dispatcher->registry(camera);
+        level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
 
-        camera->turn_on(*dispatcher);
+        auto level_runner = std::make_unique<mad::core::LevelRunner>(
+                system_listener,
+                // TODO pause menu
+                ,
+                camera,
+                global_dispatcher,
+                level_dispatcher,
+                world);
 
-        dispatcher->registry(camera);
-        dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
 
-        auto runner = std::make_shared<mad::core::SequentialRunner>(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
-                                                                    std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
-                                                                    dispatcher);
-        dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(runner, window));
-
-        return nullptr;
     }
 };
 
-
-
 int main() {
+    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
+
+    auto global_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+
+    auto system_listener = std::make_shared<mad::core::SystemListener>(window);
+
 
 }
