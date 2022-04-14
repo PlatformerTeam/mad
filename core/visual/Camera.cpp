@@ -35,7 +35,7 @@ namespace mad::core {
             : m_position(initial_position),
               m_world(std::move(world)) {}
 
-    bool Camera::compareScenes::operator()(const std::pair<int, RenderableImage> &a,
+    bool Camera::CompareScenes::operator()(const std::pair<int, RenderableImage> &a,
                                            const std::pair<int, RenderableImage> &b) const {
         return a.first == b.first ? a.second.get_unique_number() < b.second.get_unique_number()
         : a.first < b.first;

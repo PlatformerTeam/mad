@@ -38,14 +38,13 @@ namespace mad::core {
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        struct compareScenes {
+        struct CompareScenes {
             bool operator() (const std::pair<int, RenderableImage> &a,
                              const std::pair<int, RenderableImage> &b) const;
         };
 
     private:
-        std::set<std::pair<int, RenderableImage>, compareScenes> m_scene_list;
-        //std::vector<std::pair<int, RenderableImage>> m_scene_list;
+        std::set<std::pair<int, RenderableImage>, CompareScenes> m_scene_list;
 
         Vec2d m_position;
 
