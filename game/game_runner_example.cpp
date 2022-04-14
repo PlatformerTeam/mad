@@ -95,7 +95,9 @@ public:
                 level_dispatcher,
                 world);
 
+        level_dispatcher->registry(std::make_shared<mad::core::LevelPauseHandler>(level_runner));
 
+        return level_runner;
     }
 };
 
