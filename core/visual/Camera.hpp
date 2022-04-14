@@ -4,10 +4,11 @@
 #include <visual/Renderable.hpp>
 #include <visual/image/Image.hpp>
 #include <visual/image/shape/Shape.hpp>
-#include <visual/image/shape/Square.hpp>
+#include "visual/image/shape/square/Square.hpp"
 #include <event/management/handler/EventHandler.hpp>
 #include <visual/image/static/StaticImage.hpp>
-#include <visual/image/RenderableImage.hpp>
+#include <visual/image/static/RenderableStatic.hpp>
+#include <visual/image/shape/square/RenderableSquare.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
 #include <world/filter/TrueFilter.hpp>
@@ -39,12 +40,12 @@ namespace mad::core {
         std::unordered_set<Event::Type> handled_types() override;
 
         struct CompareScenes {
-            bool operator() (const std::pair<int, RenderableImage> &a,
-                             const std::pair<int, RenderableImage> &b) const;
+            bool operator() (const std::pair<int, std::shared_ptr<Renderable>> &a,
+                             const std::pair<int, std::shared_ptr<Renderable>> &b) const;
         };
 
     private:
-        std::set<std::pair<int, RenderableImage>, CompareScenes> m_scene_list;
+        std::set<std::pair<int, std::shared_ptr<Renderable>>, CompareScenes> m_scene_list;
 
         Vec2d m_position;
 

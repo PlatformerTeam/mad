@@ -2,7 +2,7 @@
 // Created by mirong on 18.03.2022.
 //
 #include "PhysicalEntity.hpp"
-#include "visual/image/shape/Square.hpp"
+#include "visual/image/shape/square/Square.hpp"
 #include "common/Cast.hpp"
 #include "world/intent/LambdaIntent.hpp"
 
