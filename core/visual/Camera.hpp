@@ -22,6 +22,7 @@
 
 #include <vector>
 #include <optional>
+#include <set>
 
 namespace mad::core {
 
@@ -31,14 +32,19 @@ namespace mad::core {
 
         void turn_on(EventDispatcher &event_dispatcher);
 
-        void render(sf::RenderWindow &window) override;
+        void render(sf::RenderWindow &window) const override;
 
         void handle(const Event &event) override;
 
         std::unordered_set<Event::Type> handled_types() override;
 
+        struct CompareScenes {
+            bool operator() (const std::pair<int, RenderableImage> &a,
+                             const std::pair<int, RenderableImage> &b) const;
+        };
+
     private:
-        std::vector<RenderableImage> m_scene_list;
+        std::set<std::pair<int, RenderableImage>, CompareScenes> m_scene_list;
 
         Vec2d m_position;
 

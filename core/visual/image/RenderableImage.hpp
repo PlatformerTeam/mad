@@ -43,13 +43,15 @@ namespace mad::core {
         explicit RenderableImage(const std::shared_ptr<Image>& image,
                                  std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) override;
+        void render(sf::RenderWindow &window) const override;
 
-        void render_shape(sf::RenderWindow &window);
+        void render_shape(sf::RenderWindow &window) const;
 
-        void render_static(sf::RenderWindow &window);
+        void render_static(sf::RenderWindow &window) const;
 
-        void render_animated(sf::RenderWindow &window);
+        void render_animated(sf::RenderWindow &window) const;
+
+        [[nodiscard]] int get_unique_number() const noexcept;
 
     private:
         Image::Type type;
@@ -61,6 +63,8 @@ namespace mad::core {
         std::shared_ptr<Vec2d> m_position;
 
         std::shared_ptr<float> m_rotation;
+
+        const int m_unique_number;
     };
 
 }

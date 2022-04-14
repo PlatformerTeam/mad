@@ -10,7 +10,7 @@ namespace mad::core {
 
     class Renderable {
     public:
-        virtual void render(sf::RenderWindow &window) = 0;
+        virtual void render(sf::RenderWindow &window) const = 0;
     };
 
 }
