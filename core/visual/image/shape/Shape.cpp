@@ -13,4 +13,8 @@ namespace mad::core {
     Shape::Shape(Geometry geometry, Color color) : Image(Image::Type::Shape), m_geometry(geometry), m_color(color) {
     }
 
+    void Shape::set_color(Color color) {
+        m_color = color;
+    }
+
 }// namespace mad::core
