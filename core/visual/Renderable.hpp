@@ -11,8 +11,10 @@ namespace mad::core {
     class Renderable {
     public:
         virtual void render(sf::RenderWindow &window) const = 0;
-    };
 
+        [[nodiscard]] virtual int get_unique_number() const noexcept {
+        }
+    };
 }
 
 
