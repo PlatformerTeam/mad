@@ -11,18 +11,18 @@ namespace mad::core {
 
     class AnimatedImage : public Image {
     public:
-        explicit AnimatedImage(std::filesystem::path path, int height, int width, int count, sf::Time delta_time);
+        explicit AnimatedImage(std::filesystem::path path, int width, int height, sf::Time delta_time);
+
+        [[nodiscard]] sf::Time get_delta_time() const noexcept;
 
     private:
         sf::Time m_delta_time;
 
         std::filesystem::path m_path;
 
-        int m_height;
-
         int m_width;
 
-        int m_count_rows;
+        int m_height;
     };
 
 }
