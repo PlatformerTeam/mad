@@ -6,6 +6,7 @@
 #include "common/Error.hpp"
 #include "visual/image/Image.hpp"
 #include "event/management/dispatcher/EventDispatcher.hpp"
+#include <visual/image/shape/Shape.hpp>
 
 
 #include <memory>
@@ -35,6 +36,8 @@ namespace mad::core {
         void set_image_position(Vec2d new_position);
 
         void set_image_rotation(float new_rotation);
+
+        void set_image_color(Color color);
 
         void move(Vec2d move_delta);
 
