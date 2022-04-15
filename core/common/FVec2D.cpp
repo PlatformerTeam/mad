@@ -29,6 +29,12 @@ namespace mad::core {
         m_y *= k;
         return *this;
     }
+    Vec2d::operator sf::Vector2<float>() const {
+        return {get_x(), get_y()};
+    }
+    Vec2d::operator b2Vec2() const {
+        return {get_x(), get_y()};
+    }
 
     Vec2d operator+(Vec2d v1, const Vec2d &v2) {
         return v1 += v2;

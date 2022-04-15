@@ -34,21 +34,21 @@ public:
         auto impulse = [](mad::core::Vec2d dir) {
             return mad::core::LambdaIntent(
                     [=](mad::core::Entity &entity, mad::core::EventDispatcher &event_dispatcher) {
-                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_impulse(dir, event_dispatcher);
+                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_linear_impulse_to_center(dir, event_dispatcher);
                     });
         };
 
         auto force = [](mad::core::Vec2d dir) {
             return mad::core::LambdaIntent(
                     [=](mad::core::Entity &entity, mad::core::EventDispatcher &event_dispatcher) {
-                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_force(dir, event_dispatcher);
+                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_force_to_center(dir, event_dispatcher);
                     });
         };
 
         if (event.type == mad::core::Event::Type::KeyPressed) {
             const auto &keystroke = mad::core::const_cast_to<mad::core::KeyPressed>(event);
             if (keystroke.key_id == sf::Keyboard::Key::Space) {
-                m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, 200000.0f}));
+                m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, -200000.0f}));
             }
         } else if (event.type == mad::core::Event::Type::KeyHeld) {
             const auto &keystroke = mad::core::const_cast_to<mad::core::KeyHeld>(event);
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     );
 
     mad::core::Entity::Id square_id1 = world->create_physical_entity(
-            0,
+            3,
             mad::core::Vec2d{100.0f, 25.0f},0,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
     );
@@ -142,9 +142,9 @@ int main(int argc, char *argv[]) {
 
     //mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/brick.png", 50, 50, mad::core::StaticImage::TransformType::Fit);
     mad::core::Entity::Id static_id_1 = world->create_viewable_entity(
-            0,
+            2,
             mad::core::Vec2d{180.0f, 340.0f},-0.5,
-            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/static/brick.png", 50.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
+            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/brick.png", 300.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
     );
 
     /*mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/18plus.png");

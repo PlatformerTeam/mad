@@ -34,8 +34,42 @@ namespace mad::core {
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
-        void apply_impulse(Vec2d impulse, EventDispatcher &dispatcher);
-        void apply_force(Vec2d impulse, EventDispatcher &dispatcher);
+        void set_transform(Vec2d position, float angle);
+        void apply_linear_impulse(Vec2d impulse, Vec2d point, EventDispatcher &dispatcher, bool awake = true);
+        void apply_linear_impulse_to_center(Vec2d impulse, EventDispatcher &dispatcher, bool awake = true);
+        void apply_force(Vec2d force, Vec2d point, EventDispatcher &dispatcher, bool awake = true);
+        void apply_force_to_center(Vec2d force, EventDispatcher &dispatcher, bool awake = true);
+        void apply_angular_impulse(float impulse, EventDispatcher &dispatcher, bool awake = true);
+        void apply_torque(float torque, EventDispatcher &dispatcher, bool awake = true);
+        void set_linear_velocity(Vec2d velocity, EventDispatcher &dispatcher);
+        void set_angular_velocity(float velocity, EventDispatcher &dispatcher);
+        void set_linear_damping(float linear_damping, EventDispatcher &dispatcher);
+        void set_angular_damping(float angular_damping, EventDispatcher &dispatcher);
+        void set_gravity_scale(float gravity_scale, EventDispatcher &dispatcher);
+
+
+        Vec2d get_position();
+        float get_angle();
+        float get_mass();
+        float get_inertia();
+        Vec2d get_linear_velocity();
+        float get_angular_velocity();
+        float get_linear_damping();
+        float get_angular_damping();
+        float get_gravity_scale();
+
+        bool is_bullet();
+        void set_bullet(bool flag);
+        bool is_awake();
+        void set_awake(bool flag);
+        bool is_enabled();
+        void set_enabled(bool flag);
+        bool is_fixed_rotation();
+        void set_fixed_rotation(bool flag);
+
+        Vec2d get_local_center();
+        Vec2d get_world_center();
+
 
         void rotate(float angle, EventDispatcher &dispatcher);
 

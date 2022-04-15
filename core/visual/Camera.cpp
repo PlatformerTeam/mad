@@ -14,17 +14,45 @@ namespace mad::core {
         m_world->manipulate(TrueFilter(), LambdaIntent(start_appearance));
     }
 
-    void Camera::render(sf::RenderWindow &window) {
-        for (auto &renderable_image : m_scene_list) {
-            renderable_image.render(window);
+    void Camera::render(sf::RenderWindow &window) const {
+        for (auto &[z_ind, renderable_image] : m_scene_list) {
+            renderable_image->render(window);
         }
     }
 
     void Camera::handle(const Event &event) {
         SPDLOG_INFO("Got positional appearance");
         const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
-        RenderableImage renderable_image(positional_appearance.get_image(), positional_appearance.get_position(), positional_appearance.get_rotation());
-        m_scene_list.push_back(renderable_image);
+        std::shared_ptr<Image> image = positional_appearance.get_image();
+        switch (image->type) {
+
+            case Image::Type::Shape: {
+                std::shared_ptr<Shape> shape = pointer_cast_to<Shape>(image);
+
+                switch (shape->get_geometry()) {
+                    case Shape::Geometry::Square:
+                        std::shared_ptr<Square> square = pointer_cast_to<Square>(shape);
+                        RenderableSquare renderable_square(square,
+                                                           positional_appearance.get_position(),
+                                                           positional_appearance.get_rotation());
+                        m_scene_list.insert({positional_appearance.get_z_index(),
+                                             std::make_shared<RenderableSquare>(renderable_square)});
+                        break;
+                }
+                break;
+            }
+            case Image::Type::Static: {
+                std::shared_ptr<StaticImage> static_image = pointer_cast_to<StaticImage>(positional_appearance.get_image());
+                RenderableStatic renderable_static(static_image,
+                                                   positional_appearance.get_position(),
+                                                   positional_appearance.get_rotation());
+                m_scene_list.insert({positional_appearance.get_z_index(),
+                                     std::make_shared<RenderableStatic>(renderable_static)});
+                break;
+            }
+            case Image::Type::Animated:
+                break;
+        }
     }
 
     std::unordered_set<Event::Type> Camera::handled_types() {
@@ -34,6 +62,12 @@ namespace mad::core {
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
             : m_position(initial_position),
               m_world(std::move(world)) {}
+
+    bool Camera::CompareScenes::operator()(const std::pair<int, std::shared_ptr<Renderable>> &a,
+                                           const std::pair<int, std::shared_ptr<Renderable>> &b) const {
+        return a.first == b.first ? a.second->get_unique_number() < b.second->get_unique_number()
+        : a.first < b.first;
+    }
 
 } // namespace mad::core
 

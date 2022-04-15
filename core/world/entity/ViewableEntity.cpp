@@ -24,13 +24,20 @@ void mad::core::ViewableEntity::set_image_rotation(float new_rotation) {
     *m_rotation = new_rotation;
 }
 
+void mad::core::ViewableEntity::set_image_color(Color color) {
+    if (m_image->type == Image::Type::Shape) {
+        auto shape = mad::core::pointer_cast_to<mad::core::Shape>(m_image);
+        shape->set_color(color);
+    }
+}
+
 void mad::core::ViewableEntity::move(mad::core::Vec2d move_delta) {
     *m_position += move_delta;
 }
 
 void mad::core::ViewableEntity::appear(mad::core::EventDispatcher &dispatcher) const {
     SPDLOG_INFO("create positional appearance");
-    dispatcher.dispatch(std::make_shared<PositionalAppearance>(m_position, m_rotation, m_image, m_id));
+    dispatcher.dispatch(std::make_shared<PositionalAppearance>(m_position, m_rotation, m_image, m_z_ind));
 }
 
 mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,

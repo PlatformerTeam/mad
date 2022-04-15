@@ -6,6 +6,7 @@
 #include "common/Error.hpp"
 #include "visual/image/Image.hpp"
 #include "event/management/dispatcher/EventDispatcher.hpp"
+#include <visual/image/shape/Shape.hpp>
 
 
 #include <memory>
@@ -36,15 +37,21 @@ namespace mad::core {
 
         void set_image_rotation(float new_rotation);
 
+        void set_image_color(Color color);
+
         void move(Vec2d move_delta);
 
         void appear(EventDispatcher &dispatcher) const;
 
     protected:
         const Id m_id;
+
         int m_z_ind;
+
         std::shared_ptr<Vec2d> m_position;
+
         std::shared_ptr<float> m_rotation;
+
         std::shared_ptr<Image> m_image;
     };
 

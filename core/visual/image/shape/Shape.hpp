@@ -19,6 +19,8 @@ namespace mad::core {
 
         [[nodiscard]] Geometry get_geometry() const noexcept;
 
+        void set_color(Color color);
+
     private:
         const Geometry m_geometry;
         Color m_color;
