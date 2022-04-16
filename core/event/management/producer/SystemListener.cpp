@@ -6,6 +6,7 @@
 #include <event/system/KeyHeld.hpp>
 #include <event/system/WindowClose.hpp>
 
+#include <imgui-SFML.h>
 #include <spdlog/spdlog.h>
 
 
@@ -21,16 +22,19 @@ namespace mad::core {
         if (ev.type == sf::Event::Closed) {
             dispatcher.dispatch(std::make_shared<WindowClose>());
         }
-
         // Listen a keyboard
-        if (ev.type == sf::Event::KeyPressed) {
+        else if (ev.type == sf::Event::KeyPressed) {
             if (m_key_held.find(ev.key.code) == m_key_held.end()) {
                 dispatcher.dispatch(std::make_shared<KeyPressed>(ev.key.code));
+                m_key_held.insert(ev.key.code);
             }
-            m_key_held.insert(ev.key.code);
         } else if (ev.type == sf::Event::KeyReleased) {
             dispatcher.dispatch(std::make_shared<KeyReleased>(ev.key.code));
             m_key_held.erase(ev.key.code);
+        }
+        // Process ImGui
+        else {
+            ImGui::SFML::ProcessEvent(ev);
         }
 
         // Check held keys

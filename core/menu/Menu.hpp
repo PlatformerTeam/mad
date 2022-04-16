@@ -19,6 +19,8 @@ namespace mad::core {
             Main,
         };
 
+        sf::Clock m_delta_clock;
+
     public:
         explicit Menu(Menu::Type type);
 
@@ -31,7 +33,6 @@ namespace mad::core {
     private:
         std::queue<std::shared_ptr<MenuEvent>> m_events_queue;
         Menu::Type m_menu_type;
-
     };
 
 }

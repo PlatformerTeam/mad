@@ -4,6 +4,7 @@
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <runner/LevelRunner.hpp>
+#include <runner/GameRunner.hpp>
 
 #include <memory>
 

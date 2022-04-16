@@ -1,6 +1,7 @@
 #include "LevelPauseHandler.hpp"
 
 #include <event/system/KeyPressed.hpp>
+#include <event/system/KeyHeld.hpp>
 
 
 namespace mad::core {
@@ -15,12 +16,16 @@ namespace mad::core {
             if (keystroke.key_id == sf::Keyboard::Key::Escape) {
                 m_runner.pause();
             }
+        } else if (event.type == Event::Type::KeyHeld) {
+            const auto &keystroke = const_cast_to<KeyHeld>(event);
+            if (keystroke.key_id == sf::Keyboard::Key::Escape) {
+                m_runner.pause();
+            }
         }
     }
 
     std::unordered_set<Event::Type> LevelPauseHandler::handled_types() {
-        //return {Event::Type::LevelPause};
-        return {Event::Type::KeyPressed};
+        return {Event::Type::KeyPressed, Event::Type::KeyHeld};
     }
 
 }

@@ -14,20 +14,23 @@ namespace mad::core {
     }
 
     void GameRunner::run(sf::RenderWindow &window) {
-        m_in_main_menu = false;
-        while (m_in_main_menu) {
-            if (!m_running) {
-                return;
+        //m_in_main_menu = false;
+        while (m_running) {
+            if (m_in_main_menu) {
+                window.clear(sf::Color(0, 0, 0));
+                m_system_listener->produce(*m_global_event_dispatcher);
+                m_main_menu->render(window);
+                m_main_menu->produce(*m_global_event_dispatcher);
+                window.display();
+            } else {
+                for (auto &loader: m_level_loaders) {
+                    if (m_in_main_menu) {
+                        return;
+                    }
+                    m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
+                    m_current_level_runner->run(window);
+                }
             }
-            m_system_listener->produce(*m_global_event_dispatcher);
-            m_main_menu->render(window);
-        }
-        for (auto &loader : m_level_loaders) {
-            if (!m_running) {
-                return;
-            }
-            m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
-            m_current_level_runner->run(window);
         }
     }
 

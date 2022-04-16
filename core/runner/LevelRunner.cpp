@@ -33,6 +33,7 @@ namespace mad::core {
                 m_pause_menu->render(window);
             } else {
                 m_world->produce(*m_level_event_dispatcher);
+                m_system_listener->produce(*m_global_event_dispatcher);
                 m_system_listener->produce(*m_level_event_dispatcher);
                 m_camera->render(window);
             }

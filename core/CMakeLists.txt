@@ -20,6 +20,8 @@ set(
         event/management/handler/EventHandler.hpp
         event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
         event/management/handler/LevelPauseHandler.hpp event/management/handler/LevelPauseHandler.cpp
+        event/management/handler/MainMenuEventsHandler.hpp event/management/handler/MainMenuEventsHandler.cpp
+        event/management/handler/PauseMenuEventsHandler.hpp event/management/handler/PauseMenuEventsHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
