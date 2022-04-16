@@ -40,6 +40,7 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
 
         menu/Menu.hpp menu/Menu.cpp
+        menu/MainMenu.hpp menu/MainMenu.cpp
         menu/PauseMenu.hpp menu/PauseMenu.cpp
 
         runner/Runner.hpp

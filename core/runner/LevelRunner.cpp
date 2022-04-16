@@ -1,5 +1,8 @@
 #include "LevelRunner.hpp"
 
+#include <spdlog/spdlog.h>
+
+
 namespace mad::core {
 
     LevelRunner::LevelRunner(
@@ -20,6 +23,7 @@ namespace mad::core {
     }
 
     void LevelRunner::run(sf::RenderWindow &window) {
+        SPDLOG_INFO("Level has started");
         m_camera->turn_on(*m_level_event_dispatcher);
         while (m_level_is_running) {
             if (m_is_in_pause) {

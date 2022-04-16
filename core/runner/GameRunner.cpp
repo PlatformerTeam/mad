@@ -5,7 +5,7 @@ namespace mad::core {
     GameRunner::GameRunner(
             std::vector<std::shared_ptr<LevelLoader>> level_loaders,
             std::shared_ptr<EventDispatcher> dispatcher,
-            std::unique_ptr<Menu> main_menu,
+            std::unique_ptr<MainMenu> main_menu,
             std::shared_ptr<SystemListener> system_listener
     ) : m_level_loaders(std::move(level_loaders)),
         m_global_event_dispatcher(std::move(dispatcher)),
@@ -14,6 +14,7 @@ namespace mad::core {
     }
 
     void GameRunner::run(sf::RenderWindow &window) {
+        m_in_main_menu = false;
         while (m_in_main_menu) {
             if (!m_running) {
                 return;

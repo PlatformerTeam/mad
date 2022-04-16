@@ -3,7 +3,7 @@
 
 #include <event/management/handler/EventHandler.hpp>
 
-#include <runner/SequentialRunner.hpp>
+#include <runner/Runner.hpp>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <spdlog/spdlog.h>
@@ -15,7 +15,7 @@ namespace mad::core {
 
     class WindowCloseHandler : public EventHandler {
     public:
-        explicit WindowCloseHandler(std::shared_ptr<SequentialRunner> runner,
+        explicit WindowCloseHandler(Runner& runner,
                                     std::shared_ptr<sf::RenderWindow> window);
 
         void handle(const Event &event) override;
@@ -23,7 +23,7 @@ namespace mad::core {
         std::unordered_set<Event::Type> handled_types() override;
 
     private:
-        std::shared_ptr<SequentialRunner> m_runner;
+        Runner& m_runner;
         std::shared_ptr<sf::RenderWindow> m_window;
     };
 

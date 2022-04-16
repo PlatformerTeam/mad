@@ -6,6 +6,8 @@
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <loader/LevelLoader.hpp>
+#include <menu/MainMenu.hpp>
+#include <menu/PauseMenu.hpp>
 #include <runner/GameRunner.hpp>
 #include <visual/Camera.hpp>
 #include <world/LocalWorld.hpp>
@@ -88,14 +90,13 @@ public:
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
-                // TODO pause menu
-                ,
+                std::make_unique<mad::core::PauseMenu>(),
                 camera,
                 global_dispatcher,
                 level_dispatcher,
                 world);
 
-        level_dispatcher->registry(std::make_shared<mad::core::LevelPauseHandler>(level_runner));
+        level_dispatcher->registry(std::make_shared<mad::core::LevelPauseHandler>(*level_runner));
 
         return level_runner;
     }
@@ -103,6 +104,7 @@ public:
 
 int main() {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
+    ImGui::SFML::Init(*window);
 
     auto global_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
@@ -115,12 +117,13 @@ int main() {
     auto game_runner = std::make_unique<mad::core::GameRunner>(
             level_loaders,
             global_dispatcher,
-            // TODO create main menu
-            ,
+            std::make_unique<mad::core::MainMenu>(),
             system_listener
             );
 
-    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(game_runner, window));
+    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*game_runner, window));
 
     game_runner->run(*window);
+
+    ImGui::SFML::Shutdown();
 }

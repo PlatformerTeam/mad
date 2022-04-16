@@ -10,9 +10,7 @@ namespace mad::core {
     public:
         explicit PauseMenu();
 
-        virtual void exit_to_main_menu() = 0;
-
-        virtual void close_and_continue() = 0;
+        void render(sf::RenderWindow &window) override;
     };
 
 }

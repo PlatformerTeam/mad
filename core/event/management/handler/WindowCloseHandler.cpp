@@ -3,8 +3,8 @@
 
 namespace mad::core {
 
-    WindowCloseHandler::WindowCloseHandler(std::shared_ptr<SequentialRunner> runner,
-                                           std::shared_ptr<sf::RenderWindow> window) : m_runner(std::move(runner)),
+    WindowCloseHandler::WindowCloseHandler(Runner& runner,
+                                           std::shared_ptr<sf::RenderWindow> window) : m_runner(runner),
                                                                                      m_window(std::move(window)) {}
 
     void WindowCloseHandler::handle(const Event &event) {
@@ -12,7 +12,7 @@ namespace mad::core {
 
         if (event.type == Event::Type::WindowClose) {
             m_window->close();
-            m_runner->stop();
+            m_runner.stop();
         }
     }
 

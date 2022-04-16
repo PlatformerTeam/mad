@@ -22,12 +22,14 @@ namespace mad::core {
     public:
         explicit Menu(Menu::Type type);
 
-        virtual void process_menu_event(std::shared_ptr<MenuEvent> menu_event) = 0;
+        void process_menu_event(std::shared_ptr<MenuEvent> menu_event);
+
+        void produce(EventDispatcher &dispatcher) override;
 
         virtual ~Menu() = default;
 
     private:
-        std::queue<std::shared_ptr<MenuEvent>> events_queue;
+        std::queue<std::shared_ptr<MenuEvent>> m_events_queue;
         Menu::Type m_menu_type;
 
     };
