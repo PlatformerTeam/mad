@@ -6,7 +6,7 @@
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <loader/LevelLoader.hpp>
-#include <runner/SequentialRunner.hpp>
+#include <runner/GameRunner.hpp>
 #include <visual/Camera.hpp>
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
@@ -108,5 +108,19 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
+    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders {
+            std::make_shared<ExampleLevelLoader>()
+    };
 
+    auto game_runner = std::make_unique<mad::core::GameRunner>(
+            level_loaders,
+            global_dispatcher,
+            // TODO create main menu
+            ,
+            system_listener
+            );
+
+    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(game_runner, window));
+
+    game_runner->run(*window);
 }
