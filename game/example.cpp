@@ -140,14 +140,26 @@ int main(int argc, char *argv[]) {
         );
     }
 
-    //mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/brick.png", 50, 50, mad::core::StaticImage::TransformType::Fit);
+    //mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/static/brick.png", 50, 50, mad::core::StaticImage::TransformType::Fit);
     mad::core::Entity::Id static_id_1 = world->create_viewable_entity(
             2,
             mad::core::Vec2d{180.0f, 340.0f},-0.5,
-            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/brick.png", 300.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
+            std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/static/brick.png", 300.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
     );
 
-    /*mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/18plus.png");
+    mad::core::Entity::Id animated_id_1 = world->create_viewable_entity(
+            5,
+            mad::core::Vec2d{180.0f, 240.0f},0,
+            std::make_shared<mad::core::AnimatedImage>(mad::core::AnimatedImage("../../game/resources/animated/runner_new.png", 5, 2, 120))
+    );
+
+    mad::core::Entity::Id animated_id_2 = world->create_viewable_entity(
+            6,
+            mad::core::Vec2d{380.0f, 70.0f},0,
+            std::make_shared<mad::core::AnimatedImage>(mad::core::AnimatedImage("../../game/resources/animated/helicopter.png", 1, 4, 150))
+    );
+
+    /*mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/static/18plus.png");
     st_im_2.set_shape(400, 400, mad::core::StaticImage::TransformType::Tile);
     mad::core::Entity::Id static_id_2 = world->create_viewable_entity(
             0,
