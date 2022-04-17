@@ -7,9 +7,8 @@
 #include <event/physics/Collision.hpp>
 
 namespace mad::core{
-    class MyContactListener : public b2ContactListener
-    {
-        void BeginContact(b2Contact* contact) override{
+    class MyContactListener : public b2ContactListener {
+        void BeginContact(b2Contact *contact) override {
 
             b2BodyUserData dataA = contact->GetFixtureA()->GetBody()->GetUserData();
             b2BodyUserData dataB = contact->GetFixtureB()->GetBody()->GetUserData();
