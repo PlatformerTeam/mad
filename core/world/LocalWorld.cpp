@@ -1,5 +1,6 @@
 #include "LocalWorld.hpp"
 
+#include <spdlog/spdlog.h>
 #include <world/intent/LambdaIntent.hpp>
 #include <world/filter/TrueFilter.hpp>
 #include <common/Error.hpp>
@@ -36,11 +37,15 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     // calculating fps + dt
     sf::Time time = clock.getElapsedTime();
     dt = time.asSeconds() - last_time;
-    double fps = 1 / (time.asSeconds() - last_time);
+    sf::sleep(sf::seconds((1.0f/120) - dt));
     last_time = time.asSeconds();
+    float fact_dt = (1.0f/120);
+
+    //double fps = 1 / (time.asSeconds() - l_old);
+    //SPDLOG_INFO("FPS {}", fps);
 
     // simulating physics
-    m_physical_world.Step(dt * render_scale, 3, 10);
+    m_physical_world.Step(fact_dt * render_scale, 3, 10);
     for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
         if (&m_storage.get_entity(entity_id) != nullptr && cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {
             auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id));

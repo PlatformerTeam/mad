@@ -38,7 +38,7 @@ namespace mad::core {
         EntityStorage m_storage;
         b2World m_physical_world;
         float dt;
-        float render_scale = 5;
+        float render_scale = 3;
         sf::Clock clock;
         float last_time = 0;
         std::shared_ptr<mad::core::MyContactListener> m_contact_listener;
