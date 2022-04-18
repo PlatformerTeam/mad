@@ -8,6 +8,8 @@
 #include <event/management/handler/EventHandler.hpp>
 #include <visual/image/static/StaticImage.hpp>
 #include <visual/image/static/RenderableStatic.hpp>
+#include <visual/image/animated/AnimatedImage.hpp>
+#include <visual/image/animated/RenderableAnimated.hpp>
 #include <visual/image/shape/square/RenderableSquare.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>

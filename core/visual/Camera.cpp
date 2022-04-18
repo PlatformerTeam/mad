@@ -51,6 +51,12 @@ namespace mad::core {
                 break;
             }
             case Image::Type::Animated:
+                std::shared_ptr<AnimatedImage> animated_image = pointer_cast_to<AnimatedImage>(positional_appearance.get_image());
+                RenderableAnimated renderable_animated(animated_image,
+                                                   positional_appearance.get_position(),
+                                                   positional_appearance.get_rotation());
+                m_scene_list.insert({positional_appearance.get_z_index(),
+                                     std::make_shared<RenderableAnimated>(renderable_animated)});
                 break;
         }
     }
