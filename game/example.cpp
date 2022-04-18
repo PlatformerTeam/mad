@@ -1,6 +1,7 @@
 #include <event/management/producer/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/handler/WindowCloseHandler.hpp>
+#include <event/management/handler/CollisionHandler.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
@@ -73,11 +74,15 @@ private:
 int main(int argc, char *argv[]) {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
 
+    auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
-    auto world = std::make_shared<mad::core::LocalWorld>();
+    auto world = std::make_shared<mad::core::LocalWorld>(*dispatcher);
 
     auto camera = std::make_shared<mad::core::Camera>(mad::core::Vec2d{0.0f, 0.0f}, world);
+
+    auto collision_handler = std::make_shared<mad::core::CollisionHandler>();
 
     mad::core::Entity::Id square_id = world->create_viewable_entity(
             0,
@@ -156,12 +161,15 @@ int main(int argc, char *argv[]) {
     );*/
 
 
-    auto dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+
 
     camera->turn_on(*dispatcher);
 
     dispatcher->registry(camera);
+    dispatcher->registry(camera);
     dispatcher->registry(std::make_shared<ArrowController>(world, square_id1));
+
+    dispatcher->registry(collision_handler);
 
     auto runner = std::make_shared<mad::core::SequentialRunner>(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
                                                                 std::vector<std::shared_ptr<mad::core::Renderable>>{camera},

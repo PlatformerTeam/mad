@@ -18,9 +18,13 @@ set(
         event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/handler/EventHandler.hpp
         event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
+        event/management/handler/CollisionHandler.hpp
+        event/management/handler/CollisionHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
+        event/physics/Collision.hpp
+        event/physics/Collision.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
@@ -34,6 +38,7 @@ set(
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
+        world/entity/ContactListener/ContactListener.hpp
 
         runner/GameRunner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
