@@ -14,7 +14,7 @@ namespace mad::core {
         }
 
         [[nodiscard]] float get_filter_radius_sq() const noexcept {
-            return r;
+            return r * r;
         }
 
         [[nodiscard]] Vec2d get_filter_point() const noexcept {
