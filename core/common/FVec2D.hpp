@@ -1,11 +1,19 @@
 #ifndef MAD_CORE_COMMON_FVEC2D_HPP
 #define MAD_CORE_COMMON_FVEC2D_HPP
 
+#include <box2d/box2d.h>
+#include <SFML/System/Vector2.hpp>
+
 namespace mad::core {
+
 
     class Vec2d {
     public:
         Vec2d(float x, float y);
+        operator b2Vec2() const;
+
+        operator sf::Vector2<float>() const;
+
 
         [[nodiscard]] float get_x() const noexcept;
 

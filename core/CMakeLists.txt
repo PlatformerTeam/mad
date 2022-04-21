@@ -29,6 +29,9 @@ set(
         event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
         event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
 
+        event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
+        event/physics/Collision.hpp event/physics/Collision.cpp
+
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
@@ -40,6 +43,8 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
+        world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
+        world/entity/ContactListener/ContactListener.hpp
 
         menu/Menu.hpp menu/Menu.cpp
         menu/MainMenu.hpp menu/MainMenu.cpp
@@ -52,9 +57,13 @@ set(
         loader/LevelLoader.hpp
 
         visual/image/Image.hpp
+        visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
+        visual/image/shape/square/RenderableSquare.cpp visual/image/shape/square/RenderableSquare.hpp
+        visual/image/animated/RenderableAnimated.cpp visual/image/animated/RenderableAnimated.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
-        visual/image/shape/Square.cpp visual/image/shape/Square.hpp
+        visual/image/shape/square/Square.cpp visual/image/shape/square/Square.hpp
         visual/image/static/StaticImage.cpp visual/image/static/StaticImage.hpp
+        visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
 )

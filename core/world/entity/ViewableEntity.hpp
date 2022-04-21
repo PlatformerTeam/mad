@@ -6,6 +6,7 @@
 #include "common/Error.hpp"
 #include "visual/image/Image.hpp"
 #include "event/management/dispatcher/EventDispatcher.hpp"
+#include <visual/image/shape/Shape.hpp>
 
 
 #include <memory>
@@ -26,7 +27,7 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        explicit ViewableEntity(Id id, int z_ind, Vec2d initial_position, std::shared_ptr<Image> image);
+        explicit ViewableEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image);
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
@@ -34,14 +35,23 @@ namespace mad::core {
 
         void set_image_position(Vec2d new_position);
 
+        void set_image_rotation(float new_rotation);
+
+        void set_image_color(Color color);
+
         void move(Vec2d move_delta);
 
         void appear(EventDispatcher &dispatcher) const;
 
-    private:
+    protected:
         const Id m_id;
+
         int m_z_ind;
+
         std::shared_ptr<Vec2d> m_position;
+
+        std::shared_ptr<float> m_rotation;
+
         std::shared_ptr<Image> m_image;
     };
 

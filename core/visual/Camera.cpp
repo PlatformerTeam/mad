@@ -7,43 +7,6 @@
 
 namespace mad::core {
 
-    void Camera::render_shape(sf::RenderWindow &window, const Shape &shape, Vec2d position) {
-        switch (shape.get_geometry()) {
-            case Shape::Geometry::Square: {
-                Square square = const_cast_to<Square>(shape);
-                sf::RectangleShape render_square({square.get_side_length(), square.get_side_length()});
-
-                Color square_color = square.get_color();
-
-                render_square.setFillColor({square_color.get_red(),
-                                            square_color.get_green(),
-                                            square_color.get_blue()});
-
-                render_square.setPosition(position.get_x(), position.get_y());
-                window.draw(render_square);
-            }
-        }
-    }
-
-    void Camera::render_static(sf::RenderWindow &window, const StaticImage &static_image, Vec2d position) {
-
-        sf::Sprite render_sprite;
-        sf::Texture texture;
-
-        texture = static_image.get_texture();
-        render_sprite.setTexture(texture);
-
-        render_sprite.setScale(static_image.get_scale().get_x(), static_image.get_scale().get_y());
-
-        render_sprite.setPosition(position.get_x(), position.get_y());
-
-        if (static_image.get_rect()) {
-            render_sprite.setTextureRect(static_image.get_rect().value());
-        }
-
-        window.draw(render_sprite);
-    }
-
     void Camera::turn_on(EventDispatcher &event_dispatcher) {
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
@@ -51,26 +14,51 @@ namespace mad::core {
         m_world->manipulate(TrueFilter(), LambdaIntent(start_appearance));
     }
 
-    void Camera::render(sf::RenderWindow &window) {
-        for (const auto &[image, position] : m_scene_list) {
-            switch (image->type) {
-                case Image::Type::Shape: {
-                    auto shape_image = pointer_cast_to<Shape>(image);
-                    render_shape(window, *shape_image, *position);
-                    break;
-                }
-                case Image::Type::Static:
-                    auto static_image = pointer_cast_to<StaticImage>(image);
-                    render_static(window, *static_image, *position);
-                    break;
-            }
+    void Camera::render(sf::RenderWindow &window) const {
+        for (auto &[z_ind, renderable_image] : m_scene_list) {
+            renderable_image->render(window);
         }
     }
 
     void Camera::handle(const Event &event) {
         SPDLOG_INFO("Got positional appearance");
         const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
-        m_scene_list.emplace_back(positional_appearance.get_image(), positional_appearance.get_position());
+        std::shared_ptr<Image> image = positional_appearance.get_image();
+        switch (image->type) {
+
+            case Image::Type::Shape: {
+                std::shared_ptr<Shape> shape = pointer_cast_to<Shape>(image);
+
+                switch (shape->get_geometry()) {
+                    case Shape::Geometry::Square:
+                        std::shared_ptr<Square> square = pointer_cast_to<Square>(shape);
+                        RenderableSquare renderable_square(square,
+                                                           positional_appearance.get_position(),
+                                                           positional_appearance.get_rotation());
+                        m_scene_list.insert({positional_appearance.get_z_index(),
+                                             std::make_shared<RenderableSquare>(renderable_square)});
+                        break;
+                }
+                break;
+            }
+            case Image::Type::Static: {
+                std::shared_ptr<StaticImage> static_image = pointer_cast_to<StaticImage>(positional_appearance.get_image());
+                RenderableStatic renderable_static(static_image,
+                                                   positional_appearance.get_position(),
+                                                   positional_appearance.get_rotation());
+                m_scene_list.insert({positional_appearance.get_z_index(),
+                                     std::make_shared<RenderableStatic>(renderable_static)});
+                break;
+            }
+            case Image::Type::Animated:
+                std::shared_ptr<AnimatedImage> animated_image = pointer_cast_to<AnimatedImage>(positional_appearance.get_image());
+                RenderableAnimated renderable_animated(animated_image,
+                                                   positional_appearance.get_position(),
+                                                   positional_appearance.get_rotation());
+                m_scene_list.insert({positional_appearance.get_z_index(),
+                                     std::make_shared<RenderableAnimated>(renderable_animated)});
+                break;
+        }
     }
 
     std::unordered_set<Event::Type> Camera::handled_types() {
@@ -80,6 +68,12 @@ namespace mad::core {
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
             : m_position(initial_position),
               m_world(std::move(world)) {}
+
+    bool Camera::CompareScenes::operator()(const std::pair<int, std::shared_ptr<Renderable>> &a,
+                                           const std::pair<int, std::shared_ptr<Renderable>> &b) const {
+        return a.first == b.first ? a.second->get_unique_number() < b.second->get_unique_number()
+        : a.first < b.first;
+    }
 
 } // namespace mad::core
 

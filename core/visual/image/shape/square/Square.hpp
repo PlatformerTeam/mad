@@ -1,7 +1,7 @@
 #ifndef MAD_SQUARE_HPP
 #define MAD_SQUARE_HPP
 
-#include "Shape.hpp"
+#include "visual/image/shape/Shape.hpp"
 
 namespace mad::core {
 
