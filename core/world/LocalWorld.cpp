@@ -76,10 +76,10 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     }
 }
 
-mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
+mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
                                                                     std::shared_ptr<Image> image) {
-    return m_storage.create_viewable_entity(z_ind, initial_position, initial_rotation, image);
+    return m_storage.create_viewable_entity(type, z_ind, initial_position, initial_rotation, image);
 }
-mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
-    return m_storage.create_physical_entity(z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
+mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
+    return m_storage.create_physical_entity(type, z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
 }

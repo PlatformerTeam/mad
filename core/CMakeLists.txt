@@ -29,6 +29,7 @@ set(
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
+        world/filter/TagFilter.hpp
         world/filter/TrueFilter.hpp
         world/filter/IdFilter.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp

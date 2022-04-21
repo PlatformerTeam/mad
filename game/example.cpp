@@ -85,18 +85,21 @@ int main(int argc, char *argv[]) {
     auto collision_handler = std::make_shared<mad::core::CollisionHandler>();
 
     mad::core::Entity::Id square_id = world->create_viewable_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{25.0f, 25.0f},0,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
     );
 
     mad::core::Entity::Id square_id1 = world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             3,
             mad::core::Vec2d{100.0f, 25.0f},0,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
     );
 
     mad::core::Entity::Id square_id2 = world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{80.0f, 100.0f},0.5,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
@@ -104,6 +107,7 @@ int main(int argc, char *argv[]) {
     );
 
     mad::core::Entity::Id square_id3 = world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{180.0f, 180.0f},-0.5,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
@@ -111,6 +115,7 @@ int main(int argc, char *argv[]) {
     );
 
     mad::core::Entity::Id square_id4 = world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{80.0f, 260.0f},0.5,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
@@ -118,6 +123,7 @@ int main(int argc, char *argv[]) {
     );
 
     mad::core::Entity::Id square_id5 = world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{180.0f, 340.0f},-0.5,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
@@ -125,12 +131,14 @@ int main(int argc, char *argv[]) {
     );
 
     mad::core::Entity::Id square_id6 = world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{500.0f, 500.0f},0,
             std::make_shared<mad::core::Square>(500.0f, mad::core::Color::Green()),
             true
     );
     world->create_physical_entity(
+            mad::core::Entity::Type::SimpleObject,
             0,
             mad::core::Vec2d{800.0f, 0.0f},0,
             std::make_shared<mad::core::Square>(500.0f, mad::core::Color::Green()),
@@ -139,6 +147,7 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < 100; i++){
         world->create_physical_entity(
+                mad::core::Entity::Type::SimpleObject,
                 0,
                 mad::core::Vec2d{500 + (float)(rand() % 100), (float)(rand() % 100)},0,
                 std::make_shared<mad::core::Square>(5.0f, mad::core::Color::Green())
@@ -147,18 +156,21 @@ int main(int argc, char *argv[]) {
 
     //mad::core::StaticImage st_im_1 = mad::core::StaticImage("../../game/resources/static/brick.png", 50, 50, mad::core::StaticImage::TransformType::Fit);
     mad::core::Entity::Id static_id_1 = world->create_viewable_entity(
+            mad::core::Entity::Type::SimpleObject,
             2,
             mad::core::Vec2d{180.0f, 340.0f},-0.5,
             std::make_shared<mad::core::StaticImage>(mad::core::StaticImage("../../game/resources/static/brick.png", 300.0f, 50.0f, mad::core::StaticImage::TransformType::Fit))
     );
 
     mad::core::Entity::Id animated_id_1 = world->create_viewable_entity(
+            mad::core::Entity::Type::SimpleObject,
             5,
             mad::core::Vec2d{180.0f, 240.0f},0,
             std::make_shared<mad::core::AnimatedImage>(mad::core::AnimatedImage("../../game/resources/animated/runner_new.png", 5, 2, 120))
     );
 
     mad::core::Entity::Id animated_id_2 = world->create_viewable_entity(
+            mad::core::Entity::Type::SimpleObject,
             6,
             mad::core::Vec2d{380.0f, 70.0f},0,
             std::make_shared<mad::core::AnimatedImage>(mad::core::AnimatedImage("../../game/resources/animated/helicopter.png", 1, 4, 150))

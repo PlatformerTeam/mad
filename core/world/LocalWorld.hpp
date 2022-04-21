@@ -28,9 +28,9 @@ namespace mad::core {
 
         void produce(EventDispatcher &dispatcher) override;
 
-        Entity::Id create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) override;
+        Entity::Id create_viewable_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) override;
 
-        Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed = false) override;
+        Entity::Id create_physical_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed = false) override;
 
     private:
         std::shared_ptr<std::queue<std::shared_ptr<Event>>> m_step_events_queue;

@@ -9,5 +9,6 @@ namespace mad::core {
     mad::core::Entity::Id mad::core::Entity::get_id() const noexcept {
         return m_id;
     }
+    Entity::Entity(Entity::Type type) : type(type) {}
 
 }
