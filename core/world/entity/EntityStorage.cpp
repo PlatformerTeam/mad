@@ -1,11 +1,13 @@
 
 
 #include "EntityStorage.hpp"
-#include <world/filter/TagFilter.hpp>
+#include "world/filter/RadiusFilter.hpp"
+#include "world/filter/TrueFilter.hpp"
 #include <common/Error.hpp>
 #include <common/FVec2D.hpp>
 #include <memory>
 #include <visual/image/Image.hpp>
+#include <world/filter/TagFilter.hpp>
 
 
 namespace mad::core {
@@ -24,6 +26,21 @@ namespace mad::core {
             case Filter::Type::EntityTag: {
                 TagFilter tag_filter = const_cast_to<TagFilter>(filter);
                 return m_map_entities_by_tag[tag_filter.get_filter_tag()];
+            }
+
+            case Filter::Type::Radius: {
+                std::vector<Entity::Id> arr;
+
+                RadiusFilter radius_filter = const_cast_to<RadiusFilter>(filter);
+                for (Entity::Id entity_id : extract(TrueFilter())) {
+                    if ((&get_entity(entity_id)) != nullptr && cast_to_or_null<PhysicalEntity>(get_entity(entity_id)) != nullptr) {
+                        auto physical_entity = cast_to_or_null<PhysicalEntity>(get_entity(entity_id));
+                        if(dist_sq(physical_entity->get_position(), radius_filter.get_filter_point()) < radius_filter.get_filter_radius_sq()){
+                            arr.push_back(entity_id);
+                        }
+                    }
+                }
+                return arr;
             }
         }
     }

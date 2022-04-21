@@ -56,7 +56,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-        )
+        world/filter/RadiusFilter.hpp)
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 

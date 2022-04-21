@@ -51,4 +51,7 @@ namespace mad::core {
     Vec2d operator*(float k, Vec2d v) {
         return v *= k;
     }
+    float dist_sq(const Vec2d &v1, const Vec2d &v2) {
+        return (v1.get_x() - v2.get_x()) * (v1.get_x() - v2.get_x()) + (v1.get_y() - v2.get_y()) * (v1.get_y() - v2.get_y());
+    }
 }
