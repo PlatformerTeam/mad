@@ -33,13 +33,13 @@ namespace mad::core {
     public:
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
 
-        void turn_on(EventDispatcher &event_dispatcher);
+        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
 
         void render(sf::RenderWindow &window) const override;
 
         void handle(const Event &event) override;
 
-        void follow();
+        void follow(sf::RenderWindow &window) const;
 
         std::unordered_set<Event::Type> handled_types() override;
 
@@ -51,11 +51,15 @@ namespace mad::core {
     private:
         std::set<std::pair<int, std::shared_ptr<Renderable>>, CompareScenes> m_scene_list;
 
-        Vec2d m_position;
+        mutable Vec2d m_position;
+
+        mutable Vec2d m_previous_object_position;
 
         std::shared_ptr<World> m_world;
 
         std::optional<Entity::Id> m_chased_object;
+
+        mutable sf::View m_view;
     };
 
 }

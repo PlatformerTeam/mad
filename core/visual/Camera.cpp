@@ -7,7 +7,8 @@
 
 namespace mad::core {
 
-    void Camera::turn_on(EventDispatcher &event_dispatcher) {
+    void Camera::turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id) {
+        m_chased_object = chased_id;
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
         };
@@ -15,6 +16,7 @@ namespace mad::core {
     }
 
     void Camera::render(sf::RenderWindow &window) const {
+        follow(window);
         for (auto &[z_ind, renderable_image] : m_scene_list) {
             renderable_image->render(window);
         }
@@ -67,13 +69,19 @@ namespace mad::core {
 
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
             : m_position(initial_position),
-              m_world(std::move(world)) {}
+              m_previous_object_position(initial_position),
+              m_world(std::move(world)),
+              m_view(m_position, {640, 480}) {}
 
-    void Camera::follow() {
+    void Camera::follow(sf::RenderWindow &window) const {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
+            m_position = {m_previous_object_position.get_x() - m_position.get_x(), m_previous_object_position.get_y() - m_position.get_y()};
+            m_previous_object_position = position;
+            m_view.setCenter(m_position);
         }
+        window.setView(m_view);
     }
 
     bool Camera::CompareScenes::operator()(const std::pair<int, std::shared_ptr<Renderable>> &a,

@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
 
     auto world = std::make_shared<mad::core::LocalWorld>(*dispatcher);
 
-    auto camera = std::make_shared<mad::core::Camera>(mad::core::Vec2d{0.0f, 0.0f}, world);
+    auto camera = std::make_shared<mad::core::Camera>(mad::core::Vec2d{320.0f, 240.0f}, world);
 
     auto collision_handler = std::make_shared<mad::core::CollisionHandler>();
 
@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
 
 
 
-    camera->turn_on(*dispatcher);
+    camera->turn_on(*dispatcher, square_id1);
 
     dispatcher->registry(camera);
     dispatcher->registry(camera);
