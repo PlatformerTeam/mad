@@ -1,5 +1,3 @@
-
-
 #include "EntityStorage.hpp"
 #include "world/filter/RadiusFilter.hpp"
 #include "world/filter/TrueFilter.hpp"
