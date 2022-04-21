@@ -39,6 +39,8 @@ namespace mad::core {
 
         void handle(const Event &event) override;
 
+        void follow();
+
         std::unordered_set<Event::Type> handled_types() override;
 
         struct CompareScenes {
@@ -52,6 +54,8 @@ namespace mad::core {
         Vec2d m_position;
 
         std::shared_ptr<World> m_world;
+
+        std::optional<Entity::Id> m_chased_object;
     };
 
 }

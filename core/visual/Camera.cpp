@@ -69,6 +69,13 @@ namespace mad::core {
             : m_position(initial_position),
               m_world(std::move(world)) {}
 
+    void Camera::follow() {
+        if (m_chased_object) {
+            auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
+            Vec2d position = entity.get_image_position();
+        }
+    }
+
     bool Camera::CompareScenes::operator()(const std::pair<int, std::shared_ptr<Renderable>> &a,
                                            const std::pair<int, std::shared_ptr<Renderable>> &b) const {
         return a.first == b.first ? a.second->get_unique_number() < b.second->get_unique_number()
