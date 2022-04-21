@@ -36,6 +36,8 @@ namespace mad::core {
     Vec2d operator*(Vec2d v, float k);
 
     Vec2d operator*(float k, Vec2d v);
+
+    float dist_sq(const Vec2d &v1, const Vec2d &v2);
 }
 
 #endif //MAD_CORE_COMMON_FVEC2D_HPP
