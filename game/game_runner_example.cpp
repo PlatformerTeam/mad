@@ -99,7 +99,7 @@ public:
                 world);
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelPauseHandler>(*level_runner));
-        //level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
+        level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
 
         return level_runner;
     }

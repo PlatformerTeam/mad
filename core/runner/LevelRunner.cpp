@@ -28,8 +28,9 @@ namespace mad::core {
         while (m_level_is_running) {
             window.clear(sf::Color(0, 0, 0));
             if (m_is_in_pause) {
-                m_pause_menu->produce(*m_global_event_dispatcher);
+                m_pause_menu->produce(*m_level_event_dispatcher);
                 m_system_listener->produce(*m_global_event_dispatcher);
+                m_system_listener->produce(*m_level_event_dispatcher);
                 m_pause_menu->render(window);
             } else {
                 m_world->produce(*m_level_event_dispatcher);
