@@ -77,9 +77,9 @@ namespace mad::core {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
-            m_position = {m_previous_object_position.get_x() - m_position.get_x(), m_previous_object_position.get_y() - m_position.get_y()};
-            m_previous_object_position = position;
-            m_view.setCenter(m_position);
+//            m_position = {m_previous_object_position.get_x() - m_position.get_x(), m_previous_object_position.get_y() - m_position.get_y()};
+//            m_previous_object_position = position;
+            m_view.setCenter(position);
         }
         window.setView(m_view);
     }
