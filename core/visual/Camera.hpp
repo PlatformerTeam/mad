@@ -35,7 +35,7 @@ namespace mad::core {
 
         void turn_on(EventDispatcher &event_dispatcher);
 
-        void render(sf::RenderWindow &window) const override;
+        void render(sf::RenderWindow &window) override;
 
         void handle(const Event &event) override;
 

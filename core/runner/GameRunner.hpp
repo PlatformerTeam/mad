@@ -24,6 +24,8 @@ namespace mad::core {
 
         void start_game();
 
+        void stop_game();
+
         void run(sf::RenderWindow &window) override;
 
         void stop() override;

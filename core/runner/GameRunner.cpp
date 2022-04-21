@@ -14,7 +14,6 @@ namespace mad::core {
     }
 
     void GameRunner::run(sf::RenderWindow &window) {
-        //m_in_main_menu = false;
         while (m_running) {
             if (m_in_main_menu) {
                 window.clear(sf::Color(0, 0, 0));
@@ -25,7 +24,7 @@ namespace mad::core {
             } else {
                 for (auto &loader: m_level_loaders) {
                     if (m_in_main_menu) {
-                        return;
+                        break;
                     }
                     m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
                     m_current_level_runner->run(window);
@@ -43,6 +42,10 @@ namespace mad::core {
 
     void GameRunner::start_game() {
         m_in_main_menu = false;
+    }
+
+    void GameRunner::stop_game() {
+        m_in_main_menu = true;
     }
 
 } // namespace mad::core

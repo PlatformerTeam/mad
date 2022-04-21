@@ -31,7 +31,7 @@ namespace mad::core {
         }
     }
 
-    void RenderableStatic::render(sf::RenderWindow &window) const {
+    void RenderableStatic::render(sf::RenderWindow &window) {
         sf::Sprite render_sprite;
 
         render_sprite.setTexture(m_texture);

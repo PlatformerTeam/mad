@@ -1,4 +1,3 @@
-#include <event/management/producer/EventProducer.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/handler/LevelPauseHandler.hpp>
 #include <event/management/handler/MainMenuEventsHandler.hpp>
@@ -76,16 +75,19 @@ public:
     std::unique_ptr<mad::core::LevelRunner> load(
             std::shared_ptr<mad::core::EventDispatcher> global_dispatcher,
             std::shared_ptr<mad::core::SystemListener> system_listener) override {
-        auto world = std::make_shared<mad::core::LocalWorld>();
+        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+
+        auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
 
         auto camera = std::make_shared<mad::core::Camera>(mad::core::Vec2d{0.0f, 0.0f}, world);
 
         mad::core::Entity::Id square_id = world->create_viewable_entity(
                 0,
                 mad::core::Vec2d{0.0f, 0.0f},
-                std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()));
+                0,
+                std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
+        );
 
-        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
         camera->turn_on(*level_dispatcher);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
@@ -96,7 +98,8 @@ public:
                 camera,
                 global_dispatcher,
                 level_dispatcher,
-                world);
+                world
+        );
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelPauseHandler>(*level_runner));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
@@ -104,8 +107,6 @@ public:
         return level_runner;
     }
 };
-
-// TODO fix imgui errors in PauseMenu.cpp / MainMenu.cpp
 
 int main() {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
@@ -124,7 +125,7 @@ int main() {
             global_dispatcher,
             std::make_unique<mad::core::MainMenu>(),
             system_listener
-            );
+    );
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*game_runner, window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));

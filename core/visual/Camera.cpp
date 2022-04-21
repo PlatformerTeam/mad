@@ -14,7 +14,7 @@ namespace mad::core {
         m_world->manipulate(TrueFilter(), LambdaIntent(start_appearance));
     }
 
-    void Camera::render(sf::RenderWindow &window) const {
+    void Camera::render(sf::RenderWindow &window) {
         for (auto &[z_ind, renderable_image] : m_scene_list) {
             renderable_image->render(window);
         }

@@ -20,7 +20,7 @@ namespace mad::core {
         m_rect = {0, 0, m_width_sprite, m_height_sprite};
     }
 
-    void RenderableAnimated::render(sf::RenderWindow &window) const {
+    void RenderableAnimated::render(sf::RenderWindow &window){
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_texture);
 

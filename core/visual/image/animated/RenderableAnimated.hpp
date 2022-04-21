@@ -15,7 +15,7 @@ namespace mad::core {
         explicit RenderableAnimated(const std::shared_ptr<AnimatedImage> &animated_image,
                                     std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) const override;
+        void render(sf::RenderWindow &window) override;
 
         int get_unique_number() const noexcept override;
 

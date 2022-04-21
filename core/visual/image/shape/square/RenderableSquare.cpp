@@ -10,7 +10,7 @@ mad::core::RenderableSquare::RenderableSquare(std::shared_ptr<Shape> shape,
                                               m_unique_number(shape->get_unique_number()) {
 }
 
-void mad::core::RenderableSquare::render(sf::RenderWindow &window) const {
+void mad::core::RenderableSquare::render(sf::RenderWindow &window) {
     Square m_square = *pointer_cast_to<Square>(m_shape);
     sf::RectangleShape render_square({m_square.get_side_length(), m_square.get_side_length()});
     render_square.setOrigin(m_square.get_side_length() / 2, m_square.get_side_length() / 2);

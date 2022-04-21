@@ -17,7 +17,7 @@ namespace mad::core {
         RenderableSquare(std::shared_ptr<Shape> shape,
                          std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) const override;
+        void render(sf::RenderWindow &window) override;
 
         [[nodiscard]] int get_unique_number() const noexcept override;
 
