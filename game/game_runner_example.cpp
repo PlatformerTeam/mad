@@ -105,6 +105,8 @@ public:
     }
 };
 
+// TODO fix imgui errors in PauseMenu.cpp / MainMenu.cpp
+
 int main() {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
     ImGui::SFML::Init(*window);
