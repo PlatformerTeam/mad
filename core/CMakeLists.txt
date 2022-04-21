@@ -35,6 +35,8 @@ set(
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp
         world/entity/Entity.hpp world/entity/Entity.cpp
+        world/entity/Mobs/Mob.hpp
+        world/entity/Mobs/Mob.cpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
@@ -54,7 +56,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-)
+        )
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 

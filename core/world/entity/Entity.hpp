@@ -24,7 +24,7 @@ namespace mad::core {
         enum class Type {
             Enemy,
             SimpleObject,
-            Hero
+            Hero,
         };
 
         const Type type;
