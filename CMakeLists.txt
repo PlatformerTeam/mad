@@ -45,7 +45,6 @@ set(SOURCES_IMGUI
         ${DIRECTORY_IMGUI}/imgui_draw.cpp
         ${DIRECTORY_IMGUI}/imgui_tables.cpp
         ${DIRECTORY_IMGUI}/imgui_demo.cpp)
-add_library(${LIBRARY_IMGUI} SHARED ${SOURCES_IMGUI})
 
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
