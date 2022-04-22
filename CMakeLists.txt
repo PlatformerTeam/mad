@@ -45,8 +45,7 @@ set(SOURCES_IMGUI
         ${DIRECTORY_IMGUI}/imgui_draw.cpp
         ${DIRECTORY_IMGUI}/imgui_tables.cpp
         ${DIRECTORY_IMGUI}/imgui_demo.cpp)
-
-
+add_library(${LIBRARY_IMGUI} SHARED ${SOURCES_IMGUI})
 
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
@@ -56,6 +55,7 @@ set(IMGUI_DIR ${DIRECTORY_IMGUI})
 set(DIRECTORY_IMGUI_SFML ${PROJECT_SOURCE_DIR}/deps/imgui-sfml)
 set(INCLUDE_IMGUI_SFML ${DIRECTORY_IMGUI_SFML})
 set(SOURCES_IMGUI_SFML ${DIRECTORY_IMGUI_SFML}/imgui-SFML.cpp)
+add_library(${LIBRARY_IMGUI_SFML} PUBLIC ${SOURCES_IMGUI_SFML})
 
 message(STATUS "ImGui-sfml include: ${INCLUDE_IMGUI_SFML}")
 message(STATUS "ImGui-sfml library: ${LIBRARY_IMGUI_SFML}")
