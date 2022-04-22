@@ -39,9 +39,19 @@ namespace mad::core {
 
         void handle(const Event &event) override;
 
-        void follow(sf::RenderWindow &window) const;
+        void follow(sf::RenderWindow &window, float smoothness) const;
+
+        void set_position(const Vec2d &position);
+
+        void set_rotation(float angle);
+
+        void set_zoom(float zoom);
+
+        sf::View get_view() const noexcept;
 
         std::unordered_set<Event::Type> handled_types() override;
+
+        int get_unique_number() const noexcept override;
 
         struct CompareScenes {
             bool operator() (const std::pair<int, std::shared_ptr<Renderable>> &a,
@@ -52,8 +62,6 @@ namespace mad::core {
         std::set<std::pair<int, std::shared_ptr<Renderable>>, CompareScenes> m_scene_list;
 
         mutable Vec2d m_position;
-
-        mutable Vec2d m_previous_object_position;
 
         std::shared_ptr<World> m_world;
 

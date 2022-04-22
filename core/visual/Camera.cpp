@@ -16,7 +16,7 @@ namespace mad::core {
     }
 
     void Camera::render(sf::RenderWindow &window) const {
-        follow(window);
+        follow(window, 0.09f);
         for (auto &[z_ind, renderable_image] : m_scene_list) {
             renderable_image->render(window);
         }
@@ -69,19 +69,37 @@ namespace mad::core {
 
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
             : m_position(initial_position),
-              m_previous_object_position(initial_position),
               m_world(std::move(world)),
               m_view(m_position, {640, 480}) {}
 
-    void Camera::follow(sf::RenderWindow &window) const {
+    void Camera::follow(sf::RenderWindow &window, float smoothness) const {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
-//            m_position = {m_previous_object_position.get_x() - m_position.get_x(), m_previous_object_position.get_y() - m_position.get_y()};
-//            m_previous_object_position = position;
-            m_view.setCenter(position);
+            m_view.move((position - m_position) * smoothness);
+            m_position += (position - m_position) * smoothness;
         }
         window.setView(m_view);
+    }
+
+    sf::View Camera::get_view() const noexcept {
+        return m_view;
+    }
+
+    void Camera::set_position(const Vec2d &position) {
+        m_position = position;
+    }
+
+    void Camera::set_rotation(float angle) {
+        m_view.setRotation(angle);
+    }
+
+    void Camera::set_zoom(float zoom) {
+        m_view.zoom(zoom);
+    }
+
+    int Camera::get_unique_number() const noexcept {
+        return 0;
     }
 
     bool Camera::CompareScenes::operator()(const std::pair<int, std::shared_ptr<Renderable>> &a,

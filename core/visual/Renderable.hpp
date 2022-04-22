@@ -12,8 +12,7 @@ namespace mad::core {
     public:
         virtual void render(sf::RenderWindow &window) const = 0;
 
-        [[nodiscard]] virtual int get_unique_number() const noexcept {
-        }
+        [[nodiscard]] virtual int get_unique_number() const noexcept = 0;
     };
 }
 
