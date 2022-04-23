@@ -23,7 +23,7 @@ namespace mad::core {
                 std::shared_ptr<EventDispatcher> dispatchers
         );
 
-        [[noreturn]] void run(sf::RenderWindow &window) override;
+        void run(sf::RenderWindow &window) override;
 
         void stop() override;
 

@@ -68,29 +68,33 @@ set(
         visual/Camera.cpp visual/Camera.hpp
 )
 
-add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
+add_library(
+        ${LIBRARY_CORE} SHARED
+
+        ${SOURCES_CORE}
+        ${SOURCES_IMGUI}
+        ${SOURCES_IMGUI_SFML}
+)
 
 # Core headers
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_CORE})
-
-# Core librayr uses sfml
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
 
 # Core library uses box2d for physics
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_BOX2D})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_BOX2D})
 
 # Core library uses SFML for interface
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SFML})
+target_include_directories(${LIBRARY_CORE} PUBLIC ${SFML_INCLUDE_DIR})
 target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
 
-# Core library uses imgui for interface
+# Core library uses imgui for gui
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI})
+
+# Core library uses OpenGL as a graphics backend
+target_link_libraries(${LIBRARY_CORE} ${LIBRARY_OPENGL})
 
 # Core library uses imgui-SFML for interface
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI_SFML})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI_SFML})
 
 # Core library uses spdlog for logging
 target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SPDLOG})

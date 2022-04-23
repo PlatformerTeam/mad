@@ -5,6 +5,7 @@
 
 #include <imgui.h>
 #include <imgui-SFML.h>
+#include <common/Error.hpp>
 
 namespace mad::core {
 
@@ -13,6 +14,7 @@ namespace mad::core {
         virtual void render(sf::RenderWindow &window) = 0;
 
         [[nodiscard]] virtual int get_unique_number() const noexcept {
+            NOT_IMPLEMENTED
         }
     };
 }

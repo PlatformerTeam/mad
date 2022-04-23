@@ -5,17 +5,19 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-#SFML
-find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
-set(
-        LIBRARY_SFML
-        sfml-graphics
-        sfml-audio
-)
+# SFML
+find_package(SFML 2.5 COMPONENTS system window graphics audio REQUIRED)
+set(LIBRARY_SFML sfml-system sfml-window sfml-graphics sfml-audio)
+set(INCLUDE_SFML ${SFML_INCLUDE_DIR})
+message(STATUS "SFML include: ${INCLUDE_SFML}")
+message(STATUS "SFML library: ${LIBRARY_SFML}")
 
-#OpenGL
+# OpenGL
 find_package(OpenGL REQUIRED)
 set(LIBRARY_OPENGL ${OPENGL_LIBRARIES})
+set(INCLUDE_OPENGL ${OPENGL_INCLUDE_DIRS})
+message(STATUS "OpenGL include: ${INCLUDE_OPENGL}")
+message(STATUS "OpenGL library: ${LIBRARY_OPENGL}")
 
 # Testing framework
 set(DIRECTORY_GTEST ${PROJECT_SOURCE_DIR}/deps/googletest)
@@ -47,17 +49,16 @@ set(SOURCES_IMGUI
         ${DIRECTORY_IMGUI}/imgui_demo.cpp)
 
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
-message(STATUS "ImGui library: ${LIBRARY_IMGUI}")
+message(STATUS "ImGui sources: ${SOURCES_IMGUI}")
 
 # ImGui-sfml library
 set(IMGUI_DIR ${DIRECTORY_IMGUI})
 set(DIRECTORY_IMGUI_SFML ${PROJECT_SOURCE_DIR}/deps/imgui-sfml)
 set(INCLUDE_IMGUI_SFML ${DIRECTORY_IMGUI_SFML})
 set(SOURCES_IMGUI_SFML ${DIRECTORY_IMGUI_SFML}/imgui-SFML.cpp)
-add_library(${LIBRARY_IMGUI_SFML} PUBLIC ${SOURCES_IMGUI_SFML})
 
 message(STATUS "ImGui-sfml include: ${INCLUDE_IMGUI_SFML}")
-message(STATUS "ImGui-sfml library: ${LIBRARY_IMGUI_SFML}")
+message(STATUS "ImGui-sfml sources: ${SOURCES_IMGUI_SFML}")
 
 # Spdlog library
 set(DIRECTORY_SPDLOG ${PROJECT_SOURCE_DIR}/deps/spdlog)
