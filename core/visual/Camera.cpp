@@ -21,7 +21,7 @@ namespace mad::core {
     }
 
     void Camera::handle(const Event &event) {
-        SPDLOG_INFO("Got positional appearance");
+        SPDLOG_DEBUG("Got positional appearance");
         const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
         std::shared_ptr<Image> image = positional_appearance.get_image();
         switch (image->type) {

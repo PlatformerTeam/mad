@@ -27,7 +27,7 @@ public:
           m_entity_id(entity_id) {}
 
     void handle(const mad::core::Event &event) override {
-        SPDLOG_INFO("handle arrow event");
+        SPDLOG_DEBUG("handle arrow event");
 
         auto make_move_intent = [](mad::core::Vec2d dir) {
             return mad::core::LambdaIntent(
@@ -36,33 +36,34 @@ public:
                     });
         };
 
-        if (event.type == mad::core::Event::Type::KeyPressed) {
-            const auto &keystroke = mad::core::const_cast_to<mad::core::KeyPressed>(event);
-            if (keystroke.key_id == sf::Keyboard::Key::Up) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, -10.0f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Down) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 10.0f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Left) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{-10.0f, 0.0f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Right) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{10.0f, 0.0f}));
-            }
-        } else if (event.type == mad::core::Event::Type::KeyHeld) {
+//        if (event.type == mad::core::Event::Type::KeyPressed) {
+//            const auto &keystroke = mad::core::const_cast_to<mad::core::KeyPressed>(event);
+//            if (keystroke.key_id == sf::Keyboard::Key::Up) {
+//                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, -10.0f}));
+//            } else if (keystroke.key_id == sf::Keyboard::Key::Down) {
+//                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 10.0f}));
+//            } else if (keystroke.key_id == sf::Keyboard::Key::Left) {
+//                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{-10.0f, 0.0f}));
+//            } else if (keystroke.key_id == sf::Keyboard::Key::Right) {
+//                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{10.0f, 0.0f}));
+//            }
+//        } else
+        if (event.type == mad::core::Event::Type::KeyHeld) {
             const auto &keystroke = mad::core::const_cast_to<mad::core::KeyHeld>(event);
             if (keystroke.key_id == sf::Keyboard::Key::Up) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, -0.01f}));
+                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, -1.f}));
             } else if (keystroke.key_id == sf::Keyboard::Key::Down) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 0.01f}));
+                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 1.f}));
             } else if (keystroke.key_id == sf::Keyboard::Key::Left) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{-0.01f, 0.0f}));
+                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{-1.f, 0.0f}));
             } else if (keystroke.key_id == sf::Keyboard::Key::Right) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.01f, 0.0f}));
+                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{1.f, 0.0f}));
             }
         }
     }
 
     std::unordered_set<mad::core::Event::Type> handled_types() override {
-        return {mad::core::Event::Type::KeyPressed, mad::core::Event::Type::KeyHeld};
+        return {mad::core::Event::Type::KeyHeld};
     }
 
 private:
@@ -111,6 +112,7 @@ public:
 int main() {
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
     ImGui::SFML::Init(*window);
+    window->setFramerateLimit(60);
 
     auto global_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 

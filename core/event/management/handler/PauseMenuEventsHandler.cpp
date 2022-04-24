@@ -12,7 +12,7 @@ namespace mad::core {
     PauseMenuEventsHandler::PauseMenuEventsHandler(LevelRunner &runner) : m_runner(runner) { }
 
     void PauseMenuEventsHandler::handle(const Event &event) {
-        SPDLOG_INFO("handle pause menu event");
+        SPDLOG_DEBUG("handle pause menu event");
 
         if (event.type == Event::Type::Menu) {
             const auto &menu_event = const_cast_to<MenuEvent>(event);

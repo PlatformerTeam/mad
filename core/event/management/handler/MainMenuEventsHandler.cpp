@@ -10,7 +10,7 @@ namespace mad::core {
     MainMenuEventsHandler::MainMenuEventsHandler(GameRunner &runner) : m_runner(runner) { }
 
     void MainMenuEventsHandler::handle(const Event &event) {
-        SPDLOG_INFO("handle start game event");
+        SPDLOG_DEBUG("handle start game event");
 
         if (event.type == Event::Type::Menu) {
             const auto &menu_event = const_cast_to<MenuEvent>(event);

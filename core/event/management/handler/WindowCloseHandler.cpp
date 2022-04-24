@@ -12,7 +12,7 @@ namespace mad::core {
                                                                                      m_window(std::move(window)) {}
 
     void WindowCloseHandler::handle(const Event &event) {
-        SPDLOG_INFO("handle window closing event");
+        SPDLOG_DEBUG("handle window closing event");
 
         if (event.type == Event::Type::WindowClose) {
             m_window->close();

@@ -9,7 +9,7 @@ namespace mad::core {
     LevelPauseHandler::LevelPauseHandler(LevelRunner& runner) : m_runner(runner) { }
 
     void LevelPauseHandler::handle(const Event &event) {
-        SPDLOG_INFO("handle level pause event");
+        SPDLOG_DEBUG("handle level pause event");
 
         if (event.type == Event::Type::KeyPressed) {
             const auto &keystroke = const_cast_to<KeyPressed>(event);
