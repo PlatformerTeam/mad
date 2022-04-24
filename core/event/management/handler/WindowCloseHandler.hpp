@@ -16,7 +16,7 @@ namespace mad::core {
     class WindowCloseHandler : public EventHandler {
     public:
         explicit WindowCloseHandler(Runner& runner,
-                                    std::shared_ptr<sf::RenderWindow> window);
+                                    sf::RenderWindow& window);
 
         void handle(const Event &event) override;
 
@@ -24,7 +24,7 @@ namespace mad::core {
 
     private:
         Runner& m_runner;
-        std::shared_ptr<sf::RenderWindow> m_window;
+        sf::RenderWindow& m_window;
     };
 
 }

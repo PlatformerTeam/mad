@@ -129,7 +129,7 @@ int main() {
             system_listener
     );
 
-    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*game_runner, window));
+    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*game_runner, *window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
 
     game_runner->run(*window);
