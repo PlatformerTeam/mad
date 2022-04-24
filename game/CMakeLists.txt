@@ -8,6 +8,11 @@ function(game_executable EXECUTABLE_GAME_NAME EXECUTABLE_SOURCES)
             ${SOURCES_IMGUI_SFML}
     )
 
+    if (CMAKE_BUILD_TYPE MATCHES Debug)
+        target_compile_definitions(${EXECUTABLE_GAME_NAME} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
+        message(STATUS "Enable debug logs for ${EXECUTABLE_GAME_NAME}")
+    endif()
+
     target_include_directories(
             ${EXECUTABLE_GAME_NAME} PUBLIC
 
@@ -27,6 +32,7 @@ function(game_executable EXECUTABLE_GAME_NAME EXECUTABLE_SOURCES)
             ${LIBRARY_BOX2D}
             ${LIBRARY_OPENGL}
     )
+
 endfunction()
 
 game_executable(${EXECUTABLE_GAME} example.cpp)

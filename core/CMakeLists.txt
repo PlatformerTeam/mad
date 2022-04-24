@@ -76,6 +76,11 @@ add_library(
         ${SOURCES_IMGUI_SFML}
 )
 
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    target_compile_definitions(${LIBRARY_CORE} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
+    message(STATUS "Enable debug logs for ${LIBRARY_CORE}")
+endif()
+
 target_include_directories(
         ${LIBRARY_CORE} PUBLIC
 
