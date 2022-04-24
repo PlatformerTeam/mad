@@ -27,7 +27,7 @@ namespace mad::core {
         const Type type;
 
     private:
-        int m_unique_number;
+        int m_unique_number{};
     };
 }
 

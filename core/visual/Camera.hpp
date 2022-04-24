@@ -30,6 +30,9 @@
 namespace mad::core {
 
     class Camera : public Renderable, public EventHandler {
+    private:
+        using RenderableWithIndex = std::pair<int, std::shared_ptr<Renderable>>;
+
     public:
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
 
@@ -41,13 +44,10 @@ namespace mad::core {
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        struct CompareScenes {
-            bool operator() (const std::pair<int, std::shared_ptr<Renderable>> &a,
-                             const std::pair<int, std::shared_ptr<Renderable>> &b) const;
-        };
-
     private:
-        std::set<std::pair<int, std::shared_ptr<Renderable>>, CompareScenes> m_scene_list;
+        void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
+
+        std::vector<std::pair<int, std::shared_ptr<Renderable>>> m_scene_list;
 
         Vec2d m_position;
 
