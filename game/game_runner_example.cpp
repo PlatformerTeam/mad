@@ -23,8 +23,8 @@ class ArrowController : public mad::core::EventHandler {
 public:
     explicit ArrowController(std::shared_ptr<mad::core::World> world,
                              mad::core::Entity::Id entity_id)
-        : m_world(std::move(world)),
-          m_entity_id(entity_id) {}
+            : m_world(std::move(world)),
+              m_entity_id(entity_id) {}
 
     void handle(const mad::core::Event &event) override {
         SPDLOG_DEBUG("handle arrow event");
@@ -110,6 +110,13 @@ public:
 };
 
 int main() {
+#ifndef NDEBUG
+    auto log_level = spdlog::level::trace;
+#else
+    auto log_level = spdlog::level::info;
+#endif
+    spdlog::set_level(log_level);
+
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
     ImGui::SFML::Init(*window);
     window->setFramerateLimit(60);
@@ -118,7 +125,7 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
-    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders {
+    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
             std::make_shared<ExampleLevelLoader>()
     };
 
