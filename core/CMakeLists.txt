@@ -69,33 +69,29 @@ set(
 )
 
 add_library(
-        ${LIBRARY_CORE} SHARED
+        ${LIBRARY_CORE} STATIC
 
         ${SOURCES_CORE}
         ${SOURCES_IMGUI}
         ${SOURCES_IMGUI_SFML}
 )
 
-# Core headers
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_CORE})
+target_include_directories(
+        ${LIBRARY_CORE} PUBLIC
 
-# Core library uses box2d for physics
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_BOX2D})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_BOX2D})
+        ${INCLUDE_CORE}
+        ${INCLUDE_BOX2D}
+        ${INCLUDE_SFML}
+        ${INCLUDE_IMGUI}
+        ${INCLUDE_IMGUI_SFML}
+        ${INCLUDE_SPDLOG}
+)
 
-# Core library uses SFML for interface
-target_include_directories(${LIBRARY_CORE} PUBLIC ${SFML_INCLUDE_DIR})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
+target_link_libraries(
+        ${LIBRARY_CORE}
 
-# Core library uses imgui for gui
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI})
-
-# Core library uses OpenGL as a graphics backend
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_OPENGL})
-
-# Core library uses imgui-SFML for interface
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI_SFML})
-
-# Core library uses spdlog for logging
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SPDLOG})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SPDLOG})
+        ${LIBRARY_SFML}
+        ${LIBRARY_SPDLOG}
+        ${LIBRARY_BOX2D}
+        ${LIBRARY_OPENGL}
+)
