@@ -186,7 +186,7 @@ int main(int argc, char *argv[]) {
     auto runner = std::make_shared<mad::core::SequentialRunner>(std::vector<std::shared_ptr<mad::core::EventProducer>>{system_listener, world},
                                                                 std::vector<std::shared_ptr<mad::core::Renderable>>{camera},
                                                                 dispatcher);
-    dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*runner, window));
+    dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*runner, *window));
 
     runner->run(*window);
 }
