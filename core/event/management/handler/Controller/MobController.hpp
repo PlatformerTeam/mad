@@ -7,13 +7,13 @@ namespace mad::core {
 
     class MobController : public Controller {
     public:
-        explicit MobController();
+        explicit MobController(std::shared_ptr<EntityStorage> m_storage);
 
         void handle(const Event &event) override;
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        void control(EntityStorage &m_storage) override;
+        void control() override;
 
     private:
 

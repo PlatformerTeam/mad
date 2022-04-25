@@ -18,6 +18,8 @@ mad::core::LocalWorld::LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravi
 
     m_contact_listener = std::make_shared<mad::core::MyContactListener>(event_dispatcher);
     m_physical_world.SetContactListener(&*m_contact_listener);
+    m_storage = std::make_shared<mad::core::EntityStorage>();
+    m_controller = std::make_shared<MobController>(m_storage);
 }
 
 
@@ -25,8 +27,8 @@ bool mad::core::LocalWorld::manipulate(const mad::core::Filter &filter, const ma
     //CHECK_THROW(is_legal(validate_filter(f), IllegalManipulation, "Illegal filter");
     //CHECK_THROW(is_legal(validate_intent(i), IllegalManipulation, "Illegal intent");
 
-    for (Entity::Id entity_id : m_storage.extract(filter)) {
-        m_storage.get_entity(entity_id).accept(*this, intent, *m_event_queue_dispatcher);
+    for (Entity::Id entity_id : m_storage->extract(filter)) {
+        m_storage->get_entity(entity_id).accept(*this, intent, *m_event_queue_dispatcher);
     }
 
     return true;
@@ -46,9 +48,9 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
 
     // simulating physics
     m_physical_world.Step(fact_dt * render_scale, 3, 10);
-    for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
-        if (&m_storage.get_entity(entity_id) != nullptr && cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {
-            auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id));
+    for (Entity::Id entity_id : m_storage->extract(TrueFilter())) {
+        if (&m_storage->get_entity(entity_id) != nullptr && cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id)) != nullptr) {
+            auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id));
             physical_entity->synchronize_position_with_viewable();
         }
     }
@@ -76,13 +78,13 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     }
 
     //control
-    m_controller.control(m_storage);
+    m_controller->control();
 }
 
 mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
                                                                     std::shared_ptr<Image> image) {
-    return m_storage.create_viewable_entity(type, z_ind, initial_position, initial_rotation, image);
+    return m_storage->create_viewable_entity(type, z_ind, initial_position, initial_rotation, image);
 }
 mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
-    return m_storage.create_physical_entity(type, z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
+    return m_storage->create_physical_entity(type, z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
 }

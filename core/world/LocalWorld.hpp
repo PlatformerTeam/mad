@@ -36,9 +36,9 @@ namespace mad::core {
     private:
         std::shared_ptr<std::queue<std::shared_ptr<Event>>> m_step_events_queue;
         std::unique_ptr<DelayedDispatcher> m_event_queue_dispatcher;
-        EntityStorage m_storage;
+        std::shared_ptr<EntityStorage> m_storage;
         b2World m_physical_world;
-        MobController m_controller;
+        std::shared_ptr<MobController> m_controller;
         float dt;
         float render_scale = 3;
         sf::Clock clock;
