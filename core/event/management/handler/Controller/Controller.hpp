@@ -7,15 +7,16 @@ namespace mad::core {
 
     class Controller : public EventHandler {
     public:
-        explicit Controller();
+        explicit Controller(std::shared_ptr<EntityStorage> m_storage);
 
         void handle(const Event &event) override;
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        virtual void control(EntityStorage &m_storage) = 0;
+        virtual void control() = 0;
 
-    private:
+    protected:
+        std::shared_ptr<EntityStorage> m_storage;
     };
 
 }// namespace mad::core
