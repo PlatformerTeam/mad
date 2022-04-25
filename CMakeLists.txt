@@ -87,6 +87,13 @@ add_subdirectory(${DIRECTORY_GAME})
 message(STATUS "Game executable: ${EXECUTABLE_GAME}")
 message(STATUS "Game-runner executable ${EXECUTABLE_GAME_RUNNER}")
 
+# Sandbox binaries
+set(DIRECTORY_SANDBOX ${PROJECT_SOURCE_DIR}/miron_sandbox)
+set(EXECUTABLE_SANDBOX sandbox)
+
+add_subdirectory(${DIRECTORY_SANDBOX})
+message(STATUS "Sandbox executable: ${EXECUTABLE_SANDBOX}")
+
 # Tests
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)
 set(EXECUTABLE_TEST test)

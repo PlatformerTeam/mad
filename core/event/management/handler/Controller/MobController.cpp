@@ -23,7 +23,7 @@ void mad::core::MobController::control() {
     for (Entity::Id entity_id : m_storage->extract(TagFilter(Entity::Type::Enemy))) {
         if (&m_storage->get_entity(entity_id) != nullptr && cast_to_or_null<Mob>(m_storage->get_entity(entity_id)) != nullptr) {
             auto mob = cast_to_or_null<Mob>(m_storage->get_entity(entity_id));
-            mob->set_image_color(Color(200, 200, rand() % 256));
+            mob->set_image_color(Color(rand() % 256, rand() % 256, rand() % 256));
         }
     }
 }
