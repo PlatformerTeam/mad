@@ -47,6 +47,7 @@ set(
         world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
         world/entity/ContactListener/ContactListener.hpp
         world/filter/RadiusFilter.hpp
+        world/filter/TagRadiusFilter.hpp
 
         runner/GameRunner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
@@ -61,7 +62,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-        )
+)
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 

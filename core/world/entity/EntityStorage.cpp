@@ -1,6 +1,7 @@
 #include "EntityStorage.hpp"
 #include "world/entity/Mobs/Mob.hpp"
 #include "world/filter/RadiusFilter.hpp"
+#include "world/filter/TagRadiusFilter.hpp"
 #include "world/filter/TrueFilter.hpp"
 #include <common/Error.hpp>
 #include <common/FVec2D.hpp>
@@ -34,7 +35,27 @@ namespace mad::core {
                 for (Entity::Id entity_id : extract(TrueFilter())) {
                     if ((&get_entity(entity_id)) != nullptr && cast_to_or_null<PhysicalEntity>(get_entity(entity_id)) != nullptr) {
                         auto physical_entity = cast_to_or_null<PhysicalEntity>(get_entity(entity_id));
+                        float t1 = dist_sq(physical_entity->get_position(), radius_filter.get_filter_point());
+                        float t2 = radius_filter.get_filter_radius_sq();
                         if (dist_sq(physical_entity->get_position(), radius_filter.get_filter_point()) < radius_filter.get_filter_radius_sq()) {
+                            arr.push_back(entity_id);
+                        }
+                    }
+                }
+                return arr;
+            }
+
+            case Filter::Type::TagRadius: {
+                std::vector<Entity::Id> arr;
+
+                auto tag_radius_filter = const_cast_to<TagRadiusFilter>(filter);
+                for (Entity::Id entity_id : extract(TrueFilter())) {
+                    if ((&get_entity(entity_id)) != nullptr && cast_to_or_null<PhysicalEntity>(get_entity(entity_id)) != nullptr) {
+                        auto physical_entity = cast_to_or_null<PhysicalEntity>(get_entity(entity_id));
+                        float t1 = dist_sq(physical_entity->get_position(), tag_radius_filter.get_filter_point());
+                        float t2 = tag_radius_filter.get_filter_radius_sq();
+                        if (dist_sq(physical_entity->get_position(), tag_radius_filter.get_filter_point()) < tag_radius_filter.get_filter_radius_sq() &&
+                            physical_entity->type == tag_radius_filter.get_filter_tag()) {
                             arr.push_back(entity_id);
                         }
                     }
@@ -64,7 +85,7 @@ namespace mad::core {
         if (type == Entity::Type::SimpleObject) {
             m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(type, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
         }
-        if (type == Entity::Type::Enemy) {
+        if (type == Entity::Type::Enemy || type == Entity::Type::Hero) {
             m_map_entities[new_entity_id] = std::make_unique<Mob>(type, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
         }
         m_map_entities_by_tag[type].push_back(new_entity_id);

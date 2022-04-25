@@ -15,6 +15,7 @@ namespace mad::core {
             True,
             EntityTag,
             Radius,
+            TagRadius
         };
 
         explicit Filter(Type new_type) : type(new_type) {

@@ -20,6 +20,7 @@ mad::core::LocalWorld::LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravi
     m_physical_world.SetContactListener(&*m_contact_listener);
     m_storage = std::make_shared<mad::core::EntityStorage>();
     m_controller = std::make_shared<MobController>(m_storage);
+    event_dispatcher.registry(m_controller);
 }
 
 
