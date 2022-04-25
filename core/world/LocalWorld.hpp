@@ -15,6 +15,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "event/management/handler/Controller/MobController.hpp"
 #include <queue>
 
 
@@ -37,6 +38,7 @@ namespace mad::core {
         std::unique_ptr<DelayedDispatcher> m_event_queue_dispatcher;
         EntityStorage m_storage;
         b2World m_physical_world;
+        MobController m_controller;
         float dt;
         float render_scale = 3;
         sf::Clock clock;

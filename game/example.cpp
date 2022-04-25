@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
     );
 
     mad::core::Entity::Id square_id1 = world->create_physical_entity(
-            mad::core::Entity::Type::SimpleObject,
+            mad::core::Entity::Type::Enemy,
             3,
             mad::core::Vec2d{100.0f, 25.0f},0,
             std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())

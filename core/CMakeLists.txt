@@ -25,6 +25,10 @@ set(
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
         event/physics/Collision.hpp
         event/physics/Collision.cpp
+        event/management/handler/Controller/Controller.hpp
+        event/management/handler/Controller/Controller.cpp
+        event/management/handler/Controller/MobController.hpp
+        event/management/handler/Controller/MobController.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
@@ -42,6 +46,7 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
         world/entity/ContactListener/ContactListener.hpp
+        world/filter/RadiusFilter.hpp
 
         runner/GameRunner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
@@ -56,7 +61,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-        world/filter/RadiusFilter.hpp)
+        )
 
 add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
 

@@ -74,6 +74,9 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
         dispatcher.dispatch(m_step_events_queue->front());
         m_step_events_queue->pop();
     }
+
+    //control
+    m_controller.control(m_storage);
 }
 
 mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,

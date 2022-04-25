@@ -21,7 +21,7 @@ namespace mad::core {
 
     public:
         explicit Mob(Entity::Type e_type, Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed);
-        virtual void take_damage(float damage) = 0;
+        //virtual void take_damage(float damage) = 0;
 
 
     private:

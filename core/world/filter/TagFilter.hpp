@@ -6,7 +6,7 @@
 namespace mad::core {
 
     struct TagFilter : Filter {
-        explicit TagFilter(Entity::Type filter_tag) : Filter(Filter::Type::Id), m_filter_tag(filter_tag) {
+        explicit TagFilter(Entity::Type filter_tag) : Filter(Filter::Type::EntityTag), m_filter_tag(filter_tag) {
         }
 
         [[nodiscard]] Entity::Type get_filter_tag() const noexcept {
