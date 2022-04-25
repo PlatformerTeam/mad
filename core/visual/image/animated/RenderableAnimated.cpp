@@ -7,8 +7,7 @@ namespace mad::core {
     RenderableAnimated::RenderableAnimated(const std::shared_ptr<AnimatedImage> &animated_image,
                                            std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
     : m_delta_time(animated_image->get_delta_time()),
-    m_position(std::move(position)), m_rotation(std::move(rotation)),
-    m_unique_number(animated_image->get_unique_number()) {
+    m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
         CHECK_THROW(m_texture.loadFromFile(
                             animated_image->get_path()),
@@ -41,10 +40,6 @@ namespace mad::core {
         window.draw(render_sprite);
     }
 
-    int RenderableAnimated::get_unique_number() const noexcept {
-        return m_unique_number;
-    }
-
     void RenderableAnimated::update_frame() const {
         if (m_rect.left + m_width_sprite >= m_texture.getSize().x) {
             m_rect.left = 0;
@@ -57,6 +52,5 @@ namespace mad::core {
             m_rect.left += m_width_sprite;
         }
     }
-
 
 }

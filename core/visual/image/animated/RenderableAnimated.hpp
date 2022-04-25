@@ -17,8 +17,6 @@ namespace mad::core {
 
         void render(sf::RenderWindow &window) override;
 
-        int get_unique_number() const noexcept override;
-
         void update_frame() const;
 
     private:
@@ -34,11 +32,10 @@ namespace mad::core {
 
         std::shared_ptr<float> m_rotation;
 
-        int m_width_sprite;
+        int m_width_sprite{};
 
-        int m_height_sprite;
+        int m_height_sprite{};
 
-        int m_unique_number;
     };
 
 }

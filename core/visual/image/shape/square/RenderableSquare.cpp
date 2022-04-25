@@ -6,8 +6,7 @@ mad::core::RenderableSquare::RenderableSquare(std::shared_ptr<Shape> shape,
                                               std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
                                               : m_shape(shape),
                                               m_position(std::move(position)),
-                                              m_rotation(std::move(rotation)),
-                                              m_unique_number(shape->get_unique_number()) {
+                                              m_rotation(std::move(rotation)) {
 }
 
 void mad::core::RenderableSquare::render(sf::RenderWindow &window) {
@@ -26,8 +25,3 @@ void mad::core::RenderableSquare::render(sf::RenderWindow &window) {
     render_square.setRotation(*m_rotation);
     window.draw(render_square);
 }
-
-int mad::core::RenderableSquare::get_unique_number() const noexcept {
-    return m_unique_number;
-}
-

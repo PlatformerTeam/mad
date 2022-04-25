@@ -16,18 +16,8 @@ namespace mad::core {
 
         virtual ~Image() = default;
 
-        void set_unique_number(int unique_number) {
-            m_unique_number = unique_number;
-        }
-
-        [[nodiscard]] int get_unique_number() const noexcept {
-            return m_unique_number;
-        }
-
         const Type type;
 
-    private:
-        int m_unique_number{};
     };
 }
 

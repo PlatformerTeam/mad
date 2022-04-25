@@ -19,8 +19,6 @@ namespace mad::core {
 
         void render(sf::RenderWindow &window) override;
 
-        [[nodiscard]] int get_unique_number() const noexcept override;
-
     private:
         std::shared_ptr<Shape> m_shape;
 
@@ -28,7 +26,6 @@ namespace mad::core {
 
         std::shared_ptr<float> m_rotation;
 
-        int m_unique_number;
     };
 
 }

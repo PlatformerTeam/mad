@@ -17,7 +17,6 @@ namespace mad::core {
 
         void render(sf::RenderWindow &window) override;
 
-        int get_unique_number() const noexcept override;
     private:
         sf::Texture m_texture;
 
@@ -29,7 +28,6 @@ namespace mad::core {
 
         std::shared_ptr<float> m_rotation;
 
-        int m_unique_number;
     };
 
 }
