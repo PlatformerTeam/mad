@@ -56,6 +56,8 @@ set(
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
         world/entity/ContactListener/ContactListener.hpp
+        world/filter/RadiusFilter.hpp
+        world/filter/TagRadiusFilter.hpp
 
         menu/Menu.hpp menu/Menu.cpp
         menu/MainMenu.hpp menu/MainMenu.cpp

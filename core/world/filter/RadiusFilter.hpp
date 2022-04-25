@@ -6,7 +6,7 @@
 namespace mad::core {
 
     struct RadiusFilter : Filter {
-        explicit RadiusFilter(Vec2d p, float r) : Filter(Filter::Type::Id), p(p), r(r) {
+        explicit RadiusFilter(Vec2d p, float r) : Filter(Filter::Type::Radius), p(p), r(r) {
         }
 
         [[nodiscard]] float get_filter_radius() const noexcept {

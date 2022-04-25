@@ -15,6 +15,3 @@ mad::core::Controller::Controller(std::shared_ptr<EntityStorage> m_storage) : m_
 
 void mad::core::Controller::handle(const mad::core::Event &event) {
 }
-std::unordered_set<mad::core::Event::Type> mad::core::Controller::handled_types() {
-    return {Event::Type::Collision};
-}
