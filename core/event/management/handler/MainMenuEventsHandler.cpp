@@ -16,7 +16,7 @@ namespace mad::core {
             const auto &menu_event = const_cast_to<MenuEvent>(event);
             if (menu_event.type == MenuEvent::Type::MainMenu) {
                 const auto &main_menu_event = const_cast_to<MainMenuEvent>(event);
-                if (main_menu_event.type == MainMenuEvent::Type::NewGame) {
+                if (main_menu_event.main_menu_event_type == MainMenuEvent::Type::NewGame) {
                     m_runner.start_game();
                 }
             }

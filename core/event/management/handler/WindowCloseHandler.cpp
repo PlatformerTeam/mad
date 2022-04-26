@@ -21,7 +21,7 @@ namespace mad::core {
             const auto &menu_event = const_cast_to<MenuEvent>(event);
             if (menu_event.type == MenuEvent::Type::MainMenu) {
                 const auto &main_menu_event = const_cast_to<MainMenuEvent>(event);
-                if (main_menu_event.type == MainMenuEvent::Type::Quit) {
+                if (main_menu_event.main_menu_event_type == MainMenuEvent::Type::Quit) {
                     m_window.close();
                     m_runner.stop();
                 }

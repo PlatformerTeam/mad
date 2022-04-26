@@ -14,7 +14,7 @@ namespace mad::core {
 
         explicit MainMenuEvent(Type new_type);
 
-        const Type type;
+        const Type main_menu_event_type;
     };
 
 }

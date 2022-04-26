@@ -18,9 +18,9 @@ namespace mad::core {
             const auto &menu_event = const_cast_to<MenuEvent>(event);
             if (menu_event.type == MenuEvent::Type::PauseMenu) {
                 const auto &pause_menu_event = const_cast_to<PauseMenuEvent>(event);
-                if (pause_menu_event.type == PauseMenuEvent::Type::Continue) {
+                if (pause_menu_event.pause_menu_event_type == PauseMenuEvent::Type::Continue) {
                     m_runner.resume();
-                } else if (pause_menu_event.type == PauseMenuEvent::Type::ToMainMenu) {
+                } else if (pause_menu_event.pause_menu_event_type == PauseMenuEvent::Type::ToMainMenu) {
                     m_runner.stop();
                 }
             }

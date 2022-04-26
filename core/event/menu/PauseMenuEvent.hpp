@@ -14,7 +14,7 @@ namespace mad::core {
 
         explicit PauseMenuEvent(Type new_type);
 
-        const Type type;
+        const Type pause_menu_event_type;
     };
 
 }
