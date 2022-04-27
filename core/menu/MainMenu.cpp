@@ -12,12 +12,14 @@ namespace mad::core {
 
     void MainMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
+        ImGui::Begin("Main menu");
         if (ImGui::Button("Start game")) {
             process_menu_event(std::make_shared<MainMenuEvent>(MainMenuEvent::Type::NewGame));
         }
         if (ImGui::Button("Quit")) {
             process_menu_event(std::make_shared<MainMenuEvent>(MainMenuEvent::Type::Quit));
         }
+        ImGui::End();
         ImGui::SFML::Render(window);
     }
 }
