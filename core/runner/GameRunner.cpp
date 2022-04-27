@@ -1,5 +1,10 @@
 #include "GameRunner.hpp"
 
+#include <event/system/WindowClose.hpp>
+
+#include <spdlog/spdlog.h>
+
+
 namespace mad::core {
 
     GameRunner::GameRunner(
@@ -14,6 +19,7 @@ namespace mad::core {
     }
 
     void GameRunner::run(sf::RenderWindow &window) {
+        SPDLOG_DEBUG("Game has started");
         while (m_running) {
             if (m_in_main_menu) {
                 window.clear(sf::Color(0, 0, 0));
@@ -34,10 +40,14 @@ namespace mad::core {
     }
 
     void GameRunner::stop() {
+        if (!m_running) {
+            return;
+        }
         m_running = false;
         if (m_current_level_runner) {
             m_current_level_runner->stop();
         }
+        m_global_event_dispatcher->dispatch(std::make_shared<WindowClose>());
     }
 
     void GameRunner::start_game() {

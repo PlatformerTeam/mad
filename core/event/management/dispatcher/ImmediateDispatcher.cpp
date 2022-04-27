@@ -12,9 +12,9 @@ namespace mad::core {
     }
 
     void ImmediateDispatcher::dispatch(std::shared_ptr<Event> event) {
-//        SPDLOG_INFO("dispatching event {}", event->type);
+        SPDLOG_DEBUG("dispatching event {}", event->type);
         for (auto &handler : m_handlers_for_types[event->type]) {
-//            SPDLOG_INFO("pass event to handler");
+            SPDLOG_DEBUG("pass event to handler");
             handler->handle(*event);
         }
     }

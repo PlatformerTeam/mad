@@ -9,6 +9,7 @@ set(
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
+        event/system/ApplicationFinish.hpp event/system/ApplicationFinish.cpp
         event/system/KeyPressed.hpp event/system/KeyPressed.cpp
         event/system/KeyReleased.hpp event/system/KeyReleased.cpp
         event/system/WindowClose.hpp event/system/WindowClose.cpp
@@ -19,9 +20,10 @@ set(
         event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/handler/EventHandler.hpp
         event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
-        event/management/handler/LevelPauseHandler.hpp event/management/handler/LevelPauseHandler.cpp
         event/management/handler/MainMenuEventsHandler.hpp event/management/handler/MainMenuEventsHandler.cpp
         event/management/handler/PauseMenuEventsHandler.hpp event/management/handler/PauseMenuEventsHandler.cpp
+        event/management/handler/LevelRunnerEventsHandler.hpp event/management/handler/LevelRunnerEventsHandler.cpp
+        event/management/handler/GameRunnerEventsHandler.hpp event/management/handler/GameRunnerEventsHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp

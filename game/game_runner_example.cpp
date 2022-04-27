@@ -1,11 +1,11 @@
 #include <event/management/dispatcher/EventDispatcher.hpp>
-#include <event/management/handler/LevelPauseHandler.hpp>
+#include <event/management/handler/LevelRunnerEventsHandler.hpp>
 #include <event/management/handler/MainMenuEventsHandler.hpp>
 #include <event/management/handler/WindowCloseHandler.hpp>
 #include <event/management/handler/PauseMenuEventsHandler.hpp>
+#include <event/management/handler/GameRunnerEventsHandler.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
-#include <event/system/KeyPressed.hpp>
 #include <loader/LevelLoader.hpp>
 #include <menu/MainMenu.hpp>
 #include <menu/PauseMenu.hpp>
@@ -90,7 +90,7 @@ public:
                 world
         );
 
-        level_dispatcher->registry(std::make_shared<mad::core::LevelPauseHandler>(*level_runner));
+        level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
 
         return level_runner;
@@ -124,8 +124,9 @@ int main() {
             system_listener
     );
 
-    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*game_runner, *window));
+    global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
+    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner));
 
     game_runner->run(*window);
 

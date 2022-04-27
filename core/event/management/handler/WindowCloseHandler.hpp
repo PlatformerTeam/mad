@@ -15,15 +15,13 @@ namespace mad::core {
 
     class WindowCloseHandler : public EventHandler {
     public:
-        explicit WindowCloseHandler(Runner& runner,
-                                    sf::RenderWindow& window);
+        explicit WindowCloseHandler(sf::RenderWindow& window);
 
         void handle(const Event &event) override;
 
         std::unordered_set<Event::Type> handled_types() override;
 
     private:
-        Runner& m_runner;
         sf::RenderWindow& m_window;
     };
 

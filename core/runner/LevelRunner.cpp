@@ -1,5 +1,7 @@
 #include "LevelRunner.hpp"
 
+#include <event/system/ApplicationFinish.hpp>
+
 #include <spdlog/spdlog.h>
 
 
@@ -29,12 +31,10 @@ namespace mad::core {
             window.clear(sf::Color(0, 0, 0));
             if (m_is_in_pause) {
                 m_pause_menu->produce(*m_level_event_dispatcher);
-                m_system_listener->produce(*m_global_event_dispatcher);
                 m_system_listener->produce(*m_level_event_dispatcher);
                 m_pause_menu->render(window);
             } else {
                 m_world->produce(*m_level_event_dispatcher);
-                m_system_listener->produce(*m_global_event_dispatcher);
                 m_system_listener->produce(*m_level_event_dispatcher);
                 m_camera->render(window);
             }
@@ -43,7 +43,11 @@ namespace mad::core {
     }
 
     void LevelRunner::stop() {
+        if (!m_level_is_running) {
+            return;
+        }
         m_level_is_running = false;
+        m_global_event_dispatcher->dispatch(std::make_shared<ApplicationFinish>());
     }
 
     void LevelRunner::pause() {

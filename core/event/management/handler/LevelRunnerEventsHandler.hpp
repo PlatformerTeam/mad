@@ -1,18 +1,17 @@
-#ifndef MAD_LEVELPAUSEHANDLER_HPP
-#define MAD_LEVELPAUSEHANDLER_HPP
+#ifndef MAD_LEVELRUNNEREVENTSHANDLER_HPP
+#define MAD_LEVELRUNNEREVENTSHANDLER_HPP
 
 #include <event/management/handler/EventHandler.hpp>
 #include <runner/LevelRunner.hpp>
 
-#include <spdlog/spdlog.h>
 #include <unordered_set>
 
 
 namespace mad::core {
 
-    class LevelPauseHandler : public EventHandler {
+    class LevelRunnerEventsHandler : public EventHandler {
     public:
-        explicit LevelPauseHandler(LevelRunner& runner);
+        explicit LevelRunnerEventsHandler(LevelRunner& runner);
 
         void handle(const Event &event) override;
 
@@ -24,4 +23,4 @@ namespace mad::core {
 
 }
 
-#endif//MAD_LEVELPAUSEHANDLER_HPP
+#endif //MAD_LEVELRUNNEREVENTSHANDLER_HPP

@@ -1,10 +1,10 @@
 #include "SystemListener.hpp"
 
 #include <event/management/dispatcher/EventDispatcher.hpp>
+#include <event/system/ApplicationFinish.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <event/system/KeyReleased.hpp>
 #include <event/system/KeyHeld.hpp>
-#include <event/system/WindowClose.hpp>
 
 #include <imgui-SFML.h>
 #include <spdlog/spdlog.h>
@@ -20,9 +20,9 @@ namespace mad::core {
 
             // Listen a window
             if (ev.type == sf::Event::Closed) {
-                dispatcher.dispatch(std::make_shared<WindowClose>());
+                dispatcher.dispatch(std::make_shared<ApplicationFinish>());
             }
-                // Listen a keyboard
+            // Listen a keyboard
             else if (ev.type == sf::Event::KeyPressed) {
                 if (m_key_held.find(ev.key.code) == m_key_held.end()) {
                     dispatcher.dispatch(std::make_shared<KeyPressed>(ev.key.code));
