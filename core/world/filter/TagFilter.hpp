@@ -3,18 +3,20 @@
 
 #include "Filter.hpp"
 
+#include <utility>
+
 namespace mad::core {
 
     struct TagFilter : Filter {
-        explicit TagFilter(Entity::Type filter_tag) : Filter(Filter::Type::EntityTag), m_filter_tag(filter_tag) {
+        explicit TagFilter(std::string filter_tag) : Filter(Filter::Type::EntityTag), m_filter_tag(std::move(filter_tag)) {
         }
 
-        [[nodiscard]] Entity::Type get_filter_tag() const noexcept {
+        [[nodiscard]] std::string get_filter_tag() const noexcept {
             return m_filter_tag;
         }
 
     private:
-        Entity::Type m_filter_tag;
+        std::string m_filter_tag;
 
     };
 

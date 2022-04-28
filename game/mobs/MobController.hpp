@@ -2,7 +2,7 @@
 #define MAD_MOBCONTROLLER_HPP
 
 
-#include "Controller.hpp"
+#include "event/management/handler/controller/Controller.hpp"
 namespace mad::core {
 
     class MobController : public Controller {

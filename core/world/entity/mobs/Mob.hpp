@@ -20,12 +20,12 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        explicit Mob(Entity::Type e_type, Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed);
+        explicit Mob(std::string e_type, Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed);
         //virtual void take_damage(float damage) = 0;
 
 
     private:
-        float health_points;
+        float health_points{};
     };
 
 

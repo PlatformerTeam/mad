@@ -1,5 +1,5 @@
 #include "EntityStorage.hpp"
-#include "world/entity/Mobs/Mob.hpp"
+#include "world/entity/mobs/Mob.hpp"
 #include "world/filter/RadiusFilter.hpp"
 #include "world/filter/TagRadiusFilter.hpp"
 #include "world/filter/TrueFilter.hpp"
@@ -71,21 +71,21 @@ namespace mad::core {
         return *entity_it->second;
     }
 
-    Entity::Id EntityStorage::create_viewable_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) {
+    Entity::Id EntityStorage::create_viewable_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         m_list_ids.push_back(new_entity_id);
         m_map_entities[new_entity_id] = std::make_unique<ViewableEntity>(type, new_entity_id, z_ind, initial_position, initial_rotation, image);
         m_map_entities_by_tag[type].push_back(new_entity_id);
         return new_entity_id;
     }
-    Entity::Id EntityStorage::create_physical_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_Fixed) {
+    Entity::Id EntityStorage::create_physical_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_Fixed) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         image->set_unique_number(new_entity_id);
         m_list_ids.push_back(new_entity_id);
-        if (type == Entity::Type::SimpleObject) {
+        if (type == "SimpleObject") {
             m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(type, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
         }
-        if (type == Entity::Type::Enemy || type == Entity::Type::Hero) {
+        if (type == "Enemy" || type == "Hero") {
             m_map_entities[new_entity_id] = std::make_unique<Mob>(type, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
         }
         m_map_entities_by_tag[type].push_back(new_entity_id);

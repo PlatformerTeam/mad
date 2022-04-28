@@ -7,7 +7,7 @@
 #include <event/management/dispatcher/DelayedDispatcher.hpp>
 #include <box2d/box2d.h>
 #include <visual/image/shape/Shape.hpp>
-#include <world/entity/ContactListener/ContactListener.hpp>
+#include <world/entity/contactListener/ContactListener.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -15,7 +15,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "event/management/handler/Controller/MobController.hpp"
+#include "../../game/mobs/MobController.hpp"
 #include <queue>
 
 
@@ -29,9 +29,9 @@ namespace mad::core {
 
         void produce(EventDispatcher &dispatcher) override;
 
-        Entity::Id create_viewable_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) override;
+        Entity::Id create_viewable_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) override;
 
-        Entity::Id create_physical_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed = false) override;
+        Entity::Id create_physical_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed = false) override;
 
     private:
         std::shared_ptr<std::queue<std::shared_ptr<Event>>> m_step_events_queue;

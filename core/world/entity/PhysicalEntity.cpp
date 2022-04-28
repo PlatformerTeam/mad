@@ -8,8 +8,8 @@
 
 #include <utility>
 
-mad::core::PhysicalEntity::PhysicalEntity(Entity::Type e_type, std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed)
-    : ViewableEntity(e_type, id, z_ind, initial_position, initial_rotation, image) {
+mad::core::PhysicalEntity::PhysicalEntity(std::string e_type, std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed)
+    : ViewableEntity(std::move(e_type), id, z_ind, initial_position, initial_rotation, image) {
 
     //rect.setOrigin(300, 50);
 

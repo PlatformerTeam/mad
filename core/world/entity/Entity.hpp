@@ -21,15 +21,10 @@ namespace mad::core {
     public:
         using Id = std::int32_t;
 
-        enum class Type {
-            Enemy,
-            SimpleObject,
-            Hero,
-        };
+        const std::string type;
 
-        const Type type;
+        explicit Entity(std::string new_type);
 
-        explicit Entity(Type new_type);
         virtual void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) = 0;
 
         [[nodiscard]] Id get_id() const noexcept;
