@@ -1,12 +1,16 @@
 #include "LocalWorld.hpp"
 
+#include <spdlog/spdlog.h>
+#include <world/intent/LambdaIntent.hpp>
+#include <world/filter/TrueFilter.hpp>
 #include <common/Error.hpp>
 #include <event/management/dispatcher/DelayedDispatcher.hpp>
 #include <spdlog/spdlog.h>
-#include <world/entity/ContactListener/ContactListener.hpp>
 #include <world/entity/Entity.hpp>
 #include <world/filter/TrueFilter.hpp>
 #include <world/intent/LambdaIntent.hpp>
+#include <world/entity/Entity.hpp>
+#include <world/entity/contactListener/ContactListener.hpp>
 
 #include <vector>
 
@@ -50,7 +54,7 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     // simulating physics
     m_physical_world.Step(fact_dt * render_scale, 3, 10);
     for (Entity::Id entity_id : m_storage->extract(TrueFilter())) {
-        if (&m_storage->get_entity(entity_id) != nullptr && cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id)) != nullptr) {
+        if (cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id)) != nullptr) {
             auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id));
             physical_entity->synchronize_position_with_viewable();
         }
@@ -82,10 +86,10 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     m_controller->control();
 }
 
-mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
+mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(std::string type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
                                                                     std::shared_ptr<Image> image) {
     return m_storage->create_viewable_entity(type, z_ind, initial_position, initial_rotation, image);
 }
-mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
+mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(std::string type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
     return m_storage->create_physical_entity(type, z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
 }

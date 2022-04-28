@@ -26,11 +26,11 @@ namespace mad::core {
 
         bool manipulate_entity_id(Entity::Id entity_id, const Intent &intent);
 
-        virtual Entity::Id create_viewable_entity(Entity::Type type, int z_ind,
+        virtual Entity::Id create_viewable_entity(std::string type, int z_ind,
                                                   Vec2d initial_position, float initial_rotation,
                                                   std::shared_ptr<Image> image) = 0;
 
-        virtual Entity::Id create_physical_entity(Entity::Type type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) = 0;
+        virtual Entity::Id create_physical_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) = 0;
     };
 
 }// namespace mad::core

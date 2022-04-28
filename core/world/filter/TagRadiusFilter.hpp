@@ -3,32 +3,33 @@
 
 #include "Filter.hpp"
 #include <common/FVec2D.hpp>
+#include <utility>
 namespace mad::core {
 
     struct TagRadiusFilter : Filter {
-        explicit TagRadiusFilter(Vec2d p, float r, Entity::Type type) : Filter(Filter::Type::TagRadius), p(p), r(r), m_filter_tag(type) {
+        explicit TagRadiusFilter(Vec2d m_point, float m_radius, std::string type) : Filter(Filter::Type::TagRadius), m_point(m_point), m_radius(m_radius), m_tag(std::move(type)) {
         }
 
         [[nodiscard]] float get_filter_radius() const noexcept {
-            return r;
+            return m_radius;
         }
 
         [[nodiscard]] float get_filter_radius_sq() const noexcept {
-            return r * r;
+            return m_radius * m_radius;
         }
 
         [[nodiscard]] Vec2d get_filter_point() const noexcept {
-            return p;
+            return m_point;
         }
 
-        [[nodiscard]] Entity::Type get_filter_tag() const noexcept {
-            return m_filter_tag;
+        [[nodiscard]] std::string get_filter_tag() const noexcept {
+            return m_tag;
         }
 
     private:
-        Vec2d p;
-        float r;
-        Entity::Type m_filter_tag;
+        Vec2d m_point;
+        float m_radius;
+        std::string m_tag;
 
     };
 

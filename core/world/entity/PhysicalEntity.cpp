@@ -43,6 +43,8 @@ mad::core::PhysicalEntity::PhysicalEntity(Entity::Type e_type, std::int32_t id, 
     }
 
     body->GetUserData().pointer = m_id;
+
+
 }
 void mad::core::PhysicalEntity::accept(mad::core::World &world, const mad::core::Intent &intent, mad::core::EventDispatcher &dispatcher) {
     cast_to<const LambdaIntent>(intent).apply(*this, dispatcher);

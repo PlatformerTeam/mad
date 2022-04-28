@@ -35,10 +35,10 @@ set(
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp
-        event/management/handler/Controller/Controller.hpp
-        event/management/handler/Controller/Controller.cpp
-        event/management/handler/Controller/MobController.hpp
-        event/management/handler/Controller/MobController.cpp
+        event/management/handler/controller/Controller.hpp
+        event/management/handler/controller/Controller.cpp
+        ../game/mobs/MobController.hpp
+        ../game/mobs/MobController.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
@@ -49,13 +49,13 @@ set(
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp
         world/entity/Entity.hpp world/entity/Entity.cpp
-        world/entity/Mobs/Mob.hpp
-        world/entity/Mobs/Mob.cpp
+        world/entity/mobs/Mob.hpp
+        world/entity/mobs/Mob.cpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
-        world/entity/ContactListener/ContactListener.hpp
+        world/entity/contactListener/ContactListener.hpp
         world/filter/RadiusFilter.hpp
         world/filter/TagRadiusFilter.hpp
 
@@ -65,9 +65,6 @@ set(
 
         runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
-        runner/LevelRunner.hpp runner/LevelRunner.cpp
-        runner/GameRunner.hpp runner/GameRunner.cpp
-        loader/LevelLoader.hpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
