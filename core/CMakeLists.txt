@@ -30,6 +30,9 @@ set(
         event/menu/MenuEvent.hpp event/menu/MenuEvent.cpp
         event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
         event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
+        event/runner/RunnerEvent.hpp event/runner/RunnerEvent.cpp
+        event/runner/GameRunnerEvent.hpp event/runner/GameRunnerEvent.cpp
+        event/runner/LevelRunnerEvent.hpp event/runner/LevelRunnerEvent.cpp
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp

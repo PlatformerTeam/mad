@@ -21,7 +21,7 @@ namespace mad::core {
                 if (pause_menu_event.pause_menu_event_type == PauseMenuEvent::Type::Continue) {
                     m_runner.resume();
                 } else if (pause_menu_event.pause_menu_event_type == PauseMenuEvent::Type::ToMainMenu) {
-                    m_runner.stop();
+                    m_runner.soft_stop();
                 }
             }
         }

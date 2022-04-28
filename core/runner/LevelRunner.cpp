@@ -58,4 +58,8 @@ namespace mad::core {
         m_is_in_pause = false;
     }
 
+    void LevelRunner::soft_stop() {
+        m_level_is_running = false;
+    }
+
 }

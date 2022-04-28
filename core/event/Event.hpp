@@ -15,7 +15,8 @@ namespace mad::core {
             WindowClose,
             Menu,
             LevelPause,
-            ApplicationFinish
+            ApplicationFinish,
+            Runner,
         };
 
         explicit Event(Type new_type);
