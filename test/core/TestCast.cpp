@@ -9,7 +9,7 @@
 TEST(Cast, EntityCast) {
     class MockEntity_1 : public mad::core::Entity {
     public:
-        MockEntity_1() : Entity(Entity::Type::SimpleObject){};
+        MockEntity_1() : Entity("SimpleObject"){};
         void accept(mad::core::World &world,
                     const mad::core::Intent &intent,
                     mad::core::EventDispatcher &dispatcher) override {
@@ -22,7 +22,7 @@ TEST(Cast, EntityCast) {
 
     class MockEntity_2 : public mad::core::Entity {
     public:
-        MockEntity_2() : Entity(Entity::Type::SimpleObject){};
+        MockEntity_2() : Entity("SimpleObject"){};
         void accept(mad::core::World &world,
                     const mad::core::Intent &intent,
                     mad::core::EventDispatcher &dispatcher) override {
