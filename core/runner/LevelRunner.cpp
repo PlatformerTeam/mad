@@ -1,6 +1,6 @@
 #include "LevelRunner.hpp"
 
-#include <event/system/ApplicationFinish.hpp>
+#include <event/runner/GameRunnerEvent.hpp>
 
 #include <spdlog/spdlog.h>
 
@@ -43,11 +43,8 @@ namespace mad::core {
     }
 
     void LevelRunner::stop() {
-        if (!m_level_is_running) {
-            return;
-        }
         m_level_is_running = false;
-        m_global_event_dispatcher->dispatch(std::make_shared<ApplicationFinish>());
+        m_global_event_dispatcher->dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::GameStop));
     }
 
     void LevelRunner::pause() {
@@ -56,10 +53,6 @@ namespace mad::core {
 
     void LevelRunner::resume() {
         m_is_in_pause = false;
-    }
-
-    void LevelRunner::soft_stop() {
-        m_level_is_running = false;
     }
 
 }

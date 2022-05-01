@@ -1,6 +1,6 @@
 #include "LevelRunnerEventsHandler.hpp"
 
-#include <event/system/ApplicationFinish.hpp>
+#include <event/runner/LevelRunnerEvent.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 
@@ -24,12 +24,18 @@ namespace mad::core {
             if (keystroke.key_id == sf::Keyboard::Key::Escape) {
                 m_runner.pause();
             }
-        } else if (event.type == Event::Type::ApplicationFinish) {
-            m_runner.stop();
+        } else if (event.type == Event::Type::Runner) {
+            const auto &runner_event = const_cast_to<RunnerEvent>(event);
+            if (runner_event.type == RunnerEvent::Type::LevelRunner) {
+                const auto &level_runner_event = const_cast_to<LevelRunnerEvent>(runner_event);
+                if (level_runner_event.level_runner_event_type == LevelRunnerEvent::Type::LevelStop) {
+                    m_runner.stop();
+                }
+            }
         }
     }
 
     std::unordered_set<Event::Type> LevelRunnerEventsHandler::handled_types() {
-        return {Event::Type::KeyPressed, Event::Type::KeyHeld, Event::Type::ApplicationFinish};
+        return {Event::Type::KeyPressed, Event::Type::KeyHeld, Event::Type::Runner};
     }
 }

@@ -7,7 +7,14 @@
 namespace mad::core {
 
     struct GameRunnerEvent : RunnerEvent {
-        explicit GameRunnerEvent();
+        enum class Type {
+            ApplicationFinish,
+            GameStop,
+        };
+
+        explicit GameRunnerEvent(Type new_type);
+
+        const Type game_runner_event_type;
     };
 
 }

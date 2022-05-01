@@ -2,6 +2,6 @@
 
 namespace mad::core {
 
-    LevelRunnerEvent::LevelRunnerEvent() : RunnerEvent(RunnerEvent::Type::LevelRunner) { }
+    LevelRunnerEvent::LevelRunnerEvent(Type new_type) : RunnerEvent(RunnerEvent::Type::LevelRunner), level_runner_event_type(new_type) { }
 
 }

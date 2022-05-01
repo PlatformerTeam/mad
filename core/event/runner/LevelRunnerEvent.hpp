@@ -7,7 +7,13 @@
 namespace mad::core {
 
     struct LevelRunnerEvent : RunnerEvent {
-        explicit LevelRunnerEvent();
+        enum class Type {
+            LevelStop,
+        };
+
+        explicit LevelRunnerEvent(Type new_type);
+
+        const Type level_runner_event_type;
     };
 
 }

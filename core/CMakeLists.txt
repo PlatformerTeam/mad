@@ -9,7 +9,6 @@ set(
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
-        event/system/ApplicationFinish.hpp event/system/ApplicationFinish.cpp
         event/system/KeyPressed.hpp event/system/KeyPressed.cpp
         event/system/KeyReleased.hpp event/system/KeyReleased.cpp
         event/system/WindowClose.hpp event/system/WindowClose.cpp

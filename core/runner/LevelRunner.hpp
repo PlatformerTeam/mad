@@ -30,8 +30,6 @@ namespace mad::core {
 
         void resume();
 
-        void soft_stop();
-
     private:
         std::shared_ptr<SystemListener> m_system_listener;
         std::shared_ptr<PauseMenu> m_pause_menu;

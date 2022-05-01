@@ -40,9 +40,6 @@ namespace mad::core {
     }
 
     void GameRunner::stop() {
-        if (!m_running) {
-            return;
-        }
         m_running = false;
         if (m_current_level_runner) {
             m_current_level_runner->stop();

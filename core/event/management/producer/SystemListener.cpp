@@ -1,7 +1,8 @@
 #include "SystemListener.hpp"
 
 #include <event/management/dispatcher/EventDispatcher.hpp>
-#include <event/system/ApplicationFinish.hpp>
+#include <event/runner/GameRunnerEvent.hpp>
+#include <event/runner/LevelRunnerEvent.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <event/system/KeyReleased.hpp>
 #include <event/system/KeyHeld.hpp>
@@ -20,7 +21,7 @@ namespace mad::core {
 
             // Listen a window
             if (ev.type == sf::Event::Closed) {
-                dispatcher.dispatch(std::make_shared<ApplicationFinish>());
+                dispatcher.dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::ApplicationFinish));
             }
             // Listen a keyboard
             else if (ev.type == sf::Event::KeyPressed) {
