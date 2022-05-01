@@ -26,6 +26,8 @@ namespace mad::core {
 
         void stop() override;
 
+        void stop_and_exit();
+
         void pause();
 
         void resume();

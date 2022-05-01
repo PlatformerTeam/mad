@@ -30,6 +30,8 @@ namespace mad::core {
                 const auto &level_runner_event = const_cast_to<LevelRunnerEvent>(runner_event);
                 if (level_runner_event.level_runner_event_type == LevelRunnerEvent::Type::LevelStop) {
                     m_runner.stop();
+                } else if (level_runner_event.level_runner_event_type == LevelRunnerEvent::Type::ApplicationFinish) {
+                    m_runner.stop_and_exit();
                 }
             }
         }

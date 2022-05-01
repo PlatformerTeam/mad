@@ -8,6 +8,7 @@ namespace mad::core {
 
     struct LevelRunnerEvent : RunnerEvent {
         enum class Type {
+            ApplicationFinish,
             LevelStop,
         };
 

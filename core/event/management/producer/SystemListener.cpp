@@ -21,6 +21,7 @@ namespace mad::core {
 
             // Listen a window
             if (ev.type == sf::Event::Closed) {
+                dispatcher.dispatch(std::make_shared<LevelRunnerEvent>(LevelRunnerEvent::Type::ApplicationFinish));
                 dispatcher.dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::ApplicationFinish));
             }
             // Listen a keyboard

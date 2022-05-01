@@ -47,6 +47,11 @@ namespace mad::core {
         m_global_event_dispatcher->dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::GameStop));
     }
 
+    void LevelRunner::stop_and_exit() {
+        stop();
+        m_global_event_dispatcher->dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::ApplicationFinish));
+    }
+
     void LevelRunner::pause() {
         m_is_in_pause = true;
     }

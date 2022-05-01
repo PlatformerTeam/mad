@@ -29,11 +29,10 @@ namespace mad::core {
                 window.display();
             } else {
                 for (auto &loader: m_level_loaders) {
-                    if (m_in_main_menu) {
-                        break;
+                    if (!m_in_main_menu) {
+                        m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
+                        m_current_level_runner->run(window);
                     }
-                    m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
-                    m_current_level_runner->run(window);
                 }
             }
         }
