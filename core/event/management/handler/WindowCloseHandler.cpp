@@ -1,23 +1,22 @@
 #include "WindowCloseHandler.hpp"
 
+#include <event/system/WindowClose.hpp>
+
 
 namespace mad::core {
 
-    WindowCloseHandler::WindowCloseHandler(std::shared_ptr<SequentialRunner> runner,
-                                           std::shared_ptr<sf::RenderWindow> window) : m_runner(std::move(runner)),
-                                                                                     m_window(std::move(window)) {}
+    WindowCloseHandler::WindowCloseHandler(sf::RenderWindow& window) : m_window(window) {}
 
     void WindowCloseHandler::handle(const Event &event) {
-        SPDLOG_INFO("handle window closing event");
+        SPDLOG_DEBUG("handle window closing event");
 
-        if (event.type == Event::Type::WindowClosed) {
-            m_window->close();
-            m_runner->stop();
+        if (event.type == Event::Type::WindowClose) {
+            m_window.close();
         }
     }
 
     std::unordered_set<Event::Type> WindowCloseHandler::handled_types() {
-        return {Event::Type::WindowClosed};
+        return {Event::Type::WindowClose};
     }
 
 }

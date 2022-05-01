@@ -6,8 +6,7 @@ namespace mad::core {
 
     RenderableStatic::RenderableStatic(const std::shared_ptr<StaticImage>& static_image,
                                        std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
-                                       : m_position(std::move(position)), m_rotation(std::move(rotation)),
-                                         m_unique_number(static_image->get_unique_number()) {
+                                       : m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
         CHECK_THROW(m_texture.loadFromFile(
                 static_image->get_path()),
@@ -31,7 +30,7 @@ namespace mad::core {
         }
     }
 
-    void RenderableStatic::render(sf::RenderWindow &window) const {
+    void RenderableStatic::render(sf::RenderWindow &window) {
         sf::Sprite render_sprite;
 
         render_sprite.setTexture(m_texture);
@@ -50,10 +49,6 @@ namespace mad::core {
         render_sprite.setRotation(*m_rotation * 180 / M_PI);
 
         window.draw(render_sprite);
-    }
-
-    int RenderableStatic::get_unique_number() const noexcept {
-        return m_unique_number;
     }
 
 }

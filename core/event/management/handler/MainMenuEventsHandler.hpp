@@ -1,11 +1,9 @@
-#ifndef MAD_CLOSINGHANDLER_HPP
-#define MAD_CLOSINGHANDLER_HPP
+#ifndef MAD_MAINMENUEVENTSHANDLER_HPP
+#define MAD_MAINMENUEVENTSHANDLER_HPP
 
 #include <event/management/handler/EventHandler.hpp>
+#include <runner/GameRunner.hpp>
 
-#include <runner/Runner.hpp>
-
-#include <SFML/Graphics/RenderWindow.hpp>
 #include <spdlog/spdlog.h>
 
 #include <unordered_set>
@@ -13,16 +11,16 @@
 
 namespace mad::core {
 
-    class WindowCloseHandler : public EventHandler {
+    class MainMenuEventsHandler : public EventHandler {
     public:
-        explicit WindowCloseHandler(sf::RenderWindow& window);
+        explicit MainMenuEventsHandler(GameRunner& runner);
 
         void handle(const Event &event) override;
 
         std::unordered_set<Event::Type> handled_types() override;
 
     private:
-        sf::RenderWindow& m_window;
+        GameRunner& m_runner;
     };
 
 }
