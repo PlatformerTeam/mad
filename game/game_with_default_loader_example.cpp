@@ -13,6 +13,7 @@
 #include <visual/Camera.hpp>
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
+#include <loader/LevelLoader.hpp>
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -59,46 +60,6 @@ private:
     mad::core::Entity::Id m_entity_id;
 };
 
-class ExampleLevelLoader : public mad::core::LevelLoader {
-public:
-    ExampleLevelLoader(std::filesystem::path path) : LevelLoader(path) {}
-
-    std::unique_ptr<mad::core::LevelRunner> load(
-            std::shared_ptr<mad::core::EventDispatcher> global_dispatcher,
-            std::shared_ptr<mad::core::SystemListener> system_listener) override {
-        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
-
-        auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
-
-        auto camera = std::make_shared<mad::core::Camera>(mad::core::Vec2d{0.0f, 0.0f}, world);
-
-        mad::core::Entity::Id square_id = world->create_viewable_entity(
-                0,
-                mad::core::Vec2d{0.0f, 0.0f},
-                0,
-                std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
-        );
-
-        camera->turn_on(*level_dispatcher);
-        level_dispatcher->registry(camera);
-        level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
-
-        auto level_runner = std::make_unique<mad::core::LevelRunner>(
-                system_listener,
-                std::make_unique<mad::core::PauseMenu>(),
-                camera,
-                global_dispatcher,
-                level_dispatcher,
-                world
-        );
-
-        level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
-        level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
-
-        return level_runner;
-    }
-};
-
 int main() {
 #ifndef NDEBUG
     auto log_level = spdlog::level::trace;
@@ -116,7 +77,7 @@ int main() {
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<ExampleLevelLoader>(ExampleLevelLoader("../../game/resources/levels/map"))
+            std::make_shared<mad::core::LevelLoader>(mad::core::LevelLoader("../../game/resources/levels/level_01"))
     };
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(

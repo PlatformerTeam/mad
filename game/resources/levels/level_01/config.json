@@ -1,0 +1,17 @@
+{
+  "name" : "level_01",
+  "block" : 50.0,
+  "camera": {
+    "position" : {
+      "x" : 10.0,
+      "y" : 10.0
+    },
+    "angle": 15.0,
+    "smoothness": 0.6,
+    "zoom": 10.5
+  },
+  "texture" : {
+    "stable" : "brick.png",
+    "unstable" : "brick.png"
+  }
+}
