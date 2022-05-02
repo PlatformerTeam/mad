@@ -26,7 +26,7 @@ namespace mad::core {
 
         camera->turn_on(*level_dispatcher);
         level_dispatcher->registry(camera);
-        //level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
+        level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -50,7 +50,6 @@ namespace mad::core {
         Entity::Id hero_id = 0;
         std::string map_line;
         while (std::getline(m_level_map, map_line)) {
-            std::cout << map_line <<std::endl;
             for (char object : map_line) {
                 switch(m_objects[object]) {
                     case Objects::unstable_block: {
@@ -62,12 +61,16 @@ namespace mad::core {
                     }
                     case Objects::stable_block: {
                         create_block(world,
-                                              {current_position_x,
-                                               current_position_y},
-                                              object_size, true);
+                                     {current_position_x,
+                                      current_position_y},
+                                      object_size, true);
                         break;
                     }
                     case Objects::hero: {
+                        hero_id = create_hero(world,
+                                              {current_position_x,
+                                               current_position_y},
+                                               object_size);
                         break;
                     }
                     case Objects::enemy_1: {
@@ -100,6 +103,16 @@ namespace mad::core {
                 std::make_shared<mad::core::Square>(block_size, mad::core::Color::Green()),
                 is_stable
         );
+    }
+
+    Entity::Id LevelLoader::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
+        Entity::Id hero_id = world->create_physical_entity(
+                0,
+                position,
+                0,
+                std::make_shared<mad::core::Square>(block_size, mad::core::Color::Blue())
+        );
+        return hero_id;
     }
 
 }

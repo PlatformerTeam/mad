@@ -13,5 +13,8 @@
   "texture" : {
     "stable" : "brick.png",
     "unstable" : "brick.png"
+  },
+  "hero" : {
+    "animated" : ""
   }
 }

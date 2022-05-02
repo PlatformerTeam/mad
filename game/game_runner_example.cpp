@@ -116,7 +116,7 @@ int main() {
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<ExampleLevelLoader>(ExampleLevelLoader("../../game/resources/levels/map"))
+            std::make_shared<ExampleLevelLoader>(ExampleLevelLoader("../../game/resources/levels/level_01"))
     };
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(
