@@ -55,7 +55,7 @@ namespace mad::core {
                         float t1 = dist_sq(physical_entity->get_position(), tag_radius_filter.get_filter_point());
                         float t2 = tag_radius_filter.get_filter_radius_sq();
                         if (dist_sq(physical_entity->get_position(), tag_radius_filter.get_filter_point()) < tag_radius_filter.get_filter_radius_sq() &&
-                            physical_entity->type == tag_radius_filter.get_filter_tag()) {
+                            physical_entity->tags.find(tag_radius_filter.get_filter_tag()) != physical_entity->tags.end()) {
                             arr.push_back(entity_id);
                         }
                     }
@@ -71,24 +71,28 @@ namespace mad::core {
         return *entity_it->second;
     }
 
-    Entity::Id EntityStorage::create_viewable_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) {
+    Entity::Id EntityStorage::create_viewable_entity(std::unordered_set<std::string> tags, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         m_list_ids.push_back(new_entity_id);
-        m_map_entities[new_entity_id] = std::make_unique<ViewableEntity>(type, new_entity_id, z_ind, initial_position, initial_rotation, image);
-        m_map_entities_by_tag[type].push_back(new_entity_id);
+        m_map_entities[new_entity_id] = std::make_unique<ViewableEntity>(tags, new_entity_id, z_ind, initial_position, initial_rotation, image);
+        for(const auto& tag : tags){
+            m_map_entities_by_tag[tag].push_back(new_entity_id);
+        }
         return new_entity_id;
     }
-    Entity::Id EntityStorage::create_physical_entity(std::string type, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_Fixed) {
+    Entity::Id EntityStorage::create_physical_entity(std::unordered_set<std::string> tags, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, b2World &physicalWorld, bool is_Fixed) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         image->set_unique_number(new_entity_id);
         m_list_ids.push_back(new_entity_id);
-        if (type == "SimpleObject") {
-            m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(type, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
+        if (tags.find("SimpleObject") != tags.end()) {
+            m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(tags, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
         }
-        if (type == "Enemy" || type == "Hero") {
-            m_map_entities[new_entity_id] = std::make_unique<Mob>(type, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
+        if (tags.find("Enemy") != tags.end() || tags.find("Hero") != tags.end()) {
+            m_map_entities[new_entity_id] = std::make_unique<Mob>(tags, new_entity_id, z_ind, initial_position, initial_rotation, image, physicalWorld, is_Fixed);
         }
-        m_map_entities_by_tag[type].push_back(new_entity_id);
+        for(const auto& tag : tags){
+            m_map_entities_by_tag[tag].push_back(new_entity_id);
+        }
         return new_entity_id;
     }
 

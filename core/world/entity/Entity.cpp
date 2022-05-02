@@ -10,6 +10,6 @@ namespace mad::core {
     mad::core::Entity::Id mad::core::Entity::get_id() const noexcept {
         return m_id;
     }
-    Entity::Entity(std::string type) : type(std::move(type)) {}
+    Entity::Entity(std::unordered_set<std::string> tags) : tags(std::move(tags)) {}
 
 }

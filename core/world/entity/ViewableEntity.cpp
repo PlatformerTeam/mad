@@ -41,13 +41,13 @@ void mad::core::ViewableEntity::appear(mad::core::EventDispatcher &dispatcher) c
     dispatcher.dispatch(std::make_shared<PositionalAppearance>(m_position, m_rotation, m_image, m_z_ind));
 }
 
-mad::core::ViewableEntity::ViewableEntity(std::string e_type,
+mad::core::ViewableEntity::ViewableEntity(std::unordered_set<std::string> tags,
                                           mad::core::ViewableEntity::Id id,
                                           int z_ind,
                                           Vec2d initial_position,
                                           float initial_rotation,
                                           std::shared_ptr<Image> image)
-    : Entity(std::move(e_type)),
+    : Entity(std::move(tags)),
       m_id(id),
       m_z_ind(z_ind),
       m_position(std::make_shared<Vec2d>(initial_position)),
