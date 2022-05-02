@@ -18,8 +18,7 @@ jobs:
         include:
           - command: g++-10
             os: ubuntu-latest
-            install: sudo apt update && sudo apt-get install libsfml-dev xorg-dev libglu1-mesa-dev
-            vcpkg install nlohmann-json
+            install: sudo apt update && sudo apt-get install libsfml-dev xorg-dev libglu1-mesa-dev && vcpkg install nlohmann-json
           - command: clang++
             install: brew install sfml nlohmann-json
             os: macos-latest
