@@ -35,6 +35,10 @@ set(
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp
+        event/management/handler/Controller/Controller.hpp
+        event/management/handler/Controller/Controller.cpp
+        event/management/handler/Controller/MobController.hpp
+        event/management/handler/Controller/MobController.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
@@ -73,7 +77,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-        world/filter/RadiusFilter.hpp)
+)
 
 add_library(
         ${LIBRARY_CORE} STATIC
@@ -86,7 +90,7 @@ add_library(
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_definitions(${LIBRARY_CORE} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
     message(STATUS "Enable debug logs for ${LIBRARY_CORE}")
-endif()
+endif ()
 
 target_include_directories(
         ${LIBRARY_CORE} PUBLIC

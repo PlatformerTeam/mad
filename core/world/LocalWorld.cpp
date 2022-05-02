@@ -1,12 +1,12 @@
 #include "LocalWorld.hpp"
 
-#include <spdlog/spdlog.h>
-#include <world/intent/LambdaIntent.hpp>
-#include <world/filter/TrueFilter.hpp>
 #include <common/Error.hpp>
 #include <event/management/dispatcher/DelayedDispatcher.hpp>
-#include <world/entity/Entity.hpp>
+#include <spdlog/spdlog.h>
 #include <world/entity/ContactListener/ContactListener.hpp>
+#include <world/entity/Entity.hpp>
+#include <world/filter/TrueFilter.hpp>
+#include <world/intent/LambdaIntent.hpp>
 
 #include <vector>
 
@@ -37,9 +37,9 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     // calculating fps + dt
     sf::Time time = clock.getElapsedTime();
     dt = time.asSeconds() - last_time;
-    sf::sleep(sf::seconds((1.0f/120) - dt));
+    sf::sleep(sf::seconds((1.0f / 120) - dt));
     last_time = time.asSeconds();
-    float fact_dt = (1.0f/120);
+    float fact_dt = (1.0f / 120);
 
     //double fps = 1 / (time.asSeconds() - l_old);
     //SPDLOG_INFO("FPS {}", fps);
@@ -74,6 +74,9 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
         dispatcher.dispatch(m_step_events_queue->front());
         m_step_events_queue->pop();
     }
+
+    //control
+    m_controller.control(m_storage);
 }
 
 mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(Entity::Type type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
