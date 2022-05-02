@@ -7,14 +7,15 @@
 
 #include <memory>
 
+#include <nlohmann/json.hpp>
 
 namespace mad::core {
 
     class LevelLoader {
     public:
-        virtual std::unique_ptr<LevelRunner> load(
+        std::unique_ptr<LevelRunner> load(
                 std::shared_ptr<EventDispatcher> global_dispatcher,
-                std::shared_ptr<SystemListener> system_listener) = 0;
+                std::shared_ptr<SystemListener> system_listener);
     };
 
 }

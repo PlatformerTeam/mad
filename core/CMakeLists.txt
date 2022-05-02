@@ -94,6 +94,7 @@ target_include_directories(
         ${INCLUDE_IMGUI}
         ${INCLUDE_IMGUI_SFML}
         ${INCLUDE_SPDLOG}
+        ${INCLUDE_JSON}
 )
 
 target_link_libraries(
@@ -103,4 +104,5 @@ target_link_libraries(
         ${LIBRARY_SPDLOG}
         ${LIBRARY_BOX2D}
         ${LIBRARY_OPENGL}
+        ${LIBRARY_JSON}
 )

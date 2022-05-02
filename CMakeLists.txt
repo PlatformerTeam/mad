@@ -48,6 +48,10 @@ set(SOURCES_IMGUI
         ${DIRECTORY_IMGUI}/imgui_tables.cpp
         ${DIRECTORY_IMGUI}/imgui_demo.cpp)
 
+# JSON parce library
+set(DIRECTORY_JSON ${PROJECT_SOURCE_DIR}/deps/json)
+set(INCLUDE_JSON ${DIRECTORY_JSON}/include/nlohmann/)
+
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui sources: ${SOURCES_IMGUI}")
 
