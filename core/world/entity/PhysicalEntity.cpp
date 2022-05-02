@@ -2,22 +2,21 @@
 // Created by mirong on 18.03.2022.
 //
 #include "PhysicalEntity.hpp"
-#include "visual/image/shape/square/Square.hpp"
 #include "common/Cast.hpp"
+#include "visual/image/shape/square/Square.hpp"
 #include "world/intent/LambdaIntent.hpp"
 
 #include <utility>
 
-mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed)
-    : ViewableEntity(id, z_ind, initial_position, initial_rotation, image) {
+mad::core::PhysicalEntity::PhysicalEntity(std::unordered_set<std::string> tags, std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed)
+    : ViewableEntity(std::move(tags), id, z_ind, initial_position, initial_rotation, image) {
 
     //rect.setOrigin(300, 50);
 
     float side_length = pointer_cast_to<Square>(image)->get_side_length();
 
 
-    if(is_fixed)
-    {
+    if (is_fixed) {
         b2BodyDef fixedBodyDef;
         fixedBodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&fixedBodyDef);
@@ -25,9 +24,7 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         groundBox.SetAsBox(side_length / 2, side_length / 2);
         body->CreateFixture(&groundBox, 0.0f);
         body->SetTransform(body->GetPosition(), initial_rotation);
-    }
-    else
-    {
+    } else {
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(initial_position.get_x(), initial_position.get_y());

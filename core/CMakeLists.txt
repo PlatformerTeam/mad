@@ -26,6 +26,12 @@ set(
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
+        event/physics/Collision.hpp
+        event/physics/Collision.cpp
+        event/management/handler/controller/Controller.hpp
+        event/management/handler/controller/Controller.cpp
+        ../game/mobs/MobController.hpp
+        ../game/mobs/MobController.cpp
         event/menu/MenuEvent.hpp event/menu/MenuEvent.cpp
         event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
         event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
@@ -35,20 +41,29 @@ set(
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp
+        event/management/handler/controller/Controller.hpp
+        event/management/handler/controller/Controller.cpp
+        ../game/mobs/MobController.hpp
+        ../game/mobs/MobController.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
         world/filter/Filter.hpp
+        world/filter/TagFilter.hpp
         world/filter/TrueFilter.hpp
         world/filter/IdFilter.hpp
         world/entity/EntityStorage.cpp world/entity/EntityStorage.hpp
         world/entity/ViewableEntity.hpp world/entity/ViewableEntity.cpp
         world/entity/Entity.hpp world/entity/Entity.cpp
+        world/entity/mobs/Mob.hpp
+        world/entity/mobs/Mob.cpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/intent/LambdaIntent.cpp world/intent/LambdaIntent.hpp
         world/intent/Intent.cpp world/intent/Intent.hpp
         world/entity/PhysicalEntity.hpp world/entity/PhysicalEntity.cpp
-        world/entity/ContactListener/ContactListener.hpp
+        world/entity/contactListener/ContactListener.hpp
+        world/filter/RadiusFilter.hpp
+        world/filter/TagRadiusFilter.hpp
 
         menu/Menu.hpp menu/Menu.cpp
         menu/MainMenu.hpp menu/MainMenu.cpp
@@ -56,9 +71,6 @@ set(
 
         runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
-        runner/LevelRunner.hpp runner/LevelRunner.cpp
-        runner/GameRunner.hpp runner/GameRunner.cpp
-        loader/LevelLoader.hpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
@@ -83,7 +95,7 @@ add_library(
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_definitions(${LIBRARY_CORE} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
     message(STATUS "Enable debug logs for ${LIBRARY_CORE}")
-endif()
+endif ()
 
 target_include_directories(
         ${LIBRARY_CORE} PUBLIC

@@ -4,6 +4,7 @@
 #include <common/Error.hpp>
 
 #include <cstdint>
+#include <unordered_set>
 
 
 namespace mad::core {
@@ -21,7 +22,10 @@ namespace mad::core {
     public:
         using Id = std::int32_t;
 
-    public:
+        const std::unordered_set<std::string> tags;
+
+        explicit Entity(std::unordered_set<std::string> tags);
+
         virtual void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) = 0;
 
         [[nodiscard]] Id get_id() const noexcept;

@@ -87,6 +87,7 @@ add_subdirectory(${DIRECTORY_GAME})
 message(STATUS "Game executable: ${EXECUTABLE_GAME}")
 message(STATUS "Game-runner executable ${EXECUTABLE_GAME_RUNNER}")
 
+
 # Tests
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)
 set(EXECUTABLE_TEST test)

@@ -2,10 +2,10 @@
 #define MAD_VIEWABLEENTITY_HPP
 
 #include "Entity.hpp"
-#include "common/FVec2D.hpp"
 #include "common/Error.hpp"
-#include "visual/image/Image.hpp"
+#include "common/FVec2D.hpp"
 #include "event/management/dispatcher/EventDispatcher.hpp"
+#include "visual/image/Image.hpp"
 #include <visual/image/shape/Shape.hpp>
 
 
@@ -17,7 +17,7 @@ namespace mad::core {
     class Intent;
 
     class EventDispatcher;
-}
+}// namespace mad::core
 
 
 namespace mad::core {
@@ -27,7 +27,7 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        explicit ViewableEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image);
+        explicit ViewableEntity(std::unordered_set<std::string> tags, Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image);
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
@@ -55,6 +55,6 @@ namespace mad::core {
         std::shared_ptr<Image> m_image;
     };
 
-}
+}// namespace mad::core
 
-#endif //MAD_VIEWABLEENTITY_HPP
+#endif//MAD_VIEWABLEENTITY_HPP

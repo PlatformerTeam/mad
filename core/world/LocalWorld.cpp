@@ -5,9 +5,14 @@
 #include <world/filter/TrueFilter.hpp>
 #include <common/Error.hpp>
 #include <event/management/dispatcher/DelayedDispatcher.hpp>
+#include <spdlog/spdlog.h>
 #include <world/entity/Entity.hpp>
-#include <world/entity/ContactListener/ContactListener.hpp>
+#include <world/filter/TrueFilter.hpp>
+#include <world/intent/LambdaIntent.hpp>
+#include <world/entity/Entity.hpp>
+#include <world/entity/contactListener/ContactListener.hpp>
 
+#include <utility>
 #include <vector>
 
 
@@ -18,6 +23,9 @@ mad::core::LocalWorld::LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravi
 
     m_contact_listener = std::make_shared<mad::core::MyContactListener>(event_dispatcher);
     m_physical_world.SetContactListener(&*m_contact_listener);
+    m_storage = std::make_shared<mad::core::EntityStorage>();
+    m_controller = std::make_shared<MobController>(m_storage);
+    event_dispatcher.registry(m_controller);
 }
 
 
@@ -25,8 +33,8 @@ bool mad::core::LocalWorld::manipulate(const mad::core::Filter &filter, const ma
     //CHECK_THROW(is_legal(validate_filter(f), IllegalManipulation, "Illegal filter");
     //CHECK_THROW(is_legal(validate_intent(i), IllegalManipulation, "Illegal intent");
 
-    for (Entity::Id entity_id : m_storage.extract(filter)) {
-        m_storage.get_entity(entity_id).accept(*this, intent, *m_event_queue_dispatcher);
+    for (Entity::Id entity_id : m_storage->extract(filter)) {
+        m_storage->get_entity(entity_id).accept(*this, intent, *m_event_queue_dispatcher);
     }
 
     return true;
@@ -37,18 +45,18 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     // calculating fps + dt
     sf::Time time = clock.getElapsedTime();
     dt = time.asSeconds() - last_time;
-    sf::sleep(sf::seconds((1.0f/120) - dt));
+    sf::sleep(sf::seconds((1.0f / 120) - dt));
     last_time = time.asSeconds();
-    float fact_dt = (1.0f/120);
+    float fact_dt = (1.0f / 120);
 
     //double fps = 1 / (time.asSeconds() - l_old);
     //SPDLOG_INFO("FPS {}", fps);
 
     // simulating physics
     m_physical_world.Step(fact_dt * render_scale, 3, 10);
-    for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
-        if (&m_storage.get_entity(entity_id) != nullptr && cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {
-            auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id));
+    for (Entity::Id entity_id : m_storage->extract(TrueFilter())) {
+        if (cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id)) != nullptr) {
+            auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage->get_entity(entity_id));
             physical_entity->synchronize_position_with_viewable();
         }
     }
@@ -74,12 +82,15 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
         dispatcher.dispatch(m_step_events_queue->front());
         m_step_events_queue->pop();
     }
+
+    //control
+    m_controller->control();
 }
 
-mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
+mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(std::unordered_set<std::string> tags, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
                                                                     std::shared_ptr<Image> image) {
-    return m_storage.create_viewable_entity(z_ind, initial_position, initial_rotation, image);
+    return m_storage->create_viewable_entity(std::move(tags), z_ind, initial_position, initial_rotation, std::move(image));
 }
-mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
-    return m_storage.create_physical_entity(z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
+mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(std::unordered_set<std::string> tags, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
+    return m_storage->create_physical_entity(std::move(tags), z_ind, initial_position, initial_rotation, std::move(image), m_physical_world, is_Fixed);
 }
