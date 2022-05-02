@@ -2,10 +2,10 @@
 #define MAD_VIEWABLEENTITY_HPP
 
 #include "Entity.hpp"
-#include "common/FVec2D.hpp"
 #include "common/Error.hpp"
-#include "visual/image/Image.hpp"
+#include "common/FVec2D.hpp"
 #include "event/management/dispatcher/EventDispatcher.hpp"
+#include "visual/image/Image.hpp"
 #include <visual/image/shape/Shape.hpp>
 
 
@@ -17,7 +17,7 @@ namespace mad::core {
     class Intent;
 
     class EventDispatcher;
-}
+}// namespace mad::core
 
 
 namespace mad::core {
@@ -55,6 +55,6 @@ namespace mad::core {
         std::shared_ptr<Image> m_image;
     };
 
-}
+}// namespace mad::core
 
-#endif //MAD_VIEWABLEENTITY_HPP
+#endif//MAD_VIEWABLEENTITY_HPP

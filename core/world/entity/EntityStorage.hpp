@@ -3,32 +3,30 @@
 
 #include "Entity.hpp"
 
-#include <common/Error.hpp>
 #include <common/Cast.hpp>
+#include <common/Error.hpp>
 #include <common/FVec2D.hpp>
 #include <world/filter/Filter.hpp>
 #include <world/filter/IdFilter.hpp>
 
 #include "EntityStorage.hpp"
+#include "PhysicalEntity.hpp"
 #include "ViewableEntity.hpp"
 #include "visual/image/shape/Shape.hpp"
-#include "PhysicalEntity.hpp"
 
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 namespace mad::core {
     class Image;
 
-    struct EnumClassHash
-    {
-        template <typename T>
-        std::size_t operator()(T t) const
-        {
+    struct EnumClassHash {
+        template<typename T>
+        std::size_t operator()(T t) const {
             return static_cast<std::size_t>(t);
         }
     };
-}
+}// namespace mad::core
 
 namespace mad::core {
 
@@ -47,7 +45,7 @@ namespace mad::core {
         std::vector<Entity::Id> m_list_ids;
     };
 
-}
+}// namespace mad::core
 
 
-#endif //MAD_CORE_WORLD_ENTITY_ENTITYSTORAGE_HPP
+#endif//MAD_CORE_WORLD_ENTITY_ENTITYSTORAGE_HPP
