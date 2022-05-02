@@ -13,13 +13,16 @@ set(
         event/system/KeyReleased.hpp event/system/KeyReleased.cpp
         event/system/WindowClose.hpp event/system/WindowClose.cpp
         event/system/KeyHeld.hpp event/system/KeyHeld.cpp
+        event/system/LevelPause.hpp event/system/LevelPause.cpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
         event/management/handler/EventHandler.hpp
         event/management/handler/WindowCloseHandler.hpp event/management/handler/WindowCloseHandler.cpp
-        event/management/handler/CollisionHandler.hpp
-        event/management/handler/CollisionHandler.cpp
+        event/management/handler/MainMenuEventsHandler.hpp event/management/handler/MainMenuEventsHandler.cpp
+        event/management/handler/PauseMenuEventsHandler.hpp event/management/handler/PauseMenuEventsHandler.cpp
+        event/management/handler/LevelRunnerEventsHandler.hpp event/management/handler/LevelRunnerEventsHandler.cpp
+        event/management/handler/GameRunnerEventsHandler.hpp event/management/handler/GameRunnerEventsHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
@@ -29,6 +32,15 @@ set(
         event/management/handler/controller/Controller.cpp
         ../game/mobs/MobController.hpp
         ../game/mobs/MobController.cpp
+        event/menu/MenuEvent.hpp event/menu/MenuEvent.cpp
+        event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
+        event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
+        event/runner/RunnerEvent.hpp event/runner/RunnerEvent.cpp
+        event/runner/GameRunnerEvent.hpp event/runner/GameRunnerEvent.cpp
+        event/runner/LevelRunnerEvent.hpp event/runner/LevelRunnerEvent.cpp
+
+        event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
+        event/physics/Collision.hpp event/physics/Collision.cpp
 
         world/World.cpp world/World.hpp
         world/LocalWorld.cpp world/LocalWorld.hpp
@@ -49,8 +61,15 @@ set(
         world/filter/RadiusFilter.hpp
         world/filter/TagRadiusFilter.hpp
 
-        runner/GameRunner.hpp
+        menu/Menu.hpp menu/Menu.cpp
+        menu/MainMenu.hpp menu/MainMenu.cpp
+        menu/PauseMenu.hpp menu/PauseMenu.cpp
+
+        runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
+        runner/LevelRunner.hpp runner/LevelRunner.cpp
+        runner/GameRunner.hpp runner/GameRunner.cpp
+        loader/LevelLoader.hpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
@@ -64,30 +83,35 @@ set(
         visual/Camera.cpp visual/Camera.hpp
 )
 
-add_library(${LIBRARY_CORE} SHARED ${SOURCES_CORE})
+add_library(
+        ${LIBRARY_CORE} STATIC
 
-# Core headers
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_CORE})
+        ${SOURCES_CORE}
+        ${SOURCES_IMGUI}
+        ${SOURCES_IMGUI_SFML}
+)
 
-# Core librayr uses sfml
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
+if (CMAKE_BUILD_TYPE MATCHES Debug)
+    target_compile_definitions(${LIBRARY_CORE} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
+    message(STATUS "Enable debug logs for ${LIBRARY_CORE}")
+endif()
 
-# Core library uses box2d for physics
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_BOX2D})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_BOX2D})
+target_include_directories(
+        ${LIBRARY_CORE} PUBLIC
 
-# Core library uses SFML for interface
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SFML})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SFML})
+        ${INCLUDE_CORE}
+        ${INCLUDE_BOX2D}
+        ${INCLUDE_SFML}
+        ${INCLUDE_IMGUI}
+        ${INCLUDE_IMGUI_SFML}
+        ${INCLUDE_SPDLOG}
+)
 
-# Core library uses imgui for interface
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI})
+target_link_libraries(
+        ${LIBRARY_CORE}
 
-# Core library uses imgui-SFML for interface
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_IMGUI_SFML})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_IMGUI_SFML})
-
-# Core library uses spdlog for logging
-target_include_directories(${LIBRARY_CORE} PUBLIC ${INCLUDE_SPDLOG})
-target_link_libraries(${LIBRARY_CORE} ${LIBRARY_SPDLOG})
+        ${LIBRARY_SFML}
+        ${LIBRARY_SPDLOG}
+        ${LIBRARY_BOX2D}
+        ${LIBRARY_OPENGL}
+)
