@@ -17,6 +17,5 @@ namespace mad::core {
         std::shared_ptr<EntityStorage> m_storage;
     };
 
-}// namespace mad::core
-
+}
 #endif//MAD_CONTROLLER_HPP

@@ -4,7 +4,7 @@
 #include <event/Event.hpp>
 #include <event/Event.hpp>
 #include <event/physics/Collision.hpp>
-#include <spdlog/spdlog.h>
+#include <event/Event.hpp>
 #include <world/entity/Entity.hpp>
 #include <world/entity/PhysicalEntity.hpp>
 #include <world/intent/LambdaIntent.hpp>

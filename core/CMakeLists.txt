@@ -26,6 +26,12 @@ set(
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
+        event/physics/Collision.hpp
+        event/physics/Collision.cpp
+        event/management/handler/controller/Controller.hpp
+        event/management/handler/controller/Controller.cpp
+        ../game/mobs/MobController.hpp
+        ../game/mobs/MobController.cpp
         event/menu/MenuEvent.hpp event/menu/MenuEvent.cpp
         event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
         event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
