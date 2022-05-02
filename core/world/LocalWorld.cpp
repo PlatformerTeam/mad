@@ -12,6 +12,7 @@
 #include <world/entity/Entity.hpp>
 #include <world/entity/contactListener/ContactListener.hpp>
 
+#include <utility>
 #include <vector>
 
 
@@ -86,10 +87,10 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     m_controller->control();
 }
 
-mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(std::string type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
+mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(std::unordered_set<std::string> tags, int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
                                                                     std::shared_ptr<Image> image) {
-    return m_storage->create_viewable_entity(type, z_ind, initial_position, initial_rotation, image);
+    return m_storage->create_viewable_entity(std::move(tags), z_ind, initial_position, initial_rotation, std::move(image));
 }
-mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(std::string type, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
-    return m_storage->create_physical_entity(type, z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
+mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(std::unordered_set<std::string> tags, int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
+    return m_storage->create_physical_entity(std::move(tags), z_ind, initial_position, initial_rotation, std::move(image), m_physical_world, is_Fixed);
 }
