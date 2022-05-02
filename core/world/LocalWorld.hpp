@@ -1,13 +1,7 @@
 #ifndef MAD_CORE_WORLD_LOCALWORLD_HPP
 #define MAD_CORE_WORLD_LOCALWORLD_HPP
 
-#include <world/World.hpp>
-#include <world/entity/EntityStorage.hpp>
-#include <event/management/dispatcher/ImmediateDispatcher.hpp>
-#include <event/management/dispatcher/DelayedDispatcher.hpp>
-#include <box2d/box2d.h>
-#include <visual/image/shape/Shape.hpp>
-#include <world/entity/contactListener/ContactListener.hpp>
+#include <game/mobs/MobController.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -17,10 +11,11 @@
 #include <box2d/box2d.h>
 #include <event/management/dispatcher/DelayedDispatcher.hpp>
 #include <event/management/dispatcher/ImmediateDispatcher.hpp>
+#include <queue>
 #include <visual/image/shape/Shape.hpp>
 #include <world/World.hpp>
 #include <world/entity/EntityStorage.hpp>
-#include <queue>
+#include <world/entity/contactListener/ContactListener.hpp>
 
 
 namespace mad::core {
