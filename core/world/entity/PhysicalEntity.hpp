@@ -4,13 +4,14 @@
 #include "Entity.hpp"
 #include "ViewableEntity.hpp"
 
-#include <box2d/box2d.h>
-#include <common/Error.hpp>
-#include <common/FVec2D.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <visual/image/Image.hpp>
 #include <visual/image/shape/Shape.hpp>
 
+#include <common/Error.hpp>
+#include <common/FVec2D.hpp>
+
+#include <box2d/box2d.h>
 
 #include <memory>
 

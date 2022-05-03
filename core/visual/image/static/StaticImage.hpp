@@ -27,6 +27,8 @@ namespace mad::core {
 
         [[nodiscard]] TransformType get_transform_type() const noexcept;
 
+        [[nodiscard]] b2PolygonShape as_fixture() override;
+
     private:
         std::filesystem::path m_path;
 
