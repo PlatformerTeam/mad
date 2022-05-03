@@ -93,7 +93,7 @@ namespace mad::core {
         void create_block(std::shared_ptr<LocalWorld> world, Vec2d position,
                                         float block_size, bool is_stable);
 
-        Entity::Id create_hero(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size);
+        Entity::Id create_hero(std::shared_ptr<LocalWorld> world, Vec2d position);
 
     private:
         enum class Objects {

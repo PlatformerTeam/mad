@@ -30,7 +30,8 @@ namespace mad::core {
                                                   Vec2d initial_position, float initial_rotation,
                                                   std::shared_ptr<Image> image) = 0;
 
-        virtual Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) = 0;
+        virtual Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image,
+                                                  bool is_fixed, bool is_rotated) = 0;
     };
 
 }// namespace mad::core

@@ -69,8 +69,7 @@ namespace mad::core {
                     case Objects::Hero: {
                         hero_id = create_hero(world,
                                               {current_position_x,
-                                               current_position_y},
-                                               object_size);
+                                               current_position_y});
                         break;
                     }
                     case Objects::Enemy1: {
@@ -94,31 +93,36 @@ namespace mad::core {
     void LevelLoader::create_block(std::shared_ptr<LocalWorld> world,
                                    Vec2d position, float block_size, bool is_stable) {
 
-        std::string resource = "../../game/resources/static/";
+        std::string source = "../../game/resources/static/";
         if (is_stable) {
-            resource += static_cast<std::string>(m_config_json["texture"]["stable"]);
+            source += static_cast<std::string>(m_config_json["texture"]["stable"]);
         } else {
-            resource += static_cast<std::string>(m_config_json["texture"]["unstable"]);
+            source += static_cast<std::string>(m_config_json["texture"]["unstable"]);
         }
 
         Entity::Id square_id = world->create_physical_entity(
                 0,
                 position,
                 0,
-                std::make_shared<StaticImage>(resource, block_size, block_size, StaticImage::TransformType::Tile),
+                std::make_shared<StaticImage>(source, block_size, block_size, StaticImage::TransformType::Tile),
                 is_stable
         );
     }
 
-    Entity::Id LevelLoader::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
+    Entity::Id LevelLoader::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
+        std::string source = "../../game/resources/animated/" +
+                static_cast<std::string>(m_config_json["hero"]["animated"]["resource"]);
         Entity::Id hero_id = world->create_physical_entity(
                 0,
                 position,
                 0,
-                std::make_shared<AnimatedImage>("../../game/resources/animated/" + (std::string)m_config_json["hero"]["animated"]["resource"],
-                                                m_config_json["hero"]["animated"]["sprite_width"], m_config_json["hero"]["animated"]["sprite_height"],
-                                                m_config_json["hero"]["animated"]["delta_time"], m_config_json["hero"]["animated"]["size_width"],
-                                                m_config_json["hero"]["animated"]["size_height"])
+                std::make_shared<AnimatedImage>(source,
+                                                m_config_json["hero"]["animated"]["sprite_width"],
+                                                m_config_json["hero"]["animated"]["sprite_height"],
+                                                m_config_json["hero"]["animated"]["delta_time"],
+                                                m_config_json["hero"]["animated"]["size_width"],
+                                                m_config_json["hero"]["animated"]["size_height"]),
+                false, false
         );
         return hero_id;
     }
