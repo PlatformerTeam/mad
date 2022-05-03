@@ -11,6 +11,8 @@ namespace mad::core {
 
         [[nodiscard]] float get_side_length() const noexcept;
 
+        b2PolygonShape as_fixture() override;
+
     private:
         float m_side;
     };

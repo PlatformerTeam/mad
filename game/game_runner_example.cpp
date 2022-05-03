@@ -17,6 +17,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <spdlog/spdlog.h>
+#include "event/system/KeyPressed.hpp"
 
 
 class ArrowController : public mad::core::EventHandler {
@@ -27,7 +28,7 @@ public:
               m_entity_id(entity_id) {}
 
     void handle(const mad::core::Event &event) override {
-        SPDLOG_DEBUG("handle arrow event");
+        SPDLOG_INFO("handle arrow event");
 
         auto make_move_intent = [](mad::core::Vec2d dir) {
             return mad::core::LambdaIntent(
@@ -36,28 +37,45 @@ public:
                     });
         };
 
-        if (event.type == mad::core::Event::Type::KeyHeld) {
+        auto impulse = [](mad::core::Vec2d dir) {
+            return mad::core::LambdaIntent(
+                    [=](mad::core::Entity &entity, mad::core::EventDispatcher &event_dispatcher) {
+                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_linear_impulse_to_center(dir, event_dispatcher);
+                    });
+        };
+
+        auto force = [](mad::core::Vec2d dir) {
+            return mad::core::LambdaIntent(
+                    [=](mad::core::Entity &entity, mad::core::EventDispatcher &event_dispatcher) {
+                        mad::core::cast_to<mad::core::PhysicalEntity>(entity).apply_force_to_center(dir, event_dispatcher);
+                    });
+        };
+
+        if (event.type == mad::core::Event::Type::KeyPressed) {
+            const auto &keystroke = mad::core::const_cast_to<mad::core::KeyPressed>(event);
+            if (keystroke.key_id == sf::Keyboard::Key::Space) {
+                m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, -200000.0f}));
+            }
+        } else if (event.type == mad::core::Event::Type::KeyHeld) {
             const auto &keystroke = mad::core::const_cast_to<mad::core::KeyHeld>(event);
-            if (keystroke.key_id == sf::Keyboard::Key::Up) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, -1.f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Down) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{0.0f, 1.f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Left) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{-1.f, 0.0f}));
-            } else if (keystroke.key_id == sf::Keyboard::Key::Right) {
-                m_world->manipulate_entity_id(m_entity_id, make_move_intent(mad::core::Vec2d{1.f, 0.0f}));
+            if (keystroke.key_id == sf::Keyboard::Key::Right) {
+                m_world->manipulate_entity_id(m_entity_id, force(mad::core::Vec2d{100000.0f, 0.0f}));
+            }
+            if (keystroke.key_id == sf::Keyboard::Key::Left) {
+                m_world->manipulate_entity_id(m_entity_id, force(mad::core::Vec2d{-100000.0f, 0.0f}));
             }
         }
     }
 
     std::unordered_set<mad::core::Event::Type> handled_types() override {
-        return {mad::core::Event::Type::KeyHeld};
+        return {mad::core::Event::Type::KeyPressed, mad::core::Event::Type::KeyHeld};
     }
 
 private:
     std::shared_ptr<mad::core::World> m_world;
     mad::core::Entity::Id m_entity_id;
 };
+
 
 class ExampleLevelLoader : public mad::core::LevelLoader {
 public:
@@ -77,9 +95,25 @@ public:
                 std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
         );
 
+        mad::core::Entity::Id square_id_1 = world->create_physical_entity(
+                0,
+                mad::core::Vec2d{0.0f, 0.0f},
+                0,
+                std::make_shared<mad::core::StaticImage>("../../game/resources/static/brick.png", 50, 50,
+                                                         mad::core::StaticImage::TransformType::Tile)
+        );
+
+        mad::core::Entity::Id square_id_2 = world->create_physical_entity(
+                0,
+                mad::core::Vec2d{200.0f, 200.0f},
+                0,
+                std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
+                true
+        );
+
         camera->turn_on(*level_dispatcher);
         level_dispatcher->registry(camera);
-        level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id));
+        level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id_1));
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
