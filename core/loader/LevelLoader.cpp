@@ -94,13 +94,18 @@ namespace mad::core {
     void LevelLoader::create_block(std::shared_ptr<LocalWorld> world,
                                    Vec2d position, float block_size, bool is_stable) {
 
+        std::string resource = "../../game/resources/static/";
+        if (is_stable) {
+            resource += static_cast<std::string>(m_config_json["texture"]["stable"]);
+        } else {
+            resource += static_cast<std::string>(m_config_json["texture"]["unstable"]);
+        }
+
         Entity::Id square_id = world->create_physical_entity(
                 0,
                 position,
                 0,
-//                std::make_shared<StaticImage>(StaticImage("../../game/resources/static" + (std::string)m_config_json["texture"]["stable"], block_size,
-//                                                         block_size, StaticImage::TransformType::Tile)),
-                std::make_shared<mad::core::Square>(block_size, mad::core::Color::Green()),
+                std::make_shared<StaticImage>(resource, block_size, block_size, StaticImage::TransformType::Tile),
                 is_stable
         );
     }
@@ -110,7 +115,10 @@ namespace mad::core {
                 0,
                 position,
                 0,
-                std::make_shared<mad::core::Square>(block_size, mad::core::Color::Blue())
+                std::make_shared<AnimatedImage>("../../game/resources/animated/" + (std::string)m_config_json["hero"]["animated"]["resource"],
+                                                m_config_json["hero"]["animated"]["sprite_width"], m_config_json["hero"]["animated"]["sprite_height"],
+                                                m_config_json["hero"]["animated"]["delta_time"], m_config_json["hero"]["animated"]["size_width"],
+                                                m_config_json["hero"]["animated"]["size_height"])
         );
         return hero_id;
     }

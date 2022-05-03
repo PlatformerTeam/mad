@@ -15,6 +15,13 @@
     "unstable" : "brick.png"
   },
   "hero" : {
-    "animated" : ""
+    "animated" : {
+      "resource" : "runner_new.png",
+      "sprite_width" : 5,
+      "sprite_height" : 2,
+      "delta_time" : 100,
+      "size_width" : 40,
+      "size_height" : 40
+    }
   }
 }

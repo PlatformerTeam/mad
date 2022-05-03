@@ -17,11 +17,16 @@ namespace mad::core {
         m_width_sprite = static_cast<int>(m_texture.getSize().x + 1) / animated_image->get_width();
 
         m_rect = {0, 0, m_width_sprite, m_height_sprite};
+
+        m_scale = {animated_image->get_sprite_width() / static_cast<float>(m_width_sprite),
+                   animated_image->get_sprite_height() / static_cast<float>(m_height_sprite)};
     }
 
     void RenderableAnimated::render(sf::RenderWindow &window){
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_texture);
+
+        render_sprite.setScale(m_scale);
 
         render_sprite.setTextureRect(m_rect);
 
@@ -35,7 +40,7 @@ namespace mad::core {
 
         render_sprite.setPosition(m_position->get_x(), m_position->get_y());
 
-        render_sprite.setRotation(*m_rotation * 180 / M_PI);
+        render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
     }
