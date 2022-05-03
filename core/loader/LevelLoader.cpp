@@ -52,34 +52,34 @@ namespace mad::core {
         while (std::getline(m_level_map, map_line)) {
             for (char object : map_line) {
                 switch(m_objects[object]) {
-                    case Objects::unstable_block: {
+                    case Objects::UnstableBlock: {
                         create_block(world,
                                      {current_position_x,
                                      current_position_y},
                                      object_size, false);
                         break;
                     }
-                    case Objects::stable_block: {
+                    case Objects::StableBlock: {
                         create_block(world,
                                      {current_position_x,
                                       current_position_y},
                                       object_size, true);
                         break;
                     }
-                    case Objects::hero: {
+                    case Objects::Hero: {
                         hero_id = create_hero(world,
                                               {current_position_x,
                                                current_position_y},
                                                object_size);
                         break;
                     }
-                    case Objects::enemy_1: {
+                    case Objects::Enemy1: {
                         break;
                     }
-                    case Objects::enemy_2: {
+                    case Objects::Enemy2: {
                         break;
                     }
-                    case Objects::empty: {
+                    case Objects::Empty: {
                         break;
                     }
                 }

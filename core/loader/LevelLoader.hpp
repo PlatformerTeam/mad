@@ -97,12 +97,12 @@ namespace mad::core {
 
     private:
         enum class Objects {
-            unstable_block,
-            stable_block,
-            hero,
-            enemy_1,
-            enemy_2,
-            empty
+            UnstableBlock,
+            StableBlock,
+            Hero,
+            Enemy1,
+            Enemy2,
+            Empty
         };
 
         std::filesystem::path m_level_directory;
@@ -112,12 +112,12 @@ namespace mad::core {
         std::ifstream m_level_map;
 
         std::unordered_map<char, Objects> m_objects = {
-                {'.', Objects::empty},
-                {'#', Objects::stable_block},
-                {'@', Objects::unstable_block},
-                {'H', Objects::hero},
-                {'Z', Objects::enemy_1},
-                {'F', Objects::enemy_2}
+                {'.', Objects::Empty},
+                {'#', Objects::StableBlock},
+                {'@', Objects::UnstableBlock},
+                {'H', Objects::Hero},
+                {'Z', Objects::Enemy1},
+                {'F', Objects::Enemy2}
         };
     };
 }
