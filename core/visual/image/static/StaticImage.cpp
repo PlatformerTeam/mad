@@ -25,4 +25,10 @@ namespace mad::core {
         return m_transform_type;
     }
 
+    b2PolygonShape StaticImage::as_fixture() {
+        b2PolygonShape fixture;
+        fixture.SetAsBox(m_width / 2, m_height / 2);
+        return fixture;
+    }
+
 }
