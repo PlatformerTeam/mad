@@ -26,7 +26,6 @@ namespace mad::core {
 
     void LevelRunner::run(sf::RenderWindow &window) {
         SPDLOG_DEBUG("Level has started");
-        m_camera->turn_on(*m_level_event_dispatcher);
         while (m_level_is_running) {
             window.clear(sf::Color(0, 0, 0));
             if (m_is_in_pause) {

@@ -111,7 +111,7 @@ public:
                 true
         );
 
-        camera->turn_on(*level_dispatcher);
+        camera->turn_on(*level_dispatcher, square_id_1);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id_1));
 

@@ -71,10 +71,10 @@ namespace mad::core {
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
             : m_position(initial_position),
               m_world(std::move(world)),
-              m_view(m_position, {640, 480}) {}
+              m_view(initial_position, {640, 480}) {}
 
               // TODO: replace follow to controller
-    void Camera::follow(sf::RenderWindow &window, float smoothness) const {
+    void Camera::follow(sf::RenderWindow &window, float smoothness) {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
@@ -99,10 +99,6 @@ namespace mad::core {
 
     void Camera::set_zoom(float zoom) {
         m_view.zoom(zoom);
-    }
-
-    int Camera::get_unique_number() const noexcept {
-        return 0;
     }
 
     void Camera::insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable) {

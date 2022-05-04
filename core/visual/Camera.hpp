@@ -36,13 +36,23 @@ namespace mad::core {
     public:
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
 
-        void turn_on(EventDispatcher &event_dispatcher);
+        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
 
         void render(sf::RenderWindow &window) override;
 
         void handle(const Event &event) override;
 
         std::unordered_set<Event::Type> handled_types() override;
+
+        void follow(sf::RenderWindow &window, float smoothness);
+
+        sf::View get_view() const noexcept;
+
+        void set_position(const Vec2d &position);
+
+        void set_rotation(float angle);
+
+        void set_zoom(float zoom);
 
         struct CompareScenes {
             bool operator() (const std::pair<int, std::shared_ptr<Renderable>> &a,
@@ -53,6 +63,10 @@ namespace mad::core {
         void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
 
         std::vector<std::pair<int, std::shared_ptr<Renderable>>> m_scene_list;
+
+        std::optional<Entity::Id> m_chased_object;
+
+        sf::View m_view;
 
         Vec2d m_position;
 
