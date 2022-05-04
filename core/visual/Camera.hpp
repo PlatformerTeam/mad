@@ -61,7 +61,7 @@ namespace mad::core {
 
         void set_smoothness(float smoothness);
 
-        void set_follow_type(FollowType type);
+        void set_follow_type(FollowType type, float minimal_distant);
 
     private:
         void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
@@ -79,6 +79,8 @@ namespace mad::core {
         float m_smoothness = 0.5;
 
         FollowType m_type = FollowType::Forward;
+
+        float m_minimal_distant = 1.0f;
     };
 
 }

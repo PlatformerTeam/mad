@@ -80,8 +80,10 @@ namespace mad::core {
             Vec2d position = entity.get_image_position();
             switch (m_type) {
                 case FollowType::Forward: {
-                    m_view.move((position - m_position) * m_smoothness);
-                    m_position += (position - m_position) * m_smoothness;
+                    float move_x = std::max(m_minimal_distant, ((m_position - position) * m_smoothness).get_x());
+                    float move_y = (position - m_position).get_y();
+                    m_view.move(move_x, move_y);
+                    m_position += {move_x, move_y};
                     break;
                 }
                 case FollowType::Backward : {
@@ -122,8 +124,9 @@ namespace mad::core {
         m_scene_list.insert(position, renderable);
     }
 
-    void Camera::set_follow_type(Camera::FollowType type) {
+    void Camera::set_follow_type(Camera::FollowType type, float minimal_distant) {
         m_type = type;
+        m_minimal_distant = minimal_distant;
     }
 
 } // namespace mad::core
