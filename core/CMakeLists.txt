@@ -57,6 +57,7 @@ set(
         menu/Menu.hpp menu/Menu.cpp
         menu/MainMenu.hpp menu/MainMenu.cpp
         menu/PauseMenu.hpp menu/PauseMenu.cpp
+        menu/AuthorizationMenu.hpp menu/AuthorizationMenu.cpp
 
         runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp

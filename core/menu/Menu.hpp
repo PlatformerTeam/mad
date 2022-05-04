@@ -17,6 +17,7 @@ namespace mad::core {
         enum class Type {
             Pause,
             Main,
+            Authorization,
         };
 
         sf::Clock m_delta_clock;
