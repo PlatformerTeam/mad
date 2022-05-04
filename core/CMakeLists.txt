@@ -6,6 +6,8 @@ set(
         common/Color.cpp common/Color.hpp
         common/Cast.hpp
 
+        database/ClientStorageDriver.hpp
+
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
         event/visual/PositionalAppearance.cpp event/visual/PositionalAppearance.hpp
