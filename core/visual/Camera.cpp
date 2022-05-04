@@ -16,6 +16,7 @@ namespace mad::core {
     }
 
     void Camera::render(sf::RenderWindow &window) {
+        window.setView(m_view);
         for (auto &[z_ind, renderable_image] : m_scene_list) {
             renderable_image->render(window);
         }
@@ -74,14 +75,13 @@ namespace mad::core {
               m_view(initial_position, {640, 480}) {}
 
               // TODO: replace follow to controller
-    void Camera::follow(sf::RenderWindow &window, float smoothness) {
+    void Camera::follow() {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
-            m_view.move((position - m_position) * smoothness);
-            m_position += (position - m_position) * smoothness;
+            m_view.move((position - m_position) * m_smoothness);
+            m_position += (position - m_position) * m_smoothness;
         }
-        window.setView(m_view);
     }
 
     sf::View Camera::get_view() const noexcept {
@@ -99,6 +99,10 @@ namespace mad::core {
 
     void Camera::set_zoom(float zoom) {
         m_view.zoom(zoom);
+    }
+
+    void Camera::set_smoothness(float smoothness) {
+        m_smoothness = smoothness;
     }
 
     void Camera::insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable) {

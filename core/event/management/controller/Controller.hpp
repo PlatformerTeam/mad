@@ -7,14 +7,10 @@
 
      class Controller : public EventHandler {
      public:
-         explicit Controller(std::shared_ptr<EntityStorage> m_storage);
-
-         void handle(const Event &event) override;
+         Controller() = default;
 
          virtual void control() = 0;
 
-     protected:
-         std::shared_ptr<EntityStorage> m_storage;
      };
 
  }

@@ -44,7 +44,7 @@ namespace mad::core {
 
         std::unordered_set<Event::Type> handled_types() override;
 
-        void follow(sf::RenderWindow &window, float smoothness);
+        void follow();
 
         sf::View get_view() const noexcept;
 
@@ -54,10 +54,7 @@ namespace mad::core {
 
         void set_zoom(float zoom);
 
-        struct CompareScenes {
-            bool operator() (const std::pair<int, std::shared_ptr<Renderable>> &a,
-                             const std::pair<int, std::shared_ptr<Renderable>> &b) const;
-        };
+        void set_smoothness(float smoothness);
 
     private:
         void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
@@ -71,6 +68,8 @@ namespace mad::core {
         Vec2d m_position;
 
         std::shared_ptr<World> m_world;
+
+        float m_smoothness = 0.5;
     };
 
 }

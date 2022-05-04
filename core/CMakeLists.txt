@@ -14,7 +14,8 @@ set(
         event/system/WindowClose.hpp event/system/WindowClose.cpp
         event/system/KeyHeld.hpp event/system/KeyHeld.cpp
         event/system/LevelPause.hpp event/system/LevelPause.cpp
-        event/management/controller/Controller.cpp event/management/controller/Controller.hpp
+        event/management/controller/Controller.hpp
+        event/management/controller/CameraController.cpp event/management/controller/CameraController.hpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
