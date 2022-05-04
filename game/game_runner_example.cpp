@@ -83,7 +83,7 @@ public:
 
     std::unique_ptr<mad::core::LevelRunner> load(
             std::shared_ptr<mad::core::EventDispatcher> global_dispatcher,
-            std::shared_ptr<mad::core::SystemListener> system_listener) override {
+            std::shared_ptr<mad::core::SystemListener> system_listener) {
         auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
         auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
