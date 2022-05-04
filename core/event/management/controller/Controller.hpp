@@ -10,7 +10,6 @@
          Controller() = default;
 
          virtual void control() = 0;
-
      };
 
  }

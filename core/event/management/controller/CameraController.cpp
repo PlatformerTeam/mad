@@ -10,5 +10,12 @@ namespace mad::core {
     void CameraController::control() {
         m_camera->follow();
     }
+
+    void CameraController::handle(const Event &event) {
+    }
+
+    std::unordered_set<Event::Type> CameraController::handled_types() {
+        return {};
+    }
 }
 

@@ -1,6 +1,7 @@
 #ifndef MAD_LEVELRUNNER_HPP
 #define MAD_LEVELRUNNER_HPP
 
+#include <event/management/controller/Controller.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <menu/PauseMenu.hpp>
@@ -19,7 +20,8 @@ namespace mad::core {
             std::shared_ptr<Camera> camera,
             std::shared_ptr<EventDispatcher> global_event_dispatcher,
             std::shared_ptr<EventDispatcher> level_event_dispatcher,
-            std::shared_ptr<World> world
+            std::shared_ptr<World> world,
+            std::vector<std::shared_ptr<Controller>> controllers
         );
 
         void run(sf::RenderWindow &window) override;
@@ -39,6 +41,7 @@ namespace mad::core {
         std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
         std::shared_ptr<EventDispatcher> m_level_event_dispatcher;
         std::shared_ptr<World> m_world;
+        std::vector<std::shared_ptr<Controller>> m_controllers;
         bool m_level_is_running;
         bool m_is_in_pause;
     };

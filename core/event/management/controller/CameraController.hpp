@@ -12,6 +12,10 @@ namespace mad::core {
 
         void control() override;
 
+        void handle(const Event &event) override;
+
+        std::unordered_set<Event::Type> handled_types() override;
+
     private:
         std::shared_ptr<Camera> m_camera;
     };
