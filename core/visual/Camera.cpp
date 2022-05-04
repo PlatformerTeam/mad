@@ -74,13 +74,22 @@ namespace mad::core {
               m_world(std::move(world)),
               m_view(initial_position, {640, 480}) {}
 
-              // TODO: replace follow to controller
     void Camera::follow() {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
-            m_view.move((position - m_position) * m_smoothness);
-            m_position += (position - m_position) * m_smoothness;
+            switch (m_type) {
+                case FollowType::Forward: {
+                    m_view.move((position - m_position) * m_smoothness);
+                    m_position += (position - m_position) * m_smoothness;
+                    break;
+                }
+                case FollowType::Backward : {
+                    m_view.move((position - m_position) * m_smoothness);
+                    m_position += (position - m_position) * m_smoothness;
+                    break;
+                }
+            }
         }
     }
 
@@ -111,6 +120,10 @@ namespace mad::core {
                                              return a.first < b.first;
                                          });
         m_scene_list.insert(position, renderable);
+    }
+
+    void Camera::set_follow_type(Camera::FollowType type) {
+        m_type = type;
     }
 
 } // namespace mad::core

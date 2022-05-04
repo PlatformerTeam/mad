@@ -34,6 +34,11 @@ namespace mad::core {
         using RenderableWithIndex = std::pair<int, std::shared_ptr<Renderable>>;
 
     public:
+        enum class FollowType {
+            Forward,
+            Backward
+        };
+
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
 
         void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
@@ -56,6 +61,8 @@ namespace mad::core {
 
         void set_smoothness(float smoothness);
 
+        void set_follow_type(FollowType type);
+
     private:
         void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
 
@@ -70,6 +77,8 @@ namespace mad::core {
         std::shared_ptr<World> m_world;
 
         float m_smoothness = 0.5;
+
+        FollowType m_type = FollowType::Forward;
     };
 
 }
