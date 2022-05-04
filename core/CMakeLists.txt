@@ -6,7 +6,8 @@ set(
         common/Color.cpp common/Color.hpp
         common/Cast.hpp
 
-        database/ClientStorageDriver.hpp
+        database/driver/ClientStorageDriver.hpp
+        database/driver/offline/OfflineClientStorageDriver.hpp database/driver/offline/OfflineClientStorageDriver.cpp
 
         event/Event.cpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp
