@@ -29,7 +29,7 @@ int main() {
 
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(1000, 1000), "MAD");
     ImGui::SFML::Init(*window);
-    window->setFramerateLimit(60);
+    window->setFramerateLimit(120);
 
     auto global_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 

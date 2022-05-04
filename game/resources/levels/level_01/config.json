@@ -19,9 +19,9 @@
       "resource" : "runner_new.png",
       "sprite_width" : 5,
       "sprite_height" : 2,
-      "delta_time" : 160,
-      "size_width" : 40,
-      "size_height" : 40
+      "delta_time" : 180,
+      "size_width" : 80,
+      "size_height" : 80
     }
   }
 }
