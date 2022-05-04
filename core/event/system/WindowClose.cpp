@@ -3,6 +3,6 @@
 
 namespace mad::core {
 
+    WindowClose::WindowClose() : Event(Event::Type::WindowClose) {}
 
-    WindowClose::WindowClose() : Event(Event::Type::WindowClosed) {}
 }

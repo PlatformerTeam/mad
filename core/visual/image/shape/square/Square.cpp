@@ -9,4 +9,10 @@ namespace mad::core {
         return m_side;
     }
 
+    b2PolygonShape Square::as_fixture() {
+        b2PolygonShape fixture;
+        fixture.SetAsBox(m_side / 2, m_side / 2);
+        return fixture;
+    }
+
 } // mad::core::Square

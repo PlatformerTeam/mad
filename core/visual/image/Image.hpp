@@ -1,6 +1,7 @@
 #ifndef MAD_CORE_VISUAL_IMAGE_IMAGE_HPP
 #define MAD_CORE_VISUAL_IMAGE_IMAGE_HPP
 
+#include <box2d/box2d.h>
 
 namespace mad::core {
     class Image {
@@ -16,18 +17,10 @@ namespace mad::core {
 
         virtual ~Image() = default;
 
-        void set_unique_number(int unique_number) {
-            m_unique_number = unique_number;
-        }
-
-        [[nodiscard]] int get_unique_number() const noexcept {
-            return m_unique_number;
-        }
+        virtual b2PolygonShape as_fixture() = 0;
 
         const Type type;
 
-    private:
-        int m_unique_number;
     };
 }
 

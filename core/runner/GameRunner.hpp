@@ -1,18 +1,45 @@
-#ifndef MAD_CORE_RUNNER_GAMERUNNER_HPP
-#define MAD_CORE_RUNNER_GAMERUNNER_HPP
+#ifndef MAD_GAMERUNNER_HPP
+#define MAD_GAMERUNNER_HPP
 
-#include <imgui-SFML.h>
+#include <event/management/dispatcher/EventDispatcher.hpp>
+#include <event/management/producer/SystemListener.hpp>
+#include <menu/MainMenu.hpp>
+#include <loader/LevelLoader.hpp>
+#include <runner/Runner.hpp>
+
+#include <memory>
+#include <vector>
+
 
 namespace mad::core {
-    class GameRunner {
+
+    class GameRunner : public Runner {
     public:
-        virtual void run(sf::RenderWindow &window) = 0;
+        explicit GameRunner(
+            std::vector<std::shared_ptr<LevelLoader>> level_loaders,
+            std::shared_ptr<EventDispatcher> dispatcher,
+            std::unique_ptr<MainMenu> main_menu,
+            std::shared_ptr<SystemListener> system_listener
+        );
 
-        virtual void stop() = 0;
+        void start_game();
 
-        virtual ~GameRunner() = default;
+        void stop_game();
+
+        void run(sf::RenderWindow &window) override;
+
+        void stop() override;
+
+    private:
+        std::vector<std::shared_ptr<LevelLoader>> m_level_loaders;
+        std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
+        std::unique_ptr<MainMenu> m_main_menu;
+        std::shared_ptr<SystemListener> m_system_listener;
+        std::unique_ptr<LevelRunner> m_current_level_runner = nullptr;
+        bool m_in_main_menu = true;
+        bool m_running = true;
     };
-}
 
+}// namespace mad::core
 
-#endif //MAD_CORE_RUNNER_GAMERUNNER_HPP
+#endif//MAD_GAMERUNNER_HPP

@@ -15,9 +15,8 @@ namespace mad::core {
         explicit RenderableStatic(const std::shared_ptr<StaticImage>& static_image,
                                   std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) const override;
+        void render(sf::RenderWindow &window) override;
 
-        int get_unique_number() const noexcept override;
     private:
         sf::Texture m_texture;
 
@@ -29,7 +28,6 @@ namespace mad::core {
 
         std::shared_ptr<float> m_rotation;
 
-        int m_unique_number;
     };
 
 }

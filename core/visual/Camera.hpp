@@ -30,28 +30,19 @@
 namespace mad::core {
 
     class Camera : public Renderable, public EventHandler {
+    private:
+        using RenderableWithIndex = std::pair<int, std::shared_ptr<Renderable>>;
+
     public:
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
 
-        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
+        void turn_on(EventDispatcher &event_dispatcher);
 
-        void render(sf::RenderWindow &window) const override;
+        void render(sf::RenderWindow &window) override;
 
         void handle(const Event &event) override;
 
-        void follow(sf::RenderWindow &window, float smoothness) const;
-
-        void set_position(const Vec2d &position);
-
-        void set_rotation(float angle);
-
-        void set_zoom(float zoom);
-
-        sf::View get_view() const noexcept;
-
         std::unordered_set<Event::Type> handled_types() override;
-
-        int get_unique_number() const noexcept override;
 
         struct CompareScenes {
             bool operator() (const std::pair<int, std::shared_ptr<Renderable>> &a,
@@ -59,15 +50,13 @@ namespace mad::core {
         };
 
     private:
-        std::set<std::pair<int, std::shared_ptr<Renderable>>, CompareScenes> m_scene_list;
+        void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
 
-        mutable Vec2d m_position;
+        std::vector<std::pair<int, std::shared_ptr<Renderable>>> m_scene_list;
+
+        Vec2d m_position;
 
         std::shared_ptr<World> m_world;
-
-        std::optional<Entity::Id> m_chased_object;
-
-        mutable sf::View m_view;
     };
 
 }

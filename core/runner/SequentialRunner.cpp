@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 
 
-[[noreturn]] void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
+void mad::core::SequentialRunner::run(sf::RenderWindow &window) {
     while (m_running) {
         window.clear(sf::Color(0, 0, 0));
         for (const auto &producer : m_producers) {
