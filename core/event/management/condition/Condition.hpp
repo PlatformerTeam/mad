@@ -11,7 +11,7 @@ namespace mad::core {
 
     class Condition {
     public:
-        virtual bool is_triggered_by(std::shared_ptr<Event> event) = 0;
+        virtual bool is_triggered_by(const Event &event) = 0;
 
         virtual std::unordered_set<Event::Type> triggers() = 0;
 
