@@ -33,6 +33,10 @@ set(
         event/runner/RunnerEvent.hpp event/runner/RunnerEvent.cpp
         event/runner/GameRunnerEvent.hpp event/runner/GameRunnerEvent.cpp
         event/runner/LevelRunnerEvent.hpp event/runner/LevelRunnerEvent.cpp
+        event/management/controller/Controller.hpp
+        event/management/controller/statemachine/StateMachine.hpp
+        event/management/controller/statemachine/StateMachine.cpp
+        event/management/controller/statemachine/Condition/Condition.hpp
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp
@@ -84,7 +88,7 @@ add_library(
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_definitions(${LIBRARY_CORE} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
     message(STATUS "Enable debug logs for ${LIBRARY_CORE}")
-endif()
+endif ()
 
 target_include_directories(
         ${LIBRARY_CORE} PUBLIC
