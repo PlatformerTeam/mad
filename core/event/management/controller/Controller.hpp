@@ -5,11 +5,13 @@
  #include <event/management/handler/EventHandler.hpp>
  namespace mad::core {
 
-     class Controller : public EventHandler {
+     class Controller {
      public:
          Controller() = default;
 
          virtual void control() = 0;
+
+         virtual ~Controller() = default;
      };
 
  }
