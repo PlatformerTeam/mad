@@ -46,7 +46,7 @@ namespace mad::core {
 
         render_sprite.setPosition(m_position->get_x(), m_position->get_y());
 
-        render_sprite.setRotation(*m_rotation * 180 / M_PI);
+        render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
     }
