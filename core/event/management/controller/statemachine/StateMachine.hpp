@@ -4,8 +4,8 @@
 
 #include "event/management/dispatcher/ImmediateDispatcher.hpp"
 #include <event/Event.hpp>
-#include <event/management/condition/Condition.hpp>
 #include <event/management/controller/Controller.hpp>
+#include <event/management/controller/statemachine/Condition/Condition.hpp>
 namespace mad::core {
     struct StateMachine;
     struct Transition;
