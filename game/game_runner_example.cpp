@@ -114,7 +114,7 @@ public:
         );
 
         camera->turn_on(*level_dispatcher, square_id_1);
-        camera->set_smoothness(0.1f);
+        camera->set_smoothness(0.01f);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id_1));
 

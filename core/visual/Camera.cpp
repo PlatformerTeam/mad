@@ -78,9 +78,12 @@ namespace mad::core {
         if (m_chased_object) {
             auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
             Vec2d position = entity.get_image_position();
+            if (!m_last_position.has_value()) {
+                m_last_position = position;
+            }
             switch (m_type) {
                 case FollowType::Forward: {
-                    float move_x = std::max(m_minimal_distant, ((m_position - position) * m_smoothness).get_x());
+                    float move_x = (position.get_x() - m_position.get_x()) * (2 - m_smoothness);
                     float move_y = (position - m_position).get_y();
                     m_view.move(move_x, move_y);
                     m_position += {move_x, move_y};
@@ -92,6 +95,7 @@ namespace mad::core {
                     break;
                 }
             }
+            m_last_position = position;
         }
     }
 

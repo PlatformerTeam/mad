@@ -4,7 +4,7 @@
 #include <visual/Renderable.hpp>
 #include <visual/image/Image.hpp>
 #include <visual/image/shape/Shape.hpp>
-#include "visual/image/shape/square/Square.hpp"
+#include <visual/image/shape/square/Square.hpp>
 #include <event/management/handler/EventHandler.hpp>
 #include <visual/image/static/StaticImage.hpp>
 #include <visual/image/static/RenderableStatic.hpp>
@@ -34,6 +34,8 @@ namespace mad::core {
         using RenderableWithIndex = std::pair<int, std::shared_ptr<Renderable>>;
 
     public:
+//        friend class CameraController;
+
         enum class FollowType {
             Forward,
             Backward
@@ -73,6 +75,8 @@ namespace mad::core {
         sf::View m_view;
 
         Vec2d m_position;
+
+        std::optional<Vec2d> m_last_position;
 
         std::shared_ptr<World> m_world;
 
