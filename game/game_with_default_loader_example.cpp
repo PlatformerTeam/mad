@@ -14,6 +14,7 @@
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
 #include <loader/LevelLoader.hpp>
+#include <loader/LevelLoaderFromFile.hpp>
 
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -36,7 +37,7 @@ int main() {
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<mad::core::LevelLoader>(mad::core::LevelLoader("../../game/resources/levels/level_01"))
+            std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_01")
     };
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(

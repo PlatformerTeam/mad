@@ -59,7 +59,8 @@ set(
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
         runner/LevelRunner.hpp runner/LevelRunner.cpp
         runner/GameRunner.hpp runner/GameRunner.cpp
-        loader/LevelLoader.cpp loader/LevelLoader.hpp
+        loader/LevelLoader.hpp
+        loader/LevelLoaderFromFile.cpp loader/LevelLoaderFromFile.hpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp

@@ -1,10 +1,10 @@
-#include "LevelLoader.hpp"
+#include "LevelLoaderFromFile.hpp"
 
 #include <common/Error.hpp>
 
 namespace mad::core {
 
-    LevelLoader::LevelLoader(const std::filesystem::path& path) : m_level_directory(path),
+    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path& path) : m_level_directory(path),
     m_level_map(path / "map") {
         std::ifstream input_config(path / "config.json");
         CHECK_THROW(input_config, FileDoesNotExist, "Config file does not exist");
@@ -12,7 +12,7 @@ namespace mad::core {
         input_config >> m_config_json;
     }
 
-    std::unique_ptr<LevelRunner> LevelLoader::load(std::shared_ptr<EventDispatcher> global_dispatcher,
+    std::unique_ptr<LevelRunner> LevelLoaderFromFile::load(std::shared_ptr<EventDispatcher> global_dispatcher,
                                                    std::shared_ptr<SystemListener> system_listener) {
         auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
@@ -43,7 +43,7 @@ namespace mad::core {
         return level_runner;
     }
 
-    Entity::Id LevelLoader::create_world(std::shared_ptr<LocalWorld> world) {
+    Entity::Id LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
         float object_size = m_config_json["block"];
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
@@ -90,7 +90,7 @@ namespace mad::core {
         return hero_id;
     }
 
-    void LevelLoader::create_block(std::shared_ptr<LocalWorld> world,
+    void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world,
                                    Vec2d position, float block_size, bool is_stable) {
 
         std::string source = "../../game/resources/static/";
@@ -109,7 +109,7 @@ namespace mad::core {
         );
     }
 
-    Entity::Id LevelLoader::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
+    Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
         std::string source = "../../game/resources/animated/" +
                 static_cast<std::string>(m_config_json["hero"]["animated"]["resource"]);
         Entity::Id hero_id = world->create_physical_entity(
