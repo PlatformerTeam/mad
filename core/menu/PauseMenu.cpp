@@ -12,7 +12,9 @@ namespace mad::core {
 
     void PauseMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
-        ImGui::Begin("Pause menu");
+        ImGui::SetNextWindowSize(ImVec2(window.getSize().x, window.getSize().y));
+        ImGui::SetNextWindowPos({0, 0});
+        ImGui::Begin("Pause menu", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
         if (ImGui::Button("Continue")) {
             process_menu_event(std::make_shared<PauseMenuEvent>(PauseMenuEvent::Type::Continue));
         }

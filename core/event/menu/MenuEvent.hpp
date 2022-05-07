@@ -6,10 +6,11 @@
 
 namespace mad::core {
 
-    struct MenuEvent : public Event {
+    struct MenuEvent : Event {
         enum class Type {
             MainMenu,
             PauseMenu,
+            AuthorizationMenu,
         };
 
         explicit MenuEvent(Type new_type);

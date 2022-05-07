@@ -27,12 +27,14 @@ set(
         event/management/handler/PauseMenuEventsHandler.hpp event/management/handler/PauseMenuEventsHandler.cpp
         event/management/handler/LevelRunnerEventsHandler.hpp event/management/handler/LevelRunnerEventsHandler.cpp
         event/management/handler/GameRunnerEventsHandler.hpp event/management/handler/GameRunnerEventsHandler.cpp
+        event/management/handler/AuthorizationMenuEventsHandler.hpp event/management/handler/AuthorizationMenuEventsHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
         event/menu/MenuEvent.hpp event/menu/MenuEvent.cpp
         event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
         event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
+        event/menu/AuthorizationMenuEvent.hpp event/menu/AuthorizationMenuEvent.cpp
         event/runner/RunnerEvent.hpp event/runner/RunnerEvent.cpp
         event/runner/GameRunnerEvent.hpp event/runner/GameRunnerEvent.cpp
         event/runner/LevelRunnerEvent.hpp event/runner/LevelRunnerEvent.cpp

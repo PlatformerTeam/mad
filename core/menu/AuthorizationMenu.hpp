@@ -17,11 +17,11 @@ namespace mad::core {
         enum class SubMenuType {
             SignInSubMenu,
             SignUpSubMenu,
-            MainSubMenu,
         };
 
-        SubMenuType m_current_submenu = SubMenuType::MainSubMenu;
+        SubMenuType m_current_submenu = SubMenuType::SignInSubMenu;
         ClientStorageDriver &m_client_storage_driver;
+        std::string m_hint_phrase = "login";
     };
 
 }

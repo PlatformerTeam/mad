@@ -12,7 +12,9 @@ namespace mad::core {
 
     void MainMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
-        ImGui::Begin("Main menu");
+        ImGui::SetNextWindowSize(ImVec2(window.getSize().x, window.getSize().y));
+        ImGui::SetNextWindowPos({0, 0});
+        ImGui::Begin("Main menu", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
         if (ImGui::Button("Start game")) {
             process_menu_event(std::make_shared<MainMenuEvent>(MainMenuEvent::Type::NewGame));
         }
