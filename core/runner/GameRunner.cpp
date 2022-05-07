@@ -11,13 +11,15 @@ namespace mad::core {
             std::vector<std::shared_ptr<LevelLoader>> level_loaders,
             std::shared_ptr<EventDispatcher> dispatcher,
             std::unique_ptr<MainMenu> main_menu,
-//            std::unique_ptr<AuthorizationMenu> auth_menu,
-            std::shared_ptr<SystemListener> system_listener
+            std::unique_ptr<AuthorizationMenu> auth_menu,
+            std::shared_ptr<SystemListener> system_listener,
+            std::shared_ptr<ClientStorageDriver> client_storage_driver
     ) : m_level_loaders(std::move(level_loaders)),
         m_global_event_dispatcher(std::move(dispatcher)),
         m_main_menu(std::move(main_menu)),
-//        m_auth_menu(std::move(auth_menu)),
-        m_system_listener(std::move(system_listener)) {
+        m_auth_menu(std::move(auth_menu)),
+        m_system_listener(std::move(system_listener)),
+        m_client_storage_driver(std::move(client_storage_driver)) {
     }
 
     void GameRunner::run(sf::RenderWindow &window) {
@@ -31,13 +33,13 @@ namespace mad::core {
                     m_main_menu->produce(*m_global_event_dispatcher);
                     window.display();
                 } break;
-//                case State::AuthorizationMenu: {
-//                    window.clear(sf::Color(0, 0, 0));
-//                    m_system_listener->produce(*m_global_event_dispatcher);
-//                    m_auth_menu->render(window);
-//                    m_auth_menu->produce(*m_global_event_dispatcher);
-//                    window.display();
-//                } break;
+                case State::AuthorizationMenu: {
+                    window.clear(sf::Color(0, 0, 0));
+                    m_system_listener->produce(*m_global_event_dispatcher);
+                    m_auth_menu->render(window);
+                    m_auth_menu->produce(*m_global_event_dispatcher);
+                    window.display();
+                } break;
                 case State::Gameplay: {
                     m_sequential_level_run(window);
                 } break;

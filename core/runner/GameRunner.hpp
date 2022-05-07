@@ -1,6 +1,7 @@
 #ifndef MAD_GAMERUNNER_HPP
 #define MAD_GAMERUNNER_HPP
 
+#include <database/driver/ClientStorageDriver.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <menu/MainMenu.hpp>
@@ -20,8 +21,9 @@ namespace mad::core {
             std::vector<std::shared_ptr<LevelLoader>> level_loaders,
             std::shared_ptr<EventDispatcher> dispatcher,
             std::unique_ptr<MainMenu> main_menu,
-//            std::unique_ptr<AuthorizationMenu> auth_menu,
-            std::shared_ptr<SystemListener> system_listener
+            std::unique_ptr<AuthorizationMenu> auth_menu,
+            std::shared_ptr<SystemListener> system_listener,
+            std::shared_ptr<ClientStorageDriver> client_storage_driver
         );
 
         void start_game();
@@ -44,10 +46,11 @@ namespace mad::core {
         std::vector<std::shared_ptr<LevelLoader>> m_level_loaders;
         std::shared_ptr<EventDispatcher> m_global_event_dispatcher;
         std::unique_ptr<MainMenu> m_main_menu;
-//        std::unique_ptr<AuthorizationMenu> m_auth_menu;
+        std::unique_ptr<AuthorizationMenu> m_auth_menu;
         std::shared_ptr<SystemListener> m_system_listener;
+        std::shared_ptr<ClientStorageDriver> m_client_storage_driver;
         std::unique_ptr<LevelRunner> m_current_level_runner = nullptr;
-        State m_current_state = State::MainMenu;
+        State m_current_state = State::AuthorizationMenu;
         bool m_running = true;
 
         void m_sequential_level_run(sf::RenderWindow &window);

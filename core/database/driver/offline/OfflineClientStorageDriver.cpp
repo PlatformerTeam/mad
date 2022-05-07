@@ -1,5 +1,7 @@
 #include "OfflineClientStorageDriver.hpp"
 
+#include <spdlog/spdlog.h>
+
 
 namespace mad::core {
 
@@ -10,7 +12,7 @@ namespace mad::core {
     }
 
     bool OfflineClientStorageDriver::sign_up(std::string username) {
-        if (m_username == "") {
+        if (m_username.empty()) {
             m_username = std::move(username);
             return true;
         }

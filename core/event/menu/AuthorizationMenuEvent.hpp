@@ -13,7 +13,7 @@ namespace mad::core {
 
         explicit AuthorizationMenuEvent(Type new_type);
 
-        const Type authorization_menu_type;
+        const Type auth_menu_type;
     };
 
 }

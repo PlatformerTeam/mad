@@ -1,12 +1,14 @@
 #include "AuthorizationMenu.hpp"
 
+#include <event/menu/AuthorizationMenuEvent.hpp>
+
 #include <imgui.h>
 #include <spdlog/spdlog.h>
 
 
 namespace mad::core {
 
-    AuthorizationMenu::AuthorizationMenu(ClientStorageDriver &client_storage_driver) : Menu(Menu::Type::Authorization), m_client_storage_driver(client_storage_driver) { }
+    AuthorizationMenu::AuthorizationMenu(std::shared_ptr<ClientStorageDriver> client_storage_driver) : Menu(Menu::Type::Authorization), m_client_storage_driver(std::move(client_storage_driver)) { }
 
     void AuthorizationMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
@@ -18,8 +20,8 @@ namespace mad::core {
                 char input[255];
                 ImGui::InputText(m_hint_phrase.c_str(), input, 255);
                 if (ImGui::Button("Enter")) {
-                    if (m_client_storage_driver.log_in(input)) {
-
+                    if (m_client_storage_driver->log_in(input)) {
+                        process_menu_event(std::make_shared<AuthorizationMenuEvent>(AuthorizationMenuEvent::Type::Enter));
                     } else {
                         m_hint_phrase = "incorrect login";
                     }
@@ -34,7 +36,7 @@ namespace mad::core {
                 char input[255];
                 ImGui::InputText("new login", input, 255);
                 if (ImGui::Button("Enter")) {
-                    m_client_storage_driver.sign_up(input);
+                    m_client_storage_driver->sign_up(input);
                     m_current_submenu = SubMenuType::SignInSubMenu;
                 }
                 ImGui::End();

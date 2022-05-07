@@ -4,12 +4,14 @@
 #include <menu/Menu.hpp>
 #include <database/driver/ClientStorageDriver.hpp>
 
+#include <memory>
+
 
 namespace mad::core {
 
     class AuthorizationMenu : public Menu {
     public:
-        explicit AuthorizationMenu(ClientStorageDriver &client_storage_driver);
+        explicit AuthorizationMenu(std::shared_ptr<ClientStorageDriver> client_storage_driver);
 
         void render(sf::RenderWindow &window) override;
 
@@ -20,7 +22,7 @@ namespace mad::core {
         };
 
         SubMenuType m_current_submenu = SubMenuType::SignInSubMenu;
-        ClientStorageDriver &m_client_storage_driver;
+        std::shared_ptr<ClientStorageDriver> m_client_storage_driver;
         std::string m_hint_phrase = "login";
     };
 
