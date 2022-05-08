@@ -1,6 +1,7 @@
 #include "LevelRunner.hpp"
 
 #include <event/runner/GameRunnerEvent.hpp>
+#include <utility>
 
 #include <spdlog/spdlog.h>
 
@@ -13,15 +14,16 @@ namespace mad::core {
             std::shared_ptr<Camera> camera,
             std::shared_ptr<EventDispatcher> global_event_dispatcher,
             std::shared_ptr<EventDispatcher> level_event_dispatcher,
-            std::shared_ptr<World> world
-    ) : m_system_listener(std::move(system_listener)),
-        m_pause_menu(std::move(pause_menu)),
-        m_camera(std::move(camera)),
-        m_global_event_dispatcher(std::move(global_event_dispatcher)),
-        m_level_event_dispatcher(std::move(level_event_dispatcher)),
-        m_world(std::move(world)),
-        m_level_is_running(true),
-        m_is_in_pause(false) {
+            std::shared_ptr<World> world,
+            std::vector<std::shared_ptr<Controller>> m_controllers) : m_system_listener(std::move(system_listener)),
+                                                                      m_pause_menu(std::move(pause_menu)),
+                                                                      m_camera(std::move(camera)),
+                                                                      m_global_event_dispatcher(std::move(global_event_dispatcher)),
+                                                                      m_level_event_dispatcher(std::move(level_event_dispatcher)),
+                                                                      m_world(std::move(world)),
+                                                                      m_controllers(std::move(m_controllers)),
+                                                                      m_level_is_running(true),
+                                                                      m_is_in_pause(false) {
     }
 
     void LevelRunner::run(sf::RenderWindow &window) {
@@ -36,6 +38,9 @@ namespace mad::core {
             } else {
                 m_world->produce(*m_level_event_dispatcher);
                 m_system_listener->produce(*m_level_event_dispatcher);
+                for(auto &i : m_controllers){
+                    i->control();
+                }
                 m_camera->render(window);
             }
             window.display();
@@ -60,4 +65,4 @@ namespace mad::core {
         m_is_in_pause = false;
     }
 
-}
+}// namespace mad::core

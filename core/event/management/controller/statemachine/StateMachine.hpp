@@ -2,12 +2,13 @@
 #define MAD_STATEMACHINE_HPP
 
 
+#include "event/management/dispatcher/ImmediateDispatcher.hpp"
 #include <event/Event.hpp>
 #include <event/management/controller/Controller.hpp>
-#include <event/management/controller/statemachine/Condition/Condition.hpp>
+#include <event/management/controller/statemachine/condition/Condition.hpp>
 namespace mad::core {
-    struct Transition;
     struct StateMachine;
+    struct Transition;
 
 
     struct StateMachine : Controller {
@@ -21,20 +22,22 @@ namespace mad::core {
     private:
         StateId m_current_state_id = -1;
         std::vector<std::shared_ptr<Controller>> m_states;
-        std::vector<StateId, std::vector<Transition>> m_transitions;
+        std::vector<std::vector<std::shared_ptr<Transition>>> m_transitions;
+        std::shared_ptr<mad::core::ImmediateDispatcher> m_dispatcher;
+        friend Transition;
     };
-
 
     struct Transition : EventHandler {
     public:
+        Transition(StateMachine *m_state_machine, StateMachine::StateId next_state, std::shared_ptr<Condition> m_condition);
         std::unordered_set<Event::Type> handled_types() override;
         void handle(const Event &event) override;
 
     private:
+        StateMachine *m_state_machine;
         StateMachine::StateId next_state;
         std::shared_ptr<Condition> m_condition;
     };
-
 
 }// namespace mad::core
 
