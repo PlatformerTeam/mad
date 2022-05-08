@@ -1,3 +1,5 @@
+#include <event/management/controller/Controller.hpp>
+#include <event/management/controller/CameraController.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>
 #include <event/management/handler/MainMenuEventsHandler.hpp>
@@ -113,7 +115,8 @@ public:
                 true
         );
 
-        camera->turn_on(*level_dispatcher);
+        camera->turn_on(*level_dispatcher, square_id_1);
+        camera->set_smoothness(0.01f);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id_1));
 
@@ -163,7 +166,7 @@ int main() {
 
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
     ImGui::SFML::Init(*window);
-    window->setFramerateLimit(60);
+    window->setFramerateLimit(200);
 
     auto global_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 

@@ -26,6 +26,8 @@ namespace mad::core {
 
         bool manipulate_entity_id(Entity::Id entity_id, const Intent &intent);
 
+        [[nodiscard]] virtual Entity &get_entity(Entity::Id id) noexcept = 0;
+
         virtual Entity::Id create_viewable_entity(int z_ind,
                                                   Vec2d initial_position, float initial_rotation,
                                                   std::shared_ptr<Image> image) = 0;

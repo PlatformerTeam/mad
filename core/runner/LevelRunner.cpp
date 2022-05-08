@@ -15,20 +15,20 @@ namespace mad::core {
             std::shared_ptr<EventDispatcher> global_event_dispatcher,
             std::shared_ptr<EventDispatcher> level_event_dispatcher,
             std::shared_ptr<World> world,
-            std::vector<std::shared_ptr<Controller>> m_controllers) : m_system_listener(std::move(system_listener)),
-                                                                      m_pause_menu(std::move(pause_menu)),
-                                                                      m_camera(std::move(camera)),
-                                                                      m_global_event_dispatcher(std::move(global_event_dispatcher)),
-                                                                      m_level_event_dispatcher(std::move(level_event_dispatcher)),
-                                                                      m_world(std::move(world)),
-                                                                      m_controllers(std::move(m_controllers)),
-                                                                      m_level_is_running(true),
-                                                                      m_is_in_pause(false) {
+            std::vector<std::shared_ptr<Controller>> controllers
+    ) : m_system_listener(std::move(system_listener)),
+        m_pause_menu(std::move(pause_menu)),
+        m_camera(std::move(camera)),
+        m_global_event_dispatcher(std::move(global_event_dispatcher)),
+        m_level_event_dispatcher(std::move(level_event_dispatcher)),
+        m_controllers(std::move(controllers)),
+        m_world(std::move(world)),
+        m_level_is_running(true),
+        m_is_in_pause(false) {
     }
 
     void LevelRunner::run(sf::RenderWindow &window) {
         SPDLOG_DEBUG("Level has started");
-        m_camera->turn_on(*m_level_event_dispatcher);
         while (m_level_is_running) {
             window.clear(sf::Color(0, 0, 0));
             if (m_is_in_pause) {
@@ -38,8 +38,8 @@ namespace mad::core {
             } else {
                 m_world->produce(*m_level_event_dispatcher);
                 m_system_listener->produce(*m_level_event_dispatcher);
-                for(auto &i : m_controllers){
-                    i->control();
+                for (const auto& controller : m_controllers) {
+                    controller->control();
                 }
                 m_camera->render(window);
             }
