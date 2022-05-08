@@ -1,5 +1,3 @@
-#include <event/management/controller/Controller.hpp>
-#include <event/management/controller/CameraController.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>
 #include <event/management/handler/MainMenuEventsHandler.hpp>
@@ -16,10 +14,12 @@
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
 
+#include "event/management/controller/statemachine/StateMachine.hpp"
+#include "event/management/controller/statemachine/condition/TrueCondition.hpp"
+#include "event/system/KeyPressed.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <spdlog/spdlog.h>
-#include "event/system/KeyPressed.hpp"
 
 
 class ArrowController : public mad::core::EventHandler {
@@ -113,14 +113,28 @@ public:
                 true
         );
 
-        camera->turn_on(*level_dispatcher, square_id_1);
-        camera->set_smoothness(0.01f);
+        camera->turn_on(*level_dispatcher);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id_1));
 
-        std::vector<std::shared_ptr<mad::core::Controller>> controllers {
-            std::make_shared<mad::core::CameraController>(camera)
+        ///State Machine
+        struct C1 : mad::core::Controller{
+            void control() override{
+                SPDLOG_DEBUG("controller 1");
+            };
         };
+        struct C2 : mad::core::Controller{
+            void control() override{
+                SPDLOG_DEBUG("controller 1");
+            };
+        };
+        auto machine = std::make_shared<mad::core::StateMachine>();
+        machine->add_state(std::make_shared<C1>());
+        machine->add_state(std::make_shared<C2>());
+        machine->set_initial_state(0);
+        machine->add_transition(0, 1, std::make_shared<mad::core::TrueCondition>());
+        //machine->add_transition(1, 0, std::make_shared<mad::core::TrueCondition>());
+        std::vector<std::shared_ptr<mad::core::Controller>> v{machine};
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -129,7 +143,7 @@ public:
                 global_dispatcher,
                 level_dispatcher,
                 world,
-                controllers
+                v
         );
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
@@ -149,7 +163,7 @@ int main() {
 
     auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
     ImGui::SFML::Init(*window);
-    window->setFramerateLimit(200);
+    window->setFramerateLimit(60);
 
     auto global_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
@@ -159,12 +173,16 @@ int main() {
             std::make_shared<ExampleLevelLoader>()
     };
 
+
     auto game_runner = std::make_unique<mad::core::GameRunner>(
             level_loaders,
             global_dispatcher,
             std::make_unique<mad::core::MainMenu>(),
             system_listener
     );
+
+
+
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));

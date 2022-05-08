@@ -1,7 +1,6 @@
 #include "LevelRunner.hpp"
 
 #include <event/runner/GameRunnerEvent.hpp>
-#include <utility>
 
 #include <spdlog/spdlog.h>
 
@@ -65,4 +64,4 @@ namespace mad::core {
         m_is_in_pause = false;
     }
 
-}
+}// namespace mad::core

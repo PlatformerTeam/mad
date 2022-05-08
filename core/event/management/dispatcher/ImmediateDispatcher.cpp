@@ -17,6 +17,10 @@ namespace mad::core {
             SPDLOG_DEBUG("pass event to handler");
             handler->handle(*event);
         }
+        for (auto &handler : m_handlers_for_types[Event::Type::All]) {
+            SPDLOG_DEBUG("pass event to handler");
+            handler->handle(*event);
+        }
     }
 
 }
