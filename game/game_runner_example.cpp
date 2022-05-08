@@ -132,7 +132,7 @@ public:
         machine->add_state(std::make_shared<C1>());
         machine->add_state(std::make_shared<C2>());
         machine->set_initial_state(0);
-        machine->add_transition(0, 1, std::make_shared<mad::core::TrueCondition>());
+        //machine->add_transition(0, 1, std::make_shared<mad::core::TrueCondition>());
         //machine->add_transition(1, 0, std::make_shared<mad::core::TrueCondition>());
         std::vector<std::shared_ptr<mad::core::Controller>> v{machine};
 
