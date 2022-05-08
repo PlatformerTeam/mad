@@ -17,10 +17,9 @@ namespace mad::core {
         switch (m_current_submenu) {
             case SubMenuType::SignInSubMenu: {
                 ImGui::Begin("Sign In", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-                char input[255];
-                ImGui::InputText(m_hint_phrase.c_str(), input, 255);
+                ImGui::InputText(m_hint_phrase.c_str(), m_input, 255);
                 if (ImGui::Button("Enter")) {
-                    if (m_client_storage_driver->log_in(input)) {
+                    if (m_client_storage_driver->log_in(m_input)) {
                         process_menu_event(std::make_shared<AuthorizationMenuEvent>(AuthorizationMenuEvent::Type::Enter));
                     } else {
                         m_hint_phrase = "incorrect login";
@@ -33,10 +32,9 @@ namespace mad::core {
             } break;
             case SubMenuType::SignUpSubMenu: {
                 ImGui::Begin("Sign Up", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-                char input[255];
-                ImGui::InputText("new login", input, 255);
+                ImGui::InputText("new login", m_input, 255);
                 if (ImGui::Button("Enter")) {
-                    m_client_storage_driver->sign_up(input);
+                    m_client_storage_driver->sign_up(m_input);
                     m_current_submenu = SubMenuType::SignInSubMenu;
                 }
                 ImGui::End();

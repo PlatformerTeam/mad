@@ -24,6 +24,7 @@ namespace mad::core {
         SubMenuType m_current_submenu = SubMenuType::SignInSubMenu;
         std::shared_ptr<ClientStorageDriver> m_client_storage_driver;
         std::string m_hint_phrase = "login";
+        char m_input[255] = "";
     };
 
 }
