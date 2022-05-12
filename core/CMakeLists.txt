@@ -17,7 +17,7 @@ set(
         event/management/controller/Controller.hpp
         event/management/controller/CameraController.cpp event/management/controller/CameraController.hpp
         event/management/condition/Condition.hpp
-        event/management/controller/statemachine/condition/TrueCondition.hpp
+        event/management/condition/TrueCondition.hpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
@@ -39,7 +39,7 @@ set(
         event/management/controller/Controller.hpp
         event/management/controller/statemachine/StateMachine.hpp
         event/management/controller/statemachine/StateMachine.cpp
-        event/management/controller/statemachine/condition/Condition.hpp
+        event/management/condition/Condition.hpp
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp
