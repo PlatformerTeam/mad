@@ -1,5 +1,5 @@
 #include "KeyDownCondition.hpp"
-#include "event/system/KeyHeld.hpp"
+#include <event/system/KeyHeld.hpp>
 
 #include <common/Cast.hpp>
 std::unordered_set<mad::core::Event::Type> mad::core::KeyDownCondition::triggers() {
