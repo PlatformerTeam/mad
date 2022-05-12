@@ -14,6 +14,9 @@ namespace mad::core {
     struct StateMachine : Controller {
     public:
         using StateId = std::int32_t;
+
+        explicit StateMachine(std::shared_ptr<mad::core::ImmediateDispatcher> m_dispatcher);
+
         StateId add_state(const std::shared_ptr<Controller> &state);
         void add_transition(StateId state_id_from, StateId state_id_to, std::shared_ptr<Condition> transition_condition);
         void set_initial_state(StateId state_id);

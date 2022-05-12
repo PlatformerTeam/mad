@@ -125,7 +125,7 @@ public:
                 SPDLOG_DEBUG("controller 2");
             };
         };
-        auto machine = std::make_shared<mad::core::StateMachine>();
+        auto machine = std::make_shared<mad::core::StateMachine>(std::shared_ptr<mad::core::ImmediateDispatcher>(level_dispatcher));
         machine->add_state(std::make_shared<C1>());
         machine->add_state(std::make_shared<C2>());
         auto debug_1 = std::make_shared<mad::core::TrueCondition>(); //TODO
