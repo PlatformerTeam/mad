@@ -80,8 +80,10 @@ mad::core::Entity::Id mad::core::LocalWorld::create_viewable_entity(int z_ind, m
                                                                     std::shared_ptr<Image> image) {
     return m_storage.create_viewable_entity(z_ind, initial_position, initial_rotation, image);
 }
-mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(int z_ind, mad::core::Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) {
-    return m_storage.create_physical_entity(z_ind, initial_position, initial_rotation, image, m_physical_world, is_Fixed);
+mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(int z_ind, mad::core::Vec2d initial_position, float initial_rotation,
+                                                                    std::shared_ptr<Image> image, bool is_fixed, bool is_rotated) {
+    return m_storage.create_physical_entity(z_ind, initial_position, initial_rotation, image,
+                                            m_physical_world, is_fixed, is_rotated);
 }
 
 mad::core::Entity &mad::core::LocalWorld::get_entity(mad::core::Entity::Id id) noexcept {

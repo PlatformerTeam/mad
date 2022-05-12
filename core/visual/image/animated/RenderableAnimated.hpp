@@ -28,6 +28,8 @@ namespace mad::core {
 
         mutable sf::IntRect m_rect;
 
+        mutable Vec2d m_scale = {1, 1};
+
         std::shared_ptr<Vec2d> m_position;
 
         std::shared_ptr<float> m_rotation;

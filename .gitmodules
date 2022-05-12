@@ -10,6 +10,9 @@
 [submodule "deps/imgui-sfml"]
 	path = deps/imgui-sfml
 	url = https://github.com/eliasdaler/imgui-sfml
+[submodule "deps/json"]
+	path = deps/json
+	url = https://github.com/nlohmann/json
 [submodule "deps/spdlog"]
 	path = deps/spdlog
 	url = https://github.com/gabime/spdlog

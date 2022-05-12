@@ -67,6 +67,7 @@ set(
         runner/LevelRunner.hpp runner/LevelRunner.cpp
         runner/GameRunner.hpp runner/GameRunner.cpp
         loader/LevelLoader.hpp
+        loader/LevelLoaderFromFile.cpp loader/LevelLoaderFromFile.hpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
@@ -102,6 +103,7 @@ target_include_directories(
         ${INCLUDE_IMGUI}
         ${INCLUDE_IMGUI_SFML}
         ${INCLUDE_SPDLOG}
+        ${INCLUDE_JSON}
 )
 
 target_link_libraries(
@@ -111,4 +113,5 @@ target_link_libraries(
         ${LIBRARY_SPDLOG}
         ${LIBRARY_BOX2D}
         ${LIBRARY_OPENGL}
+        ${LIBRARY_JSON}
 )

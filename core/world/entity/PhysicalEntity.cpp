@@ -7,7 +7,8 @@
 
 #include <utility>
 
-mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image, b2World &physicalWorld, bool is_fixed)
+mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image,
+                                          b2World &physicalWorld, bool is_fixed, bool is_rotated)
     : ViewableEntity(id, z_ind, initial_position, initial_rotation, image) {
 
     //rect.setOrigin(300, 50);
@@ -28,6 +29,10 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         bodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&bodyDef);
         b2PolygonShape dynamicBox = image->as_fixture();
+
+        if (!is_rotated) {
+            set_fixed_rotation(true);
+        }
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
