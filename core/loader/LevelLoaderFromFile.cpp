@@ -24,9 +24,13 @@ namespace mad::core {
 
         Entity::Id hero_id = create_world(world);
 
-        camera->turn_on(*level_dispatcher);
+        camera->turn_on(*level_dispatcher, hero_id);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
+
+        std::vector<std::shared_ptr<mad::core::Controller>> controllers {
+                std::make_shared<mad::core::CameraController>(camera)
+        };
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -34,7 +38,8 @@ namespace mad::core {
                 camera,
                 global_dispatcher,
                 level_dispatcher,
-                world
+                world,
+                controllers
         );
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));

@@ -1,6 +1,8 @@
 #ifndef MAD_LEVELLOADERFROMFILE_HPP
 #define MAD_LEVELLOADERFROMFILE_HPP
 
+#include <event/management/controller/Controller.hpp>
+#include <event/management/controller/CameraController.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>

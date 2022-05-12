@@ -82,7 +82,7 @@ namespace mad::core {
 
         float m_smoothness = 0.5;
 
-        FollowType m_type = FollowType::Forward;
+        FollowType m_type = FollowType::Backward;
 
         float m_minimal_distant = 1.0f;
     };
