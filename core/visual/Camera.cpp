@@ -7,7 +7,8 @@
 
 namespace mad::core {
 
-    void Camera::turn_on(EventDispatcher &event_dispatcher) {
+    void Camera::turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id) {
+        m_chased_object = chased_id;
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
         };
@@ -15,6 +16,7 @@ namespace mad::core {
     }
 
     void Camera::render(sf::RenderWindow &window) {
+        window.setView(m_view);
         for (auto &[z_ind, renderable_image] : m_scene_list) {
             renderable_image->render(window);
         }
@@ -69,7 +71,54 @@ namespace mad::core {
 
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
             : m_position(initial_position),
-              m_world(std::move(world)) {}
+              m_world(std::move(world)),
+              m_view(initial_position, {640, 480}) {}
+
+    void Camera::follow() {
+        if (m_chased_object) {
+            auto entity = cast_to<ViewableEntity>(m_world->get_entity(m_chased_object.value()));
+            Vec2d position = entity.get_image_position();
+            if (!m_last_position.has_value()) {
+                m_last_position = position;
+            }
+            switch (m_type) {
+                case FollowType::Forward: {
+                    float move_x = (position.get_x() - m_position.get_x()) * (2 - m_smoothness);
+                    float move_y = (position - m_position).get_y();
+                    m_view.move(move_x, move_y);
+                    m_position += {move_x, move_y};
+                    break;
+                }
+                case FollowType::Backward : {
+                    m_view.move((position - m_position) * m_smoothness);
+                    m_position += (position - m_position) * m_smoothness;
+                    break;
+                }
+            }
+            m_last_position = position;
+        }
+    }
+
+    sf::View Camera::get_view() const noexcept {
+        return m_view;
+    }
+
+    void Camera::set_position(const Vec2d &position) {
+        m_position = position;
+        m_view.setCenter(m_position);
+    }
+
+    void Camera::set_rotation(float angle) {
+        m_view.setRotation(angle);
+    }
+
+    void Camera::set_zoom(float zoom) {
+        m_view.zoom(zoom);
+    }
+
+    void Camera::set_smoothness(float smoothness) {
+        m_smoothness = smoothness;
+    }
 
     void Camera::insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable) {
         auto position = std::upper_bound(m_scene_list.begin(), m_scene_list.end(), renderable,
@@ -79,4 +128,11 @@ namespace mad::core {
         m_scene_list.insert(position, renderable);
     }
 
+    void Camera::set_follow_type(Camera::FollowType type, float minimal_distant) {
+        m_type = type;
+        m_minimal_distant = minimal_distant;
+    }
+
 } // namespace mad::core
+
+
