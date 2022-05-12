@@ -78,7 +78,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-)
+        event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp)
 
 add_library(
         ${LIBRARY_CORE} STATIC

@@ -6,7 +6,6 @@ namespace mad::core {
 
     struct Event {
         enum class Type {
-            All,
             Visual,
             Collision,
             Movement,
