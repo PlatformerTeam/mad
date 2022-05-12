@@ -1,5 +1,6 @@
 #include "StateMachine.hpp"
 #include "event/management/condition/Condition.hpp"
+#include "event/management/condition/TrueCondition.hpp"
 #include "spdlog/spdlog.h"
 
 #include <utility>
@@ -41,7 +42,7 @@ void mad::core::StateMachine::set_initial_state(mad::core::StateMachine::StateId
     }
 }
 void mad::core::StateMachine::add_transition(mad::core::StateMachine::StateId state_id_from, mad::core::StateMachine::StateId state_id_to, std::shared_ptr<Condition> transition_condition) {
-    auto transition = std::make_shared<Transition>(this, state_id_from, state_id_to, transition_condition);
+    auto transition = std::make_shared<Transition>(this, state_id_from, state_id_to, std::make_shared<mad::core::TrueCondition>());
     m_transitions[state_id_from].push_back(transition);
-    m_dispatcher->registry(transition);
+    m_dispatcher->registry(std::make_shared<Transition>(this, state_id_from, state_id_to, std::make_shared<mad::core::TrueCondition>()));
 }

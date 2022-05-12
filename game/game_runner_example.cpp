@@ -128,7 +128,9 @@ public:
         auto machine = std::make_shared<mad::core::StateMachine>();
         machine->add_state(std::make_shared<C1>());
         machine->add_state(std::make_shared<C2>());
-        //machine->add_transition(0, 1, std::make_shared<mad::core::TrueCondition>());
+        auto debug_1 = std::make_shared<mad::core::TrueCondition>(); //TODO
+        auto debug2 = debug_1->triggers();
+        machine->add_transition(0, 1, debug_1);
         //machine->add_transition(1, 0, std::make_shared<mad::core::TrueCondition>());
         machine->set_initial_state(0);
         std::vector<std::shared_ptr<mad::core::Controller>> v{machine};
