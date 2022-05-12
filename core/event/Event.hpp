@@ -16,6 +16,7 @@ namespace mad::core {
             Menu,
             LevelPause,
             Runner,
+            WorldUpdate,
         };
 
         explicit Event(Type new_type);

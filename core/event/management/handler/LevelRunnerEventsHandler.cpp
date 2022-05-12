@@ -12,7 +12,7 @@ namespace mad::core {
     LevelRunnerEventsHandler::LevelRunnerEventsHandler(LevelRunner &runner) : m_runner(runner) { }
 
     void LevelRunnerEventsHandler::handle(const Event &event) {
-        SPDLOG_DEBUG("Handle level runner event");
+        //SPDLOG_DEBUG("Handle level runner event");
 
         if (event.type == Event::Type::KeyPressed) {
             const auto &keystroke = const_cast_to<KeyPressed>(event);

@@ -15,4 +15,5 @@
      };
 
  }
+
 #endif//MAD_CONTROLLER_HPP

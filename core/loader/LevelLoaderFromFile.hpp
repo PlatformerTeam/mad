@@ -15,7 +15,7 @@
 
 #include <loader/LevelLoader.hpp>
 
-#include <nlohmann/json.hpp>
+#include  <nlohmann/json.hpp>
 
 #include <memory>
 #include <filesystem>
@@ -35,7 +35,7 @@ namespace mad::core {
                   m_entity_id(entity_id) {}
 
         void handle(const mad::core::Event &event) override {
-            SPDLOG_INFO("handle arrow event");
+            //SPDLOG_INFO("handle arrow event");
 
             auto make_move_intent = [](mad::core::Vec2d dir) {
                 return mad::core::LambdaIntent(
