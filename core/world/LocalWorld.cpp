@@ -52,8 +52,7 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     // simulating physics
     m_physical_world.Step(fact_dt * render_scale, 3, 10);
     for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
-        if (&m_storage.get_entity(entity_id) != nullptr && cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)) != nullptr) {
-            auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id));
+        if (auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)); physical_entity != nullptr) {
             physical_entity->synchronize_position_with_viewable();
         }
     }
