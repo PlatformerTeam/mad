@@ -79,7 +79,7 @@ set(
         visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-        event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp)
+        event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp event/WorldUpdate.hpp event/WorldUpdate.cpp)
 
 add_library(
         ${LIBRARY_CORE} STATIC

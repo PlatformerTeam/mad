@@ -15,6 +15,8 @@ namespace mad::core {
 
         virtual std::unordered_set<Event::Type> triggers() = 0;
 
+        virtual void on_start() = 0;
+
         virtual ~Condition() = default;
     };
 

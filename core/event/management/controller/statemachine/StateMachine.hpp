@@ -27,6 +27,7 @@ namespace mad::core {
         std::vector<std::shared_ptr<Controller>> m_states;
         std::vector<std::vector<std::shared_ptr<Transition>>> m_transitions;
         std::shared_ptr<mad::core::ImmediateDispatcher> m_dispatcher;
+        bool has_made_transition = false;
         friend Transition;
     };
 

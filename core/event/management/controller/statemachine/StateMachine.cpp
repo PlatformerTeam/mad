@@ -10,14 +10,17 @@ std::unordered_set<mad::core::Event::Type> mad::core::Transition::handled_types(
     return m_condition->triggers();
 }
 void mad::core::Transition::handle(const mad::core::Event &event) {
-    if (!is_active) return;
+    if (!is_active || m_state_machine->has_made_transition) return;
     if (m_condition->is_triggered_by(event)) {
+        m_state_machine->has_made_transition = true;
         m_state_machine->m_current_state_id = next_state;
+        SPDLOG_DEBUG("current state {}", m_state_machine->m_current_state_id);
         for (auto &i : m_state_machine->m_transitions[current_state]) {
             i->is_active = false;
         }
         for (auto &i : m_state_machine->m_transitions[next_state]) {
             i->is_active = true;
+            i->m_condition->on_start();
         }
     }
 }
@@ -27,7 +30,8 @@ mad::core::Transition::Transition(mad::core::StateMachine *m_state_machine, mad:
 
 /// StateMachine
 void mad::core::StateMachine::control() {
-    SPDLOG_DEBUG("current state {}", m_current_state_id);
+    //SPDLOG_DEBUG("current state {}", m_current_state_id);
+    has_made_transition = false;
     m_states[m_current_state_id]->control();
 }
 mad::core::StateMachine::StateId mad::core::StateMachine::add_state(const std::shared_ptr<Controller> &state) {
@@ -42,7 +46,7 @@ void mad::core::StateMachine::set_initial_state(mad::core::StateMachine::StateId
     }
 }
 void mad::core::StateMachine::add_transition(mad::core::StateMachine::StateId state_id_from, mad::core::StateMachine::StateId state_id_to, std::shared_ptr<Condition> transition_condition) {
-    auto transition = std::make_shared<Transition>(this, state_id_from, state_id_to, std::make_shared<mad::core::TrueCondition>());
+    auto transition = std::make_shared<Transition>(this, state_id_from, state_id_to, transition_condition);
     m_transitions[state_id_from].push_back(transition);
     m_dispatcher->registry(transition);
 }
