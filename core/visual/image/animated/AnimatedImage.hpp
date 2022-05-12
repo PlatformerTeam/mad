@@ -12,7 +12,7 @@ namespace mad::core {
     class AnimatedImage : public Image {
     public:
         explicit AnimatedImage(std::filesystem::path path, int width, int height, int32_t delta_time,
-                               float width_size, float height_size);
+                               float sprite_width, float sprite_height);
 
         [[nodiscard]] int32_t get_delta_time() const noexcept;
 
@@ -21,6 +21,10 @@ namespace mad::core {
         [[nodiscard]] int get_width() const noexcept;
 
         [[nodiscard]] int get_height() const noexcept;
+
+        [[nodiscard]] float get_sprite_height() const noexcept;
+
+        [[nodiscard]] float get_sprite_width() const noexcept;
 
         b2PolygonShape as_fixture() override;
 
@@ -33,9 +37,9 @@ namespace mad::core {
 
         int m_height;
 
-        float m_height_size;
+        float m_sprite_height;
 
-        float m_width_size;
+        float m_sprite_width;
     };
 
 }

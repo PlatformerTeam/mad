@@ -81,9 +81,11 @@ private:
 
 class ExampleLevelLoader : public mad::core::LevelLoader {
 public:
+    ExampleLevelLoader(std::filesystem::path path) : LevelLoader(path) {}
+
     std::unique_ptr<mad::core::LevelRunner> load(
             std::shared_ptr<mad::core::EventDispatcher> global_dispatcher,
-            std::shared_ptr<mad::core::SystemListener> system_listener) override {
+            std::shared_ptr<mad::core::SystemListener> system_listener) {
         auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
         auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
@@ -156,7 +158,7 @@ int main() {
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<ExampleLevelLoader>()
+            std::make_shared<ExampleLevelLoader>(ExampleLevelLoader("../../game/resources/levels/level_01"))
     };
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(

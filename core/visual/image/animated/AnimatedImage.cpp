@@ -5,10 +5,10 @@
 namespace mad::core {
 
     AnimatedImage::AnimatedImage(std::filesystem::path path, int width, int height,
-                                 int32_t delta_time, float width_size, float height_size) :
+                                 int32_t delta_time, float sprite_width, float sprite_height) :
                                 Image(Image::Type::Animated), m_path(std::move(path)),
                                 m_width(width), m_height(height), m_delta_time(delta_time),
-                                m_width_size(width_size), m_height_size(height_size) {
+                                m_sprite_width(sprite_width), m_sprite_height(sprite_height) {
     }
 
     int32_t AnimatedImage::get_delta_time() const noexcept {
@@ -29,9 +29,16 @@ namespace mad::core {
 
     b2PolygonShape AnimatedImage::as_fixture() {
         b2PolygonShape fixture;
-        fixture.SetAsBox((m_width_size / static_cast<float>(m_width)) / 2,
-                         (m_height_size / static_cast<float>(m_height)) / 2);
+        fixture.SetAsBox(m_sprite_width / 2, m_sprite_height / 2);
         return fixture;
+    }
+
+    float AnimatedImage::get_sprite_height() const noexcept {
+        return m_sprite_height;
+    }
+
+    float AnimatedImage::get_sprite_width() const noexcept {
+        return m_sprite_width;
     }
 
 

@@ -1,0 +1,27 @@
+{
+  "name" : "level_01",
+  "block" : 50.0,
+  "camera": {
+    "position" : {
+      "x" : 10.0,
+      "y" : 10.0
+    },
+    "angle": 15.0,
+    "smoothness": 0.6,
+    "zoom": 10.5
+  },
+  "texture" : {
+    "stable" : "brick.png",
+    "unstable" : "brick.png"
+  },
+  "hero" : {
+    "animated" : {
+      "resource" : "runner_new.png",
+      "sprite_width" : 5,
+      "sprite_height" : 2,
+      "delta_time" : 180,
+      "size_width" : 80,
+      "size_height" : 80
+    }
+  }
+}
