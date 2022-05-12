@@ -1,4 +1,5 @@
 #include "StateMachine.hpp"
+#include "event/management/condition/Condition.hpp"
 #include "spdlog/spdlog.h"
 
 #include <utility>

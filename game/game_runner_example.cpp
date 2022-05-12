@@ -15,7 +15,7 @@
 #include <world/entity/ViewableEntity.hpp>
 
 #include "event/management/controller/statemachine/StateMachine.hpp"
-#include "event/management/controller/statemachine/condition/TrueCondition.hpp"
+#include "event/management/condition/TrueCondition.hpp"
 #include "event/system/KeyPressed.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -122,13 +122,13 @@ public:
         };
         struct C2 : mad::core::Controller {
             void control() override {
-                SPDLOG_DEBUG("controller 1");
+                SPDLOG_DEBUG("controller 2");
             };
         };
         auto machine = std::make_shared<mad::core::StateMachine>();
         machine->add_state(std::make_shared<C1>());
         machine->add_state(std::make_shared<C2>());
-        machine->add_transition(0, 1, std::make_shared<mad::core::TrueCondition>());
+        //machine->add_transition(0, 1, std::make_shared<mad::core::TrueCondition>());
         //machine->add_transition(1, 0, std::make_shared<mad::core::TrueCondition>());
         machine->set_initial_state(0);
         std::vector<std::shared_ptr<mad::core::Controller>> v{machine};
