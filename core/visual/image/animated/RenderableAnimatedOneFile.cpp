@@ -11,6 +11,8 @@ namespace mad::core {
       m_width_scale(animated_image->get_width_scale()),
       m_height_scale(animated_image->get_height_scale()) {
 
+        is_active = animated_image->is_active;
+
         CHECK_THROW(m_texture.loadFromFile(
                             animated_image->get_path()),
                     FileDoesNotExist, "File with StaticImage doesn't exist");

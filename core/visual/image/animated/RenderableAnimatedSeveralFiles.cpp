@@ -11,6 +11,8 @@ namespace mad::core {
               m_width_scale(animated_image->get_width_scale()),
               m_height_scale(animated_image->get_height_scale()) {
 
+        is_active = animated_image->is_active;
+
         m_textures.reserve(animated_image->get_count_sprites());
 
         for (const auto &file : std::filesystem::directory_iterator{animated_image->get_path()}) {

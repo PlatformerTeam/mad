@@ -32,7 +32,9 @@ void mad::core::ViewableEntity::set_image_color(Color color) {
 }
 
 void mad::core::ViewableEntity::set_action(mad::core::ImageStorage::TypeAction type_action) {
-    m_current_image->
+    *m_current_image->is_active = false;
+    m_current_image = m_image_storage->get_action(type_action);
+    *m_current_image->is_active = true;
 }
 
 void mad::core::ViewableEntity::move(mad::core::Vec2d move_delta) {
@@ -53,6 +55,7 @@ mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,
       m_z_ind(z_ind),
       m_position(std::make_shared<Vec2d>(initial_position)),
       m_rotation(std::make_shared<float>(initial_rotation)),
-      m_image_storage(std::move(image_storage)) {
+      m_image_storage(std::move(image_storage)),
+      m_current_image(image_storage->get_action(ImageStorage::TypeAction::Idle)) {
 }
 
