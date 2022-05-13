@@ -1,5 +1,5 @@
-#ifndef MAD_ANIMATEDIMAGE_HPP
-#define MAD_ANIMATEDIMAGE_HPP
+#ifndef MAD_ANIMATEDIMAGEONEFILE_HPP
+#define MAD_ANIMATEDIMAGEONEFILE_HPP
 
 #include <visual/image/Image.hpp>
 
@@ -9,10 +9,10 @@
 
 namespace mad::core {
 
-    class AnimatedImage : public Image {
+    class AnimatedImageOneFile : public Image {
     public:
-        explicit AnimatedImage(std::filesystem::path path, int width, int height, int32_t delta_time,
-                               float sprite_width, float sprite_height);
+        explicit AnimatedImageOneFile(std::filesystem::path path, int width, int height, int32_t delta_time,
+                                      float sprite_width, float sprite_height, float width_scale, float height_scale);
 
         [[nodiscard]] int32_t get_delta_time() const noexcept;
 
@@ -28,6 +28,10 @@ namespace mad::core {
 
         b2PolygonShape as_fixture() override;
 
+        [[nodiscard]] float get_width_scale() const noexcept;
+
+        [[nodiscard]] float get_height_scale() const noexcept;
+
     private:
         int32_t m_delta_time;
 
@@ -40,8 +44,12 @@ namespace mad::core {
         float m_sprite_height;
 
         float m_sprite_width;
+
+        float m_width_scale;
+
+        float m_height_scale;
     };
 
 }
 
-#endif //MAD_ANIMATEDIMAGE_HPP
+#endif //MAD_ANIMATEDIMAGEONEFILE_HPP

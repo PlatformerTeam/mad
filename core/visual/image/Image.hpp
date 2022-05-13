@@ -9,7 +9,8 @@ namespace mad::core {
         enum class Type {
             Shape,
             Static,
-            Animated
+            AnimatedOneFile,
+            AnimatedSeveralFiles
         };
 
         explicit Image(Type new_type) : type(new_type) {

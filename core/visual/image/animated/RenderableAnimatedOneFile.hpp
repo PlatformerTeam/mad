@@ -1,19 +1,19 @@
-#ifndef MAD_RENDERABLEANIMATED_HPP
-#define MAD_RENDERABLEANIMATED_HPP
+#ifndef MAD_RENDERABLEANIMATEDONEFILE_HPP
+#define MAD_RENDERABLEANIMATEDONEFILE_HPP
 
 
 #include <visual/Renderable.hpp>
-#include <visual/image/animated/AnimatedImage.hpp>
+#include <visual/image/animated/AnimatedImageOneFile.hpp>
 #include <common/FVec2D.hpp>
 #include <common/Cast.hpp>
 #include <common/Error.hpp>
 
 namespace mad::core {
 
-    class RenderableAnimated : public Renderable {
+    class RenderableAnimatedOneFile : public Renderable {
     public:
-        explicit RenderableAnimated(const std::shared_ptr<AnimatedImage> &animated_image,
-                                    std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
+        explicit RenderableAnimatedOneFile(const std::shared_ptr<AnimatedImageOneFile> &animated_image,
+                                           std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
         void render(sf::RenderWindow &window) override;
 
@@ -30,6 +30,10 @@ namespace mad::core {
 
         mutable Vec2d m_scale = {1, 1};
 
+        float m_width_scale;
+
+        float m_height_scale;
+
         std::shared_ptr<Vec2d> m_position;
 
         std::shared_ptr<float> m_rotation;
@@ -42,5 +46,4 @@ namespace mad::core {
 
 }
 
-
-#endif //MAD_RENDERABLEANIMATED_HPP
+#endif //MAD_RENDERABLEANIMATEDONEFILE_HPP

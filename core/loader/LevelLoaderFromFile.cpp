@@ -139,20 +139,40 @@ namespace mad::core {
     }
 
     Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
-        std::string source = "../../game/resources/animated/" +
-                static_cast<std::string>(m_config_json["hero"]["animated"]["resource"]);
-        Entity::Id hero_id = world->create_physical_entity(
-                0,
-                position,
-                0,
-                std::make_shared<AnimatedImage>(source,
-                                                m_config_json["hero"]["animated"]["sprite_width"],
-                                                m_config_json["hero"]["animated"]["sprite_height"],
-                                                m_config_json["hero"]["animated"]["delta_time"],
-                                                m_config_json["hero"]["animated"]["size_width"],
-                                                m_config_json["hero"]["animated"]["size_height"]),
-                false, false
-        );
+        std::filesystem::path source(m_config_json["animated_resources"]);
+        source /= m_config_json["hero"]["animated"]["resource"];
+
+        Entity::Id hero_id = 0;
+        if (static_cast<std::string>(m_config_json["hero"]["animated"]["type"]) == "several_files") {
+            hero_id = world->create_physical_entity(
+                    0,
+                    position,
+                    0,
+                    std::make_shared<AnimatedImageSeveralFiles>(source,
+                                                                m_config_json["hero"]["animated"]["count_files"],
+                                                                m_config_json["hero"]["animated"]["delta_time"],
+                                                                m_config_json["hero"]["animated"]["size_width"],
+                                                                m_config_json["hero"]["animated"]["size_height"],
+                                                                m_config_json["hero"]["animated"]["width_scale"],
+                                                                m_config_json["hero"]["animated"]["height_scale"]),
+                    false, false
+            );
+        } else {
+            hero_id = world->create_physical_entity(
+                    0,
+                    position,
+                    0,
+                    std::make_shared<AnimatedImageOneFile>(source,
+                                                           m_config_json["hero"]["animated"]["sprite_width"],
+                                                           m_config_json["hero"]["animated"]["sprite_height"],
+                                                           m_config_json["hero"]["animated"]["delta_time"],
+                                                           m_config_json["hero"]["animated"]["size_width"],
+                                                           m_config_json["hero"]["animated"]["size_height"],
+                                                           m_config_json["hero"]["animated"]["width_scale"],
+                                                           m_config_json["hero"]["animated"]["height_scale"]),
+                    false, false
+            );
+        }
         return hero_id;
     }
 
