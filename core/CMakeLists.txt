@@ -79,6 +79,7 @@ set(
         visual/image/static/StaticImage.cpp visual/image/static/StaticImage.hpp
         visual/image/animated/AnimatedImageOneFile.cpp visual/image/animated/AnimatedImageOneFile.hpp
         visual/image/animated/AnimatedImageSeveralFiles.cpp visual/image/animated/AnimatedImageSeveralFiles.hpp
+        visual/image/storage/ImageStorage.cpp visual/image/storage/ImageStorage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
         event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp event/WorldUpdate.hpp event/WorldUpdate.cpp)

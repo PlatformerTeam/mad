@@ -22,6 +22,7 @@ namespace mad::core {
 
         const Type type;
 
+        std::shared_ptr<bool> is_active;
     };
 }
 

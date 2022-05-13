@@ -25,10 +25,14 @@ void mad::core::ViewableEntity::set_image_rotation(float new_rotation) {
 }
 
 void mad::core::ViewableEntity::set_image_color(Color color) {
-    if (m_image->type == Image::Type::Shape) {
-        auto shape = mad::core::pointer_cast_to<mad::core::Shape>(m_image);
+    if (m_current_image->type == Image::Type::Shape) {
+        auto shape = mad::core::pointer_cast_to<mad::core::Shape>(m_current_image);
         shape->set_color(color);
     }
+}
+
+void mad::core::ViewableEntity::set_action(mad::core::ImageStorage::TypeAction type_action) {
+    m_current_image->
 }
 
 void mad::core::ViewableEntity::move(mad::core::Vec2d move_delta) {
@@ -44,10 +48,11 @@ mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,
                                           int z_ind,
                                           Vec2d initial_position,
                                           float initial_rotation,
-                                          std::shared_ptr<Image> image)
+                                          std::shared_ptr<ImageStorage> image_storage)
     : m_id(id),
       m_z_ind(z_ind),
       m_position(std::make_shared<Vec2d>(initial_position)),
       m_rotation(std::make_shared<float>(initial_rotation)),
-      m_image(std::move(image)) {
+      m_image_storage(std::move(image_storage)) {
 }
+
