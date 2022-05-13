@@ -8,8 +8,11 @@
 #include <event/management/handler/EventHandler.hpp>
 #include <visual/image/static/StaticImage.hpp>
 #include <visual/image/static/RenderableStatic.hpp>
-#include <visual/image/animated/AnimatedImage.hpp>
-#include <visual/image/animated/RenderableAnimated.hpp>
+#include <visual/image/animated/AnimatedImageOneFile.hpp>
+#include <visual/image/animated/AnimatedImageSeveralFiles.hpp>
+#include <visual/image/animated/RenderableAnimatedOneFile.hpp>
+#include <visual/image/animated/RenderableAnimatedSeveralFiles.hpp>
+#include <visual/image/animated/AnimatedImageSeveralFiles.hpp>
 #include <visual/image/shape/square/RenderableSquare.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
@@ -34,8 +37,6 @@ namespace mad::core {
         using RenderableWithIndex = std::pair<int, std::shared_ptr<Renderable>>;
 
     public:
-//        friend class CameraController;
-
         enum class FollowType {
             Forward,
             Backward

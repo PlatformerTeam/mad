@@ -53,15 +53,26 @@ namespace mad::core {
                                             std::make_shared<RenderableStatic>(renderable_static)});
                 break;
             }
-            case Image::Type::Animated:
-                std::shared_ptr<AnimatedImage> animated_image = pointer_cast_to<AnimatedImage>(
+            case Image::Type::AnimatedOneFile: {
+                std::shared_ptr<AnimatedImageOneFile> animated_image = pointer_cast_to<AnimatedImageOneFile>(
                         positional_appearance.get_image());
-                RenderableAnimated renderable_animated(animated_image,
-                                                       positional_appearance.get_position(),
-                                                       positional_appearance.get_rotation());
+                RenderableAnimatedOneFile renderable_animated(animated_image,
+                                                              positional_appearance.get_position(),
+                                                              positional_appearance.get_rotation());
                 insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                            std::make_shared<RenderableAnimated>(renderable_animated)});
+                                            std::make_shared<RenderableAnimatedOneFile>(renderable_animated)});
                 break;
+            }
+            case Image::Type::AnimatedSeveralFiles: {
+                std::shared_ptr<AnimatedImageSeveralFiles> animated_image = pointer_cast_to<AnimatedImageSeveralFiles>(
+                        positional_appearance.get_image());
+                RenderableAnimatedSeveralFiles renderable_animated(animated_image,
+                                                              positional_appearance.get_position(),
+                                                              positional_appearance.get_rotation());
+                insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                            std::make_shared<RenderableAnimatedSeveralFiles>(renderable_animated)});
+                break;
+            }
         }
     }
 

@@ -121,12 +121,11 @@ namespace mad::core {
                 0,
                 position,
                 0,
-                std::make_shared<AnimatedImage>(source,
-                                                m_config_json["hero"]["animated"]["sprite_width"],
-                                                m_config_json["hero"]["animated"]["sprite_height"],
-                                                m_config_json["hero"]["animated"]["delta_time"],
-                                                m_config_json["hero"]["animated"]["size_width"],
-                                                m_config_json["hero"]["animated"]["size_height"]),
+                std::make_shared<AnimatedImageSeveralFiles>(source,
+                                                       m_config_json["hero"]["animated"]["count_sprites"],
+                                                       m_config_json["hero"]["animated"]["delta_time"],
+                                                       m_config_json["hero"]["animated"]["size_width"],
+                                                       m_config_json["hero"]["animated"]["size_height"]),
                 false, false
         );
         return hero_id;

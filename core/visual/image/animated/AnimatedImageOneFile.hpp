@@ -1,5 +1,5 @@
-#ifndef MAD_ANIMATEDIMAGE_HPP
-#define MAD_ANIMATEDIMAGE_HPP
+#ifndef MAD_ANIMATEDIMAGEONEFILE_HPP
+#define MAD_ANIMATEDIMAGEONEFILE_HPP
 
 #include <visual/image/Image.hpp>
 
@@ -9,10 +9,10 @@
 
 namespace mad::core {
 
-    class AnimatedImage : public Image {
+    class AnimatedImageOneFile : public Image {
     public:
-        explicit AnimatedImage(std::filesystem::path path, int width, int height, int32_t delta_time,
-                               float sprite_width, float sprite_height);
+        explicit AnimatedImageOneFile(std::filesystem::path path, int width, int height, int32_t delta_time,
+                                      float sprite_width, float sprite_height);
 
         [[nodiscard]] int32_t get_delta_time() const noexcept;
 
@@ -44,4 +44,4 @@ namespace mad::core {
 
 }
 
-#endif //MAD_ANIMATEDIMAGE_HPP
+#endif //MAD_ANIMATEDIMAGEONEFILE_HPP

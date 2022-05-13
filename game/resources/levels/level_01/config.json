@@ -16,12 +16,13 @@
   },
   "hero" : {
     "animated" : {
-      "resource" : "runner_new.png",
+      "resource" : "hero_walk",
       "sprite_width" : 5,
       "sprite_height" : 2,
-      "delta_time" : 180,
-      "size_width" : 80,
-      "size_height" : 80
+      "delta_time" : 100,
+      "size_width" : 100,
+      "size_height" : 100,
+      "count_sprites" : 19
     }
   }
 }

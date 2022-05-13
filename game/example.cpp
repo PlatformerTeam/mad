@@ -155,13 +155,13 @@ int main(int argc, char *argv[]) {
     mad::core::Entity::Id animated_id_1 = world->create_viewable_entity(
             5,
             mad::core::Vec2d{180.0f, 240.0f},0,
-            std::make_shared<mad::core::AnimatedImage>(mad::core::AnimatedImage("../../game/resources/animated/runner_new.png", 5, 2, 120, 1400, 770))
+            std::make_shared<mad::core::AnimatedImageOneFile>(mad::core::AnimatedImageOneFile("../../game/resources/animated/runner_new.png", 5, 2, 120, 1400, 770))
     );
 
     mad::core::Entity::Id animated_id_2 = world->create_viewable_entity(
             6,
             mad::core::Vec2d{380.0f, 70.0f},0,
-            std::make_shared<mad::core::AnimatedImage>(mad::core::AnimatedImage("../../game/resources/animated/helicopter.png", 1, 4, 150, 423, 600))
+            std::make_shared<mad::core::AnimatedImageOneFile>(mad::core::AnimatedImageOneFile("../../game/resources/animated/helicopter.png", 1, 4, 150, 423, 600))
     );
 
     /*mad::core::StaticImage st_im_2 = mad::core::StaticImage("../../game/resources/static/18plus.png");

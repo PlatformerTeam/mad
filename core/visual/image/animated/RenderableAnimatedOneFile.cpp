@@ -1,11 +1,11 @@
-#include "RenderableAnimated.hpp"
+#include "RenderableAnimatedOneFile.hpp"
 
 #include <utility>
 
 namespace mad::core {
 
-    RenderableAnimated::RenderableAnimated(const std::shared_ptr<AnimatedImage> &animated_image,
-                                           std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
+    RenderableAnimatedOneFile::RenderableAnimatedOneFile(const std::shared_ptr<AnimatedImageOneFile> &animated_image,
+                                                         std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
     : m_delta_time(animated_image->get_delta_time()),
     m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
@@ -22,7 +22,7 @@ namespace mad::core {
                    animated_image->get_sprite_height() / static_cast<float>(m_height_sprite)};
     }
 
-    void RenderableAnimated::render(sf::RenderWindow &window){
+    void RenderableAnimatedOneFile::render(sf::RenderWindow &window){
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_texture);
 
@@ -45,7 +45,7 @@ namespace mad::core {
         window.draw(render_sprite);
     }
 
-    void RenderableAnimated::update_frame() const {
+    void RenderableAnimatedOneFile::update_frame() const {
         if (m_rect.left + m_width_sprite >= m_texture.getSize().x) {
             m_rect.left = 0;
             if (m_rect.top + m_height_sprite >= m_texture.getSize().y) {
