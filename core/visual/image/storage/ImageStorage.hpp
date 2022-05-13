@@ -16,7 +16,11 @@ namespace mad::core {
             Attack
         };
 
-        std::shared_ptr<Image> get_action(TypeAction type_action);
+        explicit ImageStorage(std::unordered_map<TypeAction, std::shared_ptr<Image>> actions);
+
+        std::shared_ptr<Image> get_action(TypeAction type_action) noexcept;
+
+        [[nodiscard]] std::unordered_map<TypeAction, std::shared_ptr<Image>> get_all_action() const noexcept;
 
     private:
         std::unordered_map<TypeAction, std::shared_ptr<Image>> m_actions;

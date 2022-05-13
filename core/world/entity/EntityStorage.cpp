@@ -28,18 +28,19 @@ namespace mad::core {
         return *entity_it->second;
     }
 
-    Entity::Id EntityStorage::create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) {
+    Entity::Id EntityStorage::create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         m_list_ids.push_back(new_entity_id);
-        m_map_entities[new_entity_id] = std::make_unique<ViewableEntity>(new_entity_id, z_ind, initial_position, initial_rotation, image);
+        m_map_entities[new_entity_id] = std::make_unique<ViewableEntity>(new_entity_id, z_ind, initial_position, initial_rotation, image_storage);
         return new_entity_id;
     }
-    Entity::Id EntityStorage::create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image,
+
+    Entity::Id EntityStorage::create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
                                                      b2World &physicalWorld, bool is_fixed, bool is_rotated) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         m_list_ids.push_back(new_entity_id);
         m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(new_entity_id, z_ind, initial_position, initial_rotation,
-                                                                         image, physicalWorld, is_fixed, is_rotated);
+                                                                         image_storage, physicalWorld, is_fixed, is_rotated);
         return new_entity_id;
     }
 

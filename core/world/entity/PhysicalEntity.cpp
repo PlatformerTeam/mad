@@ -7,9 +7,9 @@
 
 #include <utility>
 
-mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<Image> image,
+mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<ImageStorage> image_storage,
                                           b2World &physicalWorld, bool is_fixed, bool is_rotated)
-    : ViewableEntity(id, z_ind, initial_position, initial_rotation, image) {
+    : ViewableEntity(id, z_ind, initial_position, initial_rotation, image_storage) {
 
     //rect.setOrigin(300, 50);
 
@@ -18,7 +18,7 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         b2BodyDef fixedBodyDef;
         fixedBodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&fixedBodyDef);
-        b2PolygonShape groundBox = image->as_fixture();
+        b2PolygonShape groundBox = (image_storage->get_action(ImageStorage::TypeAction::Idle))->as_fixture();
         body->CreateFixture(&groundBox, 0.0f);
         body->SetTransform(body->GetPosition(), initial_rotation);
     }
@@ -28,7 +28,7 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&bodyDef);
-        b2PolygonShape dynamicBox = image->as_fixture();
+        b2PolygonShape dynamicBox = (image_storage->get_action(ImageStorage::TypeAction::Idle))->as_fixture();
 
         if (!is_rotated) {
             set_fixed_rotation(true);

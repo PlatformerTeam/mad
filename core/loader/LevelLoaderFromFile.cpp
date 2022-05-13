@@ -122,18 +122,26 @@ namespace mad::core {
     void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world,
                                    Vec2d position, float block_size, bool is_stable) {
 
-        std::string source = "../../game/resources/static/";
+        std::filesystem::path source("../../game/resources/static/");
         if (is_stable) {
-            source += static_cast<std::string>(m_config_json["texture"]["stable"]);
+            source /= static_cast<std::string>(m_config_json["texture"]["stable"]);
         } else {
-            source += static_cast<std::string>(m_config_json["texture"]["unstable"]);
+            source /= static_cast<std::string>(m_config_json["texture"]["unstable"]);
         }
+
+        auto image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<StaticImage>(source, block_size,
+                                                        block_size,
+                                                        StaticImage::TransformType::Tile)
+                        }}));
 
         Entity::Id square_id = world->create_physical_entity(
                 0,
                 position,
                 0,
-                std::make_shared<StaticImage>(source, block_size, block_size, StaticImage::TransformType::Tile),
+                image_storage,
                 is_stable
         );
     }
@@ -143,36 +151,44 @@ namespace mad::core {
         source /= m_config_json["hero"]["animated"]["resource"];
 
         Entity::Id hero_id = 0;
+
+        std::shared_ptr<ImageStorage> image_storage;
+
         if (static_cast<std::string>(m_config_json["hero"]["animated"]["type"]) == "several_files") {
-            hero_id = world->create_physical_entity(
-                    0,
-                    position,
-                    0,
-                    std::make_shared<AnimatedImageSeveralFiles>(source,
-                                                                m_config_json["hero"]["animated"]["count_files"],
-                                                                m_config_json["hero"]["animated"]["delta_time"],
-                                                                m_config_json["hero"]["animated"]["size_width"],
-                                                                m_config_json["hero"]["animated"]["size_height"],
-                                                                m_config_json["hero"]["animated"]["width_scale"],
-                                                                m_config_json["hero"]["animated"]["height_scale"]),
-                    false, false
-            );
+            image_storage = std::make_shared<ImageStorage>(
+                    std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                            {{ImageStorage::TypeAction::Idle,
+                              std::make_shared<AnimatedImageSeveralFiles>(
+                                      source,
+                                      m_config_json["hero"]["animated"]["count_files"],
+                                      m_config_json["hero"]["animated"]["delta_time"],
+                                      m_config_json["hero"]["animated"]["size_width"],
+                                      m_config_json["hero"]["animated"]["size_height"],
+                                      m_config_json["hero"]["animated"]["width_scale"],
+                                      m_config_json["hero"]["animated"]["height_scale"])
+                             }}));
         } else {
-            hero_id = world->create_physical_entity(
-                    0,
-                    position,
-                    0,
-                    std::make_shared<AnimatedImageOneFile>(source,
-                                                           m_config_json["hero"]["animated"]["sprite_width"],
-                                                           m_config_json["hero"]["animated"]["sprite_height"],
-                                                           m_config_json["hero"]["animated"]["delta_time"],
-                                                           m_config_json["hero"]["animated"]["size_width"],
-                                                           m_config_json["hero"]["animated"]["size_height"],
-                                                           m_config_json["hero"]["animated"]["width_scale"],
-                                                           m_config_json["hero"]["animated"]["height_scale"]),
-                    false, false
-            );
+            image_storage = std::make_shared<ImageStorage>(
+                    std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                            {{ImageStorage::TypeAction::Idle,
+                              std::make_shared<AnimatedImageOneFile>(source,
+                                                                     m_config_json["hero"]["animated"]["sprite_width"],
+                                                                     m_config_json["hero"]["animated"]["sprite_height"],
+                                                                     m_config_json["hero"]["animated"]["delta_time"],
+                                                                     m_config_json["hero"]["animated"]["size_width"],
+                                                                     m_config_json["hero"]["animated"]["size_height"],
+                                                                     m_config_json["hero"]["animated"]["width_scale"],
+                                                                     m_config_json["hero"]["animated"]["height_scale"]),
+                             }}));
         }
+        hero_id = world->create_physical_entity(
+                0,
+                position,
+                0,
+                image_storage,
+                false, false
+                );
+
         return hero_id;
     }
 

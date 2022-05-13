@@ -3,6 +3,8 @@
 
 #include <box2d/box2d.h>
 
+#include <memory>
+
 namespace mad::core {
     class Image {
     public:
