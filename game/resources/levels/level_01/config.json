@@ -1,5 +1,6 @@
 {
   "name" : "level_01",
+  "animated_resources" : "../../game/resources/animated/",
   "block" : 50.0,
   "camera": {
     "position" : {
@@ -17,12 +18,13 @@
   "hero" : {
     "animated" : {
       "resource" : "hero_walk",
-      "sprite_width" : 5,
-      "sprite_height" : 2,
+      "type" : "several_files",
+      "width_scale" : 3.1,
+      "height_scale" : 2.0,
       "delta_time" : 100,
-      "size_width" : 100,
-      "size_height" : 100,
-      "count_sprites" : 19
+      "size_width" : 40,
+      "size_height" : 40,
+      "count_files" : 19
     }
   }
 }

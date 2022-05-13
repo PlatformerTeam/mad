@@ -29,6 +29,10 @@ namespace mad::core {
 
         mutable Vec2d m_scale = {1, 1};
 
+        float m_width_scale;
+
+        float m_height_scale;
+
         std::shared_ptr<Vec2d> m_position;
 
         std::shared_ptr<float> m_rotation;

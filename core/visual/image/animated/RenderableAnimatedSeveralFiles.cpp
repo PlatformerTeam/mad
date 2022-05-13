@@ -7,7 +7,9 @@ namespace mad::core {
     RenderableAnimatedSeveralFiles::RenderableAnimatedSeveralFiles(const std::shared_ptr<AnimatedImageSeveralFiles> &animated_image,
                                                          std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
             : m_delta_time(animated_image->get_delta_time()),
-              m_position(std::move(position)), m_rotation(std::move(rotation)) {
+              m_position(std::move(position)), m_rotation(std::move(rotation)),
+              m_width_scale(animated_image->get_width_scale()),
+              m_height_scale(animated_image->get_height_scale()) {
 
         m_textures.reserve(animated_image->get_count_sprites());
 
@@ -22,8 +24,8 @@ namespace mad::core {
         auto [texture_width, texture_height] = m_textures[0].getSize();
         std::cout << texture_width << "\n";
 
-        m_scale = {animated_image->get_sprite_width() / static_cast<float>(texture_width),
-                   animated_image->get_sprite_height() / static_cast<float>(texture_height)};
+        m_scale = {animated_image->get_sprite_width() / static_cast<float>(texture_width) * m_width_scale,
+                   animated_image->get_sprite_height() / static_cast<float>(texture_height) * m_height_scale};
     }
 
     void RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){

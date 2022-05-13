@@ -7,7 +7,9 @@ namespace mad::core {
     RenderableAnimatedOneFile::RenderableAnimatedOneFile(const std::shared_ptr<AnimatedImageOneFile> &animated_image,
                                                          std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
     : m_delta_time(animated_image->get_delta_time()),
-    m_position(std::move(position)), m_rotation(std::move(rotation)) {
+      m_position(std::move(position)), m_rotation(std::move(rotation)),
+      m_width_scale(animated_image->get_width_scale()),
+      m_height_scale(animated_image->get_height_scale()) {
 
         CHECK_THROW(m_texture.loadFromFile(
                             animated_image->get_path()),
@@ -18,8 +20,8 @@ namespace mad::core {
 
         m_rect = {0, 0, m_width_sprite, m_height_sprite};
 
-        m_scale = {animated_image->get_sprite_width() / static_cast<float>(m_width_sprite),
-                   animated_image->get_sprite_height() / static_cast<float>(m_height_sprite)};
+        m_scale = {animated_image->get_sprite_width() / static_cast<float>(m_width_sprite) * m_width_scale,
+                   animated_image->get_sprite_height() / static_cast<float>(m_height_sprite) * m_height_scale};
     }
 
     void RenderableAnimatedOneFile::render(sf::RenderWindow &window){
