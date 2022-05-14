@@ -18,60 +18,62 @@ namespace mad::core {
     void Camera::render(sf::RenderWindow &window) {
         window.setView(m_view);
         for (auto &[z_ind, renderable_image] : m_scene_list) {
-            renderable_image->render(window);
+            if (*renderable_image->is_active) {
+                renderable_image->render(window);
+            }
         }
     }
 
     void Camera::handle(const Event &event) {
         SPDLOG_DEBUG("Got positional appearance");
         const auto &positional_appearance = const_cast_to<PositionalAppearance>(event);
-        std::shared_ptr<Image> image = positional_appearance.get_image();
-        switch (image->type) {
+        std::shared_ptr<ImageStorage> image_storage = positional_appearance.get_image_storage();
+        for (auto &[type, image] : image_storage->get_all_action()) {
+            switch (image->type) {
 
-            case Image::Type::Shape: {
-                std::shared_ptr<Shape> shape = pointer_cast_to<Shape>(image);
+                case Image::Type::Shape: {
+                    std::shared_ptr<Shape> shape = pointer_cast_to<Shape>(image);
 
-                switch (shape->get_geometry()) {
-                    case Shape::Geometry::Square:
-                        std::shared_ptr<Square> square = pointer_cast_to<Square>(shape);
-                        RenderableSquare renderable_square(square,
-                                                           positional_appearance.get_position(),
-                                                           positional_appearance.get_rotation());
-                        insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                                    std::make_shared<RenderableSquare>(renderable_square)});
-                        break;
+                    switch (shape->get_geometry()) {
+                        case Shape::Geometry::Square:
+                            std::shared_ptr<Square> square = pointer_cast_to<Square>(shape);
+                            RenderableSquare renderable_square(square,
+                                                               positional_appearance.get_position(),
+                                                               positional_appearance.get_rotation());
+                            insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                                        std::make_shared<RenderableSquare>(renderable_square)});
+                            break;
+                    }
+                    break;
                 }
-                break;
-            }
-            case Image::Type::Static: {
-                std::shared_ptr<StaticImage> static_image = pointer_cast_to<StaticImage>(
-                        positional_appearance.get_image());
-                RenderableStatic renderable_static(static_image,
-                                                   positional_appearance.get_position(),
-                                                   positional_appearance.get_rotation());
-                insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                            std::make_shared<RenderableStatic>(renderable_static)});
-                break;
-            }
-            case Image::Type::AnimatedOneFile: {
-                std::shared_ptr<AnimatedImageOneFile> animated_image = pointer_cast_to<AnimatedImageOneFile>(
-                        positional_appearance.get_image());
-                RenderableAnimatedOneFile renderable_animated(animated_image,
-                                                              positional_appearance.get_position(),
-                                                              positional_appearance.get_rotation());
-                insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                            std::make_shared<RenderableAnimatedOneFile>(renderable_animated)});
-                break;
-            }
-            case Image::Type::AnimatedSeveralFiles: {
-                std::shared_ptr<AnimatedImageSeveralFiles> animated_image = pointer_cast_to<AnimatedImageSeveralFiles>(
-                        positional_appearance.get_image());
-                RenderableAnimatedSeveralFiles renderable_animated(animated_image,
-                                                              positional_appearance.get_position(),
-                                                              positional_appearance.get_rotation());
-                insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                            std::make_shared<RenderableAnimatedSeveralFiles>(renderable_animated)});
-                break;
+                case Image::Type::Static: {
+                    std::shared_ptr<StaticImage> static_image = pointer_cast_to<StaticImage>(image);
+                    RenderableStatic renderable_static(static_image,
+                                                       positional_appearance.get_position(),
+                                                       positional_appearance.get_rotation());
+                    insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                                std::make_shared<RenderableStatic>(renderable_static)});
+                    break;
+                }
+                case Image::Type::AnimatedOneFile: {
+                    std::shared_ptr<AnimatedImageOneFile> animated_image = pointer_cast_to<AnimatedImageOneFile>(image);
+                    RenderableAnimatedOneFile renderable_animated(animated_image,
+                                                                  positional_appearance.get_position(),
+                                                                  positional_appearance.get_rotation());
+                    insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                                std::make_shared<RenderableAnimatedOneFile>(renderable_animated)});
+                    break;
+                }
+                case Image::Type::AnimatedSeveralFiles: {
+                    std::shared_ptr<AnimatedImageSeveralFiles> animated_image =
+                            pointer_cast_to<AnimatedImageSeveralFiles>(image);
+                    RenderableAnimatedSeveralFiles renderable_animated(animated_image,
+                                                                       positional_appearance.get_position(),
+                                                                       positional_appearance.get_rotation());
+                    insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                                std::make_shared<RenderableAnimatedSeveralFiles>(renderable_animated)});
+                    break;
+                }
             }
         }
     }

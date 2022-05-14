@@ -3,6 +3,8 @@
 
 #include <box2d/box2d.h>
 
+#include <memory>
+
 namespace mad::core {
     class Image {
     public:
@@ -22,6 +24,7 @@ namespace mad::core {
 
         const Type type;
 
+        std::shared_ptr<bool> is_active = std::make_shared<bool>(false);
     };
 }
 

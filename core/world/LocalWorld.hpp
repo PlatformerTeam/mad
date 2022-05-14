@@ -30,9 +30,9 @@ namespace mad::core {
 
         Entity & get_entity(Entity::Id id) noexcept override;
 
-        Entity::Id create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image) override;
+        Entity::Id create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage) override;
 
-        Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image,
+        Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
                                           bool is_fixed = false, bool is_rotated = true) override;
 
     private:
