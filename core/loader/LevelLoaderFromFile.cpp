@@ -1,9 +1,10 @@
 #include "LevelLoaderFromFile.hpp"
-#include "event/management/condition/KeyDownCondition.hpp"
-#include "event/management/condition/KeyPressedCondition.hpp"
-#include "event/management/condition/TimerCondition.hpp"
-#include "event/management/condition/TrueCondition.hpp"
-#include "event/management/controller/statemachine/StateMachine.hpp"
+#include <../../game/mobs/hero/Hero.hpp>
+#include <event/management/condition/KeyDownCondition.hpp>
+#include <event/management/condition/KeyPressedCondition.hpp>
+#include <event/management/condition/TimerCondition.hpp>
+#include <event/management/condition/TrueCondition.hpp>
+#include <event/management/controller/statemachine/StateMachine.hpp>
 
 #include <common/Error.hpp>
 
@@ -19,7 +20,7 @@ namespace mad::core {
 
     std::unique_ptr<LevelRunner> LevelLoaderFromFile::load(std::shared_ptr<EventDispatcher> global_dispatcher,
                                                            std::shared_ptr<SystemListener> system_listener) {
-        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+        level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
         auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
 
@@ -27,17 +28,22 @@ namespace mad::core {
                                  m_config_json["camera"]["position"]["y"]};
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world);
 
+        controllers = {std::make_shared<mad::core::CameraController>(
+                camera)};
+
+
         Entity::Id hero_id = create_world(world);
 
         camera->turn_on(*level_dispatcher, hero_id);
         level_dispatcher->registry(camera);
-        level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
+        //level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
+
 
         /* std::vector<std::shared_ptr<mad::core::Controller>> controllers {
                  std::make_shared<mad::core::CameraController>(camera)
          };*/
 
-        ///State Machine
+        /*///State Machine
         struct C1 : mad::core::Controller {
             void control() override {
                 //SPDLOG_DEBUG("controller 1");
@@ -57,7 +63,7 @@ namespace mad::core {
         machine->set_initial_state(0);
         std::vector<std::shared_ptr<mad::core::Controller>> controllers{machine,
                                                                         std::make_shared<mad::core::CameraController>(
-                                                                                camera)};
+                                                                                camera)};*/
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -66,8 +72,7 @@ namespace mad::core {
                 global_dispatcher,
                 level_dispatcher,
                 world,
-                controllers
-        );
+                controllers);
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
@@ -82,7 +87,7 @@ namespace mad::core {
         Entity::Id hero_id = 0;
         std::string map_line;
         while (std::getline(m_level_map, map_line)) {
-            for (char object: map_line) {
+            for (char object : map_line) {
                 switch (m_objects[object]) {
                     case Objects::UnstableBlock: {
                         create_block(world,
@@ -99,9 +104,8 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Hero: {
-                        hero_id = create_hero(world,
-                                              {current_position_x,
-                                               current_position_y});
+                        Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
+                        hero_id = hero.get_hero_id();
                         break;
                     }
                     case Objects::Enemy1: {
@@ -137,16 +141,14 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Tile)
-                         }}));
+                                                        StaticImage::TransformType::Tile)}}));
 
         Entity::Id square_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                is_stable
-        );
+                is_stable);
     }
 
     Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
@@ -160,37 +162,32 @@ namespace mad::core {
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
                         {{ImageStorage::TypeAction::Idle,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["count_files"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["width_scale"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["height_scale"])
-                         },
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["count_files"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["width_scale"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["height_scale"])},
                          {ImageStorage::TypeAction::Run,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["count_files"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])
-                         }}
-                )
-        );
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["count_files"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])}}));
 
         hero_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                false, false
-        );
+                false, false);
 
         return hero_id;
     }
 
-}
+}// namespace mad::core

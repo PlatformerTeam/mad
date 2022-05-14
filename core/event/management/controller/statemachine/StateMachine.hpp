@@ -21,9 +21,12 @@ namespace mad::core {
         void add_transition(StateId state_id_from, StateId state_id_to, std::shared_ptr<Condition> transition_condition);
         void set_initial_state(StateId state_id);
         void control() override;
+        StateId get_previous_state_id();
+
 
     private:
         StateId m_current_state_id = -1;
+        StateId m_previous_state_id = -1;
         std::vector<std::shared_ptr<Controller>> m_states;
         std::vector<std::vector<std::shared_ptr<Transition>>> m_transitions;
         std::shared_ptr<mad::core::ImmediateDispatcher> m_dispatcher;

@@ -82,7 +82,7 @@ set(
         visual/image/storage/ImageStorage.cpp visual/image/storage/ImageStorage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-        event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp event/WorldUpdate.hpp event/WorldUpdate.cpp)
+        event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp event/WorldUpdate.hpp event/WorldUpdate.cpp ../game/mobs/hero/Hero.hpp ../game/mobs/hero/Hero.cpp event/management/controller/Idle.hpp event/management/controller/Idle.cpp event/management/controller/Run.hpp event/management/controller/Run.cpp event/management/condition/KeyReleasedCondition.hpp event/management/condition/KeyReleasedCondition.cpp event/management/controller/Jump.hpp event/management/controller/Jump.cpp event/management/condition/LastStateCondition.hpp event/management/condition/LastStateCondition.cpp)
 
 add_library(
         ${LIBRARY_CORE} STATIC
