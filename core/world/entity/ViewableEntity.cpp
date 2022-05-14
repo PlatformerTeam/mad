@@ -35,11 +35,12 @@ void mad::core::ViewableEntity::set_action(mad::core::ImageStorage::TypeAction t
     *m_current_image->is_active = false;
     m_current_image = m_image_storage->get_action(type_action);
     *m_current_image->is_active = true;
-    m_current_image->is_reflect = m_is_reflect;
+    *m_current_image->is_reflect = m_is_reflect;
 }
 
-void mad::core::ViewableEntity::get_flip() {
-    *m_is_reflect = !(*m_is_reflect);
+void mad::core::ViewableEntity::flip_over() {
+    m_is_reflect = !m_is_reflect;
+    *m_current_image->is_reflect = m_is_reflect;
 }
 
 void mad::core::ViewableEntity::move(mad::core::Vec2d move_delta) {
@@ -64,6 +65,5 @@ mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,
       m_image_storage(std::move(image_storage)) {
 
     *m_current_image->is_active = true;
-    m_current_image->is_reflect = m_is_reflect;
 }
 

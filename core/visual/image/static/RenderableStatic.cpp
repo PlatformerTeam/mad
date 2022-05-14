@@ -38,7 +38,7 @@ namespace mad::core {
 
         render_sprite.setTexture(m_texture);
 
-        if (*is_reflect) {
+        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
             m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
         }
 

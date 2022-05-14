@@ -18,10 +18,6 @@ void mad::core::RenderableSquare::render(sf::RenderWindow &window) {
 
     Color square_color = m_square.get_color();
 
-    if (*is_reflect) {
-        render_square.setScale(-1, -1);
-    }
-
     render_square.setFillColor({square_color.get_red(),
                                 square_color.get_green(),
                                 square_color.get_blue()});

@@ -26,7 +26,7 @@ namespace mad::core {
 
         std::shared_ptr<bool> is_active = std::make_shared<bool>(false);
 
-        std::shared_ptr<bool> is_reflect;
+        std::shared_ptr<bool> is_reflect = std::make_shared<bool>(false);
     };
 }
 

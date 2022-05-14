@@ -40,7 +40,7 @@ namespace mad::core {
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_textures[m_current_frame]);
 
-        if (*is_reflect) {
+        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
             m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
         }
 
