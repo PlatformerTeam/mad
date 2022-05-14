@@ -1,5 +1,7 @@
+#include <database/driver/offline/OfflineClientStorageDriver.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>
+#include <event/management/handler/AuthorizationMenuEventsHandler.hpp>
 #include <event/management/handler/MainMenuEventsHandler.hpp>
 #include <event/management/handler/WindowCloseHandler.hpp>
 #include <event/management/handler/PauseMenuEventsHandler.hpp>
@@ -7,6 +9,7 @@
 #include <event/management/producer/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <loader/LevelLoader.hpp>
+#include <menu/AuthorizationMenu.hpp>
 #include <menu/MainMenu.hpp>
 #include <menu/PauseMenu.hpp>
 #include <runner/GameRunner.hpp>
@@ -36,6 +39,8 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
+    auto offline_storage_driver = std::make_shared<mad::core::OfflineClientStorageDriver>();
+
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
             std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_01")
     };
@@ -44,12 +49,15 @@ int main() {
             level_loaders,
             global_dispatcher,
             std::make_unique<mad::core::MainMenu>(),
-            system_listener
+            std::make_unique<mad::core::AuthorizationMenu>(offline_storage_driver),
+            system_listener,
+            offline_storage_driver
     );
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
     global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner));
+    global_dispatcher->registry(std::make_shared<mad::core::AuthorizationMenuEventsHandler>(*game_runner));
 
     game_runner->run(*window);
 
