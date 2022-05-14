@@ -7,6 +7,8 @@
 #include <imgui-SFML.h>
 #include <common/Error.hpp>
 
+#include <memory>
+
 namespace mad::core {
 
     class Renderable {
