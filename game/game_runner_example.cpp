@@ -133,6 +133,7 @@ public:
     }
 };
 
+// Comment for commit
 int main() {
 #ifndef NDEBUG
     auto log_level = spdlog::level::trace;
