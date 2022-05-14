@@ -62,7 +62,7 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     };
     auto machine = std::make_shared<mad::core::StateMachine>(
             std::shared_ptr<mad::core::ImmediateDispatcher>(level_dispatcher));
-    machine->add_state(std::make_shared<Idle>());
+    machine->add_state(std::make_shared<Idle>(world, hero_id));
     machine->add_state(std::make_shared<Run>(world, hero_id, Run::Direction::Right));
     machine->add_state(std::make_shared<Run>(world, hero_id, Run::Direction::Left));
     machine->add_state(std::make_shared<Jump>(world, hero_id));
