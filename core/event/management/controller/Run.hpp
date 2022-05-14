@@ -12,15 +12,15 @@ namespace mad::core {
             Right,
             Left,
         };
-        explicit Run(std::shared_ptr<mad::core::World> world, Entity::Id entity_id, Direction dir);
+        explicit Run(std::shared_ptr<mad::core::LocalWorld> world, Entity::Id entity_id, Direction dir);
 
         void control() override;
 
     private:
-        std::shared_ptr<mad::core::World> m_world;
+        std::shared_ptr<mad::core::LocalWorld> m_world;
         Entity::Id m_entity_id;
-        std::shared_ptr<int> key;
         Direction dir;
+        PhysicalEntity* m_entity;
 
     };
 
