@@ -44,6 +44,8 @@ namespace mad::core {
 
         void set_action(ImageStorage::TypeAction type_action);
 
+        void flip_over();
+
         void move(Vec2d move_delta);
 
         void appear(EventDispatcher &dispatcher) const;
@@ -60,6 +62,8 @@ namespace mad::core {
         std::shared_ptr<Image> m_current_image;
 
         std::shared_ptr<ImageStorage> m_image_storage;
+
+        bool m_is_reflect = false;
     };
 
 }

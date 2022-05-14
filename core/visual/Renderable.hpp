@@ -16,6 +16,8 @@ namespace mad::core {
         virtual void render(sf::RenderWindow &window) = 0;
 
         std::shared_ptr<bool> is_active;
+
+        std::shared_ptr<bool> is_reflect;
     };
 }
 
