@@ -1,11 +1,12 @@
 #include <database/driver/offline/OfflineClientStorageDriver.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
+#include <event/management/handler/GameRunnerEventsHandler.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>
 #include <event/management/handler/MainMenuEventsHandler.hpp>
-#include <event/management/handler/WindowCloseHandler.hpp>
 #include <event/management/handler/PauseMenuEventsHandler.hpp>
 #include <event/management/handler/AuthorizationMenuEventsHandler.hpp>
 #include <event/management/handler/GameRunnerEventsHandler.hpp>
+#include <event/management/handler/WindowCloseHandler.hpp>
 #include <event/management/producer/SystemListener.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <loader/LevelLoader.hpp>
@@ -16,18 +17,20 @@
 #include <world/LocalWorld.hpp>
 #include <world/entity/ViewableEntity.hpp>
 
+#include "event/management/controller/statemachine/StateMachine.hpp"
+#include "event/management/condition/TrueCondition.hpp"
+#include "event/system/KeyPressed.hpp"
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <spdlog/spdlog.h>
-#include "event/system/KeyPressed.hpp"
 
 
 class ArrowController : public mad::core::EventHandler {
 public:
     explicit ArrowController(std::shared_ptr<mad::core::World> world,
                              mad::core::Entity::Id entity_id)
-            : m_world(std::move(world)),
-              m_entity_id(entity_id) {}
+        : m_world(std::move(world)),
+          m_entity_id(entity_id) {}
 
     void handle(const mad::core::Event &event) override {
         SPDLOG_INFO("handle arrow event");
@@ -94,28 +97,46 @@ public:
                 0,
                 mad::core::Vec2d{0.0f, 0.0f},
                 0,
-                std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green())
-        );
+                std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()));
 
         mad::core::Entity::Id square_id_1 = world->create_physical_entity(
                 0,
                 mad::core::Vec2d{0.0f, 0.0f},
                 0,
                 std::make_shared<mad::core::StaticImage>("../../game/resources/static/brick.png", 50, 50,
-                                                         mad::core::StaticImage::TransformType::Tile)
-        );
+                                                         mad::core::StaticImage::TransformType::Tile));
 
         mad::core::Entity::Id square_id_2 = world->create_physical_entity(
                 0,
                 mad::core::Vec2d{200.0f, 200.0f},
                 0,
                 std::make_shared<mad::core::Square>(50.0f, mad::core::Color::Green()),
-                true
-        );
+                true);
 
-        camera->turn_on(*level_dispatcher);
+        camera->turn_on(*level_dispatcher, square_id_1);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, square_id_1));
+
+        ///State Machine
+        struct C1 : mad::core::Controller {
+            void control() override {
+                SPDLOG_DEBUG("controller 1");
+            };
+        };
+        struct C2 : mad::core::Controller {
+            void control() override {
+                SPDLOG_DEBUG("controller 2");
+            };
+        };
+        auto machine = std::make_shared<mad::core::StateMachine>(std::shared_ptr<mad::core::ImmediateDispatcher>(level_dispatcher));
+        machine->add_state(std::make_shared<C1>());
+        machine->add_state(std::make_shared<C2>());
+        auto debug_1 = std::make_shared<mad::core::TrueCondition>(); //TODO
+        auto debug2 = debug_1->triggers();
+        machine->add_transition(0, 1, debug_1);
+        //machine->add_transition(1, 0, std::make_shared<mad::core::TrueCondition>());
+        machine->set_initial_state(0);
+        std::vector<std::shared_ptr<mad::core::Controller>> v{machine};
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -123,8 +144,8 @@ public:
                 camera,
                 global_dispatcher,
                 level_dispatcher,
-                world
-        );
+                world,
+                v);
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
@@ -153,8 +174,8 @@ int main() {
     auto offline_storage_driver = std::make_shared<mad::core::OfflineClientStorageDriver>();
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<ExampleLevelLoader>()
-    };
+            std::make_shared<ExampleLevelLoader>()};
+
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(
             level_loaders,

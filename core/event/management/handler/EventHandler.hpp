@@ -16,7 +16,7 @@ namespace mad::core {
         virtual ~EventHandler() = default;
     };
 
-}
+}// namespace mad::core
 
 
-#endif //MAD_CORE_EVENT_MANAGEMENT_EVENTHANDLER_HPP
+#endif//MAD_CORE_EVENT_MANAGEMENT_EVENTHANDLER_HPP

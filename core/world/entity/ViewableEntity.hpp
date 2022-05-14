@@ -2,12 +2,14 @@
 #define MAD_VIEWABLEENTITY_HPP
 
 #include "Entity.hpp"
-#include "common/FVec2D.hpp"
-#include "common/Error.hpp"
-#include "visual/image/Image.hpp"
-#include "event/management/dispatcher/EventDispatcher.hpp"
-#include <visual/image/shape/Shape.hpp>
 
+#include <visual/image/Image.hpp>
+#include <event/management/dispatcher/EventDispatcher.hpp>
+#include <visual/image/shape/Shape.hpp>
+#include <visual/image/storage/ImageStorage.hpp>
+
+#include <common/FVec2D.hpp>
+#include <common/Error.hpp>
 
 #include <memory>
 
@@ -27,7 +29,8 @@ namespace mad::core {
         using Id = std::int32_t;
 
     public:
-        explicit ViewableEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image);
+        explicit ViewableEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation,
+                                std::shared_ptr<ImageStorage> image_storage);
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
@@ -38,6 +41,8 @@ namespace mad::core {
         void set_image_rotation(float new_rotation);
 
         void set_image_color(Color color);
+
+        void set_action(ImageStorage::TypeAction type_action);
 
         void move(Vec2d move_delta);
 
@@ -52,7 +57,9 @@ namespace mad::core {
 
         std::shared_ptr<float> m_rotation;
 
-        std::shared_ptr<Image> m_image;
+        std::shared_ptr<Image> m_current_image;
+
+        std::shared_ptr<ImageStorage> m_image_storage;
     };
 
 }

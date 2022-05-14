@@ -8,6 +8,8 @@ namespace mad::core {
                                        std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
                                        : m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
+        is_active = static_image->is_active;
+
         CHECK_THROW(m_texture.loadFromFile(
                 static_image->get_path()),
                     FileDoesNotExist, "File with StaticImage doesn't exist");
@@ -46,7 +48,7 @@ namespace mad::core {
 
         render_sprite.setPosition(m_position->get_x(), m_position->get_y());
 
-        render_sprite.setRotation(*m_rotation * 180 / M_PI);
+        render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
     }
