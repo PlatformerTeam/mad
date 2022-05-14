@@ -3,11 +3,13 @@
 
 
 #include <event/management/producer/EventProducer.hpp>
-#include <common/FVec2D.hpp>
 #include <world/entity/Entity.hpp>
+#include <visual/image/shape/Shape.hpp>
+#include <visual/image/storage/ImageStorage.hpp>
+
+#include <common/FVec2D.hpp>
 
 #include <memory>
-#include "visual/image/shape/Shape.hpp"
 
 namespace mad::core {
     class Filter;
@@ -26,11 +28,15 @@ namespace mad::core {
 
         bool manipulate_entity_id(Entity::Id entity_id, const Intent &intent);
 
+        [[nodiscard]] virtual Entity &get_entity(Entity::Id id) noexcept = 0;
+
         virtual Entity::Id create_viewable_entity(int z_ind,
                                                   Vec2d initial_position, float initial_rotation,
-                                                  std::shared_ptr<Image> image) = 0;
+                                                  std::shared_ptr<ImageStorage> image_storage) = 0;
 
-        virtual Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<Image> image, bool is_Fixed) = 0;
+        virtual Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation,
+                                                  std::shared_ptr<ImageStorage> image_storage,
+                                                  bool is_fixed, bool is_rotated) = 0;
     };
 
 }// namespace mad::core

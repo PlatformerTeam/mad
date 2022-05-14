@@ -7,11 +7,15 @@
 #include <imgui-SFML.h>
 #include <common/Error.hpp>
 
+#include <memory>
+
 namespace mad::core {
 
     class Renderable {
     public:
         virtual void render(sf::RenderWindow &window) = 0;
+
+        std::shared_ptr<bool> is_active;
     };
 }
 

@@ -17,7 +17,10 @@ set(
         event/system/WindowClose.hpp event/system/WindowClose.cpp
         event/system/KeyHeld.hpp event/system/KeyHeld.cpp
         event/system/LevelPause.hpp event/system/LevelPause.cpp
+        event/management/controller/Controller.hpp
+        event/management/controller/CameraController.cpp event/management/controller/CameraController.hpp
         event/management/condition/Condition.hpp
+        event/management/condition/TrueCondition.hpp
         event/management/dispatcher/EventDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.hpp
         event/management/dispatcher/ImmediateDispatcher.cpp
@@ -38,6 +41,10 @@ set(
         event/runner/RunnerEvent.hpp event/runner/RunnerEvent.cpp
         event/runner/GameRunnerEvent.hpp event/runner/GameRunnerEvent.cpp
         event/runner/LevelRunnerEvent.hpp event/runner/LevelRunnerEvent.cpp
+        event/management/controller/Controller.hpp
+        event/management/controller/statemachine/StateMachine.hpp
+        event/management/controller/statemachine/StateMachine.cpp
+        event/management/condition/Condition.hpp
 
         event/management/handler/CollisionHandler.hpp event/management/handler/CollisionHandler.cpp
         event/physics/Collision.hpp event/physics/Collision.cpp
@@ -66,18 +73,22 @@ set(
         runner/LevelRunner.hpp runner/LevelRunner.cpp
         runner/GameRunner.hpp runner/GameRunner.cpp
         loader/LevelLoader.hpp
+        loader/LevelLoaderFromFile.cpp loader/LevelLoaderFromFile.hpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
         visual/image/shape/square/RenderableSquare.cpp visual/image/shape/square/RenderableSquare.hpp
-        visual/image/animated/RenderableAnimated.cpp visual/image/animated/RenderableAnimated.hpp
+        visual/image/animated/RenderableAnimatedOneFile.cpp visual/image/animated/RenderableAnimatedOneFile.hpp
+        visual/image/animated/RenderableAnimatedSeveralFiles.cpp visual/image/animated/RenderableAnimatedSeveralFiles.hpp
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/square/Square.cpp visual/image/shape/square/Square.hpp
         visual/image/static/StaticImage.cpp visual/image/static/StaticImage.hpp
-        visual/image/animated/AnimatedImage.cpp visual/image/animated/AnimatedImage.hpp
+        visual/image/animated/AnimatedImageOneFile.cpp visual/image/animated/AnimatedImageOneFile.hpp
+        visual/image/animated/AnimatedImageSeveralFiles.cpp visual/image/animated/AnimatedImageSeveralFiles.hpp
+        visual/image/storage/ImageStorage.cpp visual/image/storage/ImageStorage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
-)
+        event/management/condition/TrueCondition.hpp event/management/condition/TrueCondition.cpp event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp event/WorldUpdate.hpp event/WorldUpdate.cpp)
 
 add_library(
         ${LIBRARY_CORE} STATIC
@@ -90,7 +101,7 @@ add_library(
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_definitions(${LIBRARY_CORE} PUBLIC SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
     message(STATUS "Enable debug logs for ${LIBRARY_CORE}")
-endif()
+endif ()
 
 target_include_directories(
         ${LIBRARY_CORE} PUBLIC
@@ -101,6 +112,7 @@ target_include_directories(
         ${INCLUDE_IMGUI}
         ${INCLUDE_IMGUI_SFML}
         ${INCLUDE_SPDLOG}
+        ${INCLUDE_JSON}
 )
 
 target_link_libraries(
@@ -110,4 +122,5 @@ target_link_libraries(
         ${LIBRARY_SPDLOG}
         ${LIBRARY_BOX2D}
         ${LIBRARY_OPENGL}
+        ${LIBRARY_JSON}
 )

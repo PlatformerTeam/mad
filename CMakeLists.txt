@@ -51,6 +51,14 @@ set(SOURCES_IMGUI
 message(STATUS "ImGui include: ${INCLUDE_IMGUI}")
 message(STATUS "ImGui sources: ${SOURCES_IMGUI}")
 
+
+# JSON parce library
+set(DIRECTORY_JSON ${PROJECT_SOURCE_DIR}/deps/json)
+set(INCLUDE_JSON ${DIRECTORY_JSON}/include)
+
+message(STATUS "JSON include: ${INCLUDE_JSON}")
+
+
 # ImGui-sfml library
 set(IMGUI_DIR ${DIRECTORY_IMGUI})
 set(DIRECTORY_IMGUI_SFML ${PROJECT_SOURCE_DIR}/deps/imgui-sfml)

@@ -3,13 +3,16 @@
 
 #include <box2d/box2d.h>
 
+#include <memory>
+
 namespace mad::core {
     class Image {
     public:
         enum class Type {
             Shape,
             Static,
-            Animated
+            AnimatedOneFile,
+            AnimatedSeveralFiles
         };
 
         explicit Image(Type new_type) : type(new_type) {
@@ -21,6 +24,7 @@ namespace mad::core {
 
         const Type type;
 
+        std::shared_ptr<bool> is_active = std::make_shared<bool>(false);
     };
 }
 

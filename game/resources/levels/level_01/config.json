@@ -1,0 +1,45 @@
+{
+  "name" : "level_01",
+  "animated_resources" : "../../game/resources/animated/",
+  "block" : 50.0,
+  "camera": {
+    "position" : {
+      "x" : 10.0,
+      "y" : 10.0
+    },
+    "angle": 15.0,
+    "smoothness": 0.6,
+    "zoom": 10.5
+  },
+  "texture" : {
+    "stable" : "brick.png",
+    "unstable" : "brick.png"
+  },
+  "hero" : {
+    "source" : "hero",
+    "animated" : {
+      "actions" : {
+        "idle" : {
+          "source": "idle",
+          "type": "several_files",
+          "width_scale": 3.1,
+          "height_scale": 2.0,
+          "delta_time": 100,
+          "size_width": 40,
+          "size_height": 40,
+          "count_files": 19
+        },
+        "run" : {
+          "source": "run",
+          "type": "several_files",
+          "width_scale": 3.1,
+          "height_scale": 2.0,
+          "delta_time": 100,
+          "size_width": 40,
+          "size_height": 40,
+          "count_files": 19
+        }
+      }
+    }
+  }
+}
