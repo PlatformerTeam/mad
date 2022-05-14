@@ -10,7 +10,8 @@
 
 namespace mad::core {
 
-    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path) {
+    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path),
+                                                                                  m_level_map(path / "map") {
         std::ifstream input_config(path / "config.json");
         CHECK_THROW(input_config, FileDoesNotExist, "Config file does not exist");
         CHECK_THROW(m_level_map, FileDoesNotExist, "Map file does not exist");
@@ -162,25 +163,23 @@ namespace mad::core {
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
                         {{ImageStorage::TypeAction::Idle,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["width_scale"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["height_scale"])
-                         },
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["width_scale"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["height_scale"])},
                          {ImageStorage::TypeAction::Run,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])
-                         }}
-                )
-        );
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])}}));
 
         hero_id = world->create_physical_entity(
                 0,

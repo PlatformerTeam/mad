@@ -17,7 +17,6 @@ namespace mad::core {
         Entity::Id hero_id;
         std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher;
         int last_pressed_key;
-        float horizontal_velocity = 81;
     };
 }// namespace mad::core
 
