@@ -93,3 +93,6 @@ mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(int z_ind, m
 mad::core::Entity &mad::core::LocalWorld::get_entity(mad::core::Entity::Id id) noexcept {
     return m_storage.get_entity(id);
 }
+mad::core::EntityStorage &mad::core::LocalWorld::get_storage() {
+    return m_storage;
+}
