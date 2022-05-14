@@ -13,6 +13,7 @@ void mad::core::Transition::handle(const mad::core::Event &event) {
     if (!is_active || m_state_machine->has_made_transition) return;
     if (m_condition->is_triggered_by(event)) {
         m_state_machine->has_made_transition = true;
+        m_state_machine->m_previous_state_id = m_state_machine->m_current_state_id;
         m_state_machine->m_current_state_id = next_state;
         SPDLOG_DEBUG("current state {}", m_state_machine->m_current_state_id);
         for (auto &i : m_state_machine->m_transitions[current_state]) {
@@ -41,6 +42,7 @@ mad::core::StateMachine::StateId mad::core::StateMachine::add_state(const std::s
 }
 void mad::core::StateMachine::set_initial_state(mad::core::StateMachine::StateId state_id) {
     m_current_state_id = state_id;
+    m_previous_state_id = state_id;
     for (auto &i : m_transitions[state_id]) {
         i->is_active = true;
     }
@@ -51,4 +53,7 @@ void mad::core::StateMachine::add_transition(mad::core::StateMachine::StateId st
     m_dispatcher->registry(transition);
 }
 mad::core::StateMachine::StateMachine(std::shared_ptr<mad::core::ImmediateDispatcher> m_dispatcher) : m_dispatcher(std::move(m_dispatcher)){
+}
+mad::core::StateMachine::StateId mad::core::StateMachine::get_previous_state_id() {
+    return m_previous_state_id;
 }

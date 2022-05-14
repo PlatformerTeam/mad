@@ -115,6 +115,10 @@ namespace mad::core {
 
         std::ifstream m_level_map;
 
+        std::vector<std::shared_ptr<mad::core::Controller>> controllers;
+
+        std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher;
+
         std::unordered_map<char, Objects> m_objects = {
                 {'.', Objects::Empty},
                 {'#', Objects::StableBlock},
