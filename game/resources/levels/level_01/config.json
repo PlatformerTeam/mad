@@ -35,8 +35,8 @@
           "width_scale": 3.1,
           "height_scale": 2.0,
           "delta_time": 100,
-          "size_width": 100,
-          "size_height": 100,
+          "size_width": 40,
+          "size_height": 40,
           "count_files": 19
         }
       }
