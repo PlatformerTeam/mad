@@ -166,6 +166,16 @@ namespace mad::core {
                                       m_config_json["hero"]["animated"]["size_height"],
                                       m_config_json["hero"]["animated"]["width_scale"],
                                       m_config_json["hero"]["animated"]["height_scale"])
+                             },
+                             {ImageStorage::TypeAction::Run,
+                              std::make_shared<AnimatedImageSeveralFiles>(
+                                      source,
+                                      m_config_json["hero"]["animated"]["count_files"],
+                                      m_config_json["hero"]["animated"]["delta_time"],
+                                      m_config_json["hero"]["animated"]["size_width"],
+                                      m_config_json["hero"]["animated"]["size_height"],
+                                      7.0f,
+                                      0.2f)
                              }}));
         } else {
             image_storage = std::make_shared<ImageStorage>(

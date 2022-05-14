@@ -55,7 +55,9 @@ mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,
       m_z_ind(z_ind),
       m_position(std::make_shared<Vec2d>(initial_position)),
       m_rotation(std::make_shared<float>(initial_rotation)),
-      m_image_storage(std::move(image_storage)),
-      m_current_image(image_storage->get_action(ImageStorage::TypeAction::Idle)) {
+      m_current_image(image_storage->get_action(ImageStorage::TypeAction::Idle)),
+      m_image_storage(std::move(image_storage)) {
+
+    *m_current_image->is_active = true;
 }
 

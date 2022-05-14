@@ -18,7 +18,9 @@ namespace mad::core {
     void Camera::render(sf::RenderWindow &window) {
         window.setView(m_view);
         for (auto &[z_ind, renderable_image] : m_scene_list) {
-            renderable_image->render(window);
+            if (*renderable_image->is_active) {
+                renderable_image->render(window);
+            }
         }
     }
 

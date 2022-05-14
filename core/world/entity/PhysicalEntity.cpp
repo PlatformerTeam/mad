@@ -7,7 +7,7 @@
 
 #include <utility>
 
-mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation,std::shared_ptr<ImageStorage> image_storage,
+mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
                                           b2World &physicalWorld, bool is_fixed, bool is_rotated)
     : ViewableEntity(id, z_ind, initial_position, initial_rotation, image_storage) {
 
@@ -98,6 +98,7 @@ void mad::core::PhysicalEntity::apply_force(mad::core::Vec2d force, mad::core::V
 }
 void mad::core::PhysicalEntity::set_linear_damping(float linear_damping, mad::core::EventDispatcher &dispatcher) {
     body->SetLinearDamping(linear_damping);
+    set_action(ImageStorage::TypeAction::Run);
 }
 void mad::core::PhysicalEntity::set_angular_damping(float angular_damping, mad::core::EventDispatcher &dispatcher) {
     body->SetAngularDamping(angular_damping);
