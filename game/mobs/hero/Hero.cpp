@@ -39,36 +39,6 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
                               m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
                               m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
                               m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])
-                     },
-                     {ImageStorage::TypeAction::Jump,
-                      std::make_shared<AnimatedImageSeveralFiles>(
-                              source / m_config_json["hero"]["animated"]["actions"]["jump"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["count_files"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["delta_time"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["size_width"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["size_height"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["width_scale"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["height_scale"])
-                     },
-                     {ImageStorage::TypeAction::Fly_up,
-                      std::make_shared<AnimatedImageSeveralFiles>(
-                              source / m_config_json["hero"]["animated"]["actions"]["fly_up"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["count_files"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["delta_time"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["size_width"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["size_height"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["width_scale"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["height_scale"])
-                     },
-                     {ImageStorage::TypeAction::Fall,
-                      std::make_shared<AnimatedImageSeveralFiles>(
-                              source / m_config_json["hero"]["animated"]["actions"]["fall"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["count_files"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["delta_time"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["size_width"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["size_height"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["width_scale"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["height_scale"])
                      }}
                     )
     );
@@ -95,21 +65,10 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     };
     auto machine = std::make_shared<mad::core::StateMachine>(
             std::shared_ptr<mad::core::ImmediateDispatcher>(level_dispatcher));
-    machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Idle));
-    machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
-    machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Left, horizontal_velocity));
-    machine->add_state(std::make_shared<JumpImpulse>(world, hero_id));
-    machine->add_state(std::make_shared<StartJump>(world, hero_id, Movement::Direction::Left, horizontal_velocity));
-    machine->add_state(std::make_shared<StartJump>(world, hero_id, Movement::Direction::Idle, horizontal_velocity));
-    machine->add_state(std::make_shared<StartJump>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
-    machine->add_state(std::make_shared<FlyUp>(world, hero_id, Movement::Direction::Left, horizontal_velocity)); /// 7
-    machine->add_state(std::make_shared<FlyUp>(world, hero_id, Movement::Direction::Idle, horizontal_velocity));
-    machine->add_state(std::make_shared<FlyUp>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
-    machine->add_state(std::make_shared<Fall>(world, hero_id, Movement::Direction::Left, horizontal_velocity)); /// 10
-    machine->add_state(std::make_shared<Fall>(world, hero_id, Movement::Direction::Idle, horizontal_velocity));
-    machine->add_state(std::make_shared<Fall>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
-
-
+    machine->add_state(std::make_shared<Idle>());
+    machine->add_state(std::make_shared<Run>(world, hero_id, Run::Direction::Right));
+    machine->add_state(std::make_shared<Run>(world, hero_id, Run::Direction::Left));
+    machine->add_state(std::make_shared<Jump>(world, hero_id));
     machine->add_transition(0, 1, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
     machine->add_transition(0, 2, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
     machine->add_transition(1, 0, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
@@ -119,43 +78,9 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_transition(0, 3, std::make_shared<mad::core::KeyPressedCondition>(sf::Keyboard::Space));
     machine->add_transition(1, 3, std::make_shared<mad::core::KeyPressedCondition>(sf::Keyboard::Space));
     machine->add_transition(2, 3, std::make_shared<mad::core::KeyPressedCondition>(sf::Keyboard::Space));
-
-    machine->add_transition(3, 5, std::make_shared<TrueCondition>());
-    machine->add_transition(5, 4, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
-    machine->add_transition(5, 6, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
-    machine->add_transition(4, 5, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
-    machine->add_transition(6, 5, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
-
-    float t = 1;
-
-    machine->add_transition(4, 8, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(5, 8, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(6, 8, std::make_shared<mad::core::TimerCondition>(t));
-
-    machine->add_transition(8, 7, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
-    machine->add_transition(8, 9, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
-    machine->add_transition(7, 8, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
-    machine->add_transition(9, 8, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
-
-    machine->add_transition(7, 11, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(8, 11, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(9, 11, std::make_shared<mad::core::TimerCondition>(t));
-
-    machine->add_transition(11, 10, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
-    machine->add_transition(11, 12, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
-    machine->add_transition(10, 11, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
-    machine->add_transition(12, 11, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
-
-    machine->add_transition(10, 0, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(11, 0, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(12, 0, std::make_shared<mad::core::TimerCondition>(t));
-
-
-
-
-
-
-
+    machine->add_transition(3, 0, std::make_shared<mad::core::LastStateCondition>(machine, 0));
+    machine->add_transition(3, 1, std::make_shared<mad::core::LastStateCondition>(machine, 1));
+    machine->add_transition(3, 2, std::make_shared<mad::core::LastStateCondition>(machine, 2));
     machine->set_initial_state(0);
     controllers.push_back(machine);
 }
