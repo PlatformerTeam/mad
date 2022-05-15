@@ -38,11 +38,6 @@ namespace mad::core {
     }
 
     void RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){
-        if (m_clock.getElapsedTime().asMilliseconds() >= m_delta_time) {
-            update_frame();
-            m_clock.restart();
-        }
-
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_textures[m_current_frame]);
 
@@ -61,6 +56,11 @@ namespace mad::core {
         render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
+
+        if (m_clock.getElapsedTime().asMilliseconds() >= m_delta_time) {
+            update_frame();
+            m_clock.restart();
+        }
     }
 
     void RenderableAnimatedSeveralFiles::update_frame() {
