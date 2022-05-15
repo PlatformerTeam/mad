@@ -22,7 +22,7 @@ namespace mad::core {
             m_textures.push_back(texture);
         }
 
-        std::reverse(m_textures.begin(), m_textures.end());
+        //std::reverse(m_textures.begin(), m_textures.end());
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
 

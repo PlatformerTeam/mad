@@ -13,9 +13,11 @@ void mad::core::Movement::control() {
     if(dir == Direction::Right || dir == Direction::Left){
         m_entity->set_action(Move_animation);
         if(dir == Direction::Right){
+            m_entity->flip_over(Image::Orientation::Right);
             m_world->manipulate_entity_id(m_entity_id, set_horizontal_velocity(velocity));
         }
         else if(dir == Direction::Left){
+            m_entity->flip_over(Image::Orientation::Left);
             m_world->manipulate_entity_id(m_entity_id, set_horizontal_velocity(-velocity));
         }
     }
