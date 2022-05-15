@@ -12,19 +12,18 @@ namespace mad::core {
               m_height_scale(animated_image->get_height_scale()) {
 
         is_active = animated_image->is_active;
+        is_reflect = animated_image->is_reflect;
 
         m_textures.reserve(animated_image->get_count_sprites());
 
         for (const auto &file : std::filesystem::directory_iterator{animated_image->get_path()}) {
             sf::Texture texture;
-            std::cout << file.path() << '\n';
             CHECK_THROW(texture.loadFromFile(file.path()),
                     FileDoesNotExist, "File with StaticImage doesn't exist");
             m_textures.push_back(texture);
         }
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
-        std::cout << texture_width << "\n";
 
         m_scale = {animated_image->get_sprite_width() / static_cast<float>(texture_width) * m_width_scale,
                    animated_image->get_sprite_height() / static_cast<float>(texture_height) * m_height_scale};
@@ -39,8 +38,11 @@ namespace mad::core {
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_textures[m_current_frame]);
 
-        render_sprite.setScale(m_scale);
+        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
+            m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
+        }
 
+        render_sprite.setScale(m_scale);
 
         render_sprite.setOrigin(render_sprite.getLocalBounds().width / 2,
                                 render_sprite.getLocalBounds().height / 2);

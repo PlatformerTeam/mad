@@ -12,6 +12,7 @@ namespace mad::core {
       m_height_scale(animated_image->get_height_scale()) {
 
         is_active = animated_image->is_active;
+        is_reflect = animated_image->is_reflect;
 
         CHECK_THROW(m_texture.loadFromFile(
                             animated_image->get_path()),
@@ -29,6 +30,10 @@ namespace mad::core {
     void RenderableAnimatedOneFile::render(sf::RenderWindow &window){
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_texture);
+
+        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
+            m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
+        }
 
         render_sprite.setScale(m_scale);
 
