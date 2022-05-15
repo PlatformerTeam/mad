@@ -80,7 +80,7 @@ message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")
 # PostgreSQL library
 set(DIRECTORY_PQXX ${PROJECT_SOURCE_DIR}/deps/libpqxx)
 set(INCLUDE_PQXX ${DIRECTORY_PQXX}/include)
-set(LIBRARY_PQXX pqxx pq)
+set(LIBRARY_PQXX pqxx)
 
 add_subdirectory(${DIRECTORY_PQXX})
 message(STATUS "PostgreSQL include: ${INCLUDE_PQXX}")
