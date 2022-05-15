@@ -23,7 +23,6 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
                     {{ImageStorage::TypeAction::Idle,
                       std::make_shared<AnimatedImageSeveralFiles>(
                               source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["idle"]["count_files"],
                               m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
                               m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
                               m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
@@ -33,7 +32,6 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
                      {ImageStorage::TypeAction::Run,
                       std::make_shared<AnimatedImageSeveralFiles>(
                               source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["run"]["count_files"],
                               m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
                               m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
                               m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
@@ -43,7 +41,6 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
                      {ImageStorage::TypeAction::Jump,
                       std::make_shared<AnimatedImageSeveralFiles>(
                               source / m_config_json["hero"]["animated"]["actions"]["jump"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["jump"]["count_files"],
                               m_config_json["hero"]["animated"]["actions"]["jump"]["delta_time"],
                               m_config_json["hero"]["animated"]["actions"]["jump"]["size_width"],
                               m_config_json["hero"]["animated"]["actions"]["jump"]["size_height"],
@@ -53,7 +50,6 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
                      {ImageStorage::TypeAction::Fly_up,
                       std::make_shared<AnimatedImageSeveralFiles>(
                               source / m_config_json["hero"]["animated"]["actions"]["fly_up"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["fly_up"]["count_files"],
                               m_config_json["hero"]["animated"]["actions"]["fly_up"]["delta_time"],
                               m_config_json["hero"]["animated"]["actions"]["fly_up"]["size_width"],
                               m_config_json["hero"]["animated"]["actions"]["fly_up"]["size_height"],
@@ -63,7 +59,6 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
                      {ImageStorage::TypeAction::Fall,
                       std::make_shared<AnimatedImageSeveralFiles>(
                               source / m_config_json["hero"]["animated"]["actions"]["fall"]["source"],
-                              m_config_json["hero"]["animated"]["actions"]["fall"]["count_files"],
                               m_config_json["hero"]["animated"]["actions"]["fall"]["delta_time"],
                               m_config_json["hero"]["animated"]["actions"]["fall"]["size_width"],
                               m_config_json["hero"]["animated"]["actions"]["fall"]["size_height"],
@@ -126,7 +121,7 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_transition(4, 5, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
     machine->add_transition(6, 5, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
 
-    float t = 1;
+    float t = 2;
 
     machine->add_transition(4, 8, std::make_shared<mad::core::TimerCondition>(t));
     machine->add_transition(5, 8, std::make_shared<mad::core::TimerCondition>(t));

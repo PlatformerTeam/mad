@@ -44,7 +44,7 @@
           "type": "several_files",
           "width_scale": 1,
           "height_scale": 1,
-          "delta_time": 250,
+          "delta_time": 500,
           "size_width": 100,
           "size_height": 74,
           "count_files": 4
