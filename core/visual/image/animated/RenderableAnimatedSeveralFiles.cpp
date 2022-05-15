@@ -7,7 +7,7 @@
 namespace mad::core {
 
     RenderableAnimatedSeveralFiles::RenderableAnimatedSeveralFiles(const std::shared_ptr<AnimatedImageSeveralFiles> &animated_image,
-                                                         std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
+                                                                   std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
             : m_delta_time(animated_image->get_delta_time()),
               m_position(std::move(position)), m_rotation(std::move(rotation)),
               m_width_scale(animated_image->get_width_scale()),
