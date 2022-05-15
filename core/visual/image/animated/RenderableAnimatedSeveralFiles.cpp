@@ -1,6 +1,7 @@
 #include "RenderableAnimatedSeveralFiles.hpp"
 
 #include <utility>
+#include <algorithm>
 
 namespace mad::core {
 
@@ -12,9 +13,7 @@ namespace mad::core {
               m_height_scale(animated_image->get_height_scale()) {
 
         is_active = animated_image->is_active;
-        is_reflect = animated_image->is_reflect;
-
-        m_textures.reserve(animated_image->get_count_sprites());
+        m_orientation = animated_image->m_orientation;
 
         for (const auto &file : std::filesystem::directory_iterator{animated_image->get_path()}) {
             sf::Texture texture;
@@ -22,6 +21,8 @@ namespace mad::core {
                     FileDoesNotExist, "File with StaticImage doesn't exist");
             m_textures.push_back(texture);
         }
+
+        std::reverse(m_textures.begin(), m_textures.end());
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
 
@@ -38,7 +39,8 @@ namespace mad::core {
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_textures[m_current_frame]);
 
-        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
+        if (*m_orientation == Image::Orientation::Left && m_scale.get_x() > 0 ||
+            *m_orientation == Image::Orientation::Right && m_scale.get_x() < 0) {
             m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
         }
 

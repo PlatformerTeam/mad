@@ -162,7 +162,6 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                                  std::make_shared<AnimatedImageSeveralFiles>(
                                          source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["count_files"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
@@ -172,7 +171,6 @@ namespace mad::core {
                          {ImageStorage::TypeAction::Run,
                                  std::make_shared<AnimatedImageSeveralFiles>(
                                          source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["count_files"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],

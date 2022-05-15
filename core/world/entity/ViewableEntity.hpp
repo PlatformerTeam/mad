@@ -44,7 +44,7 @@ namespace mad::core {
 
         void set_action(ImageStorage::TypeAction type_action);
 
-        void flip_over();
+        void flip_over(Image::Orientation orientation);
 
         void move(Vec2d move_delta);
 
@@ -63,7 +63,7 @@ namespace mad::core {
 
         std::shared_ptr<ImageStorage> m_image_storage;
 
-        bool m_is_reflect = false;
+        Image::Orientation m_orientation = Image::Orientation::Right;
     };
 
 }

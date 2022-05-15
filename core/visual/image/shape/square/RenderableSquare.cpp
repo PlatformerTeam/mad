@@ -8,7 +8,6 @@ mad::core::RenderableSquare::RenderableSquare(std::shared_ptr<Shape> shape,
                                               m_position(std::move(position)),
                                               m_rotation(std::move(rotation)) {
     is_active = shape->is_active;
-    is_reflect = shape->is_reflect;
 }
 
 void mad::core::RenderableSquare::render(sf::RenderWindow &window) {

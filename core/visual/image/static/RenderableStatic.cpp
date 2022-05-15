@@ -9,7 +9,7 @@ namespace mad::core {
                                        : m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
         is_active = static_image->is_active;
-        is_reflect = static_image->is_reflect;
+        m_orientation = static_image->m_orientation;
 
         CHECK_THROW(m_texture.loadFromFile(
                 static_image->get_path()),
@@ -38,7 +38,8 @@ namespace mad::core {
 
         render_sprite.setTexture(m_texture);
 
-        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
+        if (*m_orientation == Image::Orientation::Left && m_scale.get_x() > 0 ||
+            *m_orientation == Image::Orientation::Right && m_scale.get_x() < 0) {
             m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
         }
 

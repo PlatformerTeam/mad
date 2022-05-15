@@ -12,7 +12,7 @@ namespace mad::core {
       m_height_scale(animated_image->get_height_scale()) {
 
         is_active = animated_image->is_active;
-        is_reflect = animated_image->is_reflect;
+        m_orientation = animated_image->m_orientation;
 
         CHECK_THROW(m_texture.loadFromFile(
                             animated_image->get_path()),
@@ -31,7 +31,8 @@ namespace mad::core {
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_texture);
 
-        if (*is_reflect && m_scale.get_x() > 0 || !*is_reflect && m_scale.get_x() < 0) {
+        if (*m_orientation == Image::Orientation::Left && m_scale.get_x() > 0 ||
+            *m_orientation == Image::Orientation::Right && m_scale.get_x() < 0) {
             m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
         }
 
