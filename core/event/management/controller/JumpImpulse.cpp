@@ -1,8 +1,8 @@
-#include "Jump.hpp"
+#include "JumpImpulse.hpp"
 #include "world/intent/LambdaIntent.hpp"
-mad::core::Jump::Jump(std::shared_ptr<mad::core::World> world, Entity::Id entity_id) : m_world(world), m_entity_id(entity_id) {
+mad::core::JumpImpulse::JumpImpulse(std::shared_ptr<mad::core::World> world, Entity::Id entity_id) : m_world(world), m_entity_id(entity_id) {
 }
-void mad::core::Jump::control() {
+void mad::core::JumpImpulse::control() {
 
     auto impulse = [](mad::core::Vec2d dir) {
         return mad::core::LambdaIntent(
@@ -11,5 +11,5 @@ void mad::core::Jump::control() {
                 });
     };
 
-    m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, -200000.0f}));
+    m_world->manipulate_entity_id(m_entity_id, impulse(mad::core::Vec2d{0.0f, -2000000.0f}));
 }
