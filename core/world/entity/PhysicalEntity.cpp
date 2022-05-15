@@ -37,8 +37,10 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
-        fixtureDef.restitution = 0.2f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+        body->SetLinearDamping(0.0000000001);
+        body->SetAngularDamping(0);
 
         body->CreateFixture(&fixtureDef);
         body->SetTransform(body->GetPosition(), initial_rotation);
@@ -69,6 +71,10 @@ void mad::core::PhysicalEntity::apply_force_to_center(mad::core::Vec2d force, ma
 void mad::core::PhysicalEntity::set_linear_velocity(mad::core::Vec2d velocity, mad::core::EventDispatcher &dispatcher) {
     body->SetLinearVelocity(velocity);
 }
+void mad::core::PhysicalEntity::set_linear_horizontal_velocity(float velocity, mad::core::EventDispatcher &dispatcher) {
+    body->SetLinearVelocity({velocity, body->GetLinearVelocity().y});
+}
+
 void mad::core::PhysicalEntity::apply_angular_impulse(float impulse, mad::core::EventDispatcher &dispatcher, bool awake) {
     body->ApplyAngularImpulse(impulse, awake);
 }

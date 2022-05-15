@@ -13,7 +13,10 @@ namespace mad::core {
         enum class TypeAction {
             Idle,
             Run,
-            Attack
+            Attack,
+            Jump,
+            Fly_up,
+            Fall,
         };
 
         explicit ImageStorage(std::unordered_map<TypeAction, std::shared_ptr<Image>> actions);
