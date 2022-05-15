@@ -2,6 +2,7 @@
 #define MAD_CORE_VISUAL_RENDERABLE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <visual/image/Image.hpp>
 
 #include <imgui.h>
 #include <imgui-SFML.h>
@@ -17,7 +18,7 @@ namespace mad::core {
 
         std::shared_ptr<bool> is_active;
 
-        std::shared_ptr<bool> is_reflect;
+        std::shared_ptr<Image::Orientation> m_orientation;
     };
 }
 
