@@ -1,7 +1,7 @@
 {
   "name" : "level_01",
   "animated_resources" : "../../game/resources/animated/",
-  "block" : 50.0,
+  "block" : 10.0,
   "camera": {
     "position" : {
       "x" : 10.0,
