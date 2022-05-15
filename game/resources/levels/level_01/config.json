@@ -20,24 +20,54 @@
     "animated" : {
       "actions" : {
         "idle" : {
-          "source": "idle",
+          "source": "hero_idle",
           "type": "several_files",
-          "width_scale": 3.1,
-          "height_scale": 2.0,
+          "width_scale": 1,
+          "height_scale": 1,
           "delta_time": 100,
-          "size_width": 40,
-          "size_height": 40,
-          "count_files": 19
+          "size_width": 100,
+          "size_height": 74,
+          "count_files": 4
         },
         "run" : {
-          "source": "run",
+          "source": "hero_run",
           "type": "several_files",
-          "width_scale": 3.1,
-          "height_scale": 2.0,
+          "width_scale": 1,
+          "height_scale": 1,
           "delta_time": 100,
-          "size_width": 40,
-          "size_height": 40,
-          "count_files": 19
+          "size_width": 100,
+          "size_height": 74,
+          "count_files": 6
+        },
+        "jump" : {
+          "source": "hero_jump",
+          "type": "several_files",
+          "width_scale": 1,
+          "height_scale": 1,
+          "delta_time": 250,
+          "size_width": 100,
+          "size_height": 74,
+          "count_files": 4
+        },
+        "fly_up" : {
+          "source": "hero_fly_up",
+          "type": "several_files",
+          "width_scale": 1,
+          "height_scale": 1,
+          "delta_time": 100,
+          "size_width": 100,
+          "size_height": 74,
+          "count_files": 1
+        },
+        "fall" : {
+          "source": "hero_fall",
+          "type": "several_files",
+          "width_scale": 1,
+          "height_scale": 1,
+          "delta_time": 100,
+          "size_width": 100,
+          "size_height": 74,
+          "count_files": 2
         }
       }
     }
