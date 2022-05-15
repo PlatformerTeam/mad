@@ -77,6 +77,15 @@ add_subdirectory(${DIRECTORY_SPDLOG})
 message(STATUS "Spdlog include: ${INCLUDE_SPDLOG}")
 message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")
 
+# PostgreSQL library
+set(DIRECTORY_PQXX ${PROJECT_SOURCE_DIR}/deps/libpqxx)
+set(INCLUDE_PQXX ${DIRECTORY_PQXX}/include)
+set(LIBRARY_PQXX pqxx pq)
+
+add_subdirectory(${DIRECTORY_PQXX})
+message(STATUS "PostgreSQL include: ${INCLUDE_PQXX}")
+message(STATUS "PostgreSQL library: ${LIBRARY_PQXX}")
+
 # Core library
 set(DIRECTORY_CORE ${PROJECT_SOURCE_DIR}/core)
 set(INCLUDE_CORE ${DIRECTORY_CORE})

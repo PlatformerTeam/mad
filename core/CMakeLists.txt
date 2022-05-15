@@ -6,6 +6,7 @@ set(
         common/Color.cpp common/Color.hpp
         common/Cast.hpp
 
+        database/database/Database.hpp database/database/Database.cpp
         database/driver/ClientStorageDriver.hpp
         database/driver/offline/OfflineClientStorageDriver.hpp database/driver/offline/OfflineClientStorageDriver.cpp
 
@@ -113,6 +114,7 @@ target_include_directories(
         ${INCLUDE_IMGUI_SFML}
         ${INCLUDE_SPDLOG}
         ${INCLUDE_JSON}
+        ${INCLUDE_PQXX}
 )
 
 target_link_libraries(
@@ -123,4 +125,5 @@ target_link_libraries(
         ${LIBRARY_BOX2D}
         ${LIBRARY_OPENGL}
         ${LIBRARY_JSON}
+        ${LIBRARY_PQXX}
 )

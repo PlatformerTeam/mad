@@ -17,6 +17,7 @@ function(test_executable EXECUTABLE_TEST_NAME EXECUTABLE_SOURCES)
             ${INCLUDE_BOX2D}
             ${INCLUDE_IMGUI}
             ${INCLUDE_IMGUI_SFML}
+            ${INCLUDE_PQXX}
     )
 
     target_link_libraries(
@@ -28,6 +29,7 @@ function(test_executable EXECUTABLE_TEST_NAME EXECUTABLE_SOURCES)
             ${LIBRARY_SPDLOG}
             ${LIBRARY_BOX2D}
             ${LIBRARY_OPENGL}
+            ${LIBRARY_PQXX}
     )
 endfunction()
 
