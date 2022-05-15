@@ -7,7 +7,7 @@
 namespace mad::core {
 
     RenderableAnimatedSeveralFiles::RenderableAnimatedSeveralFiles(const std::shared_ptr<AnimatedImageSeveralFiles> &animated_image,
-                                                         std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
+                                                                   std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
             : m_delta_time(animated_image->get_delta_time()),
               m_position(std::move(position)), m_rotation(std::move(rotation)),
               m_width_scale(animated_image->get_width_scale()),
@@ -29,6 +29,8 @@ namespace mad::core {
             m_textures.push_back(texture);
         }
 
+        m_current_frame = m_textures.size();
+
         //std::reverse(m_textures.begin(), m_textures.end());
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
@@ -38,8 +40,8 @@ namespace mad::core {
     }
 
     void RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){
-        if (m_clock.getElapsedTime().asMilliseconds() >= m_delta_time) {
-            update_frame();
+        if (m_current_frame == m_textures.size()) {
+            m_current_frame = 0;
             m_clock.restart();
         }
 
@@ -61,13 +63,15 @@ namespace mad::core {
         render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
+
+        if (m_clock.getElapsedTime().asMilliseconds() >= m_delta_time) {
+            update_frame();
+            m_clock.restart();
+        }
     }
 
     void RenderableAnimatedSeveralFiles::update_frame() {
         m_current_frame += 1;
-        if (m_current_frame == m_textures.size()) {
-            m_current_frame = 0;
-        }
     }
 
 }
