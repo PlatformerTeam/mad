@@ -45,6 +45,7 @@ namespace mad::core {
         void apply_angular_impulse(float impulse, EventDispatcher &dispatcher, bool awake = true);
         void apply_torque(float torque, EventDispatcher &dispatcher, bool awake = true);
         void set_linear_velocity(Vec2d velocity, EventDispatcher &dispatcher);
+        void set_linear_horizontal_velocity(float velocity, EventDispatcher &dispatcher);
         void set_angular_velocity(float velocity, EventDispatcher &dispatcher);
         void set_linear_damping(float linear_damping, EventDispatcher &dispatcher);
         void set_angular_damping(float angular_damping, EventDispatcher &dispatcher);

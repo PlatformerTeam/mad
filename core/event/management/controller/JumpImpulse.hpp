@@ -1,15 +1,15 @@
-#ifndef MAD_JUMP_HPP
-#define MAD_JUMP_HPP
+#ifndef MAD_JUMPIMPULSE_HPP
+#define MAD_JUMPIMPULSE_HPP
 
 #include "Controller.hpp"
 #include "world/LocalWorld.hpp"
 #include "world/World.hpp"
 namespace mad::core {
 
-    class Jump : public Controller {
+    class JumpImpulse : public Controller {
     public:
 
-        explicit Jump(std::shared_ptr<mad::core::World> world, Entity::Id entity_id);
+        explicit JumpImpulse(std::shared_ptr<mad::core::World> world, Entity::Id entity_id);
 
         void control() override;
 
@@ -22,4 +22,4 @@ namespace mad::core {
 
 }
 
-#endif//MAD_JUMP_HPP
+#endif//MAD_JUMPIMPULSE_HPP
