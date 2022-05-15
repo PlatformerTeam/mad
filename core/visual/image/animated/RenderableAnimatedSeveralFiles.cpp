@@ -39,7 +39,9 @@ namespace mad::core {
                    animated_image->get_sprite_height() / static_cast<float>(texture_height) * m_height_scale};
     }
 
-    void RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){
+    bool RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){
+        bool is_render_all = false;
+
         if (m_current_frame == m_textures.size()) {
             m_current_frame = 0;
             m_clock.restart();
@@ -68,6 +70,12 @@ namespace mad::core {
             update_frame();
             m_clock.restart();
         }
+
+        if (m_current_frame == m_textures.size()) {
+            is_render_all = true;
+        }
+
+        return is_render_all;
     }
 
     void RenderableAnimatedSeveralFiles::update_frame() {

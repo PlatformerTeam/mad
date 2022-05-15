@@ -10,7 +10,7 @@ namespace mad::core {
     public:
         explicit PauseMenu();
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
     };
 
 }
