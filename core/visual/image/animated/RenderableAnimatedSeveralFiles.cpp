@@ -14,8 +14,6 @@ namespace mad::core {
         is_active = animated_image->is_active;
         m_orientation = animated_image->m_orientation;
 
-        m_textures.reserve(animated_image->get_count_sprites());
-
         for (const auto &file : std::filesystem::directory_iterator{animated_image->get_path()}) {
             sf::Texture texture;
             CHECK_THROW(texture.loadFromFile(file.path()),
