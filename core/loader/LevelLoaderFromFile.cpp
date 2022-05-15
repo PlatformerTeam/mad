@@ -9,8 +9,7 @@
 
 namespace mad::core {
 
-    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path),
-                                                                                  m_level_map(path / "map") {
+    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path) {
         std::ifstream input_config(path / "config.json");
         CHECK_THROW(input_config, FileDoesNotExist, "Config file does not exist");
         CHECK_THROW(m_level_map, FileDoesNotExist, "Map file does not exist");
@@ -76,6 +75,7 @@ namespace mad::core {
     }
 
     Entity::Id LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
+        m_level_map = std::ifstream(m_level_directory / "map");
         float object_size = m_config_json["block"];
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
