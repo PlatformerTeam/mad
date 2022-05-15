@@ -6,6 +6,8 @@ set(
         common/Color.cpp common/Color.hpp
         common/Cast.hpp
 
+        details/RenderableWithId.hpp
+
         event/Event.cpp
         event/action/EndOfRenderAction.cpp event/action/EndOfRenderAction.hpp
         event/visual/VisualEvent.cpp event/visual/VisualEvent.hpp

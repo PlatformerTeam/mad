@@ -15,13 +15,21 @@ namespace mad::core {
         m_world->manipulate(TrueFilter(), LambdaIntent(start_appearance));
     }
 
-    void Camera::render(sf::RenderWindow &window) {
+    bool Camera::render(sf::RenderWindow &window) {
+        auto end_of_render = [](Entity &entity, EventDispatcher &event_dispatcher) {
+            const_cast_to<ViewableEntity>(entity).end_of_render_action(event_dispatcher);
+        };
         window.setView(m_view);
-        for (auto &[z_ind, renderable_image] : m_scene_list) {
+        for (auto &[z_ind, renderable_with_id] : m_scene_list) {
+            auto renderable_image = renderable_with_id.m_renderable;
+            Entity::Id entity_id = renderable_with_id.m_entity_id;
             if (*renderable_image->is_active) {
-                renderable_image->render(window);
+                if (renderable_image->render(window)) {
+                    m_world->manipulate(IdFilter(entity_id), LambdaIntent(end_of_render));
+                }
             }
         }
+        return true;
     }
 
     void Camera::handle(const Event &event) {
@@ -41,7 +49,9 @@ namespace mad::core {
                                                                positional_appearance.get_position(),
                                                                positional_appearance.get_rotation());
                             insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                                        std::make_shared<RenderableSquare>(renderable_square)});
+                                                        RenderableWithId(std::make_shared<RenderableSquare>(renderable_square),
+                                                                         positional_appearance.get_entity_id())
+                            });
                             break;
                     }
                     break;
@@ -52,7 +62,9 @@ namespace mad::core {
                                                        positional_appearance.get_position(),
                                                        positional_appearance.get_rotation());
                     insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                                std::make_shared<RenderableStatic>(renderable_static)});
+                                                RenderableWithId(std::make_shared<RenderableStatic>(renderable_static),
+                                                                 positional_appearance.get_entity_id())
+                    });
                     break;
                 }
                 case Image::Type::AnimatedOneFile: {
@@ -61,7 +73,9 @@ namespace mad::core {
                                                                   positional_appearance.get_position(),
                                                                   positional_appearance.get_rotation());
                     insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                                std::make_shared<RenderableAnimatedOneFile>(renderable_animated)});
+                                                RenderableWithId(std::make_shared<RenderableAnimatedOneFile>(renderable_animated),
+                                                                 positional_appearance.get_entity_id())
+                    });
                     break;
                 }
                 case Image::Type::AnimatedSeveralFiles: {
@@ -71,7 +85,9 @@ namespace mad::core {
                                                                        positional_appearance.get_position(),
                                                                        positional_appearance.get_rotation());
                     insert_renderable_to_scene({positional_appearance.get_z_index(),
-                                                std::make_shared<RenderableAnimatedSeveralFiles>(renderable_animated)});
+                                                RenderableWithId(std::make_shared<RenderableAnimatedSeveralFiles>(renderable_animated),
+                                                                 positional_appearance.get_entity_id())
+                    });
                     break;
                 }
             }
@@ -133,7 +149,7 @@ namespace mad::core {
         m_smoothness = smoothness;
     }
 
-    void Camera::insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable) {
+    void Camera::insert_renderable_to_scene(const std::pair<int, RenderableWithId> &renderable) {
         auto position = std::upper_bound(m_scene_list.begin(), m_scene_list.end(), renderable,
                                          [](const RenderableWithIndex &a, const RenderableWithIndex &b) {
                                              return a.first < b.first;

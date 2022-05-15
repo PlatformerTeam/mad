@@ -50,6 +50,8 @@ namespace mad::core {
 
         void appear(EventDispatcher &dispatcher) const;
 
+        void end_of_render_action(EventDispatcher &dispatcher) const;
+
     protected:
         const Id m_id;
 
@@ -64,6 +66,8 @@ namespace mad::core {
         std::shared_ptr<ImageStorage> m_image_storage;
 
         Image::Orientation m_orientation = Image::Orientation::Right;
+
+        ImageStorage::TypeAction m_type_action = ImageStorage::TypeAction::Idle;
     };
 
 }

@@ -12,10 +12,10 @@ namespace mad::core {
 
     class RenderableStatic : public Renderable {
     public:
-        explicit RenderableStatic(const std::shared_ptr<StaticImage>& static_image,
-                                  std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
+        explicit RenderableStatic(const std::shared_ptr<StaticImage>& static_image, std::shared_ptr<Vec2d> position,
+                                  std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
 
     private:
         sf::Texture m_texture;

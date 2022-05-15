@@ -16,7 +16,7 @@ namespace mad::core {
         explicit RenderableAnimatedSeveralFiles(const std::shared_ptr<AnimatedImageSeveralFiles> &animated_image,
                                            std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
 
         void update_frame();
 
@@ -38,6 +38,7 @@ namespace mad::core {
         std::shared_ptr<float> m_rotation;
 
         size_t m_current_frame = 0;
+
     };
 
 }

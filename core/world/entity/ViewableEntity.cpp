@@ -4,6 +4,7 @@
 #include <event/visual/VisualEvent.hpp>
 #include <world/intent/LambdaIntent.hpp>
 #include <event/visual/PositionalAppearance.hpp>
+#include <event/action/EndOfRenderAction.hpp>
 
 #include <spdlog/spdlog.h>
 
@@ -36,6 +37,7 @@ void mad::core::ViewableEntity::set_action(mad::core::ImageStorage::TypeAction t
     m_current_image = m_image_storage->get_action(type_action);
     *m_current_image->is_active = true;
     *m_current_image->m_orientation = m_orientation;
+    m_type_action = type_action;
 }
 
 void mad::core::ViewableEntity::flip_over(mad::core::Image::Orientation orientation) {
@@ -52,7 +54,7 @@ void mad::core::ViewableEntity::move(mad::core::Vec2d move_delta) {
 
 void mad::core::ViewableEntity::appear(mad::core::EventDispatcher &dispatcher) const {
     SPDLOG_DEBUG("create positional appearance");
-    dispatcher.dispatch(std::make_shared<PositionalAppearance>(m_position, m_rotation, m_image_storage, m_z_ind));
+    dispatcher.dispatch(std::make_shared<PositionalAppearance>(m_position, m_rotation, m_image_storage, m_z_ind, m_id));
 }
 
 mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,
@@ -68,5 +70,9 @@ mad::core::ViewableEntity::ViewableEntity(mad::core::ViewableEntity::Id id,
       m_image_storage(std::move(image_storage)) {
 
     *m_current_image->is_active = true;
+}
+
+void mad::core::ViewableEntity::end_of_render_action(mad::core::EventDispatcher &dispatcher) const {
+    dispatcher.dispatch(std::make_shared<mad::core::EndOfRenderAction>(m_id, m_type_action));
 }
 
