@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <algorithm>
+#include <set>
 
 namespace mad::core {
 
@@ -15,10 +16,16 @@ namespace mad::core {
         is_active = animated_image->is_active;
         m_orientation = animated_image->m_orientation;
 
+        std::set<std::string> sorted_files;
+
         for (const auto &file : std::filesystem::directory_iterator{animated_image->get_path()}) {
+            sorted_files.insert(file.path());
+        }
+
+        for (const auto &file_name : sorted_files) {
             sf::Texture texture;
-            CHECK_THROW(texture.loadFromFile(file.path()),
-                    FileDoesNotExist, "File with StaticImage doesn't exist");
+            CHECK_THROW(texture.loadFromFile(file_name),
+                        FileDoesNotExist, "File with StaticImage doesn't exist");
             m_textures.push_back(texture);
         }
 
