@@ -29,6 +29,8 @@ namespace mad::core {
             m_textures.push_back(texture);
         }
 
+        m_current_frame = m_textures.size();
+
         //std::reverse(m_textures.begin(), m_textures.end());
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
@@ -38,6 +40,11 @@ namespace mad::core {
     }
 
     void RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){
+        if (m_current_frame == m_textures.size()) {
+            m_current_frame = 0;
+            m_clock.restart();
+        }
+
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_textures[m_current_frame]);
 
@@ -65,9 +72,6 @@ namespace mad::core {
 
     void RenderableAnimatedSeveralFiles::update_frame() {
         m_current_frame += 1;
-        if (m_current_frame == m_textures.size()) {
-            m_current_frame = 0;
-        }
     }
 
 }
