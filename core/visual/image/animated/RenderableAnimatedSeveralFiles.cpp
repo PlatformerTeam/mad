@@ -1,6 +1,7 @@
 #include "RenderableAnimatedSeveralFiles.hpp"
 
 #include <utility>
+#include <algorithm>
 
 namespace mad::core {
 
@@ -20,6 +21,8 @@ namespace mad::core {
                     FileDoesNotExist, "File with StaticImage doesn't exist");
             m_textures.push_back(texture);
         }
+
+        std::reverse(m_textures.begin(), m_textures.end());
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
 
