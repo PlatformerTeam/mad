@@ -62,7 +62,7 @@ namespace mad::core {
         machine->set_initial_state(0);
         std::vector<std::shared_ptr<mad::core::Controller>> controllers{machine,
                                                                         std::make_shared<mad::core::CameraController>(
-                                                                                camera)};*/
+                                                                                camera)};
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -71,7 +71,8 @@ namespace mad::core {
                 global_dispatcher,
                 level_dispatcher,
                 world,
-                controllers);
+                controllers
+        );
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
@@ -87,7 +88,7 @@ namespace mad::core {
         Entity::Id hero_id = 0;
         std::string map_line;
         while (std::getline(m_level_map, map_line)) {
-            for (char object : map_line) {
+            for (char object: map_line) {
                 switch (m_objects[object]) {
                     case Objects::UnstableBlock: {
                         create_block(world,
@@ -141,14 +142,16 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Tile)}}));
+                                                        StaticImage::TransformType::Tile)
+                         }}));
 
         Entity::Id square_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                is_stable);
+                is_stable
+        );
     }
 
     Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
@@ -187,9 +190,10 @@ namespace mad::core {
                 position,
                 0,
                 image_storage,
-                false, false);
+                false, false
+        );
 
         return hero_id;
     }
 
-}// namespace mad::core
+}
