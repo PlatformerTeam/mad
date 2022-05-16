@@ -65,7 +65,7 @@ namespace mad::core {
                                                                         std::make_shared<mad::core::CameraController>(
                                                                                 camera)};*/
 
-        camera->set_zoom(0.2);
+        camera->set_zoom(0.07);
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -143,7 +143,7 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Tile)}}));
+                                                        StaticImage::TransformType::Fit)}}));
 
         Entity::Id square_id = world->create_physical_entity(
                 0,

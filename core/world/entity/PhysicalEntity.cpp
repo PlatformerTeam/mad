@@ -37,9 +37,9 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 50.0f;
+        fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
-        body->SetLinearDamping(0.0000000001);
+        body->SetLinearDamping(0);
         body->SetAngularDamping(0);
 
         body->CreateFixture(&fixtureDef);

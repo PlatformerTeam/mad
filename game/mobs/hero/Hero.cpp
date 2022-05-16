@@ -1,4 +1,5 @@
 #include "Hero.hpp"
+#include "event/management/condition/EndAnimationCondition.hpp"
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/KeyReleasedCondition.hpp"
@@ -93,7 +94,7 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Idle));
     machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
     machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Left, horizontal_velocity));
-    machine->add_state(std::make_shared<JumpImpulse>(world, hero_id));
+    machine->add_state(std::make_shared<JumpImpulse>(world, hero_id, m_impulse));
     machine->add_state(std::make_shared<StartJump>(world, hero_id, Movement::Direction::Left, horizontal_velocity));
     machine->add_state(std::make_shared<StartJump>(world, hero_id, Movement::Direction::Idle, horizontal_velocity));
     machine->add_state(std::make_shared<StartJump>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
@@ -121,29 +122,30 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_transition(4, 5, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
     machine->add_transition(6, 5, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
 
-    float t = 2;
+    float t1 = 0.1;
+    float t2 = 0.2;
 
-    machine->add_transition(4, 8, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(5, 8, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(6, 8, std::make_shared<mad::core::TimerCondition>(t));
+    machine->add_transition(4, 8, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Jump));
+    machine->add_transition(5, 8, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Jump));
+    machine->add_transition(6, 8, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Jump));
 
     machine->add_transition(8, 7, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
     machine->add_transition(8, 9, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
     machine->add_transition(7, 8, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
     machine->add_transition(9, 8, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
 
-    machine->add_transition(7, 11, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(8, 11, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(9, 11, std::make_shared<mad::core::TimerCondition>(t));
+    machine->add_transition(7, 11, std::make_shared<mad::core::TimerCondition>(t1));
+    machine->add_transition(8, 11, std::make_shared<mad::core::TimerCondition>(t1));
+    machine->add_transition(9, 11, std::make_shared<mad::core::TimerCondition>(t1));
 
     machine->add_transition(11, 10, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
     machine->add_transition(11, 12, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
     machine->add_transition(10, 11, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
     machine->add_transition(12, 11, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
 
-    machine->add_transition(10, 0, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(11, 0, std::make_shared<mad::core::TimerCondition>(t));
-    machine->add_transition(12, 0, std::make_shared<mad::core::TimerCondition>(t));
+    machine->add_transition(10, 0, std::make_shared<mad::core::TimerCondition>(t2));
+    machine->add_transition(11, 0, std::make_shared<mad::core::TimerCondition>(t2));
+    machine->add_transition(12, 0, std::make_shared<mad::core::TimerCondition>(t2));
 
 
 

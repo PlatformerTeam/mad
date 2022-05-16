@@ -24,9 +24,9 @@
           "type": "several_files",
           "width_scale": 1,
           "height_scale": 1,
-          "delta_time": 100,
-          "size_width": 100,
-          "size_height": 74,
+          "delta_time": 200,
+          "size_width": 10,
+          "size_height": 7.4,
           "count_files": 4
         },
         "run" : {
@@ -35,8 +35,8 @@
           "width_scale": 1,
           "height_scale": 1,
           "delta_time": 100,
-          "size_width": 100,
-          "size_height": 74,
+          "size_width": 10,
+          "size_height": 7.4,
           "count_files": 6
         },
         "jump" : {
@@ -44,9 +44,9 @@
           "type": "several_files",
           "width_scale": 1,
           "height_scale": 1,
-          "delta_time": 500,
-          "size_width": 100,
-          "size_height": 74,
+          "delta_time": 30,
+          "size_width": 10,
+          "size_height": 7.4,
           "count_files": 4
         },
         "fly_up" : {
@@ -55,8 +55,8 @@
           "width_scale": 1,
           "height_scale": 1,
           "delta_time": 100,
-          "size_width": 100,
-          "size_height": 74,
+          "size_width": 10,
+          "size_height": 7.4,
           "count_files": 1
         },
         "fall" : {
@@ -65,8 +65,8 @@
           "width_scale": 1,
           "height_scale": 1,
           "delta_time": 100,
-          "size_width": 100,
-          "size_height": 74,
+          "size_width": 10,
+          "size_height": 7.4,
           "count_files": 2
         }
       }

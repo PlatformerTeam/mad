@@ -24,6 +24,6 @@ void mad::core::Movement::control() {
     else if(dir == Direction::Idle){
         m_entity->set_action(Idle_animation);
     }
-
-
+    float k = 0.8;
+    m_world->manipulate_entity_id(m_entity_id, set_horizontal_velocity(m_entity->get_linear_velocity().get_x() * k));
 }

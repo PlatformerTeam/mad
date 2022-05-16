@@ -9,7 +9,7 @@ namespace mad::core {
     class JumpImpulse : public Controller {
     public:
 
-        explicit JumpImpulse(std::shared_ptr<mad::core::World> world, Entity::Id entity_id);
+        explicit JumpImpulse(std::shared_ptr<mad::core::World> world, Entity::Id entity_id, float m_impulse);
 
         void control() override;
 
@@ -17,6 +17,7 @@ namespace mad::core {
         std::shared_ptr<mad::core::World> m_world;
         Entity::Id m_entity_id;
         std::shared_ptr<int> key;
+        float m_impulse;
 
     };
 
