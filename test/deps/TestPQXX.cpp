@@ -133,7 +133,9 @@ namespace mad::core {
 int main() {
     mad::core::Database db;
 
-    db.registry_user("Denis");
+    if (!db.is_user_exists("Denis")) {
+        db.registry_user("Denis");
+    }
     db.increment_progress("Denis");
     db.increment_progress("Denis");
     db.increment_progress("Denis");
