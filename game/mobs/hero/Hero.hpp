@@ -13,8 +13,9 @@ namespace mad::core {
         Entity::Id get_hero_id() const;
 
     private:
-        std::shared_ptr<mad::core::World> m_world;
+        std::shared_ptr<mad::core::LocalWorld> m_world;
         Entity::Id hero_id;
+        std::shared_ptr<PhysicalEntity> m_entity;
         std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher;
         float horizontal_velocity = 20;
         float m_impulse = 3000;

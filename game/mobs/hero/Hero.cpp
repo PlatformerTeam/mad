@@ -1,5 +1,6 @@
 #include "Hero.hpp"
 #include "event/management/condition/EndAnimationCondition.hpp"
+#include "event/management/condition/FallCondition.hpp"
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/KeyReleasedCondition.hpp"
@@ -134,9 +135,9 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_transition(7, 8, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
     machine->add_transition(9, 8, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
 
-    machine->add_transition(7, 11, std::make_shared<mad::core::TimerCondition>(t1));
-    machine->add_transition(8, 11, std::make_shared<mad::core::TimerCondition>(t1));
-    machine->add_transition(9, 11, std::make_shared<mad::core::TimerCondition>(t1));
+    machine->add_transition(7, 11, std::make_shared<mad::core::FallCondition>(world, hero_id));
+    machine->add_transition(8, 11, std::make_shared<mad::core::FallCondition>(world, hero_id));
+    machine->add_transition(9, 11, std::make_shared<mad::core::FallCondition>(world, hero_id));
 
     machine->add_transition(11, 10, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
     machine->add_transition(11, 12, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
