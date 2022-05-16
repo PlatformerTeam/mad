@@ -9,8 +9,7 @@
 
 namespace mad::core {
 
-    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path),
-                                                                                  m_level_map(path / "map") {
+    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path) {
         std::ifstream input_config(path / "config.json");
         CHECK_THROW(input_config, FileDoesNotExist, "Config file does not exist");
         CHECK_THROW(m_level_map, FileDoesNotExist, "Map file does not exist");
@@ -76,6 +75,7 @@ namespace mad::core {
     }
 
     Entity::Id LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
+        m_level_map = std::ifstream(m_level_directory / "map");
         float object_size = m_config_json["block"];
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
@@ -162,7 +162,6 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                                  std::make_shared<AnimatedImageSeveralFiles>(
                                          source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["count_files"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
@@ -172,7 +171,6 @@ namespace mad::core {
                          {ImageStorage::TypeAction::Run,
                                  std::make_shared<AnimatedImageSeveralFiles>(
                                          source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["count_files"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],

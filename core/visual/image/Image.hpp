@@ -6,6 +6,7 @@
 #include <memory>
 
 namespace mad::core {
+
     class Image {
     public:
         enum class Type {
@@ -13,6 +14,10 @@ namespace mad::core {
             Static,
             AnimatedOneFile,
             AnimatedSeveralFiles
+        };
+
+        enum class Orientation {
+            Right, Left
         };
 
         explicit Image(Type new_type) : type(new_type) {
@@ -25,6 +30,8 @@ namespace mad::core {
         const Type type;
 
         std::shared_ptr<bool> is_active = std::make_shared<bool>(false);
+
+        std::shared_ptr<Orientation> m_orientation = std::make_shared<Orientation>(Orientation::Right);
     };
 }
 

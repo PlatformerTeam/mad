@@ -14,10 +14,10 @@ namespace mad::core {
 
     class RenderableSquare : public Renderable {
     public:
-        RenderableSquare(std::shared_ptr<Shape> shape,
-                         std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
+        RenderableSquare(std::shared_ptr<Shape> shape, std::shared_ptr<Vec2d> position,
+                         std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
 
     private:
         std::shared_ptr<Shape> m_shape;

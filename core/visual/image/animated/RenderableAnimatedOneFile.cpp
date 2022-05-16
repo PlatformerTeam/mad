@@ -12,6 +12,7 @@ namespace mad::core {
       m_height_scale(animated_image->get_height_scale()) {
 
         is_active = animated_image->is_active;
+        m_orientation = animated_image->m_orientation;
 
         CHECK_THROW(m_texture.loadFromFile(
                             animated_image->get_path()),
@@ -26,16 +27,23 @@ namespace mad::core {
                    animated_image->get_sprite_height() / static_cast<float>(m_height_sprite) * m_height_scale};
     }
 
-    void RenderableAnimatedOneFile::render(sf::RenderWindow &window){
+    bool RenderableAnimatedOneFile::render(sf::RenderWindow &window){
+        bool is_render_all = false;
+
         sf::Sprite render_sprite;
         render_sprite.setTexture(m_texture);
+
+        if (*m_orientation == Image::Orientation::Left && m_scale.get_x() > 0 ||
+            *m_orientation == Image::Orientation::Right && m_scale.get_x() < 0) {
+            m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
+        }
 
         render_sprite.setScale(m_scale);
 
         render_sprite.setTextureRect(m_rect);
 
         if (m_clock.getElapsedTime().asMilliseconds() >= m_delta_time) {
-            update_frame();
+            update_frame(is_render_all);
             m_clock.restart();
         }
 
@@ -47,19 +55,21 @@ namespace mad::core {
         render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
+
+        return is_render_all;
     }
 
-    void RenderableAnimatedOneFile::update_frame() const {
+    void RenderableAnimatedOneFile::update_frame(bool &is_render_all) const {
         if (m_rect.left + m_width_sprite >= m_texture.getSize().x) {
             m_rect.left = 0;
             if (m_rect.top + m_height_sprite >= m_texture.getSize().y) {
                 m_rect.top = 0;
             } else {
                 m_rect.top += m_height_sprite;
+                is_render_all = true;
             }
         } else {
             m_rect.left += m_width_sprite;
         }
     }
-
 }

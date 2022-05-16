@@ -4,11 +4,12 @@
 
 namespace mad::core {
 
-    RenderableStatic::RenderableStatic(const std::shared_ptr<StaticImage>& static_image,
-                                       std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
+    RenderableStatic::RenderableStatic(const std::shared_ptr<StaticImage>& static_image, std::shared_ptr<Vec2d> position,
+                                       std::shared_ptr<float> rotation)
                                        : m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
         is_active = static_image->is_active;
+        m_orientation = static_image->m_orientation;
 
         CHECK_THROW(m_texture.loadFromFile(
                 static_image->get_path()),
@@ -32,12 +33,17 @@ namespace mad::core {
         }
     }
 
-    void RenderableStatic::render(sf::RenderWindow &window) {
+    bool RenderableStatic::render(sf::RenderWindow &window) {
         sf::Sprite render_sprite;
 
         render_sprite.setTexture(m_texture);
 
-        render_sprite.setScale(m_scale.get_x(), m_scale.get_y());
+        if (*m_orientation == Image::Orientation::Left && m_scale.get_x() > 0 ||
+            *m_orientation == Image::Orientation::Right && m_scale.get_x() < 0) {
+            m_scale = {(-1) * m_scale.get_x(), m_scale.get_y()};
+        }
+
+        render_sprite.setScale(m_scale);
 
         if (m_rect) {
             render_sprite.setTextureRect(m_rect.value());
@@ -51,6 +57,8 @@ namespace mad::core {
         render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
+
+        return true;
     }
 
 }

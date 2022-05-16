@@ -10,7 +10,7 @@ namespace mad::core {
 
     MainMenu::MainMenu() : Menu(Menu::Type::Main) { }
 
-    void MainMenu::render(sf::RenderWindow &window) {
+    bool MainMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
         ImGui::SetNextWindowSize(ImVec2(window.getSize().x, window.getSize().y));
         ImGui::SetNextWindowPos({0, 0});
@@ -23,5 +23,7 @@ namespace mad::core {
         }
         ImGui::End();
         ImGui::SFML::Render(window);
+
+        return true;
     }
 }

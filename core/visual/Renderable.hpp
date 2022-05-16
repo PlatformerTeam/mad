@@ -2,6 +2,7 @@
 #define MAD_CORE_VISUAL_RENDERABLE_HPP
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <visual/image/Image.hpp>
 
 #include <imgui.h>
 #include <imgui-SFML.h>
@@ -13,9 +14,11 @@ namespace mad::core {
 
     class Renderable {
     public:
-        virtual void render(sf::RenderWindow &window) = 0;
+        virtual bool render(sf::RenderWindow &window) = 0;
 
         std::shared_ptr<bool> is_active;
+
+        std::shared_ptr<Image::Orientation> m_orientation;
     };
 }
 
