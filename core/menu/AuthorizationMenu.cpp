@@ -10,7 +10,7 @@ namespace mad::core {
 
     AuthorizationMenu::AuthorizationMenu(std::shared_ptr<ClientStorageDriver> client_storage_driver) : Menu(Menu::Type::Authorization), m_client_storage_driver(std::move(client_storage_driver)) { }
 
-    void AuthorizationMenu::render(sf::RenderWindow &window) {
+    bool AuthorizationMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
         ImGui::SetNextWindowSize(ImVec2(window.getSize().x, window.getSize().y));
         ImGui::SetNextWindowPos({0, 0});

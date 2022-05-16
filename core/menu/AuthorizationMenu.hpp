@@ -13,7 +13,7 @@ namespace mad::core {
     public:
         explicit AuthorizationMenu(std::shared_ptr<ClientStorageDriver> client_storage_driver);
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
 
     private:
         enum class SubMenuType {
