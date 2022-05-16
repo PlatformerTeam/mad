@@ -1,6 +1,7 @@
 #ifndef MAD_CORE_VISUAL_CAMERA_HPP
 #define MAD_CORE_VISUAL_CAMERA_HPP
 
+#include <details/RenderableWithId.hpp>
 #include <visual/Renderable.hpp>
 #include <visual/image/Image.hpp>
 #include <visual/image/shape/Shape.hpp>
@@ -16,7 +17,9 @@
 #include <visual/image/shape/square/RenderableSquare.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
+#include <event/action/EndOfRenderAction.hpp>
 #include <world/filter/TrueFilter.hpp>
+#include <world/filter/IdFilter.hpp>
 #include <world/World.hpp>
 #include <world/entity/Entity.hpp>
 #include <common/FVec2D.hpp>
@@ -34,7 +37,7 @@ namespace mad::core {
 
     class Camera : public Renderable, public EventHandler {
     private:
-        using RenderableWithIndex = std::pair<int, std::shared_ptr<Renderable>>;
+        using RenderableWithIndex = std::pair<int, RenderableWithId>;
 
     public:
         enum class FollowType {
@@ -46,7 +49,7 @@ namespace mad::core {
 
         void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
 
         void handle(const Event &event) override;
 
@@ -67,9 +70,9 @@ namespace mad::core {
         void set_follow_type(FollowType type, float minimal_distant);
 
     private:
-        void insert_renderable_to_scene(const std::pair<int, std::shared_ptr<Renderable>> &renderable);
+        void insert_renderable_to_scene(const std::pair<int, RenderableWithId> &renderable);
 
-        std::vector<std::pair<int, std::shared_ptr<Renderable>>> m_scene_list;
+        std::vector<std::pair<int, RenderableWithId>> m_scene_list;
 
         std::optional<Entity::Id> m_chased_object;
 
@@ -86,6 +89,8 @@ namespace mad::core {
         FollowType m_type = FollowType::Backward;
 
         float m_minimal_distant = 1.0f;
+
+
     };
 
 }

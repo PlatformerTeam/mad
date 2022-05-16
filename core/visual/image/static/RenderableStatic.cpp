@@ -4,8 +4,8 @@
 
 namespace mad::core {
 
-    RenderableStatic::RenderableStatic(const std::shared_ptr<StaticImage>& static_image,
-                                       std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
+    RenderableStatic::RenderableStatic(const std::shared_ptr<StaticImage>& static_image, std::shared_ptr<Vec2d> position,
+                                       std::shared_ptr<float> rotation)
                                        : m_position(std::move(position)), m_rotation(std::move(rotation)) {
 
         is_active = static_image->is_active;
@@ -33,7 +33,7 @@ namespace mad::core {
         }
     }
 
-    void RenderableStatic::render(sf::RenderWindow &window) {
+    bool RenderableStatic::render(sf::RenderWindow &window) {
         sf::Sprite render_sprite;
 
         render_sprite.setTexture(m_texture);
@@ -57,6 +57,8 @@ namespace mad::core {
         render_sprite.setRotation(*m_rotation);
 
         window.draw(render_sprite);
+
+        return true;
     }
 
 }

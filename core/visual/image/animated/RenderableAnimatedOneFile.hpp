@@ -15,9 +15,9 @@ namespace mad::core {
         explicit RenderableAnimatedOneFile(const std::shared_ptr<AnimatedImageOneFile> &animated_image,
                                            std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
 
-        void render(sf::RenderWindow &window) override;
+        bool render(sf::RenderWindow &window) override;
 
-        void update_frame() const;
+        void update_frame(bool &is_render_all) const;
 
     private:
         int32_t m_delta_time;

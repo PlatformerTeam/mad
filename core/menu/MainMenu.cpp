@@ -10,7 +10,7 @@ namespace mad::core {
 
     MainMenu::MainMenu() : Menu(Menu::Type::Main) { }
 
-    void MainMenu::render(sf::RenderWindow &window) {
+    bool MainMenu::render(sf::RenderWindow &window) {
         ImGui::SFML::Update(window, m_delta_clock.restart());
         ImGui::Begin("Main menu");
         if (ImGui::Button("Start game")) {
@@ -21,5 +21,7 @@ namespace mad::core {
         }
         ImGui::End();
         ImGui::SFML::Render(window);
+
+        return true;
     }
 }
