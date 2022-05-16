@@ -45,12 +45,12 @@ namespace mad::core {
             pqxx::work w(m_connector);
 
             m_query = "CREATE TABLE IF NOT EXISTS users("
-                      "id SERIAL PRIMARY KEY,"
+                      "id SMALLINT PRIMARY KEY,"
                       "name TEXT NOT NULL UNIQUE);";
             w.exec(m_query);
 
             m_query = "CREATE TABLE IF NOT EXISTS progress("
-                      "id SERIAL PRIMARY KEY,"
+                      "id SMALLINT PRIMARY KEY REFERENCES users (id),"
                       "levels_completed SMALLINT NOT NULL);";
             w.exec(m_query);
 
@@ -71,10 +71,17 @@ namespace mad::core {
 
     void Database::registry_user(const std::string &username) {
         pqxx::work W(m_connector);
-        m_query = "INSERT INTO users(name) VALUES('" + W.esc(username) + "');";
+
+        m_query = "SELECT id FROM users";
+        pqxx::result total_rows = W.exec(m_query);
+        std::size_t id = total_rows.size();
+
+        m_query = "INSERT INTO users(id, name) VALUES(" + std::to_string(id) + ", '" + W.esc(username) + "');";
         W.exec(m_query);
-        m_query = "INSERT INTO progress(levels_completed) VALUES(0);";
+
+        m_query = "INSERT INTO progress(id, levels_completed) VALUES(" + std::to_string(id) + ", 0);";
         W.exec(m_query);
+
         W.commit();
     }
 
@@ -134,3 +141,11 @@ int main() {
     db.reset_progress("Denis");
     std::cout << db.get_progress("Denis") << '\n';
 }
+
+// sudo apt-get update
+// sudo apt-get install postgresql postgresql-contrib
+// sudo -i -u postgres
+// createuser -P --interactive
+// @create user with ubuntu-system username@
+// createdb @ubuntu-username@
+// createdb mad
