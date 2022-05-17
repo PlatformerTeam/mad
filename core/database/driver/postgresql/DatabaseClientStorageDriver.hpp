@@ -1,14 +1,17 @@
-#ifndef MAD_OFFLINECLIENTSTORAGEDRIVER_HPP
-#define MAD_OFFLINECLIENTSTORAGEDRIVER_HPP
+#ifndef MAD_DATABASECLIENTSTORAGEDRIVER_H
+#define MAD_DATABASECLIENTSTORAGEDRIVER_H
 
+#include <database/database/Database.hpp>
 #include <database/driver/ClientStorageDriver.hpp>
+
+#include <memory>
 
 
 namespace mad::core {
 
-    class OfflineClientStorageDriver : public ClientStorageDriver {
+    class DatabaseClientStorageDriver : public ClientStorageDriver {
     public:
-        explicit OfflineClientStorageDriver();
+        explicit DatabaseClientStorageDriver(std::shared_ptr<Database> database);
 
         bool log_in(const std::string &username) const override;
 
@@ -18,12 +21,12 @@ namespace mad::core {
 
         void update_progress(const std::string &username) override;
 
-
     private:
-        std::string m_username;
-        std::size_t m_level_counter = 0;
+        std::shared_ptr<Database> m_database;
+
     };
 
 }
 
-#endif //MAD_OFFLINECLIENTSTORAGEDRIVER_HPP
+
+#endif//MAD_DATABASECLIENTSTORAGEDRIVER_H

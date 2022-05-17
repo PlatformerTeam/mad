@@ -9,6 +9,7 @@ set(
         database/database/Database.hpp database/database/Database.cpp
         database/driver/ClientStorageDriver.hpp
         database/driver/offline/OfflineClientStorageDriver.hpp database/driver/offline/OfflineClientStorageDriver.cpp
+        database/driver/postgresql/DatabaseClientStorageDriver.hpp database/driver/postgresql/DatabaseClientStorageDriver.cpp
         details/RenderableWithId.hpp
 
         event/Event.cpp
