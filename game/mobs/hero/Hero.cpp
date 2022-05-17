@@ -5,6 +5,7 @@
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/KeyReleasedCondition.hpp"
 #include "event/management/condition/LastStateCondition.hpp"
+#include "event/management/condition/SensorCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
 #include "event/management/controller/Fall.hpp"
@@ -144,9 +145,9 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_transition(10, 11, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Left));
     machine->add_transition(12, 11, std::make_shared<mad::core::KeyReleasedCondition>(sf::Keyboard::Right));
 
-    machine->add_transition(10, 0, std::make_shared<mad::core::TimerCondition>(t2));
-    machine->add_transition(11, 0, std::make_shared<mad::core::TimerCondition>(t2));
-    machine->add_transition(12, 0, std::make_shared<mad::core::TimerCondition>(t2));
+    machine->add_transition(10, 0, std::make_shared<mad::core::SensorCondition>(hero_id));
+    machine->add_transition(11, 0, std::make_shared<mad::core::SensorCondition>(hero_id));
+    machine->add_transition(12, 0, std::make_shared<mad::core::SensorCondition>(hero_id));
 
 
 
@@ -158,7 +159,7 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
 
     /// add sensor
     auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(hero_id));
-    m_entity->add_sensor({0, 5}, 0.3, 0.3);
+    m_entity->add_sensor({0, 4}, 0.3, 0.05);
 }
 mad::core::Entity::Id mad::core::Hero::get_hero_id() const {
     return hero_id;
