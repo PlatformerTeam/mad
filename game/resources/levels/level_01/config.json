@@ -18,25 +18,21 @@
   "hero" : {
     "source" : "hero",
     "animated" : {
+      "size_width": 30,
+      "size_height": 50,
+      "size_scale": 0.2,
+      "delta_x" : 0,
+      "delta_y" : 0,
       "actions" : {
         "idle" : {
           "source": "idle",
           "type": "several_files",
-          "width_scale": 3.1,
-          "height_scale": 2.0,
-          "delta_time": 100,
-          "size_width": 40,
-          "size_height": 40,
-          "count_files": 19
+          "delta_time": 100
         },
         "run" : {
           "source": "run",
           "type": "several_files",
-          "width_scale": 3.1,
-          "height_scale": 2.0,
-          "delta_time": 100,
-          "size_width": 40,
-          "size_height": 40
+          "delta_time": 100
         }
       }
     }

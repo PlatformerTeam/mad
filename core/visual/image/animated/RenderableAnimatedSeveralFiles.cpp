@@ -10,8 +10,7 @@ namespace mad::core {
                                                                    std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
             : m_delta_time(animated_image->get_delta_time()),
               m_position(std::move(position)), m_rotation(std::move(rotation)),
-              m_width_scale(animated_image->get_width_scale()),
-              m_height_scale(animated_image->get_height_scale()) {
+              m_delta_x(animated_image->get_delta_x()), m_delta_y(animated_image->get_delta_y()) {
 
         is_active = animated_image->is_active;
         m_orientation = animated_image->m_orientation;
@@ -35,8 +34,15 @@ namespace mad::core {
 
         auto [texture_width, texture_height] = m_textures[0].getSize();
 
-        m_scale = {animated_image->get_sprite_width() / static_cast<float>(texture_width) * m_width_scale,
-                   animated_image->get_sprite_height() / static_cast<float>(texture_height) * m_height_scale};
+        m_scale = {animated_image->get_size_scale(), animated_image->get_size_scale()};
+
+        m_physical_shape = sf::RectangleShape({animated_image->get_physical_width(),
+                                              animated_image->get_physical_height()});
+        m_physical_shape.setOrigin(animated_image->get_physical_width() / 2,
+                                   animated_image->get_physical_height() / 2);
+        m_physical_shape.setOutlineThickness(1);
+        m_physical_shape.setOutlineColor({0, 255, 0});
+        m_physical_shape.setFillColor(sf::Color::Transparent);
     }
 
     bool RenderableAnimatedSeveralFiles::render(sf::RenderWindow &window){
@@ -57,8 +63,8 @@ namespace mad::core {
 
         render_sprite.setScale(m_scale);
 
-        render_sprite.setOrigin(render_sprite.getLocalBounds().width / 2,
-                                render_sprite.getLocalBounds().height / 2);
+        render_sprite.setOrigin(render_sprite.getLocalBounds().width / 2 + m_delta_x,
+                                render_sprite.getLocalBounds().height / 2 + m_delta_y);
 
         render_sprite.setPosition(m_position->get_x(), m_position->get_y());
 
@@ -80,6 +86,12 @@ namespace mad::core {
 
     void RenderableAnimatedSeveralFiles::update_frame() {
         m_current_frame += 1;
+    }
+
+    sf::RectangleShape RenderableAnimatedSeveralFiles::get_physical_shape() noexcept {
+        m_physical_shape.setPosition(*m_position);
+        m_physical_shape.setRotation(*m_rotation);
+        return m_physical_shape;
     }
 
 }

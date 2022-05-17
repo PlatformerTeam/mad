@@ -24,7 +24,7 @@ namespace mad::core {
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
-        auto camera = std::make_shared<mad::core::Camera>(camera_position, world);
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
         Entity::Id hero_id = create_world(world);
 
@@ -157,25 +157,28 @@ namespace mad::core {
 
         std::shared_ptr<ImageStorage> image_storage;
 
+        float physical_size_width = m_config_json["hero"]["animated"]["size_width"];
+        float physical_size_height = m_config_json["hero"]["animated"]["size_height"];
+        float size_scale = m_config_json["hero"]["animated"]["size_scale"];
+        float delta_x = m_config_json["hero"]["animated"]["delta_x"];
+        float delta_y = m_config_json["hero"]["animated"]["delta_y"];
+
+
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
                         {{ImageStorage::TypeAction::Idle,
                                  std::make_shared<AnimatedImageSeveralFiles>(
                                          source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
                                          m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["width_scale"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["height_scale"])
+                                         physical_size_width, physical_size_height, size_scale,
+                                         delta_x, delta_y)
                          },
                          {ImageStorage::TypeAction::Run,
                                  std::make_shared<AnimatedImageSeveralFiles>(
                                          source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
                                          m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])
+                                         physical_size_width, physical_size_height, size_scale,
+                                         delta_x, delta_y)
                          }}
                 )
         );

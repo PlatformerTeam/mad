@@ -12,7 +12,8 @@ namespace mad::core {
     class AnimatedImageOneFile : public Image {
     public:
         explicit AnimatedImageOneFile(std::filesystem::path path, int width, int height, int32_t delta_time,
-                                      float sprite_width, float sprite_height, float width_scale, float height_scale);
+                                      float physical_width, float physical_height, float size_scale, float delta_x,
+                                      float delta_y);
 
         [[nodiscard]] int32_t get_delta_time() const noexcept;
 
@@ -22,15 +23,17 @@ namespace mad::core {
 
         [[nodiscard]] int get_height() const noexcept;
 
-        [[nodiscard]] float get_sprite_height() const noexcept;
+        [[nodiscard]] float get_physical_height() const noexcept;
 
-        [[nodiscard]] float get_sprite_width() const noexcept;
+        [[nodiscard]] float get_physical_width() const noexcept;
+
+        [[nodiscard]] float get_delta_x() const noexcept;
+
+        [[nodiscard]] float get_delta_y() const noexcept;
 
         b2PolygonShape as_fixture() override;
 
-        [[nodiscard]] float get_width_scale() const noexcept;
-
-        [[nodiscard]] float get_height_scale() const noexcept;
+        [[nodiscard]] float get_size_scale() const noexcept;
 
     private:
         int32_t m_delta_time;
@@ -41,13 +44,15 @@ namespace mad::core {
 
         int m_height;
 
-        float m_sprite_height;
+        float m_physical_height;
 
-        float m_sprite_width;
+        float m_physical_width;
 
-        float m_width_scale;
+        float m_size_scale;
 
-        float m_height_scale;
+        float m_delta_x;
+
+        float m_delta_y;
     };
 
 }

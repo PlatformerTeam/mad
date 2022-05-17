@@ -28,6 +28,8 @@ namespace mad::core {
 
         void produce(EventDispatcher &dispatcher) override;
 
+        sf::RectangleShape get_physical_shape() noexcept override;
+
         virtual ~Menu() = default;
 
     private:
