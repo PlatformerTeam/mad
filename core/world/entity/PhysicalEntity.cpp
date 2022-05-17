@@ -160,3 +160,12 @@ mad::core::Vec2d mad::core::PhysicalEntity::get_local_center() {
 mad::core::Vec2d mad::core::PhysicalEntity::get_world_center() {
     return {body->GetWorldCenter().x, body->GetWorldCenter().y};
 }
+void mad::core::PhysicalEntity::add_sensor(b2Vec2 offset, float x_size, float y_size) {
+    b2FixtureDef FixtureDef;
+    b2PolygonShape fixture;
+    fixture.SetAsBox(x_size, y_size, offset, 0);
+    FixtureDef.shape = &fixture;
+    FixtureDef.isSensor = true;
+    b2Fixture* footSensorFixture = body->CreateFixture(&FixtureDef);
+    footSensorFixture->GetUserData().pointer = m_id;
+}

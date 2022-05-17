@@ -1,15 +1,22 @@
 #ifndef MAD_CONTACTLISTENER_HPP
 #define MAD_CONTACTLISTENER_HPP
 
+#include "event/physics/SensorCollision.hpp"
+#include "spdlog/spdlog.h"
 #include <box2d/b2_world_callbacks.h>
-#include <world/entity/PhysicalEntity.hpp>
 #include <common/Cast.hpp>
 #include <event/physics/Collision.hpp>
+#include <world/entity/PhysicalEntity.hpp>
 
 namespace mad::core{
     class MyContactListener : public b2ContactListener {
         void BeginContact(b2Contact *contact) override {
-
+            ///sensors
+            b2FixtureUserData fixture_data_A = contact->GetFixtureA()->GetUserData();
+            b2FixtureUserData fixture_data_B = contact->GetFixtureB()->GetUserData();
+            if(static_cast<int>(fixture_data_A.pointer) != 0)  dispatcher.dispatch(std::make_shared<SensorCollision>(fixture_data_A.pointer));
+            if(static_cast<int>(fixture_data_B.pointer) != 0)  dispatcher.dispatch(std::make_shared<SensorCollision>(fixture_data_B.pointer));
+            ///bodies
             b2BodyUserData dataA = contact->GetFixtureA()->GetBody()->GetUserData();
             b2BodyUserData dataB = contact->GetFixtureB()->GetBody()->GetUserData();
             //std::cout << "!!! " << dataA.pointer <<  "\n";

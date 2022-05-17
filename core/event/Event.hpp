@@ -17,7 +17,8 @@ namespace mad::core {
             LevelPause,
             Runner,
             WorldUpdate,
-            EndOfRenderAction
+            EndOfRenderAction,
+            SensorCollision
         };
 
         explicit Event(Type new_type);

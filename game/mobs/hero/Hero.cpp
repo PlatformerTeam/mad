@@ -152,10 +152,13 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
 
 
 
-
-
     machine->set_initial_state(0);
     controllers.push_back(machine);
+
+
+    /// add sensor
+    auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(hero_id));
+    m_entity->add_sensor({0, 5}, 0.3, 0.3);
 }
 mad::core::Entity::Id mad::core::Hero::get_hero_id() const {
     return hero_id;

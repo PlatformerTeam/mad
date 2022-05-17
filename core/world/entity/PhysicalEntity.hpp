@@ -79,6 +79,8 @@ namespace mad::core {
 
         void synchronize_position_with_viewable();
 
+        void add_sensor(b2Vec2 offset, float x_size, float y_size);
+
 
     private:
         b2Body *body;
