@@ -99,6 +99,7 @@ message(STATUS "Core library: ${LIBRARY_CORE}")
 set(DIRECTORY_GAME ${PROJECT_SOURCE_DIR}/game)
 set(EXECUTABLE_GAME example)
 set(EXECUTABLE_GAME_RUNNER game_runner_example)
+set(EXECUTABLE_GAME_DATABASE game_database_example)
 
 add_subdirectory(${DIRECTORY_GAME})
 message(STATUS "Game executable: ${EXECUTABLE_GAME}")
