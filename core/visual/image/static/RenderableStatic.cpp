@@ -32,10 +32,11 @@ namespace mad::core {
             }
         }
 
-        m_physical_shape = sf::RectangleShape({static_image->get_width(), static_image->get_height()});
-        m_physical_shape.setOrigin(static_image->get_width() / 2,
-                                   static_image->get_height() / 2);
-        m_physical_shape.setOutlineThickness(1);
+        float outline = 1;
+        m_physical_shape = sf::RectangleShape({static_image->get_width() - outline, static_image->get_height() - outline});
+        m_physical_shape.setOrigin((static_image->get_width() - outline) / 2,
+                                   (static_image->get_height() - outline) / 2);
+        m_physical_shape.setOutlineThickness(outline);
         m_physical_shape.setOutlineColor({0, 255, 0});
         m_physical_shape.setFillColor(sf::Color::Transparent);
     }

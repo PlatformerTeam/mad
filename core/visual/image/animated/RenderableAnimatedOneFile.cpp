@@ -24,11 +24,12 @@ namespace mad::core {
 
         m_scale = {animated_image->get_size_scale(), animated_image->get_size_scale()};
 
-        m_physical_shape = sf::RectangleShape({animated_image->get_physical_width(),
-                                               animated_image->get_physical_height()});
-        m_physical_shape.setOrigin(animated_image->get_physical_width() / 2,
-                                   animated_image->get_physical_height() / 2);
-        m_physical_shape.setOutlineThickness(1);
+        float outline = 1;
+        m_physical_shape = sf::RectangleShape({animated_image->get_physical_width() - outline,
+                                               animated_image->get_physical_height() - outline});
+        m_physical_shape.setOrigin((animated_image->get_physical_width() - outline) / 2,
+                                   (animated_image->get_physical_height() - outline) / 2);
+        m_physical_shape.setOutlineThickness(outline);
         m_physical_shape.setOutlineColor({0, 255, 0});
         m_physical_shape.setFillColor(sf::Color::Transparent);
     }
