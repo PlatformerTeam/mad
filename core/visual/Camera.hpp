@@ -45,7 +45,7 @@ namespace mad::core {
             Backward
         };
 
-        explicit Camera(Vec2d initial_position, std::shared_ptr<World> world);
+        explicit Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode = false);
 
         void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
 
@@ -90,7 +90,9 @@ namespace mad::core {
 
         float m_minimal_distant = 1.0f;
 
+        bool m_is_debug_mode;
 
+        sf::RectangleShape get_physical_shape() noexcept override;
     };
 
 }

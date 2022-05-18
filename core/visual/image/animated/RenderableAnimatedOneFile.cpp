@@ -8,8 +8,7 @@ namespace mad::core {
                                                          std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation)
     : m_delta_time(animated_image->get_delta_time()),
       m_position(std::move(position)), m_rotation(std::move(rotation)),
-      m_width_scale(animated_image->get_width_scale()),
-      m_height_scale(animated_image->get_height_scale()) {
+      m_delta_x(animated_image->get_delta_x()), m_delta_y(animated_image->get_delta_y()) {
 
         is_active = animated_image->is_active;
         m_orientation = animated_image->m_orientation;
@@ -23,8 +22,16 @@ namespace mad::core {
 
         m_rect = {0, 0, m_width_sprite, m_height_sprite};
 
-        m_scale = {animated_image->get_sprite_width() / static_cast<float>(m_width_sprite) * m_width_scale,
-                   animated_image->get_sprite_height() / static_cast<float>(m_height_sprite) * m_height_scale};
+        m_scale = {animated_image->get_size_scale(), animated_image->get_size_scale()};
+
+        float outline = 1;
+        m_physical_shape = sf::RectangleShape({animated_image->get_physical_width() - outline,
+                                               animated_image->get_physical_height() - outline});
+        m_physical_shape.setOrigin((animated_image->get_physical_width() - outline) / 2,
+                                   (animated_image->get_physical_height() - outline) / 2);
+        m_physical_shape.setOutlineThickness(outline);
+        m_physical_shape.setOutlineColor({0, 255, 0});
+        m_physical_shape.setFillColor(sf::Color::Transparent);
     }
 
     bool RenderableAnimatedOneFile::render(sf::RenderWindow &window){
@@ -71,5 +78,11 @@ namespace mad::core {
         } else {
             m_rect.left += m_width_sprite;
         }
+    }
+
+    sf::RectangleShape RenderableAnimatedOneFile::get_physical_shape() noexcept {
+        m_physical_shape.setPosition(*m_position);
+        m_physical_shape.setRotation(*m_rotation);
+        return m_physical_shape;
     }
 }

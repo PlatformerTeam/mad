@@ -17,6 +17,8 @@ namespace mad::core {
 
         bool render(sf::RenderWindow &window) override;
 
+        sf::RectangleShape get_physical_shape() noexcept override;
+
     private:
         sf::Texture m_texture;
 
@@ -27,6 +29,8 @@ namespace mad::core {
         std::shared_ptr<Vec2d> m_position;
 
         std::shared_ptr<float> m_rotation;
+
+        sf::RectangleShape m_physical_shape;
 
     };
 

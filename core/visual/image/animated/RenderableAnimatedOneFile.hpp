@@ -19,6 +19,7 @@ namespace mad::core {
 
         void update_frame(bool &is_render_all) const;
 
+        sf::RectangleShape get_physical_shape() noexcept override;
     private:
         int32_t m_delta_time;
 
@@ -30,18 +31,19 @@ namespace mad::core {
 
         mutable Vec2d m_scale = {1, 1};
 
-        float m_width_scale;
-
-        float m_height_scale;
-
         std::shared_ptr<Vec2d> m_position;
 
         std::shared_ptr<float> m_rotation;
+
+        float m_delta_x;
+
+        float m_delta_y;
 
         int m_width_sprite{};
 
         int m_height_sprite{};
 
+        sf::RectangleShape m_physical_shape;
     };
 
 }

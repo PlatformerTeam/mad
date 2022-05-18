@@ -27,6 +27,9 @@ namespace mad::core {
                 if (renderable_image->render(window)) {
                     m_world->manipulate(IdFilter(entity_id), LambdaIntent(end_of_render));
                 }
+                if (m_is_debug_mode) {
+                    window.draw(renderable_image->get_physical_shape());
+                }
             }
         }
         return true;
@@ -98,10 +101,12 @@ namespace mad::core {
         return {Event::Type::Visual, Event::Type::Movement};
     }
 
-    Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world)
+    Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode)
             : m_position(initial_position),
               m_world(std::move(world)),
-              m_view(initial_position, {640, 480}) {}
+              m_view(initial_position, {640, 480}),
+              m_is_debug_mode(is_debug_mode) {
+    }
 
     void Camera::follow() {
         if (m_chased_object) {
@@ -160,6 +165,10 @@ namespace mad::core {
     void Camera::set_follow_type(Camera::FollowType type, float minimal_distant) {
         m_type = type;
         m_minimal_distant = minimal_distant;
+    }
+
+    sf::RectangleShape Camera::get_physical_shape() noexcept {
+        return sf::RectangleShape(m_view.getSize());
     }
 
 } // namespace mad::core
