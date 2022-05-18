@@ -81,6 +81,8 @@ namespace mad::core {
         float current_position_y = object_size / 2;
         Entity::Id hero_id = 0;
         std::string map_line;
+
+        create_background(world);
         while (std::getline(m_level_map, map_line)) {
             for (char object: map_line) {
                 switch (m_objects[object]) {
@@ -192,6 +194,30 @@ namespace mad::core {
         );
 
         return hero_id;
+    }
+
+    void LevelLoaderFromFile::create_background(std::shared_ptr<LocalWorld> world) {
+        std::filesystem::path source(m_config_json["background"]["source"]);
+
+        std::shared_ptr<ImageStorage> image_storage;
+        std::vector<float> parallax_ratios = m_config_json["background"]["a"];
+
+        image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<BackgroundImage>(
+                                  source,
+                                  parallax_ratios
+                                  )
+                        }}
+                )
+        );
+        world->create_viewable_entity(
+                -1,
+                {0, 0},
+                0,
+                image_storage
+        );
     }
 
 }

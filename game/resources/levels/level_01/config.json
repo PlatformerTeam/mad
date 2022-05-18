@@ -11,6 +11,10 @@
     "smoothness": 0.6,
     "zoom": 10.5
   },
+  "background" : {
+    "source" : "background",
+    "parallax_ratios" : [1, 1, 1, 1, 1]
+  },
   "texture" : {
     "stable" : "brick.png",
     "unstable" : "brick.png"

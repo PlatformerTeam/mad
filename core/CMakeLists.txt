@@ -77,11 +77,15 @@ set(
         visual/image/shape/square/RenderableSquare.cpp visual/image/shape/square/RenderableSquare.hpp
         visual/image/animated/RenderableAnimatedOneFile.cpp visual/image/animated/RenderableAnimatedOneFile.hpp
         visual/image/animated/RenderableAnimatedSeveralFiles.cpp visual/image/animated/RenderableAnimatedSeveralFiles.hpp
+        visual/image/background/RenderableBackground.cpp visual/image/background/RenderableBackground.hpp
+
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/square/Square.cpp visual/image/shape/square/Square.hpp
         visual/image/static/StaticImage.cpp visual/image/static/StaticImage.hpp
         visual/image/animated/AnimatedImageOneFile.cpp visual/image/animated/AnimatedImageOneFile.hpp
         visual/image/animated/AnimatedImageSeveralFiles.cpp visual/image/animated/AnimatedImageSeveralFiles.hpp
+        visual/image/background/BackgroundImage.cpp visual/image/background/BackgroundImage.hpp
+
         visual/image/storage/ImageStorage.cpp visual/image/storage/ImageStorage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
