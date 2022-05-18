@@ -200,7 +200,7 @@ namespace mad::core {
         std::filesystem::path source(m_config_json["background"]["source"]);
 
         std::shared_ptr<ImageStorage> image_storage;
-        std::vector<float> parallax_ratios = m_config_json["background"]["a"];
+        std::vector<float> parallax_ratios = m_config_json["background"]["parallax_ratios"];
 
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(

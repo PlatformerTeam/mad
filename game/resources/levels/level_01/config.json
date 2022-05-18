@@ -12,7 +12,7 @@
     "zoom": 10.5
   },
   "background" : {
-    "source" : "background",
+    "source" : "../../game/resources/background",
     "parallax_ratios" : [1, 1, 1, 1, 1]
   },
   "texture" : {

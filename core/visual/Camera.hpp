@@ -80,7 +80,7 @@ namespace mad::core {
 
         sf::View m_view;
 
-        Vec2d m_position;
+        std::shared_ptr<Vec2d> m_position;
 
         std::optional<Vec2d> m_last_position;
 
