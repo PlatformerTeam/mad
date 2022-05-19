@@ -1,19 +1,17 @@
-#ifndef MAD_MAINMENUEVENTSHANDLER_HPP
-#define MAD_MAINMENUEVENTSHANDLER_HPP
+#ifndef MAD_AUTHORIZATIONMENUEVENTSHANDLER_HPP
+#define MAD_AUTHORIZATIONMENUEVENTSHANDLER_HPP
 
 #include <event/management/handler/EventHandler.hpp>
 #include <runner/GameRunner.hpp>
-
-#include <spdlog/spdlog.h>
 
 #include <unordered_set>
 
 
 namespace mad::core {
 
-    class MainMenuEventsHandler : public EventHandler {
+    class AuthorizationMenuEventsHandler : public EventHandler {
     public:
-        explicit MainMenuEventsHandler(GameRunner& runner);
+        explicit AuthorizationMenuEventsHandler(GameRunner& runner);
 
         void handle(const Event &event) override;
 
@@ -25,4 +23,5 @@ namespace mad::core {
 
 }
 
-#endif //MAD_MAINMENUEVENTSHANDLER_HPP
+
+#endif //MAD_AUTHORIZATIONMENUEVENTSHANDLER_HPP

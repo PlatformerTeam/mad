@@ -17,7 +17,7 @@ namespace mad::core {
                 if (game_runner_event.game_runner_event_type == GameRunnerEvent::Type::ApplicationFinish) {
                     m_runner.stop();
                 } else if (game_runner_event.game_runner_event_type == GameRunnerEvent::Type::GameStop) {
-                    m_runner.stop_game();
+                    m_runner.to_main_menu();
                 }
             }
         }

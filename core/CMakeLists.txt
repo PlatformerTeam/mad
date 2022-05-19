@@ -6,6 +6,10 @@ set(
         common/Color.cpp common/Color.hpp
         common/Cast.hpp
 
+        database/database/Database.hpp database/database/Database.cpp
+        database/driver/ClientStorageDriver.hpp
+        database/driver/offline/OfflineClientStorageDriver.hpp database/driver/offline/OfflineClientStorageDriver.cpp
+        database/driver/postgresql/DatabaseClientStorageDriver.hpp database/driver/postgresql/DatabaseClientStorageDriver.cpp
         details/RenderableWithId.hpp
 
         event/Event.cpp
@@ -30,12 +34,14 @@ set(
         event/management/handler/PauseMenuEventsHandler.hpp event/management/handler/PauseMenuEventsHandler.cpp
         event/management/handler/LevelRunnerEventsHandler.hpp event/management/handler/LevelRunnerEventsHandler.cpp
         event/management/handler/GameRunnerEventsHandler.hpp event/management/handler/GameRunnerEventsHandler.cpp
+        event/management/handler/AuthorizationMenuEventsHandler.hpp event/management/handler/AuthorizationMenuEventsHandler.cpp
         event/management/producer/SystemListener.cpp event/management/producer/SystemListener.hpp
         event/management/producer/EventProducer.hpp
         event/management/dispatcher/DelayedDispatcher.cpp event/management/dispatcher/DelayedDispatcher.hpp
         event/menu/MenuEvent.hpp event/menu/MenuEvent.cpp
         event/menu/MainMenuEvent.hpp event/menu/MainMenuEvent.cpp
         event/menu/PauseMenuEvent.hpp event/menu/PauseMenuEvent.cpp
+        event/menu/AuthorizationMenuEvent.hpp event/menu/AuthorizationMenuEvent.cpp
         event/runner/RunnerEvent.hpp event/runner/RunnerEvent.cpp
         event/runner/GameRunnerEvent.hpp event/runner/GameRunnerEvent.cpp
         event/runner/LevelRunnerEvent.hpp event/runner/LevelRunnerEvent.cpp
@@ -64,6 +70,7 @@ set(
         menu/Menu.hpp menu/Menu.cpp
         menu/MainMenu.hpp menu/MainMenu.cpp
         menu/PauseMenu.hpp menu/PauseMenu.cpp
+        menu/AuthorizationMenu.hpp menu/AuthorizationMenu.cpp
 
         runner/Runner.hpp
         runner/SequentialRunner.cpp runner/SequentialRunner.hpp
@@ -114,6 +121,7 @@ target_include_directories(
         ${INCLUDE_IMGUI_SFML}
         ${INCLUDE_SPDLOG}
         ${INCLUDE_JSON}
+        ${INCLUDE_PQXX}
 )
 
 target_link_libraries(
@@ -124,4 +132,5 @@ target_link_libraries(
         ${LIBRARY_BOX2D}
         ${LIBRARY_OPENGL}
         ${LIBRARY_JSON}
+        ${LIBRARY_PQXX}
 )
