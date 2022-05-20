@@ -1,6 +1,7 @@
 #include "LevelRunnerEventsHandler.hpp"
 
 #include <event/runner/LevelRunnerEvent.hpp>
+#include <event/physics/Collision.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 
@@ -34,8 +35,14 @@ namespace mad::core {
                     m_runner.stop_and_exit();
                 }
             }
-        } else if (m_finish_condition->triggers().count(event.type)) {
-
+        }
+        if (m_finish_condition->triggers().count(event.type)) {
+            if (event.type == Event::Type::Collision) {
+                const auto &finisher_event = const_cast_to<Collision>(event);
+                if (m_finish_condition->is_triggered_by(finisher_event)) {
+                    m_runner.stop();
+                }
+            }
         }
     }
 

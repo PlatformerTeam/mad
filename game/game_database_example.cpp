@@ -41,7 +41,6 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
-    //auto offline_storage_driver = std::make_shared<mad::core::OfflineClientStorageDriver>();
     auto database = std::make_shared<mad::core::Database>();
     auto database_storage_driver = std::make_shared<mad::core::DatabaseClientStorageDriver>(database);
 
