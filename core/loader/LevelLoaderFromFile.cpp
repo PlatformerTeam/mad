@@ -26,11 +26,11 @@ namespace mad::core {
                                  m_config_json["camera"]["position"]["y"]};
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
-        Entity::Id hero_id = create_world(world);
+        std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys = create_world(world);
 
-        camera->turn_on(*level_dispatcher, hero_id);
+        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero]);
         level_dispatcher->registry(camera);
-        level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
+        level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
 
         /* std::vector<std::shared_ptr<mad::core::Controller>> controllers {
                  std::make_shared<mad::core::CameraController>(camera)
@@ -74,12 +74,12 @@ namespace mad::core {
         return level_runner;
     }
 
-    Entity::Id LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
+    std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
         m_level_map = std::ifstream(m_level_directory / "map");
         float object_size = m_config_json["block"];
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
-        Entity::Id hero_id = 0;
+        std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys;
         std::string map_line;
         while (std::getline(m_level_map, map_line)) {
             for (char object: map_line) {
@@ -98,8 +98,13 @@ namespace mad::core {
                                      object_size, true);
                         break;
                     }
+                    case Objects::FinishBlock: {
+                        keys[LevelLoaderFromFile::IdKeys::FinishBlock] = create_finish_block(
+                                world,
+                                {current_position_x, current_position_y});
+                    }
                     case Objects::Hero: {
-                        hero_id = create_hero(world,
+                        keys[LevelLoaderFromFile::IdKeys::Hero] = create_hero(world,
                                               {current_position_x,
                                                current_position_y});
                         break;
@@ -119,7 +124,7 @@ namespace mad::core {
             current_position_y += object_size;
             current_position_x = object_size / 2;
         }
-        return hero_id;
+        return keys;
     }
 
     void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world,
