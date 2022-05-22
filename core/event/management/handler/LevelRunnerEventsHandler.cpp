@@ -40,7 +40,7 @@ namespace mad::core {
             if (event.type == Event::Type::Collision) {
                 const auto &finisher_event = const_cast_to<Collision>(event);
                 if (m_finish_condition->is_triggered_by(finisher_event)) {
-                    m_runner.stop();
+                    m_runner.complete_level();
                 }
             }
         }

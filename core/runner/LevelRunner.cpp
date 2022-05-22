@@ -64,4 +64,8 @@ namespace mad::core {
         m_is_in_pause = false;
     }
 
+    void LevelRunner::complete_level() {
+        m_level_is_running = false;
+    }
+
 }// namespace mad::core
