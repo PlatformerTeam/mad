@@ -41,6 +41,7 @@ namespace mad::core {
             } break;
         }
         ImGui::SFML::Render(window);
+        return true;
     }
 
 
