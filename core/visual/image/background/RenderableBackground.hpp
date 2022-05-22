@@ -23,9 +23,15 @@ namespace mad::core {
     private:
         std::vector<sf::Texture> m_layers;
 
-        std::shared_ptr<Vec2d> m_position;
+        std::shared_ptr<Vec2d> m_camera_position;
+
+        std::vector<Vec2d> m_layers_positions;
+
+        Vec2d m_last_camera_position;
 
         std::shared_ptr<float> m_rotation;
+
+        Vec2d m_scale = {2.8, 2.8};
 
         std::vector<float> m_parallax_ratios;
     };

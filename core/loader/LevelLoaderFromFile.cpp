@@ -24,7 +24,7 @@ namespace mad::core {
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
-        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world);
 
         Entity::Id hero_id = create_world(world);
 
