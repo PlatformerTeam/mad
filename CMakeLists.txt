@@ -77,6 +77,15 @@ add_subdirectory(${DIRECTORY_SPDLOG})
 message(STATUS "Spdlog include: ${INCLUDE_SPDLOG}")
 message(STATUS "Spdlog library: ${LIBRARY_SPDLOG}")
 
+# PostgreSQL library
+set(DIRECTORY_PQXX ${PROJECT_SOURCE_DIR}/deps/libpqxx)
+set(INCLUDE_PQXX ${DIRECTORY_PQXX}/include)
+set(LIBRARY_PQXX pqxx)
+
+add_subdirectory(${DIRECTORY_PQXX})
+message(STATUS "PostgreSQL include: ${INCLUDE_PQXX}")
+message(STATUS "PostgreSQL library: ${LIBRARY_PQXX}")
+
 # Core library
 set(DIRECTORY_CORE ${PROJECT_SOURCE_DIR}/core)
 set(INCLUDE_CORE ${DIRECTORY_CORE})
@@ -90,6 +99,7 @@ message(STATUS "Core library: ${LIBRARY_CORE}")
 set(DIRECTORY_GAME ${PROJECT_SOURCE_DIR}/game)
 set(EXECUTABLE_GAME example)
 set(EXECUTABLE_GAME_RUNNER game_runner_example)
+set(EXECUTABLE_GAME_DATABASE game_database_example)
 
 add_subdirectory(${DIRECTORY_GAME})
 message(STATUS "Game executable: ${EXECUTABLE_GAME}")

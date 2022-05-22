@@ -31,6 +31,14 @@ namespace mad::core {
                 break;
             }
         }
+
+        float outline = 1;
+        m_physical_shape = sf::RectangleShape({static_image->get_width() - outline, static_image->get_height() - outline});
+        m_physical_shape.setOrigin((static_image->get_width() - outline) / 2,
+                                   (static_image->get_height() - outline) / 2);
+        m_physical_shape.setOutlineThickness(outline);
+        m_physical_shape.setOutlineColor({0, 255, 0});
+        m_physical_shape.setFillColor(sf::Color::Transparent);
     }
 
     bool RenderableStatic::render(sf::RenderWindow &window) {
@@ -59,6 +67,12 @@ namespace mad::core {
         window.draw(render_sprite);
 
         return true;
+    }
+
+    sf::RectangleShape RenderableStatic::get_physical_shape() noexcept {
+        m_physical_shape.setPosition(*m_position);
+        m_physical_shape.setRotation(*m_rotation);
+        return m_physical_shape;
     }
 
 }

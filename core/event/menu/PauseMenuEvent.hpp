@@ -6,7 +6,7 @@
 
 namespace mad::core {
 
-    struct PauseMenuEvent : public MenuEvent {
+    struct PauseMenuEvent : MenuEvent {
         enum class Type {
             Continue,
             ToMainMenu,

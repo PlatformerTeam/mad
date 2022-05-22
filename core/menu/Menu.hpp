@@ -17,6 +17,7 @@ namespace mad::core {
         enum class Type {
             Pause,
             Main,
+            Authorization,
         };
 
         sf::Clock m_delta_clock;
@@ -27,6 +28,8 @@ namespace mad::core {
         void process_menu_event(std::shared_ptr<MenuEvent> menu_event);
 
         void produce(EventDispatcher &dispatcher) override;
+
+        sf::RectangleShape get_physical_shape() noexcept override;
 
         virtual ~Menu() = default;
 

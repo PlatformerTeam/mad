@@ -2,12 +2,20 @@
 
 #include <utility>
 
-mad::core::RenderableSquare::RenderableSquare(std::shared_ptr<Shape> shape, std::shared_ptr<Vec2d> position,
+mad::core::RenderableSquare::RenderableSquare(std::shared_ptr<Square> shape, std::shared_ptr<Vec2d> position,
                                               std::shared_ptr<float> rotation)
                                               : m_shape(shape),
                                               m_position(std::move(position)),
                                               m_rotation(std::move(rotation)){
     is_active = shape->is_active;
+
+    float outline = 1;
+    m_physical_shape = sf::RectangleShape({shape->get_side_length() - outline, shape->get_side_length() - outline});
+    m_physical_shape.setOrigin((shape->get_side_length() - outline) / 2,
+                               (shape->get_side_length() - outline) / 2);
+    m_physical_shape.setOutlineThickness(outline);
+    m_physical_shape.setOutlineColor({0, 255, 0});
+    m_physical_shape.setFillColor(sf::Color::Transparent);
 }
 
 bool mad::core::RenderableSquare::render(sf::RenderWindow &window) {
@@ -27,4 +35,10 @@ bool mad::core::RenderableSquare::render(sf::RenderWindow &window) {
     window.draw(render_square);
 
     return true;
+}
+
+sf::RectangleShape mad::core::RenderableSquare::get_physical_shape() noexcept {
+    m_physical_shape.setPosition(*m_position);
+    m_physical_shape.setRotation(*m_rotation);
+    return m_physical_shape;
 }

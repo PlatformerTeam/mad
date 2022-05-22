@@ -10,8 +10,7 @@
 
 namespace mad::core {
 
-    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path),
-                                                                                  m_level_map(path / "map") {
+    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path) {
         std::ifstream input_config(path / "config.json");
         CHECK_THROW(input_config, FileDoesNotExist, "Config file does not exist");
         CHECK_THROW(m_level_map, FileDoesNotExist, "Map file does not exist");
@@ -26,7 +25,7 @@ namespace mad::core {
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
-        auto camera = std::make_shared<mad::core::Camera>(camera_position, world);
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
         controllers = {std::make_shared<mad::core::CameraController>(
                 camera)};
@@ -83,13 +82,14 @@ namespace mad::core {
     }
 
     Entity::Id LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
+        m_level_map = std::ifstream(m_level_directory / "map");
         float object_size = m_config_json["block"];
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
         Entity::Id hero_id = 0;
         std::string map_line;
         while (std::getline(m_level_map, map_line)) {
-            for (char object : map_line) {
+            for (char object: map_line) {
                 switch (m_objects[object]) {
                     case Objects::UnstableBlock: {
                         create_block(world,
@@ -150,7 +150,8 @@ namespace mad::core {
                 position,
                 0,
                 image_storage,
-                is_stable);
+                is_stable
+        );
     }
 
     Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
@@ -161,6 +162,13 @@ namespace mad::core {
 
         std::shared_ptr<ImageStorage> image_storage;
 
+        float physical_size_width = m_config_json["hero"]["animated"]["size_width"];
+        float physical_size_height = m_config_json["hero"]["animated"]["size_height"];
+        float size_scale = m_config_json["hero"]["animated"]["size_scale"];
+        float delta_x = m_config_json["hero"]["animated"]["delta_x"];
+        float delta_y = m_config_json["hero"]["animated"]["delta_y"];
+
+
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
                         {{ImageStorage::TypeAction::Idle,
@@ -168,26 +176,23 @@ namespace mad::core {
                                   source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
 
                                   m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
-                                  m_config_json["hero"]["animated"]["actions"]["idle"]["size_width"],
-                                  m_config_json["hero"]["animated"]["actions"]["idle"]["size_height"],
-                                  m_config_json["hero"]["animated"]["actions"]["idle"]["width_scale"],
-                                  m_config_json["hero"]["animated"]["actions"]["idle"]["height_scale"])},
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
                          {ImageStorage::TypeAction::Run,
                           std::make_shared<AnimatedImageSeveralFiles>(
                                   source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
 
                                   m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                  m_config_json["hero"]["animated"]["actions"]["run"]["size_width"],
-                                  m_config_json["hero"]["animated"]["actions"]["run"]["size_height"],
-                                  m_config_json["hero"]["animated"]["actions"]["run"]["width_scale"],
-                                  m_config_json["hero"]["animated"]["actions"]["run"]["height_scale"])}}));
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)}}));
 
         hero_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                false, false);
+                false, false
+        );
 
         return hero_id;
     }

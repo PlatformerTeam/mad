@@ -15,4 +15,8 @@ namespace mad::core {
         }
     }
 
+    sf::RectangleShape Menu::get_physical_shape() noexcept {
+        return sf::RectangleShape();
+    }
+
 }

@@ -1,7 +1,7 @@
 {
   "name" : "level_01",
   "animated_resources" : "../../game/resources/animated/",
-  "block" : 10.0,
+  "block" : 50.0,
   "camera": {
     "position" : {
       "x" : 10.0,
@@ -18,56 +18,21 @@
   "hero" : {
     "source" : "hero",
     "animated" : {
+      "size_width": 30,
+      "size_height": 50,
+      "size_scale": 0.2,
+      "delta_x" : 0,
+      "delta_y" : 0,
       "actions" : {
         "idle" : {
-          "source": "hero_idle",
+          "source": "idle",
           "type": "several_files",
-          "width_scale": 1,
-          "height_scale": 1,
-          "delta_time": 200,
-          "size_width": 10,
-          "size_height": 7.4,
-          "count_files": 4
+          "delta_time": 100
         },
         "run" : {
-          "source": "hero_run",
+          "source": "run",
           "type": "several_files",
-          "width_scale": 1,
-          "height_scale": 1,
-          "delta_time": 100,
-          "size_width": 10,
-          "size_height": 7.4,
-          "count_files": 6
-        },
-        "jump" : {
-          "source": "hero_jump",
-          "type": "several_files",
-          "width_scale": 1,
-          "height_scale": 1,
-          "delta_time": 30,
-          "size_width": 10,
-          "size_height": 7.4,
-          "count_files": 4
-        },
-        "fly_up" : {
-          "source": "hero_fly_up",
-          "type": "several_files",
-          "width_scale": 1,
-          "height_scale": 1,
-          "delta_time": 100,
-          "size_width": 10,
-          "size_height": 7.4,
-          "count_files": 1
-        },
-        "fall" : {
-          "source": "hero_fall",
-          "type": "several_files",
-          "width_scale": 1,
-          "height_scale": 1,
-          "delta_time": 100,
-          "size_width": 10,
-          "size_height": 7.4,
-          "count_files": 2
+          "delta_time": 100
         }
       }
     }
