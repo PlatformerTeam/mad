@@ -106,7 +106,7 @@ namespace mad::core {
 
         Entity::Id create_hero(std::shared_ptr<LocalWorld> world, Vec2d position);
 
-        Entity::Id create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position);
+        Entity::Id create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size);
 
     private:
         enum class Objects {

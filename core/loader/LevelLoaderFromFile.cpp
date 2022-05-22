@@ -199,4 +199,29 @@ namespace mad::core {
         return hero_id;
     }
 
+    Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
+        std::filesystem::path source("../../game/resources/static/");
+        if (is_stable) {
+            source /= static_cast<std::string>(m_config_json["texture"]["stable"]);
+        } else {
+            source /= static_cast<std::string>(m_config_json["texture"]["unstable"]);
+        }
+
+        auto image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<StaticImage>(source, block_size,
+                                                        block_size,
+                                                        StaticImage::TransformType::Tile)
+                         }}));
+
+        return world->create_physical_entity(
+                0,
+                position,
+                0,
+                image_storage,
+                true
+        );
+    }
+
 }
