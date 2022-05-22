@@ -1,4 +1,5 @@
 #include "LevelLoaderFromFile.hpp"
+#include <event/management/condition/CollisionCondition.hpp>
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
@@ -68,7 +69,7 @@ namespace mad::core {
                 controllers
         );
 
-        level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner));
+        level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner, std::make_shared<CollisionCondition>(keys[LevelLoaderFromFile::IdKeys::Hero], keys[LevelLoaderFromFile::IdKeys::FinishBlock])));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
 
         return level_runner;
@@ -101,7 +102,9 @@ namespace mad::core {
                     case Objects::FinishBlock: {
                         keys[LevelLoaderFromFile::IdKeys::FinishBlock] = create_finish_block(
                                 world,
-                                {current_position_x, current_position_y});
+                                {current_position_x, current_position_y},
+                                object_size);
+                        break;
                     }
                     case Objects::Hero: {
                         keys[LevelLoaderFromFile::IdKeys::Hero] = create_hero(world,
@@ -201,11 +204,7 @@ namespace mad::core {
 
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
         std::filesystem::path source("../../game/resources/static/");
-        if (is_stable) {
-            source /= static_cast<std::string>(m_config_json["texture"]["stable"]);
-        } else {
-            source /= static_cast<std::string>(m_config_json["texture"]["unstable"]);
-        }
+        source /= static_cast<std::string>(m_config_json["texture"]["finish"]);
 
         auto image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(

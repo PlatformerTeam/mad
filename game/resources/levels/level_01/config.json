@@ -13,7 +13,8 @@
   },
   "texture" : {
     "stable" : "brick.png",
-    "unstable" : "brick.png"
+    "unstable" : "brick.png",
+    "finish" : "exit.png"
   },
   "hero" : {
     "source" : "hero",
