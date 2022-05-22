@@ -6,6 +6,7 @@
 namespace mad::core {
 
     GameRunnerEventsHandler::GameRunnerEventsHandler(GameRunner &runner) : m_runner(runner) { }
+//    GameRunnerEventsHandler::GameRunnerEventsHandler(GameRunner &runner, std::shared_ptr<DatabaseClientStorageDriver> db_driver) : m_runner(runner), m_db_driver(std::move(db_driver)) { }
 
     void GameRunnerEventsHandler::handle(const Event &event) {
         SPDLOG_DEBUG("Handle game runner event");
@@ -18,6 +19,8 @@ namespace mad::core {
                     m_runner.stop();
                 } else if (game_runner_event.game_runner_event_type == GameRunnerEvent::Type::GameStop) {
                     m_runner.to_main_menu();
+                } else if (game_runner_event.game_runner_event_type == GameRunnerEvent::Type::UpdateProgress) {
+                    // TODO m_db_driver->update_progress(...)
                 }
             }
         }

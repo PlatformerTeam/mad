@@ -66,6 +66,7 @@ namespace mad::core {
 
     void LevelRunner::complete_level() {
         m_level_is_running = false;
+        m_global_event_dispatcher->dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::UpdateProgress));
     }
 
 }// namespace mad::core
