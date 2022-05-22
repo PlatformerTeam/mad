@@ -16,7 +16,7 @@ namespace mad::core {
         Entity::Id hero_id;
         std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher;
         float horizontal_velocity = 20;
-        float m_impulse = 3000;
+        float m_impulse = 2000;
     };
 }// namespace mad::core
 

@@ -15,7 +15,7 @@ void mad::core::Transition::handle(const mad::core::Event &event) {
         m_state_machine->has_made_transition = true;
         m_state_machine->m_previous_state_id = m_state_machine->m_current_state_id;
         m_state_machine->m_current_state_id = next_state;
-        //SPDLOG_DEBUG("current state {}", m_state_machine->m_current_state_id);
+        SPDLOG_DEBUG("current state {}", m_state_machine->m_current_state_id);
         for (auto &i : m_state_machine->m_transitions[current_state]) {
             i->is_active = false;
         }

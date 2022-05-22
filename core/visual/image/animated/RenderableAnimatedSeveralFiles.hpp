@@ -42,6 +42,8 @@ namespace mad::core {
         float m_delta_y;
 
         sf::RectangleShape m_physical_shape;
+
+        int debug_prev_sprite_num = 0;
     };
 
 }

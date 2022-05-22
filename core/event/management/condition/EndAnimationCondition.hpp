@@ -7,7 +7,7 @@
 namespace mad::core {
     struct EndAnimationCondition : Condition {
     public:
-        explicit EndAnimationCondition(Entity::Id m_entity_id, ImageStorage::TypeAction m_type_action);
+        explicit EndAnimationCondition(Entity::Id m_entity_id, ImageStorage::TypeAction m_type_action, int *stage = new int(0));
         bool is_triggered_by(const mad::core::Event &event) override;
         std::unordered_set<Event::Type> triggers() override;
         void on_start() override;
@@ -15,6 +15,7 @@ namespace mad::core {
     private:
         Entity::Id m_entity_id;
         ImageStorage::TypeAction m_type_action;
+        int* stage;
     };
 }// namespace mad::core
 
