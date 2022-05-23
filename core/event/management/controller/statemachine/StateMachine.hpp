@@ -37,6 +37,7 @@ namespace mad::core {
     struct Transition : EventHandler {
     public:
         Transition(StateMachine *m_state_machine, StateMachine::StateId current_state, StateMachine::StateId next_state, std::shared_ptr<Condition> m_condition);
+        Transition(StateMachine *m_state_machine, StateMachine::StateId current_state, StateMachine::StateId next_state, std::vector<std::shared_ptr<Condition>> m_conditions);
         std::unordered_set<Event::Type> handled_types() override;
         void handle(const Event &event) override;
         bool is_active = false;
@@ -45,7 +46,7 @@ namespace mad::core {
         StateMachine *m_state_machine;
         StateMachine::StateId current_state;
         StateMachine::StateId next_state;
-        std::shared_ptr<Condition> m_condition;
+        std::vector<std::shared_ptr<Condition>> m_conditions;
     };
 
 }// namespace mad::core

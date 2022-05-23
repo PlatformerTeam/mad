@@ -59,7 +59,7 @@ namespace mad::core {
         sf::Sprite render_sprite;
         if(debug_prev_name != debug_m_textures_names[m_current_frame]){
             debug_prev_name = debug_m_textures_names[m_current_frame];
-            SPDLOG_DEBUG("current frame name {}", debug_prev_name);
+            //SPDLOG_DEBUG("current frame name {}", debug_prev_name);
         }
         render_sprite.setTexture(m_textures[m_current_frame]);
 

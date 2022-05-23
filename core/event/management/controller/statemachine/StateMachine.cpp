@@ -7,11 +7,17 @@
 
 
 std::unordered_set<mad::core::Event::Type> mad::core::Transition::handled_types() {
-    return m_condition->triggers();
+    return m_conditions[0]->triggers();
 }
 void mad::core::Transition::handle(const mad::core::Event &event) {
     if (!is_active || m_state_machine->has_made_transition) return;
-    if (m_condition->is_triggered_by(event)) {
+    bool flag = true;
+    for(auto &i : m_conditions){
+        if(!i->is_triggered_by(event)){
+            flag = false;
+        }
+    }
+    if (flag) {
         m_state_machine->has_made_transition = true;
         m_state_machine->m_previous_state_id = m_state_machine->m_current_state_id;
         m_state_machine->m_current_state_id = next_state;
@@ -21,11 +27,15 @@ void mad::core::Transition::handle(const mad::core::Event &event) {
         }
         for (auto &i : m_state_machine->m_transitions[next_state]) {
             i->is_active = true;
-            i->m_condition->on_start();
+            for(auto &el : i->m_conditions){
+                el->on_start();
+            }
         }
     }
 }
-mad::core::Transition::Transition(mad::core::StateMachine *m_state_machine, mad::core::StateMachine::StateId current_state, mad::core::StateMachine::StateId next_state, std::shared_ptr<Condition> m_condition) : m_state_machine(m_state_machine), current_state(current_state), next_state(next_state), m_condition(std::move(m_condition)) {
+mad::core::Transition::Transition(mad::core::StateMachine *m_state_machine, mad::core::StateMachine::StateId current_state, mad::core::StateMachine::StateId next_state, std::shared_ptr<Condition> m_condition) : m_state_machine(m_state_machine), current_state(current_state), next_state(next_state), m_conditions({std::move(m_condition)}) {
+}
+mad::core::Transition::Transition(mad::core::StateMachine *m_state_machine, mad::core::StateMachine::StateId current_state, mad::core::StateMachine::StateId next_state, std::vector<std::shared_ptr<Condition>> m_conditions) : m_state_machine(m_state_machine), current_state(current_state), next_state(next_state), m_conditions(m_conditions)   {
 }
 
 

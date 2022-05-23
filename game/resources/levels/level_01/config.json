@@ -52,32 +52,32 @@
         "attack_1_beg" : {
           "source": "hero_attack_1_beg",
           "type": "several_files",
-          "delta_time": 2000
+          "delta_time": 30
         },
         "attack_1_end" : {
           "source": "hero_attack_1_end",
           "type": "several_files",
-          "delta_time": 2000
+          "delta_time": 30
         },
         "attack_2_beg" : {
           "source": "hero_attack_2_beg",
           "type": "several_files",
-          "delta_time": 2000
+          "delta_time": 30
         },
         "attack_2_end" : {
           "source": "hero_attack_2_end",
           "type": "several_files",
-          "delta_time": 2000
+          "delta_time": 30
         },
         "attack_3_beg" : {
           "source": "hero_attack_3_beg",
           "type": "several_files",
-          "delta_time": 2000
+          "delta_time": 30
         },
         "attack_3_end" : {
           "source": "hero_attack_3_end",
           "type": "several_files",
-          "delta_time": 2000
+          "delta_time": 30
         }
       }
     }
