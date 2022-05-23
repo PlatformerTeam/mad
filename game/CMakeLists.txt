@@ -31,6 +31,7 @@ function(game_executable EXECUTABLE_GAME_NAME EXECUTABLE_SOURCES)
             ${LIBRARY_SPDLOG}
             ${LIBRARY_BOX2D}
             ${LIBRARY_OPENGL}
+            ${LIBRARY_PQXX}
     )
 
 endfunction()

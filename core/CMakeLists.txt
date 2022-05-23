@@ -96,6 +96,7 @@ set(
         event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp
         event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp
         event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp
+        event/management/condition/CollisionCondition.hpp event/management/condition/CollisionCondition.cpp
         event/WorldUpdate.hpp event/WorldUpdate.cpp)
 
 add_library(

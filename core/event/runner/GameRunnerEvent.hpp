@@ -10,6 +10,7 @@ namespace mad::core {
         enum class Type {
             ApplicationFinish,
             GameStop,
+            UpdateProgress,
         };
 
         explicit GameRunnerEvent(Type new_type);

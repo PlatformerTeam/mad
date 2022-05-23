@@ -1,5 +1,5 @@
 {
-  "name" : "level_01",
+  "name" : "level_with_finish",
   "animated_resources" : "../../game/resources/animated/",
   "block" : 50.0,
   "camera": {
