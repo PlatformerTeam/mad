@@ -60,7 +60,7 @@ int main() {
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
-    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner));
+    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner, database_storage_driver));
     global_dispatcher->registry(std::make_shared<mad::core::AuthorizationMenuEventsHandler>(*game_runner));
 
     game_runner->run(*window);

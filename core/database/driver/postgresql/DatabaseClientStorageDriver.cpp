@@ -6,7 +6,11 @@ namespace mad::core {
     DatabaseClientStorageDriver::DatabaseClientStorageDriver(std::shared_ptr<Database> database) : m_database(std::move(database)) { }
 
     bool DatabaseClientStorageDriver::log_in(const std::string &username) const {
-        return m_database->is_user_exists(username);
+        if (m_database->is_user_exists(username)) {
+            m_username = username;
+            return true;
+        }
+        return false;
     }
 
     bool DatabaseClientStorageDriver::sign_up(const std::string &username) {
@@ -17,12 +21,12 @@ namespace mad::core {
         return false;
     }
 
-    std::size_t DatabaseClientStorageDriver::get_progress(const std::string &username) const {
-        return m_database->get_progress(username);
+    std::size_t DatabaseClientStorageDriver::get_progress() const {
+        return m_database->get_progress(m_username);
     }
 
-    void DatabaseClientStorageDriver::update_progress(const std::string &username) {
-        m_database->increment_progress(username);
+    void DatabaseClientStorageDriver::update_progress() {
+        m_database->increment_progress(m_username);
     }
 
 }

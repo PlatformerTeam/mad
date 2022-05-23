@@ -13,8 +13,7 @@ namespace mad::core {
 
     class GameRunnerEventsHandler : public EventHandler {
     public:
-        explicit GameRunnerEventsHandler(GameRunner& runner);
-//        explicit GameRunnerEventsHandler(GameRunner& runner, std::shared_ptr<DatabaseClientStorageDriver> db_driver);
+        explicit GameRunnerEventsHandler(GameRunner& runner, std::shared_ptr<DatabaseClientStorageDriver> db_driver);
 
         void handle(const Event &event) override;
 
@@ -22,7 +21,7 @@ namespace mad::core {
 
     private:
         GameRunner& m_runner;
-//        std::shared_ptr<DatabaseClientStorageDriver> m_db_driver;
+        std::shared_ptr<DatabaseClientStorageDriver> m_db_driver;
 
     };
 
