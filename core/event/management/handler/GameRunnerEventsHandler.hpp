@@ -1,7 +1,7 @@
 #ifndef MAD_GAMERUNNEREVENTSHANDLER_HPP
 #define MAD_GAMERUNNEREVENTSHANDLER_HPP
 
-#include <database/driver/postgresql/DatabaseClientStorageDriver.hpp>
+#include <database/driver/ClientStorageDriver.hpp>
 #include <event/management/handler/EventHandler.hpp>
 #include <runner/GameRunner.hpp>
 
@@ -13,7 +13,7 @@ namespace mad::core {
 
     class GameRunnerEventsHandler : public EventHandler {
     public:
-        explicit GameRunnerEventsHandler(GameRunner& runner, std::shared_ptr<DatabaseClientStorageDriver> db_driver);
+        explicit GameRunnerEventsHandler(GameRunner& runner, std::shared_ptr<ClientStorageDriver> db_driver);
 
         void handle(const Event &event) override;
 
@@ -21,7 +21,7 @@ namespace mad::core {
 
     private:
         GameRunner& m_runner;
-        std::shared_ptr<DatabaseClientStorageDriver> m_db_driver;
+        std::shared_ptr<ClientStorageDriver> m_db_driver;
 
     };
 

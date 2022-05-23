@@ -27,7 +27,7 @@ namespace mad::core {
                                  m_config_json["camera"]["position"]["y"]};
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
-        std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys = create_world(world);
+        auto keys = create_world(world);
 
         camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero]);
         level_dispatcher->registry(camera);

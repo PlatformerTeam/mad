@@ -5,7 +5,7 @@
 
 namespace mad::core {
 
-    GameRunnerEventsHandler::GameRunnerEventsHandler(GameRunner &runner, std::shared_ptr<DatabaseClientStorageDriver> db_driver) : m_runner(runner), m_db_driver(std::move(db_driver)) { }
+    GameRunnerEventsHandler::GameRunnerEventsHandler(GameRunner &runner, std::shared_ptr<ClientStorageDriver> db_driver) : m_runner(runner), m_db_driver(std::move(db_driver)) { }
 
     void GameRunnerEventsHandler::handle(const Event &event) {
         SPDLOG_DEBUG("Handle game runner event");
