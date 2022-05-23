@@ -27,6 +27,7 @@ namespace mad::core {
             CHECK_THROW(texture.loadFromFile(file_name),
                         FileDoesNotExist, "File with StaticImage doesn't exist");
             m_textures.push_back(texture);
+            debug_m_textures_names.push_back(file_name);
         }
 
         m_current_frame = m_textures.size();
@@ -56,9 +57,9 @@ namespace mad::core {
         }
 
         sf::Sprite render_sprite;
-        if(m_current_frame != debug_prev_sprite_num){
-            debug_prev_sprite_num = m_current_frame;
-            SPDLOG_DEBUG("current frame number {}", m_current_frame);
+        if(debug_prev_name != debug_m_textures_names[m_current_frame]){
+            debug_prev_name = debug_m_textures_names[m_current_frame];
+            SPDLOG_DEBUG("current frame name {}", debug_prev_name);
         }
         render_sprite.setTexture(m_textures[m_current_frame]);
 

@@ -44,6 +44,10 @@ namespace mad::core {
         sf::RectangleShape m_physical_shape;
 
         int debug_prev_sprite_num = 0;
+
+        std::vector<std::string> debug_m_textures_names;
+
+        std::string debug_prev_name;
     };
 
 }
