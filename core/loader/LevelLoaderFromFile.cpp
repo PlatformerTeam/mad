@@ -211,7 +211,7 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Tile)
+                                                        StaticImage::TransformType::Fit)
                          }}));
 
         return world->create_physical_entity(

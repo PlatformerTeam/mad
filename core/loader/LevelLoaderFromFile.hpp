@@ -129,10 +129,10 @@ namespace mad::core {
                 {'.', Objects::Empty},
                 {'#', Objects::StableBlock},
                 {'@', Objects::UnstableBlock},
-                {'E', Objects::FinishBlock},
+                {'F', Objects::FinishBlock},
                 {'H', Objects::Hero},
                 {'Z', Objects::Enemy1},
-                {'F', Objects::Enemy2}
+                {'E', Objects::Enemy2}
         };
     };
 }
