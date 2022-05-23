@@ -18,6 +18,8 @@ namespace mad::core {
         virtual void on_start() = 0;
 
         virtual ~Condition() = default;
+
+        bool triggered;
     };
 
 }

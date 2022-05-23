@@ -7,15 +7,24 @@
 
 
 std::unordered_set<mad::core::Event::Type> mad::core::Transition::handled_types() {
-    return m_conditions[0]->triggers();
+    std::unordered_set<mad::core::Event::Type> res;
+    for(auto const &i : m_conditions){
+        res.insert(i->triggers().begin(), i->triggers().end());
+    }
+    return res;
 }
 void mad::core::Transition::handle(const mad::core::Event &event) {
     if (!is_active || m_state_machine->has_made_transition) return;
+    for(auto &i : m_conditions){
+        if(i->triggers().find(event.type) != i->triggers().end()){
+            if(i->is_triggered_by(event)){
+                i->triggered = true;
+            }
+        }
+    }
     bool flag = true;
     for(auto &i : m_conditions){
-        if(!i->is_triggered_by(event)){
-            flag = false;
-        }
+        flag &= i->triggered;
     }
     if (flag) {
         m_state_machine->has_made_transition = true;
@@ -42,6 +51,11 @@ mad::core::Transition::Transition(mad::core::StateMachine *m_state_machine, mad:
 /// StateMachine
 void mad::core::StateMachine::control() {
     //SPDLOG_DEBUG("current state {}", m_current_state_id);
+    for(auto &i : m_transitions[m_current_state_id]){
+        for(auto &j : i->m_conditions){
+            j->triggered = false;
+        }
+    }
     has_made_transition = false;
     m_states[m_current_state_id]->control();
 }
@@ -59,6 +73,11 @@ void mad::core::StateMachine::set_initial_state(mad::core::StateMachine::StateId
 }
 void mad::core::StateMachine::add_transition(mad::core::StateMachine::StateId state_id_from, mad::core::StateMachine::StateId state_id_to, std::shared_ptr<Condition> transition_condition) {
     auto transition = std::make_shared<Transition>(this, state_id_from, state_id_to, transition_condition);
+    m_transitions[state_id_from].push_back(transition);
+    m_dispatcher->registry(transition);
+}
+void mad::core::StateMachine::add_transition(mad::core::StateMachine::StateId state_id_from, mad::core::StateMachine::StateId state_id_to, std::vector<std::shared_ptr<Condition>> transition_conditions) {
+    auto transition = std::make_shared<Transition>(this, state_id_from, state_id_to, transition_conditions);
     m_transitions[state_id_from].push_back(transition);
     m_dispatcher->registry(transition);
 }

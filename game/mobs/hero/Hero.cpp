@@ -6,6 +6,7 @@
 #include "event/management/condition/KeyReleasedCondition.hpp"
 #include "event/management/condition/LastStateCondition.hpp"
 #include "event/management/condition/SensorCondition.hpp"
+#include "event/management/condition/SensorEndCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
 #include "event/management/controller/Attack.hpp"
@@ -180,9 +181,10 @@ mad::core::Hero::Hero(std::shared_ptr<LocalWorld> world, Vec2d position, json m_
     machine->add_transition(fly_up_left, fall_idle, std::make_shared<mad::core::FallCondition>(world, hero_id, 0));
     machine->add_transition(fly_up_idle, fall_idle, std::make_shared<mad::core::FallCondition>(world, hero_id, 0));
     machine->add_transition(fly_up_right, fall_idle, std::make_shared<mad::core::FallCondition>(world, hero_id, 0));
-    machine->add_transition(ground_left, fall_idle, std::make_shared<mad::core::FallCondition>(world, hero_id, 3));
-    machine->add_transition(ground_idle, fall_idle, std::make_shared<mad::core::FallCondition>(world, hero_id, 3));
-    machine->add_transition(ground_right, fall_idle, std::make_shared<mad::core::FallCondition>(world, hero_id, 3));
+
+    machine->add_transition(ground_left, fall_idle, std::vector<std::shared_ptr<mad::core::Condition>>{std::make_shared<mad::core::FallCondition>(world, hero_id, 0.1), std::make_shared<mad::core::SensorEndCondition>(hero_id, 0.2)});
+    machine->add_transition(ground_idle, fall_idle, std::vector<std::shared_ptr<mad::core::Condition>>{std::make_shared<mad::core::FallCondition>(world, hero_id, 0.1), std::make_shared<mad::core::SensorEndCondition>(hero_id, 0.2)});
+    machine->add_transition(ground_right, fall_idle, std::vector<std::shared_ptr<mad::core::Condition>>{std::make_shared<mad::core::FallCondition>(world, hero_id, 0.1), std::make_shared<mad::core::SensorEndCondition>(hero_id, 0.2)});
 
     machine->add_transition(fall_idle, fall_left, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));
     machine->add_transition(fall_idle, fall_right, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));

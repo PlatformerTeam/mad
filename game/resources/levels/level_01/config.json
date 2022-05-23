@@ -27,7 +27,7 @@
         "idle" : {
           "source": "hero_idle",
           "type": "several_files",
-          "delta_time": 200000
+          "delta_time": 200
         },
         "run" : {
           "source": "hero_run",

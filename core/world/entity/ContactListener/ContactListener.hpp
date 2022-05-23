@@ -2,6 +2,7 @@
 #define MAD_CONTACTLISTENER_HPP
 
 #include "event/physics/SensorCollision.hpp"
+#include "event/physics/SensorCollisionEnd.hpp"
 #include "spdlog/spdlog.h"
 #include <box2d/b2_world_callbacks.h>
 #include <common/Cast.hpp>
@@ -31,15 +32,11 @@ namespace mad::core{
 
         void EndContact(b2Contact* contact) override{
 
-            /*//check if fixture A was a ball
-            void* bodyUserData = contact->GetFixtureA()->GetBody()->GetUserData();
-            if ( bodyUserData )
-                static_cast<Ball*>( bodyUserData )->endContact();
-
-            //check if fixture B was a ball
-            bodyUserData = contact->GetFixtureB()->GetBody()->GetUserData();
-            if ( bodyUserData )
-                static_cast<Ball*>( bodyUserData )->endContact();*/
+            ///sensors
+            b2FixtureUserData fixture_data_A = contact->GetFixtureA()->GetUserData();
+            b2FixtureUserData fixture_data_B = contact->GetFixtureB()->GetUserData();
+            if(static_cast<int>(fixture_data_A.pointer) != 0)  dispatcher.dispatch(std::make_shared<SensorCollisionEnd>(fixture_data_A.pointer));
+            if(static_cast<int>(fixture_data_B.pointer) != 0)  dispatcher.dispatch(std::make_shared<SensorCollisionEnd>(fixture_data_B.pointer));
 
         }
 

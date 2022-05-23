@@ -18,7 +18,8 @@ namespace mad::core {
             Runner,
             WorldUpdate,
             EndOfRenderAction,
-            SensorCollision
+            SensorCollision,
+            SensorCollisionEnd,
         };
 
         explicit Event(Type new_type);
