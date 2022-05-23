@@ -114,6 +114,8 @@ namespace mad::core {
             Vec2d position = entity.get_image_position();
             if (!m_last_position.has_value()) {
                 m_last_position = position;
+                m_position = position;
+                m_view.setCenter(m_position);
             }
             switch (m_type) {
                 case FollowType::Forward: {
