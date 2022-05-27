@@ -106,6 +106,8 @@ namespace mad::core {
 
         Entity::Id create_hero(std::shared_ptr<LocalWorld> world, Vec2d position);
 
+        void create_background(std::shared_ptr<LocalWorld> world);
+
         Entity::Id create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size);
 
     private:

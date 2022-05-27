@@ -82,6 +82,9 @@ namespace mad::core {
         float current_position_y = object_size / 2;
         std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys;
         std::string map_line;
+
+        create_background(world);
+
         while (std::getline(m_level_map, map_line)) {
             for (char object: map_line) {
                 switch (m_objects[object]) {
