@@ -1,6 +1,7 @@
 #include "LevelRunnerEventsHandler.hpp"
 
 #include <event/runner/LevelRunnerEvent.hpp>
+#include <event/physics/Collision.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 
@@ -9,7 +10,7 @@
 
 namespace mad::core {
 
-    LevelRunnerEventsHandler::LevelRunnerEventsHandler(LevelRunner &runner) : m_runner(runner) { }
+    LevelRunnerEventsHandler::LevelRunnerEventsHandler(LevelRunner &runner, std::shared_ptr<Condition> finish_condition) : m_runner(runner), m_finish_condition(std::move(finish_condition)) { }
 
     void LevelRunnerEventsHandler::handle(const Event &event) {
         //SPDLOG_DEBUG("Handle level runner event");
@@ -35,9 +36,22 @@ namespace mad::core {
                 }
             }
         }
+        if (m_finish_condition->triggers().count(event.type)) {
+            if (event.type == Event::Type::Collision) {
+                const auto &finisher_event = const_cast_to<Collision>(event);
+                if (m_finish_condition->is_triggered_by(finisher_event)) {
+                    m_runner.complete_level();
+                }
+            }
+        }
     }
 
     std::unordered_set<Event::Type> LevelRunnerEventsHandler::handled_types() {
-        return {Event::Type::KeyPressed, Event::Type::KeyHeld, Event::Type::Runner};
+        std::unordered_set<Event::Type> runner_types{Event::Type::KeyPressed, Event::Type::KeyHeld, Event::Type::Runner};
+        std::unordered_set<Event::Type> condition_types = m_finish_condition->triggers();
+        for (const auto &c : condition_types) {
+            runner_types.insert(c);
+        }
+        return runner_types;
     }
 }

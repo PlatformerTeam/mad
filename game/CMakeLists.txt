@@ -31,6 +31,7 @@ function(game_executable EXECUTABLE_GAME_NAME EXECUTABLE_SOURCES)
             ${LIBRARY_SPDLOG}
             ${LIBRARY_BOX2D}
             ${LIBRARY_OPENGL}
+            ${LIBRARY_PQXX}
     )
 
 endfunction()
@@ -38,3 +39,4 @@ endfunction()
 game_executable(${EXECUTABLE_GAME} example.cpp)
 #game_executable(${EXECUTABLE_GAME_RUNNER} game_runner_example.cpp)
 game_executable(${EXECUTABLE_GAME_RUNNER} game_with_default_loader_example.cpp)
+game_executable(${EXECUTABLE_GAME_DATABASE} game_database_example.cpp)
