@@ -136,7 +136,7 @@ namespace mad::core {
     void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world,
                                            Vec2d position, float block_size, bool is_stable) {
 
-        std::filesystem::path source("../../game/resources/static/");
+        std::filesystem::path source("../../resources/static/");
         if (is_stable) {
             source /= static_cast<std::string>(m_config_json["texture"]["stable"]);
         } else {
@@ -206,7 +206,7 @@ namespace mad::core {
     }
 
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
-        std::filesystem::path source("../../game/resources/static/");
+        std::filesystem::path source("../../resources/static/");
         source /= static_cast<std::string>(m_config_json["texture"]["finish"]);
 
         auto image_storage = std::make_shared<ImageStorage>(
