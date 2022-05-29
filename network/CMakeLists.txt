@@ -37,5 +37,5 @@ function(network_executable EXECUTABLE_NETWORK_NAME EXECUTABLE_SOURCES)
 
 endfunction()
 
-network_executable(${EXECUTABLE_SERVER} server/server.cpp)
-network_executable(${EXECUTABLE_CLIENT} client/client.cpp)
+network_executable(${EXECUTABLE_SIMPLE_SERVER} server/simple-server.cpp)
+network_executable(${EXECUTABLE_SIMPLE_CLIENT} client/simple-client.cpp)
