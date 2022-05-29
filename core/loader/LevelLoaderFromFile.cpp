@@ -237,7 +237,8 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<BackgroundImage>(
                                   source,
-                                  parallax_ratios
+                                  parallax_ratios,
+                                  m_config_json["background"]["scale"]
                                   )
                         }}
                 )

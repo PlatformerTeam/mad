@@ -6,11 +6,12 @@
 namespace mad::core {
 
 
-    RenderableBackground::RenderableBackground(const std::shared_ptr<BackgroundImage> &background,
-                                               std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation) :
+    RenderableBackground::RenderableBackground(const std::shared_ptr<BackgroundImage> &background, std::shared_ptr<Vec2d> position,
+                                               std::shared_ptr<float> rotation) :
                                                m_camera_position(std::move(position)), m_rotation(std::move(rotation)),
                                                m_parallax_ratios(background->get_parallax_ratios()),
-                                               m_last_camera_position(*m_camera_position) {
+                                               m_last_camera_position(*m_camera_position),
+                                               m_scale({background->get_scale(), background->get_scale()}) {
         is_active = background->is_active;
 
         std::set<std::string> sorted_files;
@@ -41,8 +42,8 @@ namespace mad::core {
                 background.setPosition(m_layers_positions[i].get_x() + (*m_camera_position - m_last_camera_position).get_x() * ratio, m_camera_position->get_y());
             }
             m_layers_positions[i] += {(*m_camera_position - m_last_camera_position).get_x() * ratio, (*m_camera_position - m_layers_positions[i]).get_y()};
-            background.setTextureRect({0, 0, static_cast<int>(window.getSize().x) * 3, static_cast<int>(window.getSize().y)});
-            background.setOrigin(static_cast<float>(window.getSize().x) / 2, static_cast<float>(window.getSize().y) / 4); //static_cast<float>(window.getSize().y) / 2);
+            background.setTextureRect({0, 0, static_cast<int>(background.getLocalBounds().width) * 100, static_cast<int>(background.getLocalBounds().height)});
+            background.setOrigin(background.getLocalBounds().width / 2, background.getLocalBounds().height / 2); //static_cast<float>(window.getSize().y) / 2);
             window.draw(background);
         }
         m_last_camera_position = *m_camera_position;
