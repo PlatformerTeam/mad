@@ -114,8 +114,8 @@ message(STATUS "Game-runner executable ${EXECUTABLE_GAME_RUNNER}")
 
 # Network binaries
 set(DIRECTORY_NETWORK ${PROJECT_SOURCE_DIR}/network)
-set(EXECUTABLE_SERVER server)
-set(EXECUTABLE_CLIENT client)
+set(EXECUTABLE_SIMPLE_SERVER simple-server)
+set(EXECUTABLE_SIMPLE_CLIENT simple-client)
 
 add_subdirectory(${DIRECTORY_NETWORK})
 message(STATUS "Server executable: ${EXECUTABLE_SERVER}")
