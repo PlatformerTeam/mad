@@ -24,12 +24,16 @@ namespace mad::core {
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
+        float camera_smoothness = m_config_json["camera"]["smoothness"];
+        Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ?
+                                         Camera::FollowType::Forward : Camera::FollowType::Backward;
+        float minimal_distance = m_config_json["camera"]["minimal_distance"];
+
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
-        camera->set_follow_type(Camera::FollowType::Forward, 50);
 
         Entity::Id hero_id = create_world(world);
 
-        camera->turn_on(*level_dispatcher, hero_id);
+        camera->turn_on(*level_dispatcher, hero_id, camera_smoothness, camera_type, minimal_distance);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, hero_id));
 

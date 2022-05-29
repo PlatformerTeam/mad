@@ -9,7 +9,9 @@
     },
     "angle": 15.0,
     "smoothness": 0.6,
-    "zoom": 10.5
+    "zoom": 10.5,
+    "follow_type" : "forward",
+    "minimal_distance" : 3.0
   },
   "texture" : {
     "stable" : "brick.png",

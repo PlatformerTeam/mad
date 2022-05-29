@@ -47,7 +47,8 @@ namespace mad::core {
 
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode = false);
 
-        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
+        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id, float smoothness,
+                     FollowType type = FollowType::Forward, float minimal_distance = 1);
 
         bool render(sf::RenderWindow &window) override;
 
@@ -84,11 +85,11 @@ namespace mad::core {
 
         std::shared_ptr<World> m_world;
 
-        float m_smoothness = 0.5;
+        float m_smoothness;
 
-        FollowType m_type = FollowType::Backward;
+        FollowType m_type;
 
-        float m_minimal_distant = 1.0f;
+        float m_minimal_distant;
 
         bool m_is_debug_mode;
 
