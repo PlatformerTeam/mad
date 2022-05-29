@@ -1,4 +1,5 @@
 #include "LevelLoaderFromFile.hpp"
+#include "event/management/controller/statemachine/HeroStateMachine.hpp"
 #include <../../game/mobs/hero/Hero.hpp>
 #include <event/management/condition/KeyDownCondition.hpp>
 #include <event/management/condition/KeyPressedCondition.hpp>
@@ -106,8 +107,8 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Hero: {
-                        Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
-                        hero_id = hero.get_hero_id();
+                       // Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
+                        hero_id = create_hero(world, {current_position_x, current_position_y});
                         break;
                     }
                     case Objects::Enemy1: {
@@ -158,8 +159,6 @@ namespace mad::core {
         std::filesystem::path source(m_config_json["animated_resources"]);
         source /= m_config_json["hero"]["source"];
 
-        Entity::Id hero_id = 0;
-
         std::shared_ptr<ImageStorage> image_storage;
 
         float physical_size_width = m_config_json["hero"]["animated"]["size_width"];
@@ -184,15 +183,90 @@ namespace mad::core {
 
                                   m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
-                                  delta_x, delta_y)}}));
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Jump,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["jump"]["source"],
 
-        hero_id = world->create_physical_entity(
+                                  m_config_json["hero"]["animated"]["actions"]["jump"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Fly_up,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["fly_up"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["fly_up"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Fall,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["fall"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["fall"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_1_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_1_beg"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_1_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_1_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_1_end"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_1_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_2_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_2_beg"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_2_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_2_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_2_end"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_2_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_3_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_3_beg"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_3_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_3_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_3_end"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_3_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)}
+                        }
+                        ));
+
+        Entity::Id hero_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
                 false, false
         );
+
+        /// add sensor
+        auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(hero_id));
+        m_entity->add_sensor({0, 6}, 2.65, 0.05);
+
+        float m_impulse = 2000;
+        float horizontal_velocity = 20;
+
+        auto machine = std::make_shared<mad::core::HeroStateMachine>(world, position, hero_id, level_dispatcher, m_impulse, horizontal_velocity);
+        controllers.push_back(machine);
 
         return hero_id;
     }
