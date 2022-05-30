@@ -14,6 +14,8 @@
 #include <visual/image/animated/RenderableAnimatedOneFile.hpp>
 #include <visual/image/animated/RenderableAnimatedSeveralFiles.hpp>
 #include <visual/image/animated/AnimatedImageSeveralFiles.hpp>
+#include <visual/image/background/BackgroundImage.hpp>
+#include <visual/image/background/RenderableBackground.hpp>
 #include <visual/image/shape/square/RenderableSquare.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
@@ -79,7 +81,7 @@ namespace mad::core {
 
         sf::View m_view;
 
-        Vec2d m_position;
+        std::shared_ptr<Vec2d> m_position;
 
         std::optional<Vec2d> m_last_position;
 

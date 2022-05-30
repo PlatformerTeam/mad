@@ -13,7 +13,8 @@ namespace mad::core {
             Shape,
             Static,
             AnimatedOneFile,
-            AnimatedSeveralFiles
+            AnimatedSeveralFiles,
+            Background
         };
 
         enum class Orientation {

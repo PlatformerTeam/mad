@@ -97,6 +97,20 @@ namespace mad::core {
                     });
                     break;
                 }
+                case Image::Type::Background: {
+                    std::shared_ptr<BackgroundImage> background_image =
+                            pointer_cast_to<BackgroundImage>(image);
+                    RenderableBackground renderable_background(background_image,
+                                                               m_position,
+                                                               positional_appearance.get_rotation());
+
+                    insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                                RenderableWithId(std::make_shared<RenderableBackground>(renderable_background),
+                                                                 positional_appearance.get_entity_id())
+                    });
+
+                    break;
+                }
             }
         }
     }
@@ -106,7 +120,7 @@ namespace mad::core {
     }
 
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode)
-            : m_position(initial_position),
+            : m_position(std::make_shared<Vec2d>(initial_position)),
               m_world(std::move(world)),
               m_view(initial_position, {640, 480}),
               m_is_debug_mode(is_debug_mode) {
@@ -118,30 +132,30 @@ namespace mad::core {
             Vec2d position = entity.get_image_position();
             if (!m_last_position.has_value()) {
                 m_last_position = position;
-                m_position = position;
-                m_view.setCenter(position);
+                *m_position = position;
+                m_view.setCenter(*m_position);
             }
             switch (m_type) {
                 case FollowType::Forward: {
                     float move_x;
-                    float move_y = (position - m_position).get_y();
+                    float move_y = (position - *m_position).get_y();
                     switch (entity.get_orientation()) {
                         case Image::Orientation::Right: {
-                            if (m_position.get_x() < position.get_x() + m_minimal_distant) {
-                                move_x = (-m_position.get_x() + (position.get_x() + m_minimal_distant)) * (m_smoothness);
+                            if (m_position->get_x() < position.get_x() + m_minimal_distant) {
+                                move_x = (-m_position->get_x() + (position.get_x() + m_minimal_distant)) * (m_smoothness);
                             } else {
                                 move_x = std::min(
-                                        (m_position.get_x() - (position.get_x() + m_minimal_distant)) * m_smoothness,
+                                        (m_position->get_x() - (position.get_x() + m_minimal_distant)) * m_smoothness,
                                         (position - m_last_position.value()).get_x() * m_smoothness);
                             }
                             break;
                         }
                         case Image::Orientation::Left: {
-                            if (m_position.get_x() > position.get_x() - m_minimal_distant) {
-                                move_x = (-m_position.get_x() + (position.get_x() - m_minimal_distant)) * (m_smoothness);
+                            if (m_position->get_x() > position.get_x() - m_minimal_distant) {
+                                move_x = (-m_position->get_x() + (position.get_x() - m_minimal_distant)) * (m_smoothness);
                             } else {
                                 move_x = std::max(
-                                        (m_position.get_x() - (position.get_x() - m_minimal_distant)) * m_smoothness,
+                                        (m_position->get_x() - (position.get_x() - m_minimal_distant)) * m_smoothness,
                                         (position - m_last_position.value()).get_x() * m_smoothness);
                             }
                             break;
@@ -150,12 +164,12 @@ namespace mad::core {
                     //move_x = (position.get_x() - m_position.get_x()) * (2 - m_smoothness);
                     //std::cout << m_position.get_x() << " " << position.get_x() << '\n';
                     m_view.move(move_x, move_y);
-                    m_position += {move_x, move_y};
+                    *m_position += {move_x, move_y};
                     break;
                 }
                 case FollowType::Backward : {
-                    m_view.move((position - m_position) * m_smoothness);
-                    m_position += (position - m_position) * m_smoothness;
+                    m_view.move((position - *m_position) * m_smoothness);
+                    *m_position += (position - *m_position) * m_smoothness;
                     break;
                 }
             }
@@ -163,14 +177,13 @@ namespace mad::core {
         }
     }
 
-
     sf::View Camera::get_view() const noexcept {
         return m_view;
     }
 
     void Camera::set_position(const Vec2d &position) {
-        m_position = position;
-        m_view.setCenter(m_position);
+        *m_position = position;
+        m_view.setCenter(*m_position);
     }
 
     void Camera::set_rotation(float angle) {
