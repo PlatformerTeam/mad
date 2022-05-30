@@ -21,7 +21,10 @@ namespace mad::core {
 
     class NetworkClientStorageDriver : public ClientStorageDriver {
     public:
-        explicit NetworkClientStorageDriver() : m_client("localhost", 8080) { }
+        explicit NetworkClientStorageDriver() : m_client("localhost", 8080) {
+            auto res = m_client.Get("/connection");
+            SPDLOG_DEBUG("Connection request result:\n\tStatus: " + std::to_string(res->status) + "\n\tMessage: " + res->body);
+        }
 
         bool log_in(const std::string &username) const override {
             auto res = m_client.Post("/user/login", httplib::Params{
