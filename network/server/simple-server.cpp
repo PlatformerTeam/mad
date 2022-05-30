@@ -3,6 +3,7 @@
 #include <iostream>
 #include <httplib.h>
 #include <thread>
+#include <vector>
 
 #include <imgui.h>
 #include <imgui-SFML.h>
@@ -16,17 +17,22 @@ int main() {
     httplib::Server svr;
     mad::core::Database db;
 
-    svr.Get("/connection", [](const httplib::Request &req, httplib::Response &res) {
+    std::vector<std::string> logs;
+    const char *log;
+
+    svr.Get("/connection", [&logs](const httplib::Request &req, httplib::Response &res) {
         res.status = 200;
         res.body = "Connected user port -- " + std::to_string(req.remote_port);
+        logs.push_back(res.body);
     });
 
-    svr.Post("/user/login", [&db](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/login", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
                 res.status = 200;
                 res.body = "OK";
+                logs.push_back("User " + std::to_string(req.remote_port) + " login as " + username);
             } else {
                 res.status = 404;
                 res.body = "User doesn\'t exists";
@@ -37,12 +43,13 @@ int main() {
         }
     });
 
-    svr.Post("/user/signup", [&db](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/signup", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
                 res.status = 404;
                 res.body = "User already exists";
+                logs.push_back("Register new user " + username + " from port " + std::to_string(req.remote_port));
             } else {
                 db.registry_user(username);
                 res.status = 200;
@@ -54,12 +61,13 @@ int main() {
         }
     });
 
-    svr.Post("/user/progress", [&db](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/progress", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
                 res.status = 200;
                 res.body = std::to_string(db.get_progress(username));
+                logs.push_back("Send progress to user " + username);
             } else {
                 res.status = 404;
                 res.body = "User doesn\'t exists";
@@ -70,13 +78,14 @@ int main() {
         }
     });
 
-    svr.Post("/user/increment-progress", [&db](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/increment-progress", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
                 res.status = 200;
                 res.body = "OK";
                 db.increment_progress(username);
+                logs.push_back("Increment progress for user " + username);
             } else {
                 res.status = 404;
                 res.body = "User doesn\'t exists";
@@ -116,12 +125,14 @@ int main() {
                 std::thread([&svr]() mutable {
                     svr.listen("localhost", 8080);
                 }).detach();
+                logs.emplace_back("Server has started");
             }
         }
 
         if (ImGui::Button("Stop server")) {
             if (svr.is_running()) {
                 svr.stop();
+                logs.emplace_back("Server has stopped");
             }
         }
 
@@ -130,6 +141,15 @@ int main() {
             if (svr.is_running()) {
                 svr.stop();
             }
+        }
+
+        {
+            ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+            ImGui::BeginChild("Child", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true, window_flags);
+            for (int i = 0; i < logs.size(); ++i) {
+                ImGui::Text(logs[i].c_str(), i);
+            }
+            ImGui::EndChild();
         }
 
         ImGui::End();
