@@ -1,9 +1,9 @@
 #include <database/database/Database.hpp>
 
-#include <iostream>
 #include <httplib.h>
 #include <thread>
 #include <vector>
+#include <mutex>
 
 #include <imgui.h>
 #include <imgui-SFML.h>
@@ -17,16 +17,18 @@ int main() {
     httplib::Server svr;
     mad::core::Database db;
 
+    std::mutex locker;
     std::vector<std::string> logs;
-    const char *log;
 
-    svr.Get("/connection", [&logs](const httplib::Request &req, httplib::Response &res) {
+    svr.Get("/connection", [&logs, &locker](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
         res.status = 200;
-        res.body = "Connected user port -- " + std::to_string(req.remote_port);
-        logs.push_back(res.body);
+        res.body = "Connection successful";
+        logs.push_back("Connected user port -- " + std::to_string(req.remote_port));
     });
 
-    svr.Post("/user/login", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/login", [&db, &logs, &locker](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
@@ -43,7 +45,8 @@ int main() {
         }
     });
 
-    svr.Post("/user/signup", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/signup", [&db, &logs, &locker](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
@@ -61,7 +64,8 @@ int main() {
         }
     });
 
-    svr.Post("/user/progress", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/progress", [&db, &logs, &locker](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
@@ -78,7 +82,8 @@ int main() {
         }
     });
 
-    svr.Post("/user/increment-progress", [&db, &logs](const httplib::Request &req, httplib::Response &res) {
+    svr.Post("/user/increment-progress", [&db, &logs, &locker](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
         if (req.has_param("username")) {
             auto username = req.get_param_value("username");
             if (db.is_user_exists(username)) {
@@ -144,6 +149,7 @@ int main() {
         }
 
         {
+            std::unique_lock lock(locker);
             ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
             ImGui::BeginChild("Child", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true, window_flags);
             for (int i = 0; i < logs.size(); ++i) {
