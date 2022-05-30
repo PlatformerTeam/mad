@@ -46,7 +46,7 @@ int main() {
             } else {
                 db.registry_user(username);
                 res.status = 200;
-                res.body = "User doesn\'t exists";
+                res.body = "User " + username + " is registered";
             }
         } else {
             res.status = 404;
@@ -87,10 +87,6 @@ int main() {
         }
     });
 
-    std::thread([&svr]() mutable {
-        svr.listen("localhost", 8080);
-    }).detach();
-
     sf::RenderWindow window(sf::VideoMode(640, 480), "MAD Server");
     ImGui::SFML::Init(window);
     window.setFramerateLimit(120);
@@ -102,14 +98,40 @@ int main() {
 
             if (event.type == sf::Event::Closed) {
                 window.close();
-                svr.stop();
+                if (svr.is_running()) {
+                    svr.stop();
+                }
             }
         }
 
         ImGui::SFML::Update(window, clock.restart());
 
-        ImGui::Begin("Window");
-        ImGui::Text("Hello");
+        ImGui::SetNextWindowSize(ImVec2(window.getSize().x, window.getSize().y));
+        ImGui::SetNextWindowPos({0, 0});
+        ImGui::Begin("Server util", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+
+
+        if (ImGui::Button("Start server")) {
+            if (!svr.is_running()) {
+                std::thread([&svr]() mutable {
+                    svr.listen("localhost", 8080);
+                }).detach();
+            }
+        }
+
+        if (ImGui::Button("Stop server")) {
+            if (svr.is_running()) {
+                svr.stop();
+            }
+        }
+
+        if (ImGui::Button("Quit")) {
+            window.close();
+            if (svr.is_running()) {
+                svr.stop();
+            }
+        }
+
         ImGui::End();
 
         window.clear();
