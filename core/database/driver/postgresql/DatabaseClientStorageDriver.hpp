@@ -17,12 +17,13 @@ namespace mad::core {
 
         bool sign_up(const std::string &username) override;
 
-        std::size_t get_progress(const std::string &username) const override;
+        std::size_t get_progress() const override;
 
-        void update_progress(const std::string &username) override;
+        void update_progress() override;
 
     private:
         std::shared_ptr<Database> m_database;
+        mutable std::string m_username;
 
     };
 

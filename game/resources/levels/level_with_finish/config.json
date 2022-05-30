@@ -1,5 +1,5 @@
 {
-  "name" : "level_01",
+  "name" : "level_with_finish",
   "animated_resources" : "../../game/resources/animated/",
   "block" : 50.0,
   "camera": {
@@ -9,9 +9,7 @@
     },
     "angle": 15.0,
     "smoothness": 0.6,
-    "zoom": 10.5,
-    "follow_type" : "forward",
-    "minimal_distance" : 3.0
+    "zoom": 10.5
   },
   "texture" : {
     "stable" : "brick.png",

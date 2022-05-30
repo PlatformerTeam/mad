@@ -19,11 +19,11 @@ namespace mad::core {
         return false;
     }
 
-    std::size_t OfflineClientStorageDriver::get_progress(const std::string &username) const {
+    std::size_t OfflineClientStorageDriver::get_progress() const {
         return m_level_counter;
     }
 
-    void OfflineClientStorageDriver::update_progress(const std::string &username) {
+    void OfflineClientStorageDriver::update_progress() {
         m_level_counter++;
     }
 

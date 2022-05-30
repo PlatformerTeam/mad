@@ -1,6 +1,7 @@
 #ifndef MAD_LEVELRUNNEREVENTSHANDLER_HPP
 #define MAD_LEVELRUNNEREVENTSHANDLER_HPP
 
+#include <event/management/condition/Condition.hpp>
 #include <event/management/handler/EventHandler.hpp>
 #include <runner/LevelRunner.hpp>
 
@@ -11,7 +12,7 @@ namespace mad::core {
 
     class LevelRunnerEventsHandler : public EventHandler {
     public:
-        explicit LevelRunnerEventsHandler(LevelRunner& runner);
+        explicit LevelRunnerEventsHandler(LevelRunner& runner, std::shared_ptr<Condition> finish_condition);
 
         void handle(const Event &event) override;
 
@@ -19,6 +20,7 @@ namespace mad::core {
 
     private:
         LevelRunner& m_runner;
+        std::shared_ptr<Condition> m_finish_condition;
     };
 
 }

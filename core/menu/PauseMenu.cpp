@@ -23,6 +23,7 @@ namespace mad::core {
         }
         ImGui::End();
         ImGui::SFML::Render(window);
+        return true;
     }
 
 }

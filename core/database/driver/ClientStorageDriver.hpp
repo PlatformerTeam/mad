@@ -14,9 +14,9 @@ namespace mad::core {
 
         virtual bool sign_up(const std::string &username) = 0;
 
-        virtual std::size_t get_progress(const std::string &username) const = 0;
+        virtual std::size_t get_progress() const = 0;
 
-        virtual void update_progress(const std::string &username) = 0;
+        virtual void update_progress() = 0;
 
         virtual ~ClientStorageDriver() = default;
     };
