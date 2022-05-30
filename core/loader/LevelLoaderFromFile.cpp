@@ -25,7 +25,7 @@ namespace mad::core {
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
-        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world);
 
         auto keys = create_world(world);
 
@@ -82,6 +82,9 @@ namespace mad::core {
         float current_position_y = object_size / 2;
         std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys;
         std::string map_line;
+
+        create_background(world);
+
         while (std::getline(m_level_map, map_line)) {
             for (char object: map_line) {
                 switch (m_objects[object]) {
@@ -220,6 +223,31 @@ namespace mad::core {
                 0,
                 image_storage,
                 true
+        );
+    }
+
+    void LevelLoaderFromFile::create_background(std::shared_ptr<LocalWorld> world) {
+        std::filesystem::path source(m_config_json["background"]["source"]);
+
+        std::shared_ptr<ImageStorage> image_storage;
+        std::vector<float> parallax_ratios = m_config_json["background"]["parallax_ratios"];
+
+        image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<BackgroundImage>(
+                                  source,
+                                  parallax_ratios,
+                                  m_config_json["background"]["scale"]
+                                  )
+                        }}
+                )
+        );
+        world->create_viewable_entity(
+                -1,
+                {0, 0},
+                0,
+                image_storage
         );
     }
 
