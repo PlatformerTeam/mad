@@ -21,6 +21,7 @@ namespace mad::core {
         }
 
         for (const auto &layer : sorted_files) {
+            std::cout << layer << '\n';
             sf::Texture texture;
             CHECK_THROW(texture.loadFromFile(layer),
                         FileDoesNotExist, "Background file does not exist");

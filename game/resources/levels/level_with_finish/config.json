@@ -1,6 +1,7 @@
 {
   "name" : "level_with_finish",
   "animated_resources" : "../../game/resources/animated/",
+  "static_resources" : "../../game/resources/static/",
   "block" : 50.0,
   "camera": {
     "position" : {
@@ -16,12 +17,12 @@
   "background" : {
     "source" : "../../game/resources/background/background_02",
     "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75],
-    "scale" : 2.8
+    "scale" : 3
   },
   "texture" : {
-    "stable" : "brick.png",
-    "unstable" : "brick.png",
-    "finish" : "exit.png"
+    "ground_block" : "brick.png",
+    "unstable_block" : "brick.png",
+    "finish_block" : "exit.png"
   },
   "hero" : {
     "source" : "hero",

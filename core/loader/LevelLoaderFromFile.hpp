@@ -93,7 +93,10 @@ namespace mad::core {
             FinishBlock,
         };
 
+        enum class Objects;
+
     public:
+
         explicit LevelLoaderFromFile(const std::filesystem::path& path);
 
         std::unique_ptr<LevelRunner> load(
@@ -103,7 +106,7 @@ namespace mad::core {
         std::unordered_map<IdKeys, Entity::Id> create_world(std::shared_ptr<LocalWorld> world);
 
         void create_block(std::shared_ptr<LocalWorld> world, Vec2d position,
-                          float block_size, bool is_stable);
+                          float block_size, bool is_stable, Objects object);
 
         Entity::Id create_hero(std::shared_ptr<LocalWorld> world, Vec2d position);
 
@@ -114,8 +117,14 @@ namespace mad::core {
     private:
         enum class Objects {
             UnstableBlock,
-            StableBlock,
+            GroundBlock,
             FinishBlock,
+            BeginBlock,
+            MiddleBlock,
+            EndBlock,
+            SeparateBlock,
+            Decoration1,
+            Decoration2,
             Hero,
             Enemy1,
             Enemy2,
@@ -130,9 +139,15 @@ namespace mad::core {
 
         std::unordered_map<char, Objects> m_objects = {
                 {'.', Objects::Empty},
-                {'#', Objects::StableBlock},
+                {'#', Objects::GroundBlock},
                 {'@', Objects::UnstableBlock},
                 {'F', Objects::FinishBlock},
+                {'[', Objects::BeginBlock},
+                {'_', Objects::MiddleBlock},
+                {']', Objects::EndBlock},
+                {'+', Objects::SeparateBlock},
+                {'*', Objects::Decoration1},
+                {'&', Objects::Decoration2},
                 {'H', Objects::Hero},
                 {'Z', Objects::Enemy1},
                 {'E', Objects::Enemy2}
