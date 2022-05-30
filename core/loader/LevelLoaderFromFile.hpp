@@ -7,6 +7,7 @@
 #include <event/management/producer/SystemListener.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>
 #include <event/management/handler/PauseMenuEventsHandler.hpp>
+#include <event/management/condition/CollisionCondition.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <runner/LevelRunner.hpp>

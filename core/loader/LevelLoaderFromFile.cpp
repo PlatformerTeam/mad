@@ -33,7 +33,7 @@ namespace mad::core {
 
         auto keys = create_world(world);
 
-        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero]);
+        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness, camera_type, minimal_distance);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
 
