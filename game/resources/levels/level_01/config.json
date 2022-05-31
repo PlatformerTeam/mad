@@ -2,6 +2,7 @@
   "name" : "level_01",
   "animated_resources" : "../../game/resources/animated/",
   "static_resources" : "../../game/resources/static/block_01",
+  "decoration_resources" : "../../game/resources/decoration/decoration_01",
   "block" : 50.0,
   "camera": {
     "position" : {
@@ -27,6 +28,20 @@
     "middle_block" : "middle_block.png",
     "end_block" : "end_block.png",
     "separate_block" : "separate_block.png"
+  },
+  "decoration" : {
+    "decoration_01" : {
+      "source" : "tree.png",
+      "scale" : 1,
+      "delta_x" : 0,
+      "delta_y" : 5
+    },
+    "decoration_02" : {
+      "source" : "stone.png",
+      "scale" : 1,
+      "delta_x" : 0,
+      "delta_y" : -20
+    }
   },
   "hero" : {
     "source" : "hero",

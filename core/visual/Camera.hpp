@@ -17,6 +17,8 @@
 #include <visual/image/background/BackgroundImage.hpp>
 #include <visual/image/background/RenderableBackground.hpp>
 #include <visual/image/shape/square/RenderableSquare.hpp>
+#include <visual/image/decoration/DecorationImage.hpp>
+#include <visual/image/decoration/RenderableDecoration.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
 #include <event/action/EndOfRenderAction.hpp>

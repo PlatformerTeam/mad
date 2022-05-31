@@ -136,17 +136,17 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Decoration1: {
-                        create_block(world,
+                        create_decoration(world,
                                      {current_position_x,
                                       current_position_y},
-                                     object_size, true, m_objects[object]);
+                                      m_objects[object]);
                         break;
                     }
                     case Objects::Decoration2: {
-                        create_block(world,
+                        create_decoration(world,
                                      {current_position_x,
                                       current_position_y},
-                                     object_size, true, m_objects[object]);
+                                      m_objects[object]);
                         break;
                     }
                     case Objects::FinishBlock: {
@@ -221,11 +221,49 @@ namespace mad::core {
                          }}));
 
         Entity::Id square_id = world->create_physical_entity(
-                0,
+                1,
                 position,
                 0,
                 image_storage,
                 is_stable
+        );
+    }
+
+    void LevelLoaderFromFile::create_decoration(std::shared_ptr<LocalWorld> world, Vec2d position, Objects object) {
+        std::filesystem::path source(m_config_json["decoration_resources"]);
+
+        float decoration_scale = 1;
+        float delta_x = 0;
+        float delta_y = 0;
+
+        switch (object) {
+            case Objects::Decoration1 : {
+                source /= m_config_json["decoration"]["decoration_01"]["source"];
+                decoration_scale = m_config_json["decoration"]["decoration_01"]["scale"];
+                delta_x = m_config_json["decoration"]["decoration_01"]["delta_x"];
+                delta_y = m_config_json["decoration"]["decoration_01"]["delta_y"];
+                break;
+            }
+            case Objects::Decoration2 : {
+                source /= m_config_json["decoration"]["decoration_02"]["source"];
+                decoration_scale = m_config_json["decoration"]["decoration_02"]["scale"];
+                delta_x = m_config_json["decoration"]["decoration_02"]["delta_x"];
+                delta_y = m_config_json["decoration"]["decoration_02"]["delta_y"];
+                break;
+            }
+        }
+
+        auto image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<DecorationImage>(source, decoration_scale, delta_x, delta_y)
+                         }}));
+
+        Entity::Id decoration_id = world->create_viewable_entity(
+                0,
+                position,
+                0,
+                image_storage
         );
     }
 
@@ -264,7 +302,7 @@ namespace mad::core {
         );
 
         hero_id = world->create_physical_entity(
-                0,
+                2,
                 position,
                 0,
                 image_storage,

@@ -114,6 +114,8 @@ namespace mad::core {
 
         Entity::Id create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size);
 
+        void create_decoration(std::shared_ptr<LocalWorld> world, Vec2d position, Objects object);
+
     private:
         enum class Objects {
             UnstableBlock,

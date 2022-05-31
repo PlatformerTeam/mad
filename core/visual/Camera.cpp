@@ -111,6 +111,17 @@ namespace mad::core {
 
                     break;
                 }
+                case Image::Type::Decoration: {
+                    std::shared_ptr<DecorationImage> decoration_image = pointer_cast_to<DecorationImage>(image);
+                    RenderableDecoration renderable_decoration(decoration_image,
+                                                       positional_appearance.get_position(),
+                                                       positional_appearance.get_rotation());
+                    insert_renderable_to_scene({positional_appearance.get_z_index(),
+                                                RenderableWithId(std::make_shared<RenderableDecoration>(renderable_decoration),
+                                                                 positional_appearance.get_entity_id())
+                                               });
+                    break;
+                }
             }
         }
     }
