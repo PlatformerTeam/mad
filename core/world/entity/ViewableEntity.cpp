@@ -76,3 +76,7 @@ void mad::core::ViewableEntity::end_of_render_action(mad::core::EventDispatcher 
     dispatcher.dispatch(std::make_shared<mad::core::EndOfRenderAction>(m_id, m_type_action));
 }
 
+mad::core::Image::Orientation mad::core::ViewableEntity::get_orientation() const noexcept {
+    return m_orientation;
+}
+

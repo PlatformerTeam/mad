@@ -35,6 +35,8 @@ namespace mad::core {
 
         void resume();
 
+        void complete_level();
+
     private:
         std::shared_ptr<SystemListener> m_system_listener;
         std::shared_ptr<PauseMenu> m_pause_menu;

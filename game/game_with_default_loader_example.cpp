@@ -31,7 +31,7 @@ int main() {
 #endif
     spdlog::set_level(log_level);
 
-    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
+    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(2560, 1600), "MAD");
     ImGui::SFML::Init(*window);
     window->setFramerateLimit(120);
 
@@ -56,7 +56,7 @@ int main() {
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
-    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner));
+    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner, offline_storage_driver));
     global_dispatcher->registry(std::make_shared<mad::core::AuthorizationMenuEventsHandler>(*game_runner));
 
     game_runner->run(*window);

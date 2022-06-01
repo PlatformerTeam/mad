@@ -7,6 +7,7 @@
 #include <event/management/producer/SystemListener.hpp>
 #include <event/management/handler/LevelRunnerEventsHandler.hpp>
 #include <event/management/handler/PauseMenuEventsHandler.hpp>
+#include <event/management/condition/CollisionCondition.hpp>
 #include <event/system/KeyHeld.hpp>
 #include <event/system/KeyPressed.hpp>
 #include <runner/LevelRunner.hpp>
@@ -22,6 +23,7 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include <unordered_map>
 
 using json = nlohmann::json;
 
@@ -85,6 +87,12 @@ namespace mad::core {
 
 
     class LevelLoaderFromFile : public LevelLoader {
+    private:
+        enum class IdKeys {
+            Hero,
+            FinishBlock,
+        };
+
     public:
         explicit LevelLoaderFromFile(const std::filesystem::path& path);
 
@@ -92,7 +100,7 @@ namespace mad::core {
                 std::shared_ptr<EventDispatcher> global_dispatcher,
                 std::shared_ptr<SystemListener> system_listener) override;
 
-        Entity::Id create_world(std::shared_ptr<LocalWorld> world);
+        std::unordered_map<IdKeys, Entity::Id> create_world(std::shared_ptr<LocalWorld> world);
 
         void create_block(std::shared_ptr<LocalWorld> world, Vec2d position,
                           float block_size, bool is_stable);
@@ -101,10 +109,15 @@ namespace mad::core {
 
         void create_mob(std::shared_ptr<LocalWorld> world, Vec2d position);
 
+        void create_background(std::shared_ptr<LocalWorld> world);
+
+        Entity::Id create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size);
+
     private:
         enum class Objects {
             UnstableBlock,
             StableBlock,
+            FinishBlock,
             Hero,
             Enemy1,
             Enemy2,
@@ -125,9 +138,10 @@ namespace mad::core {
                 {'.', Objects::Empty},
                 {'#', Objects::StableBlock},
                 {'@', Objects::UnstableBlock},
+                {'F', Objects::FinishBlock},
                 {'H', Objects::Hero},
                 {'Z', Objects::Enemy1},
-                {'F', Objects::Enemy2}
+                {'E', Objects::Enemy2}
         };
     };
 }

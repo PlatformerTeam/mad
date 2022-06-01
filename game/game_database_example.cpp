@@ -41,11 +41,11 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
-    //auto offline_storage_driver = std::make_shared<mad::core::OfflineClientStorageDriver>();
     auto database = std::make_shared<mad::core::Database>();
     auto database_storage_driver = std::make_shared<mad::core::DatabaseClientStorageDriver>(database);
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
+            std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_with_finish"),
             std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_01")
     };
 
@@ -60,7 +60,7 @@ int main() {
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
-    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner));
+    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner, database_storage_driver));
     global_dispatcher->registry(std::make_shared<mad::core::AuthorizationMenuEventsHandler>(*game_runner));
 
     game_runner->run(*window);

@@ -84,11 +84,15 @@ set(
         visual/image/shape/square/RenderableSquare.cpp visual/image/shape/square/RenderableSquare.hpp
         visual/image/animated/RenderableAnimatedOneFile.cpp visual/image/animated/RenderableAnimatedOneFile.hpp
         visual/image/animated/RenderableAnimatedSeveralFiles.cpp visual/image/animated/RenderableAnimatedSeveralFiles.hpp
+        visual/image/background/RenderableBackground.cpp visual/image/background/RenderableBackground.hpp
+
         visual/image/shape/Shape.cpp visual/image/shape/Shape.hpp
         visual/image/shape/square/Square.cpp visual/image/shape/square/Square.hpp
         visual/image/static/StaticImage.cpp visual/image/static/StaticImage.hpp
         visual/image/animated/AnimatedImageOneFile.cpp visual/image/animated/AnimatedImageOneFile.hpp
         visual/image/animated/AnimatedImageSeveralFiles.cpp visual/image/animated/AnimatedImageSeveralFiles.hpp
+        visual/image/background/BackgroundImage.cpp visual/image/background/BackgroundImage.hpp
+
         visual/image/storage/ImageStorage.cpp visual/image/storage/ImageStorage.hpp
         visual/Renderable.hpp
         visual/Camera.cpp visual/Camera.hpp
@@ -96,6 +100,7 @@ set(
         event/management/condition/KeyPressedCondition.hpp event/management/condition/KeyPressedCondition.cpp
         event/management/condition/KeyDownCondition.hpp event/management/condition/KeyDownCondition.cpp
         event/management/condition/TimerCondition.hpp event/management/condition/TimerCondition.cpp
+        event/management/condition/CollisionCondition.hpp event/management/condition/CollisionCondition.cpp
         event/WorldUpdate.hpp event/WorldUpdate.cpp ../game/mobs/hero/Hero.hpp ../game/mobs/hero/Hero.cpp event/management/condition/KeyReleasedCondition.hpp event/management/condition/KeyReleasedCondition.cpp event/management/controller/JumpImpulse.hpp event/management/controller/JumpImpulse.cpp event/management/condition/LastStateCondition.hpp event/management/condition/LastStateCondition.cpp event/management/controller/Movement.hpp event/management/controller/Movement.cpp event/management/controller/StartJump.hpp event/management/controller/StartJump.cpp event/management/controller/FlyUp.hpp event/management/controller/FlyUp.cpp event/management/controller/Fall.hpp event/management/controller/Fall.cpp event/management/controller/GroundMovement.hpp event/management/controller/GroundMovement.cpp event/management/condition/EndAnimationCondition.hpp event/management/condition/EndAnimationCondition.cpp event/management/condition/FallCondition.hpp event/management/condition/FallCondition.cpp event/physics/SensorCollision.hpp event/physics/SensorCollision.cpp event/management/condition/SensorCondition.hpp event/management/condition/SensorCondition.cpp event/management/controller/Attack.cpp event/management/controller/Attack.hpp event/physics/SensorCollisionEnd.hpp event/physics/SensorCollisionEnd.cpp event/management/condition/SensorEndCondition.hpp event/management/condition/SensorEndCondition.cpp event/management/controller/statemachine/HeroStateMachine.hpp event/management/controller/statemachine/HeroStateMachine.cpp)
 
 add_library(

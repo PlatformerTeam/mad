@@ -14,6 +14,8 @@
 #include <visual/image/animated/RenderableAnimatedOneFile.hpp>
 #include <visual/image/animated/RenderableAnimatedSeveralFiles.hpp>
 #include <visual/image/animated/AnimatedImageSeveralFiles.hpp>
+#include <visual/image/background/BackgroundImage.hpp>
+#include <visual/image/background/RenderableBackground.hpp>
 #include <visual/image/shape/square/RenderableSquare.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
@@ -47,7 +49,8 @@ namespace mad::core {
 
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode = false);
 
-        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id);
+        void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id, float smoothness,
+                     FollowType type = FollowType::Forward, float minimal_distance = 1);
 
         bool render(sf::RenderWindow &window) override;
 
@@ -78,17 +81,17 @@ namespace mad::core {
 
         sf::View m_view;
 
-        Vec2d m_position;
+        std::shared_ptr<Vec2d> m_position;
 
         std::optional<Vec2d> m_last_position;
 
         std::shared_ptr<World> m_world;
 
-        float m_smoothness = 0.5;
+        float m_smoothness;
 
-        FollowType m_type = FollowType::Backward;
+        FollowType m_type;
 
-        float m_minimal_distant = 1.0f;
+        float m_minimal_distant;
 
         bool m_is_debug_mode;
 
