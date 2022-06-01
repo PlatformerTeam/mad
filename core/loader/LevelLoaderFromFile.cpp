@@ -1,17 +1,17 @@
 #include "LevelLoaderFromFile.hpp"
+#include "event/management/condition/KeyDownCondition.hpp"
+#include "event/management/condition/KeyPressedCondition.hpp"
+#include "event/management/condition/TimerCondition.hpp"
+#include "event/management/condition/TrueCondition.hpp"
 #include "event/management/controller/statemachine/HeroStateMachine.hpp"
+#include "event/management/controller/statemachine/StateMachine.hpp"
 #include <../../game/mobs/hero/Hero.hpp>
+#include <event/management/condition/CollisionCondition.hpp>
 #include <event/management/condition/KeyDownCondition.hpp>
 #include <event/management/condition/KeyPressedCondition.hpp>
 #include <event/management/condition/TimerCondition.hpp>
 #include <event/management/condition/TrueCondition.hpp>
 #include <event/management/controller/statemachine/StateMachine.hpp>
-#include <event/management/condition/CollisionCondition.hpp>
-#include "event/management/condition/KeyDownCondition.hpp"
-#include "event/management/condition/KeyPressedCondition.hpp"
-#include "event/management/condition/TimerCondition.hpp"
-#include "event/management/condition/TrueCondition.hpp"
-#include "event/management/controller/statemachine/StateMachine.hpp"
 
 #include <common/Error.hpp>
 
@@ -33,8 +33,7 @@ namespace mad::core {
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
         float camera_smoothness = m_config_json["camera"]["smoothness"];
-        Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ?
-                                         Camera::FollowType::Forward : Camera::FollowType::Backward;
+        Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ? Camera::FollowType::Forward : Camera::FollowType::Backward;
         float minimal_distance = m_config_json["camera"]["minimal_distance"];
 
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
@@ -43,7 +42,7 @@ namespace mad::core {
                 camera)};
 
 
-        Entity::Id hero_id = create_world(world);
+        //Entity::Id hero_id = create_world(world);
         auto keys = create_world(world);
 
         camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness, camera_type, minimal_distance);
@@ -76,7 +75,7 @@ namespace mad::core {
                                                                         std::make_shared<mad::core::CameraController>(
                                                                                 camera)};*/
 
-        camera->set_zoom(0.10);
+        camera->set_zoom(0.15);
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -105,7 +104,7 @@ namespace mad::core {
         create_background(world);
 
         while (std::getline(m_level_map, map_line)) {
-            for (char object: map_line) {
+            for (char object : map_line) {
                 switch (m_objects[object]) {
                     case Objects::UnstableBlock: {
                         create_block(world,
@@ -129,7 +128,7 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Hero: {
-                       // Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
+                        // Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
                         hero_id = create_hero(world, {current_position_x, current_position_y});
                         break;
                     }
@@ -174,8 +173,7 @@ namespace mad::core {
                 position,
                 0,
                 image_storage,
-                is_stable
-        );
+                is_stable);
     }
 
     Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
@@ -195,7 +193,14 @@ namespace mad::core {
 
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
-                        {{ImageStorage::TypeAction::Idle,
+                        {{ImageStorage::TypeAction::Jump,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["jump"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["jump"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Idle,
                           std::make_shared<AnimatedImageSeveralFiles>(
                                   source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
 
@@ -207,13 +212,6 @@ namespace mad::core {
                                   source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
 
                                   m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                  physical_size_width, physical_size_height, size_scale,
-                                  delta_x, delta_y)},
-                         {ImageStorage::TypeAction::Jump,
-                          std::make_shared<AnimatedImageSeveralFiles>(
-                                  source / m_config_json["hero"]["animated"]["actions"]["jump"]["source"],
-
-                                  m_config_json["hero"]["animated"]["actions"]["jump"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
                                   delta_x, delta_y)},
                          {ImageStorage::TypeAction::Fly_up,
@@ -271,17 +269,14 @@ namespace mad::core {
 
                                   m_config_json["hero"]["animated"]["actions"]["attack_3_end"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
-                                  delta_x, delta_y)}
-                        }
-                        ));
+                                  delta_x, delta_y)}}));
 
-        Entity::Id hero_id = world->create_physical_entity(
+        hero_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                false, false
-        );
+                false, false);
 
         /// add sensor
         auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(hero_id));
@@ -339,17 +334,14 @@ namespace mad::core {
 
                                   m_config_json["hero"]["animated"]["actions"]["attack_end"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
-                                  delta_x, delta_y)}
-                        }
-                        ));
+                                  delta_x, delta_y)}}));
 
         Entity::Id enemy_id = world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                false, false
-        );
+                false, false);
 
 
         float m_impulse = 2000;
@@ -357,10 +349,7 @@ namespace mad::core {
 
         auto machine = std::make_shared<mad::core::HeroStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
         controllers.push_back(machine);
-
     }
-
-}// namespace mad::core
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
         std::filesystem::path source("../../game/resources/static/");
         source /= static_cast<std::string>(m_config_json["texture"]["finish"]);
@@ -370,16 +359,14 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Fit)
-                         }}));
+                                                        StaticImage::TransformType::Fit)}}));
 
         return world->create_physical_entity(
                 0,
                 position,
                 0,
                 image_storage,
-                true
-        );
+                true);
     }
 
     void LevelLoaderFromFile::create_background(std::shared_ptr<LocalWorld> world) {
@@ -394,17 +381,13 @@ namespace mad::core {
                           std::make_shared<BackgroundImage>(
                                   source,
                                   parallax_ratios,
-                                  m_config_json["background"]["scale"]
-                                  )
-                        }}
-                )
-        );
+                                  m_config_json["background"]["scale"])}}));
         world->create_viewable_entity(
                 -1,
                 {0, 0},
                 0,
-                image_storage
-        );
+                image_storage);
     }
 
-}
+
+}// namespace mad::core
