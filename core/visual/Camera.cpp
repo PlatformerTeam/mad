@@ -7,8 +7,12 @@
 
 namespace mad::core {
 
-    void Camera::turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id) {
+    void Camera::turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id, float smoothness,
+                         FollowType type, float minimal_distance) {
+        m_smoothness = smoothness;
         m_chased_object = chased_id;
+        m_type = type;
+        m_minimal_distant = minimal_distance;
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
         };
@@ -133,8 +137,32 @@ namespace mad::core {
             }
             switch (m_type) {
                 case FollowType::Forward: {
-                    float move_x = (position.get_x() - m_position->get_x()) * (2 - m_smoothness);
+                    float move_x;
                     float move_y = (position - *m_position).get_y();
+                    switch (entity.get_orientation()) {
+                        case Image::Orientation::Right: {
+                            if (m_position->get_x() < position.get_x() + m_minimal_distant) {
+                                move_x = (-m_position->get_x() + (position.get_x() + m_minimal_distant)) * (m_smoothness);
+                            } else {
+                                move_x = std::min(
+                                        (m_position->get_x() - (position.get_x() + m_minimal_distant)) * m_smoothness,
+                                        (position - m_last_position.value()).get_x() * m_smoothness);
+                            }
+                            break;
+                        }
+                        case Image::Orientation::Left: {
+                            if (m_position->get_x() > position.get_x() - m_minimal_distant) {
+                                move_x = (-m_position->get_x() + (position.get_x() - m_minimal_distant)) * (m_smoothness);
+                            } else {
+                                move_x = std::max(
+                                        (m_position->get_x() - (position.get_x() - m_minimal_distant)) * m_smoothness,
+                                        (position - m_last_position.value()).get_x() * m_smoothness);
+                            }
+                            break;
+                        }
+                    }
+                    //move_x = (position.get_x() - m_position.get_x()) * (2 - m_smoothness);
+                    //std::cout << m_position.get_x() << " " << position.get_x() << '\n';
                     m_view.move(move_x, move_y);
                     *m_position += {move_x, move_y};
                     break;

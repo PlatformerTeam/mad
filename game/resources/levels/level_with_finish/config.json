@@ -9,10 +9,12 @@
     },
     "angle": 15.0,
     "smoothness": 0.6,
-    "zoom": 10.5
+    "zoom": 10.5,
+    "follow_type" : "forward",
+    "minimal_distance" : 3.0
   },
   "background" : {
-    "source" : "../../game/resources/background",
+    "source" : "../../game/resources/background/background_02",
     "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75],
     "scale" : 2.8
   },

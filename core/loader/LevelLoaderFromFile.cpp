@@ -25,11 +25,16 @@ namespace mad::core {
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
-        auto camera = std::make_shared<mad::core::Camera>(camera_position, world);
+        float camera_smoothness = m_config_json["camera"]["smoothness"];
+        Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ?
+                                         Camera::FollowType::Forward : Camera::FollowType::Backward;
+        float minimal_distance = m_config_json["camera"]["minimal_distance"];
+
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
         auto keys = create_world(world);
 
-        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero]);
+        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness, camera_type, minimal_distance);
         level_dispatcher->registry(camera);
         level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
 

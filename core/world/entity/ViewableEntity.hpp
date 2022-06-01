@@ -52,6 +52,8 @@ namespace mad::core {
 
         void end_of_render_action(EventDispatcher &dispatcher) const;
 
+        Image::Orientation get_orientation() const noexcept;
+
     protected:
         const Id m_id;
 
