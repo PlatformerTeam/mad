@@ -130,6 +130,7 @@ namespace mad::core {
                     case Objects::Hero: {
                         // Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
                         hero_id = create_hero(world, {current_position_x, current_position_y});
+                        keys[LevelLoaderFromFile::IdKeys::Hero] = hero_id;
                         break;
                     }
                     case Objects::Enemy1: {
