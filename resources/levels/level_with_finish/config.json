@@ -1,6 +1,7 @@
 {
   "name" : "level_with_finish",
   "animated_resources" : "../../resources/animated/",
+  "width" : 18,
   "block" : 50.0,
   "camera": {
     "position" : {
