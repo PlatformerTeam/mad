@@ -77,6 +77,7 @@ namespace mad::core {
 
         camera->set_zoom(0.1);
 
+
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
                 std::make_unique<mad::core::PauseMenu>(),
