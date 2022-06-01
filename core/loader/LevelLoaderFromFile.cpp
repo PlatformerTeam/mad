@@ -325,7 +325,7 @@ namespace mad::core {
                          }}));
 
         return world->create_physical_entity(
-                0,
+                1,
                 position,
                 0,
                 image_storage,
