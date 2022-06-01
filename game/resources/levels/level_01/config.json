@@ -81,5 +81,37 @@
         }
       }
     }
+  },
+  "enemy" : {
+    "source" : "enemy",
+    "animated" : {
+      "size_width": 5.5,
+      "size_height": 9,
+      "size_scale": 0.3,
+      "delta_x" : 0,
+      "delta_y" : 3,
+      "actions" : {
+        "idle" : {
+          "source": "enemy_idle",
+          "type": "several_files",
+          "delta_time": 200
+        },
+        "run" : {
+          "source": "enemy_run",
+          "type": "several_files",
+          "delta_time": 130
+        },
+        "attack_beg" : {
+          "source": "enemy_attack_beg",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_end" : {
+          "source": "enemy_attack_end",
+          "type": "several_files",
+          "delta_time": 30
+        }
+      }
+    }
   }
 }
