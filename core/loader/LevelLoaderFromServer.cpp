@@ -1,4 +1,5 @@
-#include "LevelLoaderFromFile.hpp"
+#include "LevelLoaderFromServer.hpp"
+
 #include <event/management/condition/CollisionCondition.hpp>
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
@@ -10,14 +11,9 @@
 
 namespace mad::core {
 
-    LevelLoaderFromFile::LevelLoaderFromFile(const std::filesystem::path &path) : m_level_directory(path) {
-        std::ifstream input_config(path / "config.json");
-        CHECK_THROW(input_config, FileDoesNotExist, "Config file does not exist");
-        CHECK_THROW(m_level_map, FileDoesNotExist, "Map file does not exist");
-        input_config >> m_config_json;
-    }
+    LevelLoaderFromServer::LevelLoaderFromServer(std::string map, json config) : m_level_map(std::move(map)), m_config_json(std::move(config)) { }
 
-    std::unique_ptr<LevelRunner> LevelLoaderFromFile::load(std::shared_ptr<EventDispatcher> global_dispatcher,
+    std::unique_ptr<LevelRunner> LevelLoaderFromServer::load(std::shared_ptr<EventDispatcher> global_dispatcher,
                                                            std::shared_ptr<SystemListener> system_listener) {
         auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
@@ -29,9 +25,9 @@ namespace mad::core {
 
         auto keys = create_world(world);
 
-        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero]);
+        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromServer::IdKeys::Hero]);
         level_dispatcher->registry(camera);
-        level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
+        level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromServer::IdKeys::Hero]));
 
         /* std::vector<std::shared_ptr<mad::core::Controller>> controllers {
                  std::make_shared<mad::core::CameraController>(camera)
@@ -40,12 +36,12 @@ namespace mad::core {
         ///State Machine
         struct C1 : mad::core::Controller {
             void control() override {
-                //SPDLOG_DEBUG("controller 1");
+                    //SPDLOG_DEBUG("controller 1");
             };
         };
         struct C2 : mad::core::Controller {
             void control() override {
-                //SPDLOG_DEBUG("controller 2");
+                    //SPDLOG_DEBUG("controller 2");
             };
         };
         auto machine = std::make_shared<mad::core::StateMachine>(
@@ -69,24 +65,24 @@ namespace mad::core {
                 controllers
         );
 
-        level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner, std::make_shared<CollisionCondition>(keys[LevelLoaderFromFile::IdKeys::Hero], keys[LevelLoaderFromFile::IdKeys::FinishBlock])));
+        level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner, std::make_shared<CollisionCondition>(keys[LevelLoaderFromServer::IdKeys::Hero], keys[LevelLoaderFromServer::IdKeys::FinishBlock])));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
 
         return level_runner;
     }
 
-    std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> LevelLoaderFromFile::create_world(std::shared_ptr<LocalWorld> world) {
-        m_level_map = std::ifstream(m_level_directory / "map");
+    std::unordered_map<LevelLoaderFromServer::IdKeys, Entity::Id> LevelLoaderFromServer::create_world(std::shared_ptr<LocalWorld> world) {
         float object_size = m_config_json["block"];
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
-        std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys;
-        std::string map_line;
+        std::size_t width = m_config_json["width"];
+        std::unordered_map<LevelLoaderFromServer::IdKeys, Entity::Id> keys;
 
         create_background(world);
 
-        while (std::getline(m_level_map, map_line)) {
-            for (char object: map_line) {
+        for (std::size_t i = 0; i < m_level_map.size();) {
+            for (std::size_t j = 0; j < width; ++j, ++i) {
+                char object = m_level_map[i];
                 switch (m_objects[object]) {
                     case Objects::UnstableBlock: {
                         create_block(world,
@@ -103,16 +99,16 @@ namespace mad::core {
                         break;
                     }
                     case Objects::FinishBlock: {
-                        keys[LevelLoaderFromFile::IdKeys::FinishBlock] = create_finish_block(
+                        keys[LevelLoaderFromServer::IdKeys::FinishBlock] = create_finish_block(
                                 world,
                                 {current_position_x, current_position_y},
                                 object_size);
                         break;
                     }
                     case Objects::Hero: {
-                        keys[LevelLoaderFromFile::IdKeys::Hero] = create_hero(world,
-                                              {current_position_x,
-                                               current_position_y});
+                        keys[LevelLoaderFromServer::IdKeys::Hero] = create_hero(world,
+                                                                              {current_position_x,
+                                                                               current_position_y});
                         break;
                     }
                     case Objects::Enemy1: {
@@ -133,7 +129,7 @@ namespace mad::core {
         return keys;
     }
 
-    void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world,
+    void LevelLoaderFromServer::create_block(std::shared_ptr<LocalWorld> world,
                                            Vec2d position, float block_size, bool is_stable) {
 
         std::filesystem::path source("../../resources/static/");
@@ -149,7 +145,7 @@ namespace mad::core {
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
                                                         StaticImage::TransformType::Tile)
-                         }}));
+                        }}));
 
         Entity::Id square_id = world->create_physical_entity(
                 0,
@@ -160,7 +156,7 @@ namespace mad::core {
         );
     }
 
-    Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
+    Entity::Id LevelLoaderFromServer::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
         std::filesystem::path source(m_config_json["animated_resources"]);
         source /= m_config_json["hero"]["source"];
 
@@ -178,20 +174,20 @@ namespace mad::core {
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
                         {{ImageStorage::TypeAction::Idle,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
-                                         physical_size_width, physical_size_height, size_scale,
-                                         delta_x, delta_y)
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)
                          },
                          {ImageStorage::TypeAction::Run,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                         physical_size_width, physical_size_height, size_scale,
-                                         delta_x, delta_y)
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)
                          }}
-                )
+                        )
         );
 
         hero_id = world->create_physical_entity(
@@ -205,7 +201,7 @@ namespace mad::core {
         return hero_id;
     }
 
-    Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
+    Entity::Id LevelLoaderFromServer::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
         std::filesystem::path source("../../resources/static/");
         source /= static_cast<std::string>(m_config_json["texture"]["finish"]);
 
@@ -215,7 +211,7 @@ namespace mad::core {
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
                                                         StaticImage::TransformType::Fit)
-                         }}));
+                        }}));
 
         return world->create_physical_entity(
                 0,
@@ -226,7 +222,7 @@ namespace mad::core {
         );
     }
 
-    void LevelLoaderFromFile::create_background(std::shared_ptr<LocalWorld> world) {
+    void LevelLoaderFromServer::create_background(std::shared_ptr<LocalWorld> world) {
         std::filesystem::path source(m_config_json["background"]["source"]);
 
         std::shared_ptr<ImageStorage> image_storage;
@@ -241,7 +237,7 @@ namespace mad::core {
                                   m_config_json["background"]["scale"]
                                   )
                         }}
-                )
+                        )
         );
         world->create_viewable_entity(
                 -1,
