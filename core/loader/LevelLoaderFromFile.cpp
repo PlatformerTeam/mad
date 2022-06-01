@@ -75,7 +75,7 @@ namespace mad::core {
                                                                         std::make_shared<mad::core::CameraController>(
                                                                                 camera)};*/
 
-        camera->set_zoom(0.15);
+        camera->set_zoom(0.1);
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
