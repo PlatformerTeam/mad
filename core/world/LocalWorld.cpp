@@ -54,6 +54,9 @@ void mad::core::LocalWorld::produce(mad::core::EventDispatcher &dispatcher) {
     for (Entity::Id entity_id : m_storage.extract(TrueFilter())) {
         if (auto physical_entity = cast_to_or_null<PhysicalEntity>(m_storage.get_entity(entity_id)); physical_entity != nullptr) {
             physical_entity->synchronize_position_with_viewable();
+            if(abs(physical_entity->get_linear_velocity().get_y()) > 0.01){
+                //SPDLOG_DEBUG("vel {}", physical_entity->get_linear_velocity().get_y());
+            }
         }
     }
 
@@ -92,4 +95,7 @@ mad::core::Entity::Id mad::core::LocalWorld::create_physical_entity(int z_ind, m
 
 mad::core::Entity &mad::core::LocalWorld::get_entity(mad::core::Entity::Id id) noexcept {
     return m_storage.get_entity(id);
+}
+mad::core::EntityStorage &mad::core::LocalWorld::get_storage() {
+    return m_storage;
 }

@@ -22,7 +22,7 @@ namespace mad::core {
 
     class LocalWorld : public World {
     public:
-        explicit LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravitation_scale = {0, 30.0f});
+        explicit LocalWorld(EventDispatcher &event_dispatcher, Vec2d gravitation_scale = {0, 40.0f});
 
         bool manipulate(const Filter &filter, const Intent &intent) override;
 
@@ -34,6 +34,8 @@ namespace mad::core {
 
         Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
                                           bool is_fixed = false, bool is_rotated = true) override;
+        EntityStorage& get_storage();
+
 
     private:
         std::shared_ptr<std::queue<std::shared_ptr<Event>>> m_step_events_queue;

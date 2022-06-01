@@ -107,6 +107,8 @@ namespace mad::core {
 
         Entity::Id create_hero(std::shared_ptr<LocalWorld> world, Vec2d position);
 
+        void create_mob(std::shared_ptr<LocalWorld> world, Vec2d position);
+
         void create_background(std::shared_ptr<LocalWorld> world);
 
         Entity::Id create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size);
@@ -127,6 +129,10 @@ namespace mad::core {
         json m_config_json;
 
         std::ifstream m_level_map;
+
+        std::vector<std::shared_ptr<mad::core::Controller>> controllers;
+
+        std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher;
 
         std::unordered_map<char, Objects> m_objects = {
                 {'.', Objects::Empty},

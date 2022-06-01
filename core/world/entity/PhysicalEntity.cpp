@@ -37,8 +37,10 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
-        fixtureDef.restitution = 0.2f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+        body->SetLinearDamping(0);
+        body->SetAngularDamping(0);
 
         body->CreateFixture(&fixtureDef);
         body->SetTransform(body->GetPosition(), initial_rotation);
@@ -69,6 +71,10 @@ void mad::core::PhysicalEntity::apply_force_to_center(mad::core::Vec2d force, ma
 void mad::core::PhysicalEntity::set_linear_velocity(mad::core::Vec2d velocity, mad::core::EventDispatcher &dispatcher) {
     body->SetLinearVelocity(velocity);
 }
+void mad::core::PhysicalEntity::set_linear_horizontal_velocity(float velocity, mad::core::EventDispatcher &dispatcher) {
+    body->SetLinearVelocity({velocity, body->GetLinearVelocity().y});
+}
+
 void mad::core::PhysicalEntity::apply_angular_impulse(float impulse, mad::core::EventDispatcher &dispatcher, bool awake) {
     body->ApplyAngularImpulse(impulse, awake);
 }
@@ -153,4 +159,13 @@ mad::core::Vec2d mad::core::PhysicalEntity::get_local_center() {
 }
 mad::core::Vec2d mad::core::PhysicalEntity::get_world_center() {
     return {body->GetWorldCenter().x, body->GetWorldCenter().y};
+}
+void mad::core::PhysicalEntity::add_sensor(b2Vec2 offset, float x_size, float y_size) {
+    b2FixtureDef FixtureDef;
+    b2PolygonShape fixture;
+    fixture.SetAsBox(x_size, y_size, offset, 0);
+    FixtureDef.shape = &fixture;
+    FixtureDef.isSensor = true;
+    b2Fixture* footSensorFixture = body->CreateFixture(&FixtureDef);
+    footSensorFixture->GetUserData().pointer = m_id;
 }
