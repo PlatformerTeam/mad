@@ -444,7 +444,7 @@ namespace mad::core {
                                   delta_x, delta_y)}}));
 
         Entity::Id enemy_id = world->create_physical_entity(
-                0,
+                2,
                 position,
                 0,
                 image_storage,
@@ -453,7 +453,7 @@ namespace mad::core {
 
 
         float m_impulse = 2000;
-        float horizontal_velocity = 20;
+        float horizontal_velocity = 5.5f;
 
         auto machine = std::make_shared<mad::core::EnemyStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
         controllers.push_back(machine);
