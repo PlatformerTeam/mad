@@ -3,6 +3,7 @@
 
 #include <pqxx/pqxx>
 #include <cstddef>
+#include <mutex>
 
 
 namespace mad::core {
@@ -23,6 +24,8 @@ namespace mad::core {
         std::size_t get_progress(const std::string &username);
 
         std::string get_levelname(std::size_t id);
+
+        std::size_t get_levels_total();
 
         void increment_progress(std::size_t id);
         void increment_progress(const std::string &username);

@@ -1,10 +1,7 @@
 #include "LevelLoaderFromFile.hpp"
 #include <event/management/condition/CollisionCondition.hpp>
-#include "event/management/condition/KeyDownCondition.hpp"
-#include "event/management/condition/KeyPressedCondition.hpp"
-#include "event/management/condition/TimerCondition.hpp"
-#include "event/management/condition/TrueCondition.hpp"
-#include "event/management/controller/statemachine/StateMachine.hpp"
+#include <event/management/condition/TimerCondition.hpp>
+#include <event/management/controller/statemachine/StateMachine.hpp>
 
 #include <common/Error.hpp>
 

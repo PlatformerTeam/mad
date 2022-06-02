@@ -4,6 +4,8 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <filesystem>
+#include <fstream>
 
 #include <imgui.h>
 #include <imgui-SFML.h>
@@ -12,10 +14,15 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
 
 int main() {
     httplib::Server svr;
     mad::core::Database db;
+    std::filesystem::path levels_directory = "../../resources/levels";
 
     std::mutex locker;
     std::vector<std::string> logs;
@@ -24,7 +31,43 @@ int main() {
         std::unique_lock lock(locker);
         res.status = 200;
         res.body = "Connection successful";
-        logs.push_back("Connected user port -- " + std::to_string(req.remote_port));
+        logs.push_back("Connected user port " + std::to_string(req.remote_port));
+    });
+
+    svr.Get("/level/total", [&logs, &locker, &db](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
+        res.status = 200;
+        res.body = std::to_string(db.get_levels_total());
+        logs.push_back("Send total level counter to port " + std::to_string(req.remote_port));
+    });
+
+    svr.Post("/level/load", [&logs, &locker, &db, &levels_directory](const httplib::Request &req, httplib::Response &res) {
+        std::unique_lock lock(locker);
+        if (req.has_param("number")) {
+            auto number = std::stoi(req.get_param_value("number"));
+            if (number <= db.get_levels_total()) {
+                auto levelname = db.get_levelname(number);
+                auto cur_level_directory = levels_directory / levelname;
+                std::ifstream input_config(cur_level_directory / "config.json");
+                std::ifstream input_map(cur_level_directory / "map");
+                json config;
+                std::string map, map_line;
+                input_config >> config;
+                while (input_map >> map_line) {
+                    map += map_line;
+                }
+                config["map"] = map;
+                res.status = 200;
+                res.body = to_string(config);
+                logs.push_back("Send level " + levelname + " to port " + std::to_string(req.remote_port));
+            } else {
+                res.status = 404;
+                res.body = "Invalid number of level";
+            }
+        } else {
+            res.status = 404;
+            res.body = "Invalid params of request";
+        }
     });
 
     svr.Post("/user/login", [&db, &logs, &locker](const httplib::Request &req, httplib::Response &res) {

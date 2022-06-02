@@ -10,7 +10,7 @@
 #include <menu/MainMenu.hpp>
 #include <runner/GameRunner.hpp>
 #include <world/LocalWorld.hpp>
-#include <loader/LevelLoaderFromFile.hpp>
+#include <loader/LevelLoaderFromServer.hpp>
 
 #include <httplib.h>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -60,6 +60,23 @@ namespace mad::core {
             SPDLOG_DEBUG("Update request result:\n\tStatus: " + std::to_string(res->status) + "\n\tMessage: " + res->body);
         }
 
+        std::vector<std::shared_ptr<LevelLoader>> get_levels() {
+            auto res = m_client.Get("/level/total");
+            std::size_t level_count = std::stoi(res->body);
+            std::vector<std::shared_ptr<LevelLoader>> loaders;
+            for (std::size_t i = 1; i <= level_count; ++i) {
+                auto res1 = m_client.Post("/level/load", httplib::Params{
+                        {"number", std::to_string(i)}
+                });
+                json config;
+                std::stringstream ss;
+                ss << res1->body;
+                ss >> config;
+                loaders.push_back(std::make_shared<LevelLoaderFromServer>(config["map"], config));
+            }
+            return loaders;
+        }
+
     private:
         mutable std::string m_username;
         mutable httplib::Client m_client;
@@ -84,12 +101,9 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
-    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_with_finish"),
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_01")
-    };
-
     auto network_storage_driver = std::make_shared<mad::core::NetworkClientStorageDriver>();
+
+    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders = network_storage_driver->get_levels();
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(
             level_loaders,

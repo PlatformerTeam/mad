@@ -48,7 +48,7 @@ namespace mad::core {
     void Database::registry_user(const std::string &username) {
         pqxx::work W(m_connector);
 
-        m_query = "SELECT id FROM users";
+        m_query = "SELECT id FROM users;";
         pqxx::result total_rows = W.exec(m_query);
         std::size_t id = total_rows.size();
 
@@ -119,5 +119,12 @@ namespace mad::core {
         m_query = "SELECT * FROM levels WHERE id = " + std::to_string(id) + ";";
         auto found_row = W.exec1(m_query);
         return found_row["name"].as<std::string>();
+    }
+
+    std::size_t Database::get_levels_total() {
+        pqxx::work W(m_connector);
+        m_query = "SELECT id FROM levels;";
+        auto total_rows = W.exec(m_query);
+        return total_rows.size();
     }
 }
