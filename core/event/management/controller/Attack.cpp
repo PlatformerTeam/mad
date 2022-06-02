@@ -4,7 +4,6 @@ mad::core::Attack::Attack(std::shared_ptr<mad::core::LocalWorld> world, mad::cor
     Idle_animation = ImageStorage::TypeAction::Attack_1_beg;
 }
 void mad::core::Attack::control() {
-    Movement::control();
     if((*attack_stage) % 6 == 0){
         if(Move_animation != ImageStorage::TypeAction::Attack_1_beg){
             SPDLOG_DEBUG("changed to Attack_1_beg");
@@ -47,4 +46,5 @@ void mad::core::Attack::control() {
         Move_animation = ImageStorage::TypeAction::Attack_3_end;
         Idle_animation = ImageStorage::TypeAction::Attack_3_end;
     }
+    Movement::control();
 }
