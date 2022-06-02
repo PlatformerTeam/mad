@@ -14,7 +14,8 @@ namespace mad::core {
             Static,
             AnimatedOneFile,
             AnimatedSeveralFiles,
-            Background
+            Background,
+            Decoration
         };
 
         enum class Orientation {

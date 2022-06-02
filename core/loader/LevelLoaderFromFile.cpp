@@ -1,4 +1,5 @@
 #include "LevelLoaderFromFile.hpp"
+#include <event/management/condition/CollisionCondition.hpp>
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
@@ -6,12 +7,6 @@
 #include "event/management/controller/statemachine/HeroStateMachine.hpp"
 #include "event/management/controller/statemachine/StateMachine.hpp"
 #include <../../game/mobs/hero/Hero.hpp>
-#include <event/management/condition/CollisionCondition.hpp>
-#include <event/management/condition/KeyDownCondition.hpp>
-#include <event/management/condition/KeyPressedCondition.hpp>
-#include <event/management/condition/TimerCondition.hpp>
-#include <event/management/condition/TrueCondition.hpp>
-#include <event/management/controller/statemachine/StateMachine.hpp>
 
 #include <common/Error.hpp>
 
@@ -26,14 +21,15 @@ namespace mad::core {
 
     std::unique_ptr<LevelRunner> LevelLoaderFromFile::load(std::shared_ptr<EventDispatcher> global_dispatcher,
                                                            std::shared_ptr<SystemListener> system_listener) {
-        level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
         auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
 
         Vec2d camera_position = {m_config_json["camera"]["position"]["x"],
                                  m_config_json["camera"]["position"]["y"]};
         float camera_smoothness = m_config_json["camera"]["smoothness"];
-        Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ? Camera::FollowType::Forward : Camera::FollowType::Backward;
+        Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ?
+                                         Camera::FollowType::Forward : Camera::FollowType::Backward;
         float minimal_distance = m_config_json["camera"]["minimal_distance"];
 
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
@@ -111,14 +107,56 @@ namespace mad::core {
                         create_block(world,
                                      {current_position_x,
                                       current_position_y},
-                                     object_size, false);
+                                     object_size, false, m_objects[object]);
                         break;
                     }
-                    case Objects::StableBlock: {
+                    case Objects::GroundBlock: {
                         create_block(world,
                                      {current_position_x,
                                       current_position_y},
-                                     object_size, true);
+                                     object_size, true, m_objects[object]);
+                        break;
+                    }
+                    case Objects::BeginBlock: {
+                        create_block(world,
+                                     {current_position_x,
+                                      current_position_y},
+                                     object_size, true, m_objects[object]);
+                        break;
+                    }
+                    case Objects::MiddleBlock: {
+                        create_block(world,
+                                     {current_position_x,
+                                      current_position_y},
+                                     object_size, true, m_objects[object]);
+                        break;
+                    }
+                    case Objects::EndBlock: {
+                        create_block(world,
+                                     {current_position_x,
+                                      current_position_y},
+                                     object_size, true, m_objects[object]);
+                        break;
+                    }
+                    case Objects::SeparateBlock: {
+                        create_block(world,
+                                     {current_position_x,
+                                      current_position_y},
+                                     object_size, true, m_objects[object]);
+                        break;
+                    }
+                    case Objects::Decoration1: {
+                        create_decoration(world,
+                                     {current_position_x,
+                                      current_position_y},
+                                      m_objects[object]);
+                        break;
+                    }
+                    case Objects::Decoration2: {
+                        create_decoration(world,
+                                     {current_position_x,
+                                      current_position_y},
+                                      m_objects[object]);
                         break;
                     }
                     case Objects::FinishBlock: {
@@ -135,7 +173,6 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Enemy1: {
-                        create_mob(world, {current_position_x, current_position_y});
                         break;
                     }
                     case Objects::Enemy2: {
@@ -153,14 +190,36 @@ namespace mad::core {
         return keys;
     }
 
-    void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world,
-                                           Vec2d position, float block_size, bool is_stable) {
+    void LevelLoaderFromFile::create_block(std::shared_ptr<LocalWorld> world, Vec2d position,
+                                           float block_size, bool is_stable, Objects object) {
 
-        std::filesystem::path source("../../game/resources/static/");
-        if (is_stable) {
-            source /= static_cast<std::string>(m_config_json["texture"]["stable"]);
-        } else {
-            source /= static_cast<std::string>(m_config_json["texture"]["unstable"]);
+        std::filesystem::path source(m_config_json["static_resources"]);
+
+        switch (object) {
+            case Objects::UnstableBlock: {
+                source /= m_config_json["texture"]["unstable_block"];
+                break;
+            }
+            case Objects::GroundBlock: {
+                source /= m_config_json["texture"]["ground_block"];
+                break;
+            }
+            case Objects::BeginBlock: {
+                source /= m_config_json["texture"]["begin_block"];
+                break;
+            }
+            case Objects::MiddleBlock: {
+                source /= m_config_json["texture"]["middle_block"];
+                break;
+            }
+            case Objects::EndBlock: {
+                source /= m_config_json["texture"]["end_block"];
+                break;
+            }
+            case Objects::SeparateBlock: {
+                source /= m_config_json["texture"]["separate_block"];
+                break;
+            }
         }
 
         auto image_storage = std::make_shared<ImageStorage>(
@@ -168,14 +227,53 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Fit)}}));
+                                                        StaticImage::TransformType::Fit)
+                         }}));
 
         Entity::Id square_id = world->create_physical_entity(
-                0,
+                1,
                 position,
                 0,
                 image_storage,
                 is_stable);
+    }
+
+    void LevelLoaderFromFile::create_decoration(std::shared_ptr<LocalWorld> world, Vec2d position, Objects object) {
+        std::filesystem::path source(m_config_json["decoration_resources"]);
+
+        float decoration_scale = 1;
+        float delta_x = 0;
+        float delta_y = 0;
+
+        switch (object) {
+            case Objects::Decoration1 : {
+                source /= m_config_json["decoration"]["decoration_01"]["source"];
+                decoration_scale = m_config_json["decoration"]["decoration_01"]["scale"];
+                delta_x = m_config_json["decoration"]["decoration_01"]["delta_x"];
+                delta_y = m_config_json["decoration"]["decoration_01"]["delta_y"];
+                break;
+            }
+            case Objects::Decoration2 : {
+                source /= m_config_json["decoration"]["decoration_02"]["source"];
+                decoration_scale = m_config_json["decoration"]["decoration_02"]["scale"];
+                delta_x = m_config_json["decoration"]["decoration_02"]["delta_x"];
+                delta_y = m_config_json["decoration"]["decoration_02"]["delta_y"];
+                break;
+            }
+        }
+
+        auto image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<DecorationImage>(source, decoration_scale, delta_x, delta_y)
+                         }}));
+
+        Entity::Id decoration_id = world->create_viewable_entity(
+                0,
+                position,
+                0,
+                image_storage
+        );
     }
 
     Entity::Id LevelLoaderFromFile::create_hero(std::shared_ptr<LocalWorld> world, Vec2d position) {
@@ -274,7 +372,7 @@ namespace mad::core {
                                   delta_x, delta_y)}}));
 
         hero_id = world->create_physical_entity(
-                0,
+                2,
                 position,
                 0,
                 image_storage,
@@ -353,8 +451,8 @@ namespace mad::core {
         controllers.push_back(machine);
     }
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
-        std::filesystem::path source("../../game/resources/static/");
-        source /= static_cast<std::string>(m_config_json["texture"]["finish"]);
+        std::filesystem::path source(m_config_json["static_resources"]);
+        source /= static_cast<std::string>(m_config_json["texture"]["finish_block"]);
 
         auto image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
@@ -364,7 +462,7 @@ namespace mad::core {
                                                         StaticImage::TransformType::Fit)}}));
 
         return world->create_physical_entity(
-                0,
+                1,
                 position,
                 0,
                 image_storage,
