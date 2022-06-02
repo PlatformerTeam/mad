@@ -12,7 +12,8 @@
     "smoothness": 0.6,
     "zoom": 10.5,
     "follow_type" : "forward",
-    "minimal_distance" : 3.0
+    "minimal_distance" : 3.0,
+    "part_of_window" : 0.02
   },
   "background" : {
     "source" : "../../game/resources/background/background_02",

@@ -8,11 +8,12 @@
 namespace mad::core {
 
     void Camera::turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id, float smoothness,
-                         FollowType type, float minimal_distance) {
+                         FollowType type, float minimal_distance, float part_of_window) {
         m_smoothness = smoothness;
         m_chased_object = chased_id;
         m_type = type;
         m_minimal_distant = minimal_distance;
+        m_part_of_window = part_of_window;
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
         };
@@ -20,6 +21,11 @@ namespace mad::core {
     }
 
     bool Camera::render(sf::RenderWindow &window) {
+        if (m_distance_over_hero == 0) {
+            m_distance_over_hero = -static_cast<float>(window.getSize().y * m_part_of_window);
+            *m_position += Vec2d{0, m_distance_over_hero};
+            m_view.setCenter(*m_position);
+        }
         auto end_of_render = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).end_of_render_action(event_dispatcher);
         };
@@ -143,9 +149,10 @@ namespace mad::core {
             Vec2d position = entity.get_image_position();
             if (!m_last_position.has_value()) {
                 m_last_position = position;
-                *m_position = position;
+                *m_position = position + Vec2d{0, m_distance_over_hero};
                 m_view.setCenter(*m_position);
             }
+            *m_position -= Vec2d{0, m_distance_over_hero};
             switch (m_type) {
                 case FollowType::Forward: {
                     float move_x;
@@ -184,6 +191,7 @@ namespace mad::core {
                     break;
                 }
             }
+            *m_position += Vec2d{0, m_distance_over_hero};
             m_last_position = position;
         }
     }

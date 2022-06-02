@@ -32,6 +32,7 @@ namespace mad::core {
                                          Camera::FollowType::Forward : Camera::FollowType::Backward;
         float minimal_distance = m_config_json["camera"]["minimal_distance"];
         float zoom = m_config_json["camera"]["zoom"];
+        float part_of_window = m_config_json["camera"]["part_of_window"];
 
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
@@ -42,7 +43,8 @@ namespace mad::core {
         //Entity::Id hero_id = create_world(world);
         auto keys = create_world(world);
 
-        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness, camera_type, minimal_distance);
+        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness,
+                        camera_type, minimal_distance, part_of_window);
         level_dispatcher->registry(camera);
         //level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
 
