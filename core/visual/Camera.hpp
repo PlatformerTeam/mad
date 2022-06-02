@@ -17,6 +17,8 @@
 #include <visual/image/background/BackgroundImage.hpp>
 #include <visual/image/background/RenderableBackground.hpp>
 #include <visual/image/shape/square/RenderableSquare.hpp>
+#include <visual/image/decoration/DecorationImage.hpp>
+#include <visual/image/decoration/RenderableDecoration.hpp>
 #include <event/management/dispatcher/EventDispatcher.hpp>
 #include <event/visual/PositionalAppearance.hpp>
 #include <event/action/EndOfRenderAction.hpp>
@@ -50,7 +52,7 @@ namespace mad::core {
         explicit Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode = false);
 
         void turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id, float smoothness,
-                     FollowType type = FollowType::Forward, float minimal_distance = 1);
+                     FollowType type = FollowType::Forward, float minimal_distance = 1, float part_of_window = 0);
 
         bool render(sf::RenderWindow &window) override;
 
@@ -94,6 +96,10 @@ namespace mad::core {
         float m_minimal_distant;
 
         bool m_is_debug_mode;
+
+        float m_distance_over_hero = 0;
+
+        float m_part_of_window;
 
         sf::RectangleShape get_physical_shape() noexcept override;
     };
