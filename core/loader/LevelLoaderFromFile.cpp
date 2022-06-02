@@ -21,7 +21,7 @@ namespace mad::core {
 
     std::unique_ptr<LevelRunner> LevelLoaderFromFile::load(std::shared_ptr<EventDispatcher> global_dispatcher,
                                                            std::shared_ptr<SystemListener> system_listener) {
-        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+        level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
         auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
 
@@ -31,6 +31,7 @@ namespace mad::core {
         Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ?
                                          Camera::FollowType::Forward : Camera::FollowType::Backward;
         float minimal_distance = m_config_json["camera"]["minimal_distance"];
+        float zoom = m_config_json["camera"]["zoom"];
 
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
 
@@ -71,7 +72,7 @@ namespace mad::core {
                                                                         std::make_shared<mad::core::CameraController>(
                                                                                 camera)};*/
 
-        camera->set_zoom(0.1);
+        camera->set_zoom(zoom);
 
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
@@ -261,6 +262,7 @@ namespace mad::core {
                 break;
             }
         }
+        decoration_scale *= static_cast<float>(m_config_json["camera"]["zoom"]);
 
         auto image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
@@ -481,7 +483,8 @@ namespace mad::core {
                           std::make_shared<BackgroundImage>(
                                   source,
                                   parallax_ratios,
-                                  m_config_json["background"]["scale"])}}));
+                                  static_cast<float>(m_config_json["background"]["scale"]) *
+                                  static_cast<float>(m_config_json["camera"]["zoom"]))}}));
         world->create_viewable_entity(
                 -1,
                 {0, 0},

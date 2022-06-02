@@ -11,7 +11,7 @@
     },
     "angle": 15.0,
     "smoothness": 0.1,
-    "zoom": 10.5,
+    "zoom": 0.1,
     "follow_type" : "forward",
     "minimal_distance" : 3.0
   },
