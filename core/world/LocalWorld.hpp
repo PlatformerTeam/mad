@@ -33,7 +33,7 @@ namespace mad::core {
         Entity::Id create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage) override;
 
         Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
-                                          bool is_fixed = false, bool is_rotated = true) override;
+                                          bool is_fixed = false, bool is_rotated = true, uint16 categoryBits = 0x0006, uint16 maskBits = 0x0006) override;
         EntityStorage& get_storage();
 
 

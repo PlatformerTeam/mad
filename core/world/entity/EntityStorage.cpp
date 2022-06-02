@@ -36,11 +36,11 @@ namespace mad::core {
     }
 
     Entity::Id EntityStorage::create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
-                                                     b2World &physicalWorld, bool is_fixed, bool is_rotated) {
+                                                     b2World &physicalWorld, bool is_fixed, bool is_rotated, uint16 categoryBits, uint16 maskBits) {
         auto new_entity_id = static_cast<Entity::Id>(m_map_entities.size());
         m_list_ids.push_back(new_entity_id);
         m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(new_entity_id, z_ind, initial_position, initial_rotation,
-                                                                         image_storage, physicalWorld, is_fixed, is_rotated);
+                                                                         image_storage, physicalWorld, is_fixed, is_rotated,  categoryBits,  maskBits);
         return new_entity_id;
     }
 

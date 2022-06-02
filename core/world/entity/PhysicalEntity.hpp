@@ -33,7 +33,8 @@ namespace mad::core {
     public:
         explicit PhysicalEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation,
                                 std::shared_ptr<ImageStorage> image_storage,
-                                b2World &physicalWorld, bool is_fixed, bool is_rotated);
+                                b2World &physicalWorld, bool is_fixed, bool is_rotated,
+                                uint16 categoryBits, uint16 maskBits);
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 

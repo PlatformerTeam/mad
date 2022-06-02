@@ -1,12 +1,13 @@
 #include "LevelLoaderFromFile.hpp"
-#include <event/management/condition/CollisionCondition.hpp>
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
+#include "event/management/controller/statemachine/EnemyStateMachine.hpp"
 #include "event/management/controller/statemachine/HeroStateMachine.hpp"
 #include "event/management/controller/statemachine/StateMachine.hpp"
 #include <../../game/mobs/hero/Hero.hpp>
+#include <event/management/condition/CollisionCondition.hpp>
 
 #include <common/Error.hpp>
 
@@ -381,7 +382,8 @@ namespace mad::core {
                 position,
                 0,
                 image_storage,
-                false, false);
+                false, false,
+                0x0004, 0x0002);
 
         /// add sensor
         auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(hero_id));
@@ -446,14 +448,15 @@ namespace mad::core {
                 position,
                 0,
                 image_storage,
-                false, false);
+                false, false,
+                0x0004, 0x0002);
 
 
         float m_impulse = 2000;
         float horizontal_velocity = 20;
 
-        //auto machine = std::make_shared<mad::core::HeroStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
-        //controllers.push_back(machine);
+        auto machine = std::make_shared<mad::core::EnemyStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
+        controllers.push_back(machine);
     }
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
         std::filesystem::path source(m_config_json["static_resources"]);

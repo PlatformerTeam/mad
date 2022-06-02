@@ -31,7 +31,7 @@ namespace mad::core {
 
         Entity::Id create_viewable_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage);
         Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
-                                          b2World &physicalWorld, bool is_fixed, bool is_rotated);
+                                          b2World &physicalWorld, bool is_fixed, bool is_rotated, uint16 categoryBits, uint16 maskBits);
 
     private:
         std::unordered_map<Entity::Id, std::unique_ptr<Entity>> m_map_entities;

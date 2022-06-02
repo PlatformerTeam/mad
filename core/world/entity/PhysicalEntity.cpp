@@ -8,7 +8,7 @@
 #include <utility>
 
 mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
-                                          b2World &physicalWorld, bool is_fixed, bool is_rotated)
+                                          b2World &physicalWorld, bool is_fixed, bool is_rotated,  uint16 categoryBits, uint16 maskBits)
     : ViewableEntity(id, z_ind, initial_position, initial_rotation, image_storage) {
 
     //rect.setOrigin(300, 50);
@@ -16,10 +16,19 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
     if(is_fixed)
     {
         b2BodyDef fixedBodyDef;
+        //fixtureDef.filter.categoryBits = categoryBits;
+        //fixtureDef.filter.maskBits = maskBits;
         fixedBodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&fixedBodyDef);
         b2PolygonShape groundBox = (image_storage->get_action(ImageStorage::TypeAction::Idle))->as_fixture();
-        body->CreateFixture(&groundBox, 0.0f);
+
+        b2FixtureDef fixtureDef;
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
+        fixtureDef.shape = &groundBox;
+        fixtureDef.density = 0.0f;
+
+        body->CreateFixture(&fixtureDef);
         body->SetTransform(body->GetPosition(), initial_rotation);
     }
     else
@@ -35,6 +44,8 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         }
 
         b2FixtureDef fixtureDef;
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.0f;
@@ -162,6 +173,8 @@ mad::core::Vec2d mad::core::PhysicalEntity::get_world_center() {
 }
 void mad::core::PhysicalEntity::add_sensor(b2Vec2 offset, float x_size, float y_size) {
     b2FixtureDef FixtureDef;
+    FixtureDef.filter.categoryBits = 0x0006;
+    FixtureDef.filter.maskBits = 0x0006;
     b2PolygonShape fixture;
     fixture.SetAsBox(x_size, y_size, offset, 0);
     FixtureDef.shape = &fixture;

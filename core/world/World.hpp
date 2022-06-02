@@ -36,7 +36,7 @@ namespace mad::core {
 
         virtual Entity::Id create_physical_entity(int z_ind, Vec2d initial_position, float initial_rotation,
                                                   std::shared_ptr<ImageStorage> image_storage,
-                                                  bool is_fixed, bool is_rotated) = 0;
+                                                  bool is_fixed, bool is_rotated, uint16 categoryBits = 0x0002, uint16 maskBits = 0x0002) = 0;
     };
 
 }// namespace mad::core
