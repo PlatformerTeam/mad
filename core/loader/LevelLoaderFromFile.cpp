@@ -135,10 +135,10 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Enemy1: {
-                        create_mob(world, {current_position_x, current_position_y});
                         break;
                     }
                     case Objects::Enemy2: {
+                        create_mob(world, {current_position_x, current_position_y});
                         break;
                     }
                     case Objects::Empty: {
@@ -334,7 +334,7 @@ namespace mad::core {
                           std::make_shared<AnimatedImageSeveralFiles>(
                                   source / m_config_json["enemy"]["animated"]["actions"]["attack_end"]["source"],
 
-                                  m_config_json["hero"]["animated"]["actions"]["attack_end"]["delta_time"],
+                                  m_config_json["enemy"]["animated"]["actions"]["attack_end"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
                                   delta_x, delta_y)}}));
 
@@ -349,8 +349,8 @@ namespace mad::core {
         float m_impulse = 2000;
         float horizontal_velocity = 20;
 
-        auto machine = std::make_shared<mad::core::HeroStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
-        controllers.push_back(machine);
+        //auto machine = std::make_shared<mad::core::HeroStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
+        //controllers.push_back(machine);
     }
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
         std::filesystem::path source("../../game/resources/static/");
