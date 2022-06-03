@@ -167,28 +167,31 @@ int main() {
         ImGui::SetNextWindowPos({0, 0});
         ImGui::Begin("Server util", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
-
-        if (ImGui::Button("Start server")) {
-            if (!svr.is_running()) {
-                std::thread([&svr]() mutable {
-                    svr.listen("localhost", 8080);
-                }).detach();
-                logs.emplace_back("Server has started");
+        {
+            ImGui::BeginChild("Tool buttons", ImVec2(ImGui::GetContentRegionAvail().x * 0.3f, 80), true);
+            if (ImGui::Button("Start server")) {
+                if (!svr.is_running()) {
+                    std::thread([&svr]() mutable {
+                        svr.listen("localhost", 8080);
+                    }).detach();
+                    logs.emplace_back("Server has started");
+                }
             }
-        }
 
-        if (ImGui::Button("Stop server")) {
-            if (svr.is_running()) {
-                svr.stop();
-                logs.emplace_back("Server has stopped");
+            if (ImGui::Button("Stop server")) {
+                if (svr.is_running()) {
+                    svr.stop();
+                    logs.emplace_back("Server has stopped");
+                }
             }
-        }
 
-        if (ImGui::Button("Quit")) {
-            window.close();
-            if (svr.is_running()) {
-                svr.stop();
+            if (ImGui::Button("Quit")) {
+                window.close();
+                if (svr.is_running()) {
+                    svr.stop();
+                }
             }
+            ImGui::EndChild();
         }
 
         {
