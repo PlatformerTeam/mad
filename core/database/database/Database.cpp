@@ -45,6 +45,13 @@ namespace mad::core {
         return !rows_found.empty();
     }
 
+    bool Database::is_level_exists(const std::string &levelname) {
+        pqxx::work W(m_connector);
+        m_query = "SELECT * FROM levels WHERE name = '" + W.esc(levelname) + "';";
+        pqxx::result rows_found = W.exec(m_query);
+        return !rows_found.empty();
+    }
+
     void Database::registry_user(const std::string &username) {
         pqxx::work W(m_connector);
 

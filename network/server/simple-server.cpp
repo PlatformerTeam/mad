@@ -147,6 +147,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(640, 480), "MAD Server");
     ImGui::SFML::Init(window);
     window.setFramerateLimit(120);
+    char input_levelname[255] = "";
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Event event;
@@ -168,7 +169,9 @@ int main() {
         ImGui::Begin("Server util", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
 
         {
-            ImGui::BeginChild("Tool buttons", ImVec2(ImGui::GetContentRegionAvail().x * 0.3f, 80), true);
+            std::unique_lock lock(locker);
+            ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+            ImGui::BeginChild("Tool buttons", ImVec2(ImGui::GetContentRegionAvail().x * 0.3f, 82), true, window_flags);
             if (ImGui::Button("Start server")) {
                 if (!svr.is_running()) {
                     std::thread([&svr]() mutable {
@@ -194,10 +197,25 @@ int main() {
             ImGui::EndChild();
         }
 
+        ImGui::SameLine();
         {
             std::unique_lock lock(locker);
             ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
-            ImGui::BeginChild("Child", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true, window_flags);
+            ImGui::BeginChild("Input levelname", ImVec2(ImGui::GetContentRegionAvail().x, 82), true, window_flags);
+            ImGui::InputText("##", input_levelname, 255);
+            ImGui::Text("new level name");
+            if (ImGui::Button("Enter")) {
+                if (!std::string(input_levelname).empty()) {
+
+                }
+            }
+            ImGui::EndChild();
+        }
+
+        {
+            std::unique_lock lock(locker);
+            ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
+            ImGui::BeginChild("Logs", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), true, window_flags);
             for (int i = 0; i < logs.size(); ++i) {
                 ImGui::Text(logs[i].c_str(), i);
             }

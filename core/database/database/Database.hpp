@@ -14,9 +14,7 @@ namespace mad::core {
 
         bool is_user_exists(const std::string &username);
 
-        void registry_user(const std::string &username);
-
-        void append_level(const std::string &levelname);
+        bool is_level_exists(const std::string &levelname);
 
         std::size_t get_id(const std::string &username);
 
@@ -26,6 +24,10 @@ namespace mad::core {
         std::string get_levelname(std::size_t id);
 
         std::size_t get_levels_total();
+
+        void registry_user(const std::string &username);
+
+        void append_level(const std::string &levelname);
 
         void increment_progress(std::size_t id);
         void increment_progress(const std::string &username);
