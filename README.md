@@ -8,7 +8,7 @@ sudo apt update
 sudo apt-get install libsfml-dev xorg-dev libglu1-mesa-dev
 
 ```
-### Macos
+### Mac OS
 ```bash
 brew install sfml
 
