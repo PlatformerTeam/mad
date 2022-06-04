@@ -1,8 +1,8 @@
 {
   "name" : "level_02",
   "animated_resources" : "../../resources/animated/",
-  "static_resources" : "../../resources/static/block_01",
-  "decoration_resources" : "../../resources/decoration/decoration_01",
+  "static_resources" : "../../resources/static/block_02",
+  "decoration_resources" : "../../resources/decoration/decoration_03",
   "block" : 10.0,
   "camera": {
     "position" : {
@@ -20,13 +20,13 @@
     "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6]
   },
   "texture" : {
-    "unstable_block" : "unstable_block.png",
-    "ground_block" : "ground_block.png",
+    "unstable_block" : "block.png",
+    "ground_block" : "block.png",
     "finish_block" : "finish_block.png",
-    "begin_block" : "begin_block.png",
-    "middle_block" : "middle_block.png",
-    "end_block" : "end_block.png",
-    "separate_block" : "separate_block.png"
+    "begin_block" : "block.png",
+    "middle_block" : "block.png",
+    "end_block" : "block.png",
+    "separate_block" : "block.png"
   },
   "decoration" : {
     "decoration_01" : {
