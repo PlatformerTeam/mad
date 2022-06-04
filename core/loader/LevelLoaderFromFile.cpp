@@ -180,7 +180,7 @@ namespace mad::core {
                     case Objects::Hero: {
                         // Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
                         hero_id = create_hero(world, {current_position_x, current_position_y});
-                        keys[LevelLoaderFromFile::IdKeys::Hero] = hero_id;
+                        r_hero_id = keys[LevelLoaderFromFile::IdKeys::Hero] = hero_id;
                         break;
                     }
                     case Objects::Enemy1: {
@@ -389,7 +389,22 @@ namespace mad::core {
 
                                   m_config_json["hero"]["animated"]["actions"]["attack_3_end"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
-                                  delta_x, delta_y)}}));
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Hurt,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["hurt"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["hurt"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Die,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["die"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["die"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)}
+                        }));
 
         hero_id = world->create_physical_entity(
                 2,
@@ -483,8 +498,10 @@ namespace mad::core {
 
         float m_impulse = 2000;
         float horizontal_velocity = 5.5f;
+        auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(enemy_id));
+        m_entity->add_sensor({6, 0}, 2.65, 0.05);
 
-        auto machine = std::make_shared<mad::core::EnemyStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity);
+        auto machine = std::make_shared<mad::core::EnemyStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity, r_hero_id);
         controllers.push_back(machine);
     }
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
