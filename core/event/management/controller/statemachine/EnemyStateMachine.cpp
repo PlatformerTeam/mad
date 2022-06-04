@@ -36,7 +36,7 @@ mad::core::EnemyStateMachine::EnemyStateMachine(std::shared_ptr<LocalWorld> worl
     StateMachine::StateId ground_left = machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Left, horizontal_velocity));
     StateMachine::StateId die_idle = machine->add_state(std::make_shared<Die>(world, hero_id, Movement::Direction::Idle));
     StateMachine::StateId hurt_idle = machine->add_state(std::make_shared<Hurt>(world, hero_id, Movement::Direction::Idle));
-    StateMachine::StateId destroy = machine->add_state(std::make_shared<Destroy>(world, hero_id));
+    StateMachine::StateId destroy = machine->add_state(std::make_shared<Destroy>(world, level_dispatcher, hero_id));
 
     int *attack_stage = new int(0);
     StateMachine::StateId attack_idle = machine->add_state(std::make_shared<EnemyAttack>(world, level_dispatcher, hero_id, Movement::Direction::Idle, attack_stage, horizontal_velocity));
