@@ -147,7 +147,8 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(640, 480), "MAD Server");
     ImGui::SFML::Init(window);
     window.setFramerateLimit(120);
-    char input_levelname[255] = "";
+    char input_levelname[255] = "\0";
+    std::string text_hint = "new level name";
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Event event;
@@ -203,10 +204,15 @@ int main() {
             ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
             ImGui::BeginChild("Input levelname", ImVec2(ImGui::GetContentRegionAvail().x, 82), true, window_flags);
             ImGui::InputText("##", input_levelname, 255);
-            ImGui::Text("new level name");
+            ImGui::Text(text_hint.c_str());
             if (ImGui::Button("Enter")) {
                 if (!std::string(input_levelname).empty()) {
-
+                    if (!db.is_level_exists(input_levelname)) {
+                        db.append_level(input_levelname);
+                        text_hint = "new level name";
+                    } else {
+                        text_hint = "level name is already used";
+                    }
                 }
             }
             ImGui::EndChild();
