@@ -12,6 +12,10 @@ namespace mad::core {
     public:
         Destroy(std::shared_ptr<mad::core::LocalWorld> world, Entity::Id entity_id);
         void control() override;
+    private:
+        std::shared_ptr<mad::core::LocalWorld> world;
+        Entity::Id entity_id;
+        PhysicalEntity* m_entity;
     };
 
 }
