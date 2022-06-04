@@ -47,8 +47,7 @@ int main() {
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
             std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_01"),
             std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_02"),
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_03"),
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_with_finish")
+            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_03")
     };
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(
