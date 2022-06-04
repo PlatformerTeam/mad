@@ -30,16 +30,22 @@
   },
   "decoration" : {
     "decoration_01" : {
-      "source" : "tree.png",
+      "source" : "arrow.png",
       "scale" : 1,
       "delta_x" : 0,
-      "delta_y" : 5
+      "delta_y" : 0
     },
     "decoration_02" : {
-      "source" : "stone.png",
+      "source" : "head.png",
       "scale" : 1,
       "delta_x" : 0,
-      "delta_y" : -20
+      "delta_y" : 0
+    },
+    "decoration_03" : {
+      "source" : "gross.png",
+      "scale" : 1,
+      "delta_x" : 0,
+      "delta_y" : 0
     }
   },
   "hero" : {
