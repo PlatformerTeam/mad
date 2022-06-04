@@ -93,7 +93,7 @@ int main() {
 #endif
     spdlog::set_level(log_level);
 
-    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
+    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(), "MAD", sf::Style::Fullscreen);
     ImGui::SFML::Init(*window);
     window->setFramerateLimit(120);
 
@@ -101,22 +101,22 @@ int main() {
 
     auto system_listener = std::make_shared<mad::core::SystemListener>(window);
 
-    auto network_storage_driver = std::make_shared<mad::core::NetworkClientStorageDriver>();
+    auto database_storage_driver = std::make_shared<mad::core::NetworkClientStorageDriver>();
 
-    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders = network_storage_driver->get_levels();
+    std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders = database_storage_driver->get_levels();
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(
             level_loaders,
             global_dispatcher,
             std::make_unique<mad::core::MainMenu>(),
-            std::make_unique<mad::core::AuthorizationMenu>(network_storage_driver),
+            std::make_unique<mad::core::AuthorizationMenu>(database_storage_driver),
             system_listener,
-            network_storage_driver
+            database_storage_driver
     );
 
     global_dispatcher->registry(std::make_shared<mad::core::WindowCloseHandler>(*window));
     global_dispatcher->registry(std::make_shared<mad::core::MainMenuEventsHandler>(*game_runner));
-    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner, network_storage_driver));
+    global_dispatcher->registry(std::make_shared<mad::core::GameRunnerEventsHandler>(*game_runner, database_storage_driver));
     global_dispatcher->registry(std::make_shared<mad::core::AuthorizationMenuEventsHandler>(*game_runner));
 
     game_runner->run(*window);

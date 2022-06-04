@@ -54,7 +54,7 @@ int main() {
                 std::string map, map_line;
                 input_config >> config;
                 while (input_map >> map_line) {
-                    map += map_line;
+                    map += map_line + '\n';
                 }
                 config["map"] = map;
                 res.status = 200;
@@ -209,8 +209,8 @@ int main() {
                 if (!std::string(input_levelname).empty()) {
                     std::filesystem::path level_container = levels_directory / input_levelname;
                     if (std::filesystem::is_directory(level_container) &&
-                            std::filesystem::exists(level_container / "config.json") &&
-                            std::filesystem::exists(level_container / "map")) {
+                        std::filesystem::exists(level_container / "config.json") &&
+                        std::filesystem::exists(level_container / "map")) {
                         if (!db.is_level_exists(input_levelname)) {
                             db.append_level(input_levelname);
                             text_hint = "new level name";
