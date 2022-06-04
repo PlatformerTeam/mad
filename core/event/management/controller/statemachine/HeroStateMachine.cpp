@@ -50,7 +50,7 @@ mad::core::HeroStateMachine::HeroStateMachine(std::shared_ptr<LocalWorld> world,
     StateMachine::StateId deal_damage = machine->add_state(std::make_shared<DealDamage>(world, hero_id, level_dispatcher));
     StateMachine::StateId hurt_idle = machine->add_state(std::make_shared<Hurt>(world, hero_id, Movement::Direction::Idle));
     StateMachine::StateId die_idle = machine->add_state(std::make_shared<Die>(world, hero_id, Movement::Direction::Idle));
-    StateMachine::StateId destroy = machine->add_state(std::make_shared<Destroy>(world, hero_id));
+    StateMachine::StateId destroy = machine->add_state(std::make_shared<Destroy>(world, level_dispatcher, hero_id));
 
 
     machine->add_transition(ground_idle, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));

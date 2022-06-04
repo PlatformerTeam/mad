@@ -69,10 +69,13 @@ namespace mad::core {
 
     void GameRunner::m_sequential_level_run(sf::RenderWindow &window) {
         for (auto &loader: m_level_loaders) {
-            m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
-            while (m_current_state == State::Gameplay && m_current_level_runner->get_state() == LevelRunner::State::Active) {
-                m_current_level_runner->run(window);
+            if (m_current_state != State::Gameplay) {
+                return;
             }
+            do {
+                m_current_level_runner = loader->load(m_global_event_dispatcher, m_system_listener);
+                m_current_level_runner->run(window);
+            } while (m_current_state == State::Gameplay && m_current_level_runner->get_state() == LevelRunner::State::Active);
         }
     }
 
