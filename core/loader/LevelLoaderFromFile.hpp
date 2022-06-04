@@ -129,6 +129,7 @@ namespace mad::core {
             SeparateBlock,
             Decoration1,
             Decoration2,
+            Decoration3,
             Hero,
             Enemy1,
             Enemy2,
@@ -156,6 +157,7 @@ namespace mad::core {
                 {'+', Objects::SeparateBlock},
                 {'*', Objects::Decoration1},
                 {'&', Objects::Decoration2},
+                {'^', Objects::Decoration3},
                 {'H', Objects::Hero},
                 {'Z', Objects::Enemy1},
                 {'E', Objects::Enemy2}

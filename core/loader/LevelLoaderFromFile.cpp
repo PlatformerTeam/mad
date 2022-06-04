@@ -163,6 +163,13 @@ namespace mad::core {
                                       m_objects[object]);
                         break;
                     }
+                    case Objects::Decoration3: {
+                        create_decoration(world,
+                                          {current_position_x,
+                                           current_position_y},
+                                          m_objects[object]);
+                        break;
+                    }
                     case Objects::FinishBlock: {
                         keys[LevelLoaderFromFile::IdKeys::FinishBlock] = create_finish_block(
                                 world,
@@ -263,6 +270,13 @@ namespace mad::core {
                 decoration_scale = m_config_json["decoration"]["decoration_02"]["scale"];
                 delta_x = m_config_json["decoration"]["decoration_02"]["delta_x"];
                 delta_y = m_config_json["decoration"]["decoration_02"]["delta_y"];
+                break;
+            }
+            case Objects::Decoration3 : {
+                source /= m_config_json["decoration"]["decoration_03"]["source"];
+                decoration_scale = m_config_json["decoration"]["decoration_03"]["scale"];
+                delta_x = m_config_json["decoration"]["decoration_03"]["delta_x"];
+                delta_y = m_config_json["decoration"]["decoration_03"]["delta_y"];
                 break;
             }
         }
