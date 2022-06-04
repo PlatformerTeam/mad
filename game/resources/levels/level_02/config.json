@@ -1,5 +1,5 @@
 {
-  "name" : "level_01",
+  "name" : "level_02",
   "animated_resources" : "../../game/resources/animated/",
   "static_resources" : "../../game/resources/static/block_01",
   "decoration_resources" : "../../game/resources/decoration/decoration_01",

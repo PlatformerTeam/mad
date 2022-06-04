@@ -1,5 +1,5 @@
 {
-  "name" : "level_01",
+  "name" : "level_03",
   "animated_resources" : "../../game/resources/animated/",
   "static_resources" : "../../game/resources/static/block_03",
   "decoration_resources" : "../../game/resources/decoration/decoration_03",
@@ -13,7 +13,7 @@
     "zoom": 0.1,
     "follow_type" : "forward",
     "minimal_distance" : 3.0,
-    "part_of_window" : 0.02
+    "part_of_window" : 0.25
   },
   "background" : {
     "source" : "../../game/resources/background/background_03",

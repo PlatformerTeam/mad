@@ -23,8 +23,7 @@ namespace mad::core {
     bool Camera::render(sf::RenderWindow &window) {
         if (m_distance_over_hero == 0) {
             m_view.setSize(static_cast<float>(window.getSize().x) * *m_zoom, static_cast<float>(window.getSize().y) * *m_zoom);
-            std::cout << window.getView().getViewport().height << '\n';
-            m_distance_over_hero = -static_cast<float>(window.getView().getSize().y) * m_part_of_window * *m_zoom;
+            m_distance_over_hero = -static_cast<float>(window.getSize().y) * m_part_of_window * *m_zoom;
             *m_position += Vec2d{0, m_distance_over_hero};
             m_view.setCenter(*m_position);
         }
