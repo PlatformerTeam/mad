@@ -20,6 +20,7 @@ namespace mad::core {
             EndOfRenderAction,
             SensorCollision,
             SensorCollisionEnd,
+            TakeDamage,
         };
 
         explicit Event(Type new_type);

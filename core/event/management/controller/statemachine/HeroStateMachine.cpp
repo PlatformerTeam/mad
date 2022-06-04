@@ -10,6 +10,7 @@
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
 #include "event/management/controller/Attack.hpp"
+#include "event/management/controller/DealDamage.hpp"
 #include "event/management/controller/Fall.hpp"
 #include "event/management/controller/FlyUp.hpp"
 #include "event/management/controller/GroundMovement.hpp"
@@ -36,9 +37,11 @@ mad::core::HeroStateMachine::HeroStateMachine(std::shared_ptr<LocalWorld> world,
     StateMachine::StateId fall_idle = machine->add_state(std::make_shared<Fall>(world, hero_id, Movement::Direction::Idle, horizontal_velocity));
     StateMachine::StateId fall_right= machine->add_state(std::make_shared<Fall>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
     int *attack_stage = new int(0);
-    StateMachine::StateId attack_left = machine->add_state(std::make_shared<Attack>(world, hero_id, Movement::Direction::Left,  attack_stage, horizontal_velocity));
-    StateMachine::StateId attack_idle= machine->add_state(std::make_shared<Attack>(world, hero_id, Movement::Direction::Idle, attack_stage, horizontal_velocity));
-    StateMachine::StateId attack_right = machine->add_state(std::make_shared<Attack>(world, hero_id, Movement::Direction::Right, attack_stage, horizontal_velocity));
+    StateMachine::StateId attack_left = machine->add_state(std::make_shared<Attack>(world, level_dispatcher, hero_id, Movement::Direction::Left,  attack_stage, horizontal_velocity));
+    StateMachine::StateId attack_idle= machine->add_state(std::make_shared<Attack>(world, level_dispatcher, hero_id, Movement::Direction::Idle, attack_stage, horizontal_velocity));
+    StateMachine::StateId attack_right = machine->add_state(std::make_shared<Attack>(world, level_dispatcher, hero_id, Movement::Direction::Right, attack_stage, horizontal_velocity));
+    StateMachine::StateId deal_damage = machine->add_state(std::make_shared<DealDamage>(world, hero_id, level_dispatcher));
+
 
     machine->add_transition(ground_idle, ground_right, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
     machine->add_transition(ground_idle, ground_left, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Left));

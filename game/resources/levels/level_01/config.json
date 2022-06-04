@@ -137,22 +137,22 @@
         "attack_beg" : {
           "source": "enemy_attack_beg",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         },
         "attack_end" : {
           "source": "enemy_attack_end",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         },
         "hurt" : {
           "source": "enemy_hurt",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         },
         "die" : {
           "source": "enemy_die",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         }
       }
     }

@@ -51,4 +51,6 @@ namespace mad::core {
     Vec2d operator*(float k, Vec2d v) {
         return v *= k;
     }
+
+
 }

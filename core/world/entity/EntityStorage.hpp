@@ -25,7 +25,7 @@ namespace mad::core {
 
     class EntityStorage {
     public:
-        [[nodiscard]] std::vector<Entity::Id> extract(const Filter &filter) const;
+        [[nodiscard]] std::vector<Entity::Id> extract(const Filter &filter) ;
 
         Entity &get_entity(Entity::Id id);
 
