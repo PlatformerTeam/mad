@@ -86,6 +86,13 @@ add_subdirectory(${DIRECTORY_PQXX})
 message(STATUS "PostgreSQL include: ${INCLUDE_PQXX}")
 message(STATUS "PostgreSQL library: ${LIBRARY_PQXX}")
 
+# HTTP library
+set(DIRECTORY_HTTP ${PROJECT_SOURCE_DIR}/deps/cpp-httplib)
+set(INCLUDE_HTTP ${DIRECTORY_HTTP})
+
+add_subdirectory(${DIRECTORY_HTTP})
+message(STATUS "HTTP include: ${INCLUDE_HTTP}")
+
 # Core library
 set(DIRECTORY_CORE ${PROJECT_SOURCE_DIR}/core)
 set(INCLUDE_CORE ${DIRECTORY_CORE})
@@ -100,10 +107,20 @@ set(DIRECTORY_GAME ${PROJECT_SOURCE_DIR}/game)
 set(EXECUTABLE_GAME example)
 set(EXECUTABLE_GAME_RUNNER game_runner_example)
 set(EXECUTABLE_GAME_DATABASE game_database_example)
+set(EXECUTABLE_LOADER_FROM_SERVER game_loader_from_server_example)
 
 add_subdirectory(${DIRECTORY_GAME})
 message(STATUS "Game executable: ${EXECUTABLE_GAME}")
 message(STATUS "Game-runner executable ${EXECUTABLE_GAME_RUNNER}")
+
+# Network binaries
+set(DIRECTORY_NETWORK ${PROJECT_SOURCE_DIR}/network)
+set(EXECUTABLE_SIMPLE_SERVER simple-server)
+set(EXECUTABLE_SIMPLE_CLIENT simple-client)
+
+add_subdirectory(${DIRECTORY_NETWORK})
+message(STATUS "Server executable: ${EXECUTABLE_SERVER}")
+message(STATUS "Client executable ${EXECUTABLE_GAME_CLIENT}")
 
 # Tests
 set(DIRECTORY_TEST ${PROJECT_SOURCE_DIR}/test)

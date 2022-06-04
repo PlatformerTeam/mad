@@ -1,11 +1,40 @@
-#include "Database.hpp"
-
+#include <httplib.h>
+#include <pqxx/pqxx>
 #include <spdlog/spdlog.h>
 
+namespace mad::core {
+    class Database {
+    public:
+        Database();
+
+        bool is_user_exists(const std::string &username);
+
+        void registry_user(const std::string &username);
+
+        std::size_t get_id(const std::string &username);
+
+        std::size_t get_progress(std::size_t id);
+
+        std::size_t get_progress(const std::string &username);
+
+        void increment_progress(std::size_t id);
+
+        void increment_progress(const std::string &username);
+
+        void reset_progress(std::size_t id);
+
+        void reset_progress(const std::string &username);
+
+    private:
+        pqxx::connection m_connector;
+        std::string m_query;
+
+    };
+}
 
 namespace mad::core {
 
-    Database::Database() : m_connector("dbname = mad") {
+    Database::Database() : m_connector("dbname = test-network") {
         try {
             if (m_connector.is_open()) {
                 SPDLOG_DEBUG("Database mad opened successfully");
@@ -25,11 +54,6 @@ namespace mad::core {
                       "levels_completed SMALLINT NOT NULL);";
             w.exec(m_query);
 
-            m_query = "CREATE TABLE IF NOT EXISTS levels("
-                      "id SERIAL PRIMARY KEY,"
-                      "name TEXT NOT NULL UNIQUE);";
-            w.exec(m_query);
-
             w.commit();
 
             SPDLOG_DEBUG("Tables created successfully");
@@ -45,17 +69,10 @@ namespace mad::core {
         return !rows_found.empty();
     }
 
-    bool Database::is_level_exists(const std::string &levelname) {
-        pqxx::work W(m_connector);
-        m_query = "SELECT * FROM levels WHERE name = '" + W.esc(levelname) + "';";
-        pqxx::result rows_found = W.exec(m_query);
-        return !rows_found.empty();
-    }
-
     void Database::registry_user(const std::string &username) {
         pqxx::work W(m_connector);
 
-        m_query = "SELECT id FROM users;";
+        m_query = "SELECT id FROM users";
         pqxx::result total_rows = W.exec(m_query);
         std::size_t id = total_rows.size();
 
@@ -63,15 +80,6 @@ namespace mad::core {
         W.exec(m_query);
 
         m_query = "INSERT INTO progress(id, levels_completed) VALUES(" + std::to_string(id) + ", 0);";
-        W.exec(m_query);
-
-        W.commit();
-    }
-
-    void Database::append_level(const std::string &levelname) {
-        pqxx::work W(m_connector);
-
-        m_query = "INSERT INTO levels(name) VALUES('" + levelname + "');";
         W.exec(m_query);
 
         W.commit();
@@ -120,18 +128,28 @@ namespace mad::core {
     void Database::reset_progress(const std::string &username) {
         reset_progress(get_id(username));
     }
+}
 
-    std::string Database::get_levelname(std::size_t id) {
-        pqxx::work W(m_connector);
-        m_query = "SELECT * FROM levels WHERE id = " + std::to_string(id) + ";";
-        auto found_row = W.exec1(m_query);
-        return found_row["name"].as<std::string>();
-    }
+int main() {
+    httplib::Server svr;
+    mad::core::Database db;
 
-    std::size_t Database::get_levels_total() {
-        pqxx::work W(m_connector);
-        m_query = "SELECT id FROM levels;";
-        auto total_rows = W.exec(m_query);
-        return total_rows.size();
-    }
+    svr.Post("/user/login", [&db](const httplib::Request &req, httplib::Response &res) {
+       if (req.has_param("username")) {
+           auto username = req.get_param_value("username");
+           if (db.is_user_exists(username)) {
+               res.status = 200;
+               res.body = "OK";
+           } else {
+               res.status = 404;
+               res.body = "User doesn\'t exists";
+           }
+       } else {
+           res.status = 404;
+           res.body = "Invalid params of request";
+       }
+    });
+
+
+    svr.listen("localhost", 8080);
 }
