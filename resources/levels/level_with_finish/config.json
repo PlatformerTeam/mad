@@ -1,46 +1,28 @@
 {
-  "name" : "level_03",
-  "animated_resources" : "../../game/resources/animated/",
-  "static_resources" : "../../game/resources/static/block_03",
-  "decoration_resources" : "../../game/resources/decoration/decoration_03",
+  "name" : "level_with_finish",
+  "animated_resources" : "../../resources/animated/",
+  "static_resources" : "../../resources/static/",
   "block" : 10.0,
   "camera": {
     "position" : {
       "x" : 10.0,
       "y" : 10.0
     },
-    "smoothness": 0.1,
-    "zoom": 0.1,
+    "angle": 15.0,
+    "smoothness": 0.6,
+    "zoom": 10.5,
     "follow_type" : "forward",
     "minimal_distance" : 3.0,
-    "part_of_window" : 0.25
+    "part_of_window" : 0.02
   },
   "background" : {
-    "source" : "../../game/resources/background/background_03",
-    "parallax_ratios" : [0.95, 0.9, 0.85, 0.8]
+    "source" : "../../resources/background/background_02",
+    "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75]
   },
   "texture" : {
-    "unstable_block" : "unstable_block.png",
-    "ground_block" : "ground_block.png",
-    "finish_block" : "finish_block.png",
-    "begin_block" : "begin_block.png",
-    "middle_block" : "middle_block.png",
-    "end_block" : "end_block.png",
-    "separate_block" : "separate_block.png"
-  },
-  "decoration" : {
-    "decoration_01" : {
-      "source" : "tree.png",
-      "scale" : 1,
-      "delta_x" : 0,
-      "delta_y" : 5
-    },
-    "decoration_02" : {
-      "source" : "stone.png",
-      "scale" : 1,
-      "delta_x" : 0,
-      "delta_y" : -20
-    }
+    "ground_block" : "brick.png",
+    "unstable_block" : "brick.png",
+    "finish_block" : "exit.png"
   },
   "hero" : {
     "source" : "hero",
@@ -105,16 +87,6 @@
           "source": "hero_attack_3_end",
           "type": "several_files",
           "delta_time": 30
-        },
-        "hurt" : {
-          "source": "hero_hurt",
-          "type": "several_files",
-          "delta_time": 130
-        },
-        "die" : {
-          "source": "hero_die",
-          "type": "several_files",
-          "delta_time": 130
         }
       }
     }
@@ -123,7 +95,7 @@
     "source" : "enemy",
     "animated" : {
       "size_width": 5.5,
-      "size_height": 5,
+      "size_height": 9,
       "size_scale": 0.3,
       "delta_x" : 0,
       "delta_y" : 3,
@@ -145,16 +117,6 @@
         },
         "attack_end" : {
           "source": "enemy_attack_end",
-          "type": "several_files",
-          "delta_time": 30
-        },
-        "hurt" : {
-          "source": "enemy_hurt",
-          "type": "several_files",
-          "delta_time": 30
-        },
-        "die" : {
-          "source": "enemy_die",
           "type": "several_files",
           "delta_time": 30
         }

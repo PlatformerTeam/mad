@@ -37,6 +37,6 @@ function(game_executable EXECUTABLE_GAME_NAME EXECUTABLE_SOURCES)
 endfunction()
 
 game_executable(${EXECUTABLE_GAME} example.cpp)
-#game_executable(${EXECUTABLE_GAME_RUNNER} game_runner_example.cpp)
+game_executable(${EXECUTABLE_LOADER_FROM_SERVER} game_loader_from_server_example.cpp)
 game_executable(${EXECUTABLE_GAME_RUNNER} game_with_default_loader_example.cpp)
 game_executable(${EXECUTABLE_GAME_DATABASE} game_database_example.cpp)

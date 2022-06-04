@@ -78,6 +78,7 @@ set(
         runner/GameRunner.hpp runner/GameRunner.cpp
         loader/LevelLoader.hpp
         loader/LevelLoaderFromFile.cpp loader/LevelLoaderFromFile.hpp
+        loader/LevelLoaderFromServer.hpp loader/LevelLoaderFromServer.cpp
 
         visual/image/Image.hpp
         visual/image/static/RenderableStatic.cpp visual/image/static/RenderableStatic.hpp
