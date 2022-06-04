@@ -113,7 +113,7 @@
     "source" : "enemy",
     "animated" : {
       "size_width": 5.5,
-      "size_height": 9,
+      "size_height": 5,
       "size_scale": 0.3,
       "delta_x" : 0,
       "delta_y" : 3,
@@ -135,6 +135,16 @@
         },
         "attack_end" : {
           "source": "enemy_attack_end",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "hurt" : {
+          "source": "enemy_hurt",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "die" : {
+          "source": "enemy_die",
           "type": "several_files",
           "delta_time": 30
         }

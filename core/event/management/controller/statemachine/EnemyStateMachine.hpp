@@ -8,6 +8,8 @@ namespace mad::core{
 
     public:
         explicit EnemyStateMachine(std::shared_ptr<LocalWorld> world, Vec2d position, int hero_id, std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher, float m_impulse, float horizontal_velocity);
+    private:
+        float health = 30;
     };
 }
 

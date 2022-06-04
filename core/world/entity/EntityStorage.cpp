@@ -5,7 +5,7 @@
 #include <visual/image/Image.hpp>
 #include <memory>
 #include "EntityStorage.hpp"
-
+#include "algorithm"
 
 namespace mad::core {
 
@@ -42,6 +42,11 @@ namespace mad::core {
         m_map_entities[new_entity_id] = std::make_unique<PhysicalEntity>(new_entity_id, z_ind, initial_position, initial_rotation,
                                                                          image_storage, physicalWorld, is_fixed, is_rotated,  categoryBits,  maskBits);
         return new_entity_id;
+    }
+
+    void EntityStorage::destroy_physical_entity(Entity::Id entity_id) {
+        m_list_ids.erase(std::remove(m_list_ids.begin(), m_list_ids.end(), entity_id), m_list_ids.end());
+        m_map_entities[entity_id] = nullptr;
     }
 
 }// namespace mad::core

@@ -10,6 +10,8 @@
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
 #include "event/management/controller/Attack.hpp"
+#include "event/management/controller/Destroy.hpp"
+#include "event/management/controller/Die.hpp"
 #include "event/management/controller/EnemyAttack.hpp"
 #include "event/management/controller/Fall.hpp"
 #include "event/management/controller/FlyUp.hpp"
@@ -27,6 +29,9 @@ mad::core::EnemyStateMachine::EnemyStateMachine(std::shared_ptr<LocalWorld> worl
     StateMachine::StateId ground_idle1 = machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Idle));
     StateMachine::StateId ground_right = machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Right, horizontal_velocity));
     StateMachine::StateId ground_left = machine->add_state(std::make_shared<GroundMovement>(world, hero_id, Movement::Direction::Left, horizontal_velocity));
+    StateMachine::StateId die_idle = machine->add_state(std::make_shared<Die>(world, hero_id, Movement::Direction::Idle));
+    StateMachine::StateId destroy = machine->add_state(std::make_shared<Destroy>(world, hero_id));
+
     int *attack_stage = new int(0);
     StateMachine::StateId attack_idle = machine->add_state(std::make_shared<EnemyAttack>(world, hero_id, Movement::Direction::Idle, attack_stage, horizontal_velocity));
 
@@ -43,7 +48,13 @@ mad::core::EnemyStateMachine::EnemyStateMachine(std::shared_ptr<LocalWorld> worl
     machine->add_transition(attack_idle, ground_idle, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Attack_1_end, attack_stage));
 
 
+    machine->add_transition(ground_idle, die_idle, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::E));
+    machine->add_transition(ground_left, die_idle, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::E));
+    machine->add_transition(ground_right, die_idle, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::E));
+    machine->add_transition(attack_idle, die_idle, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::E));
 
+
+    machine->add_transition(die_idle, destroy, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Die));
 
 
 
