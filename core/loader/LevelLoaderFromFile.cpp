@@ -441,7 +441,22 @@ namespace mad::core {
 
                                   m_config_json["enemy"]["animated"]["actions"]["attack_end"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
-                                  delta_x, delta_y)}}));
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Die,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["die"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["die"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Hurt,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["hurt"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["hurt"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)}
+                        }));
 
         Entity::Id enemy_id = world->create_physical_entity(
                 2,

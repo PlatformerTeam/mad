@@ -22,7 +22,8 @@ namespace mad::core {
             Jump,
             Fly_up,
             Fall,
-
+            Die,
+            Hurt,
         };
 
         explicit ImageStorage(std::unordered_map<TypeAction, std::shared_ptr<Image>> actions);
