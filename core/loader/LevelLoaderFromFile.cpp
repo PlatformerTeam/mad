@@ -503,9 +503,8 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<BackgroundImage>(
                                   source,
-                                  parallax_ratios,
-                                  static_cast<float>(m_config_json["background"]["scale"]) *
-                                  static_cast<float>(m_config_json["camera"]["zoom"]))}}));
+                                  parallax_ratios)
+                                  }}));
         world->create_viewable_entity(
                 -1,
                 {0, 0},

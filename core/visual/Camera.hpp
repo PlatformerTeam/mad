@@ -91,6 +91,8 @@ namespace mad::core {
 
         float m_smoothness;
 
+        std::shared_ptr<float> m_zoom = std::make_shared<float>(1.0);
+
         FollowType m_type;
 
         float m_minimal_distant;

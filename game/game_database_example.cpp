@@ -33,7 +33,7 @@ int main() {
 #endif
     spdlog::set_level(log_level);
 
-    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
+    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(), "MAD", sf::Style::Fullscreen);
     ImGui::SFML::Init(*window);
     window->setFramerateLimit(120);
 
