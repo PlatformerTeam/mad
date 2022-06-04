@@ -15,6 +15,11 @@ namespace mad::core {
 
     class LevelRunner : public Runner {
     public:
+        enum class State {
+            Completed,
+            Active,
+        };
+
         explicit LevelRunner(
             std::shared_ptr<SystemListener> system_listener,
             std::shared_ptr<PauseMenu> pause_menu,
@@ -37,6 +42,10 @@ namespace mad::core {
 
         void complete_level();
 
+        void fail_level();
+
+        State get_state() const;
+
     private:
         std::shared_ptr<SystemListener> m_system_listener;
         std::shared_ptr<PauseMenu> m_pause_menu;
@@ -45,8 +54,9 @@ namespace mad::core {
         std::shared_ptr<EventDispatcher> m_level_event_dispatcher;
         std::shared_ptr<World> m_world;
         std::vector<std::shared_ptr<Controller>> m_controllers;
-        bool m_level_is_running;
-        bool m_is_in_pause;
+        bool m_level_is_running = true;
+        bool m_is_in_pause = false;
+        State m_state = State::Active;
     };
 
 }// namespace mad::core

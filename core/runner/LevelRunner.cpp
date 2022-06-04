@@ -21,9 +21,7 @@ namespace mad::core {
         m_global_event_dispatcher(std::move(global_event_dispatcher)),
         m_level_event_dispatcher(std::move(level_event_dispatcher)),
         m_controllers(std::move(controllers)),
-        m_world(std::move(world)),
-        m_level_is_running(true),
-        m_is_in_pause(false) {
+        m_world(std::move(world)) {
     }
 
     void LevelRunner::run(sf::RenderWindow &window) {
@@ -67,7 +65,16 @@ namespace mad::core {
 
     void LevelRunner::complete_level() {
         m_level_is_running = false;
+        m_state = State::Completed;
         m_global_event_dispatcher->dispatch(std::make_shared<GameRunnerEvent>(GameRunnerEvent::Type::UpdateProgress));
+    }
+
+    void LevelRunner::fail_level() {
+        m_level_is_running = false;
+    }
+
+    LevelRunner::State LevelRunner::get_state() const {
+        return m_state;
     }
 
 }// namespace mad::core
