@@ -396,6 +396,13 @@ namespace mad::core {
 
                                   m_config_json["hero"]["animated"]["actions"]["hurt"]["delta_time"],
                                   physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Die,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["die"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["die"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
                                   delta_x, delta_y)}
                         }));
 

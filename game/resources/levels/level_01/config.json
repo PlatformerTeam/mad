@@ -116,6 +116,11 @@
           "source": "hero_hurt",
           "type": "several_files",
           "delta_time": 130
+        },
+        "die" : {
+          "source": "hero_die",
+          "type": "several_files",
+          "delta_time": 130
         }
       }
     }
