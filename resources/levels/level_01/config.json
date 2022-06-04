@@ -1,23 +1,23 @@
 {
-  "name" : "level_02",
-  "animated_resources" : "../../game/resources/animated/",
-  "static_resources" : "../../game/resources/static/block_01",
-  "decoration_resources" : "../../game/resources/decoration/decoration_01",
+  "name" : "level_01",
+  "animated_resources" : "../../resources/animated/",
   "block" : 10.0,
+  "static_resources" : "../../resources/static/block_01",
+  "decoration_resources" : "../../resources/decoration/decoration_01",
   "camera": {
     "position" : {
       "x" : 10.0,
       "y" : 10.0
     },
-    "smoothness": 0.1,
+    "smoothness": 0.05,
     "zoom": 0.1,
     "follow_type" : "forward",
-    "minimal_distance" : 3.0,
+    "minimal_distance" : 7.0,
     "part_of_window" : 0.25
   },
   "background" : {
-    "source" : "../../game/resources/background/background_02",
-    "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6]
+    "source" : "../../resources/background/background_01",
+    "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65]
   },
   "texture" : {
     "unstable_block" : "unstable_block.png",
@@ -30,16 +30,22 @@
   },
   "decoration" : {
     "decoration_01" : {
-      "source" : "tree.png",
+      "source" : "arrow.png",
       "scale" : 1,
       "delta_x" : 0,
-      "delta_y" : 5
+      "delta_y" : 20
     },
     "decoration_02" : {
-      "source" : "stone.png",
+      "source" : "head.png",
       "scale" : 1,
       "delta_x" : 0,
-      "delta_y" : -20
+      "delta_y" : 90
+    },
+    "decoration_03" : {
+      "source" : "gross.png",
+      "scale" : 1,
+      "delta_x" : 0,
+      "delta_y" : 0
     }
   },
   "hero" : {
@@ -141,22 +147,22 @@
         "attack_beg" : {
           "source": "enemy_attack_beg",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         },
         "attack_end" : {
           "source": "enemy_attack_end",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         },
         "hurt" : {
           "source": "enemy_hurt",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         },
         "die" : {
           "source": "enemy_die",
           "type": "several_files",
-          "delta_time": 30
+          "delta_time": 100
         }
       }
     }
