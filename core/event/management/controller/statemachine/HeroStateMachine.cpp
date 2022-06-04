@@ -2,6 +2,7 @@
 #include "event/management/condition/Counter.hpp"
 #include "event/management/condition/EndAnimationCondition.hpp"
 #include "event/management/condition/FallCondition.hpp"
+#include "event/management/condition/FallDownCondition.hpp"
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/KeyReleasedCondition.hpp"
@@ -66,6 +67,10 @@ mad::core::HeroStateMachine::HeroStateMachine(std::shared_ptr<LocalWorld> world,
     machine->add_transition(ground_idle, die_idle, std::make_shared<mad::core::Counter>(attack_count, 5));
     machine->add_transition(ground_left, die_idle, std::make_shared<mad::core::Counter>(attack_count, 5));
     machine->add_transition(ground_right, die_idle, std::make_shared<mad::core::Counter>(attack_count, 5));
+
+    machine->add_transition(fall_idle, die_idle, std::make_shared<mad::core::FallDownCondition>(world, hero_id));
+    machine->add_transition(fall_left, die_idle, std::make_shared<mad::core::FallDownCondition>(world, hero_id));
+    machine->add_transition(fall_right, die_idle, std::make_shared<mad::core::FallDownCondition>(world, hero_id));
 
 
 
