@@ -207,12 +207,21 @@ int main() {
             ImGui::Text(text_hint.c_str());
             if (ImGui::Button("Enter")) {
                 if (!std::string(input_levelname).empty()) {
-                    if (!db.is_level_exists(input_levelname)) {
-                        db.append_level(input_levelname);
-                        text_hint = "new level name";
+                    std::filesystem::path level_container = levels_directory / input_levelname;
+                    if (std::filesystem::is_directory(level_container) &&
+                            std::filesystem::exists(level_container / "config.json") &&
+                            std::filesystem::exists(level_container / "map")) {
+                        if (!db.is_level_exists(input_levelname)) {
+                            db.append_level(input_levelname);
+                            text_hint = "new level name";
+                        } else {
+                            text_hint = "level name is already used";
+                        }
                     } else {
-                        text_hint = "level name is already used";
+                        text_hint = "wrong directory format";
                     }
+                } else {
+                    text_hint = "string is empty";
                 }
             }
             ImGui::EndChild();
