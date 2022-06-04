@@ -25,6 +25,8 @@ namespace mad::core {
             if (keystroke.key_id == sf::Keyboard::Key::Escape) {
                 m_runner.pause();
             }
+        } else if (event.type == Event::Type::Death) {
+            m_runner.fail_level();
         } else if (event.type == Event::Type::Runner) {
             const auto &runner_event = const_cast_to<RunnerEvent>(event);
             if (runner_event.type == RunnerEvent::Type::LevelRunner) {
@@ -47,7 +49,7 @@ namespace mad::core {
     }
 
     std::unordered_set<Event::Type> LevelRunnerEventsHandler::handled_types() {
-        std::unordered_set<Event::Type> runner_types{Event::Type::KeyPressed, Event::Type::KeyHeld, Event::Type::Runner};
+        std::unordered_set<Event::Type> runner_types{Event::Type::KeyPressed, Event::Type::KeyHeld, Event::Type::Runner, Event::Type::Death};
         std::unordered_set<Event::Type> condition_types = m_finish_condition->triggers();
         for (const auto &c : condition_types) {
             runner_types.insert(c);

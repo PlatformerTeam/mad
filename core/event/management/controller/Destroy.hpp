@@ -10,12 +10,14 @@ namespace mad::core {
 
     class Destroy : public Controller {
     public:
-        Destroy(std::shared_ptr<mad::core::LocalWorld> world, Entity::Id entity_id);
+        Destroy(std::shared_ptr<mad::core::LocalWorld> world, std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher, Entity::Id entity_id);
         void control() override;
     private:
         std::shared_ptr<mad::core::LocalWorld> world;
+        std::shared_ptr<mad::core::ImmediateDispatcher> level_dispatcher;
         Entity::Id entity_id;
         PhysicalEntity* m_entity;
+
     };
 
 }
