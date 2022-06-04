@@ -9,10 +9,10 @@
       "x" : 10.0,
       "y" : 10.0
     },
-    "smoothness": 0.1,
+    "smoothness": 0.05,
     "zoom": 0.1,
     "follow_type" : "forward",
-    "minimal_distance" : 3.0,
+    "minimal_distance" : 7.0,
     "part_of_window" : 0.25
   },
   "background" : {
