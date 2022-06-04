@@ -26,7 +26,7 @@ Map file may contain the following elements: \
 | Sign | Meaning              | Description |
 |:----:|:--------------------:|:-----------:|
 | `H` | Hero                  | The character you control |
-| `E` | Enemy - *type 1*)     | An opponent who can attack you |
+| `E` | Enemy - *type 1*      | An opponent who can attack you |
 | `Z` | Enemy - *type 2*      | You can add a second type of enemy |
 | `F` | Finish block          | The block with which the level was successfully completed when touched |
 | `#` | Ground block          | A monolithic block describing the earth |
@@ -39,6 +39,93 @@ Map file may contain the following elements: \
 | `&` | Decoration - *type 2* | Other type of decoration |
 | `^` | Decoration - *type 3* | Other type of decoration |
 | `.` | Empty                 | You can also use ` ` |
+
+Config.json prototype: 
+```json
+{
+  "name" : "level_01",
+  "animated_resources" : "../../game/resources/animated/",
+  "block" : 10.0,
+  "static_resources" : "../../game/resources/static/block_01",
+  "decoration_resources" : "../../game/resources/decoration/decoration_01",
+  "camera": {
+    "position" : {
+      "x" : 10.0,
+      "y" : 10.0
+    },
+    "smoothness": 0.05,
+    "zoom": 0.1,
+    "follow_type" : "forward",
+    "minimal_distance" : 7.0,
+    "part_of_window" : 0.25
+  },
+  "background" : {
+    "source" : "../../game/resources/background/background_01",
+    "parallax_ratios" : [0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65]
+  },
+  "texture" : {
+    "unstable_block" : "unstable_block.png",
+    "ground_block" : "ground_block.png",
+    "finish_block" : "finish_block.png",
+    "begin_block" : "begin_block.png",
+    "middle_block" : "middle_block.png",
+    "end_block" : "end_block.png",
+    "separate_block" : "separate_block.png"
+  },
+  "decoration" : {
+    "decoration_01" : {
+      "source" : "arrow.png",
+      "scale" : 1,
+      "delta_x" : 0,
+      "delta_y" : 20
+    } // You can add other decoration
+  } 
+  "hero" : {
+    "source" : "hero",
+    "animated" : {
+      "size_width": 5.5,
+      "size_height": 9,
+      "size_scale": 0.3,
+      "delta_x" : 0,
+      "delta_y" : 3,
+      "actions" : {
+        "idle" : {
+          "source": "hero_idle",
+          "type": "several_files",
+          "delta_time": 200
+        },
+        "run" : {
+          "source": "hero_run",
+          "type": "several_files",
+          "delta_time": 130
+        } // You can add other actions
+      }
+    }
+  },
+  "enemy" : {
+    "source" : "enemy",
+    "animated" : {
+      "size_width": 5.5,
+      "size_height": 5,
+      "size_scale": 0.3,
+      "delta_x" : 0,
+      "delta_y" : 3,
+      "actions" : {
+        "idle" : {
+          "source": "enemy_idle",
+          "type": "several_files",
+          "delta_time": 200
+        },
+        "run" : {
+          "source": "enemy_run",
+          "type": "several_files",
+          "delta_time": 130
+        } // You can add other actions
+      }
+    }
+  }
+}
+```
 
 
 ## License
