@@ -111,6 +111,11 @@
           "source": "hero_attack_3_end",
           "type": "several_files",
           "delta_time": 30
+        },
+        "hurt" : {
+          "source": "hero_hurt",
+          "type": "several_files",
+          "delta_time": 130
         }
       }
     }

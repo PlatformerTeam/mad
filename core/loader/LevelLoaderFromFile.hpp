@@ -106,6 +106,8 @@ namespace mad::core {
                 {'Z', Objects::Enemy1},
                 {'E', Objects::Enemy2}
         };
+
+        int r_hero_id;
     };
 }
 

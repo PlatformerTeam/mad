@@ -7,6 +7,7 @@
 #include "event/management/condition/LastStateCondition.hpp"
 #include "event/management/condition/SensorCondition.hpp"
 #include "event/management/condition/SensorEndCondition.hpp"
+#include "event/management/condition/TakeDamageCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
 #include "event/management/controller/Attack.hpp"
@@ -14,6 +15,7 @@
 #include "event/management/controller/Fall.hpp"
 #include "event/management/controller/FlyUp.hpp"
 #include "event/management/controller/GroundMovement.hpp"
+#include "event/management/controller/Hurt.hpp"
 #include "event/management/controller/JumpImpulse.hpp"
 #include "event/management/controller/Movement.hpp"
 #include "event/management/controller/StartJump.hpp"
@@ -41,6 +43,23 @@ mad::core::HeroStateMachine::HeroStateMachine(std::shared_ptr<LocalWorld> world,
     StateMachine::StateId attack_idle= machine->add_state(std::make_shared<Attack>(world, level_dispatcher, hero_id, Movement::Direction::Idle, attack_stage, horizontal_velocity));
     StateMachine::StateId attack_right = machine->add_state(std::make_shared<Attack>(world, level_dispatcher, hero_id, Movement::Direction::Right, attack_stage, horizontal_velocity));
     StateMachine::StateId deal_damage = machine->add_state(std::make_shared<DealDamage>(world, hero_id, level_dispatcher));
+    StateMachine::StateId hurt_idle = machine->add_state(std::make_shared<Hurt>(world, hero_id, Movement::Direction::Idle));
+
+    machine->add_transition(ground_idle, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(ground_left, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(ground_right, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(attack_idle, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(attack_left, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(attack_right, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(fall_idle, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(fall_left, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(fall_right, hurt_idle, std::make_shared<mad::core::TakeDamageCondition>(hero_id));
+    machine->add_transition(hurt_idle, ground_idle, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Hurt));
+
+
+
+
+
 
 
     machine->add_transition(ground_idle, ground_right, std::make_shared<mad::core::KeyDownCondition>(sf::Keyboard::Right));
