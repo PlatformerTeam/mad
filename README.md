@@ -22,7 +22,7 @@ cmake --build build/
 
 ## Usage
 You can create your own level. in order to do this, you need to create two files: **config.json** and text file **map**.\
-Map file may contain the following elements: \
+*Map* file may contain the following elements: \
 | Sign | Meaning              | Description |
 |:----:|:--------------------:|:-----------:|
 | `H` | Hero                  | The character you control |
@@ -38,9 +38,9 @@ Map file may contain the following elements: \
 | `*` | Decoration - *type 1* | Any object not involved in physics |
 | `&` | Decoration - *type 2* | Other type of decoration |
 | `^` | Decoration - *type 3* | Other type of decoration |
-| `.` | Empty                 | You can also use ` ` |
+| `.` | Empty                 | You can also use  ` ` |
 
-Config.json prototype: 
+*Config.json* prototype: 
 ```json
 {
   "name" : "level_01",
@@ -78,7 +78,7 @@ Config.json prototype:
       "scale" : 1,
       "delta_x" : 0,
       "delta_y" : 20
-    } // You can add other decoration
+    } // You can add other decorations
   } 
   "hero" : {
     "source" : "hero",
