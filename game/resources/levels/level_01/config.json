@@ -33,13 +33,13 @@
       "source" : "arrow.png",
       "scale" : 1,
       "delta_x" : 0,
-      "delta_y" : 0
+      "delta_y" : 20
     },
     "decoration_02" : {
       "source" : "head.png",
       "scale" : 1,
       "delta_x" : 0,
-      "delta_y" : 0
+      "delta_y" : 90
     },
     "decoration_03" : {
       "source" : "gross.png",
