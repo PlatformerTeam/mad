@@ -2,6 +2,17 @@
 # MAD
 MAD - 2D platformer game with the ability to create your own levels.
 ## Installation
+### Linux
+'''bash
+sudo apt update 
+sudo apt-get install libsfml-dev xorg-dev libglu1-mesa-dev
+
+'''
+### Macos
+'''bash
+brew install sfml
+
+'''
 
 ## Usage
 
