@@ -3,13 +3,12 @@
   "animated_resources" : "../../game/resources/animated/",
   "static_resources" : "../../game/resources/static/block_03",
   "decoration_resources" : "../../game/resources/decoration/decoration_03",
-  "block" : 50.0,
+  "block" : 10.0,
   "camera": {
     "position" : {
       "x" : 10.0,
       "y" : 10.0
     },
-    "angle": 15.0,
     "smoothness": 0.1,
     "zoom": 0.1,
     "follow_type" : "forward",
@@ -46,21 +45,98 @@
   "hero" : {
     "source" : "hero",
     "animated" : {
-      "size_width": 30,
-      "size_height": 50,
-      "size_scale": 0.2,
+      "size_width": 5.5,
+      "size_height": 9,
+      "size_scale": 0.3,
       "delta_x" : 0,
-      "delta_y" : 0,
+      "delta_y" : 3,
       "actions" : {
         "idle" : {
-          "source": "idle",
+          "source": "hero_idle",
+          "type": "several_files",
+          "delta_time": 200
+        },
+        "run" : {
+          "source": "hero_run",
+          "type": "several_files",
+          "delta_time": 130
+        },
+        "jump" : {
+          "source": "hero_jump",
+          "type": "several_files",
+          "delta_time": 50
+        },
+        "fly_up" : {
+          "source": "hero_fly_up",
           "type": "several_files",
           "delta_time": 100
         },
-        "run" : {
-          "source": "run",
+        "fall" : {
+          "source": "hero_fall",
           "type": "several_files",
-          "delta_time": 100
+          "delta_time": 130
+        },
+        "attack_1_beg" : {
+          "source": "hero_attack_1_beg",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_1_end" : {
+          "source": "hero_attack_1_end",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_2_beg" : {
+          "source": "hero_attack_2_beg",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_2_end" : {
+          "source": "hero_attack_2_end",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_3_beg" : {
+          "source": "hero_attack_3_beg",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_3_end" : {
+          "source": "hero_attack_3_end",
+          "type": "several_files",
+          "delta_time": 30
+        }
+      }
+    }
+  },
+  "enemy" : {
+    "source" : "enemy",
+    "animated" : {
+      "size_width": 5.5,
+      "size_height": 9,
+      "size_scale": 0.3,
+      "delta_x" : 0,
+      "delta_y" : 3,
+      "actions" : {
+        "idle" : {
+          "source": "enemy_idle",
+          "type": "several_files",
+          "delta_time": 200
+        },
+        "run" : {
+          "source": "enemy_run",
+          "type": "several_files",
+          "delta_time": 130
+        },
+        "attack_beg" : {
+          "source": "enemy_attack_beg",
+          "type": "several_files",
+          "delta_time": 30
+        },
+        "attack_end" : {
+          "source": "enemy_attack_end",
+          "type": "several_files",
+          "delta_time": 30
         }
       }
     }

@@ -9,7 +9,6 @@
       "x" : 10.0,
       "y" : 10.0
     },
-    "angle": 15.0,
     "smoothness": 0.1,
     "zoom": 0.1,
     "follow_type" : "forward",
