@@ -23,22 +23,22 @@ cmake --build build/
 ## Usage
 You can create your own level. in order to do this, you need to create two files: **config.json** and text file **map**.\
 Map file may contain the following elements: \
-| Sign | Meaning |
-|:----:|:-------:|
-| H    | Hero    |
-| E | Enemy - *type 1*) |
-| Z | Enemy - *type 2* |
-| F | Finish block |
-| # | Ground block |
-| @ | Unstable block |
-| `[` | Begin block |
-| _ | Middle block|
-| `]` | End block |
-| + | Separate block |
-| * | Decoration - *type 1* |
-| & | Decoration - *type 2* |
-| ^ | Decoration - *type 3* |
-| . | Empty |
+| Sign | Meaning              | Description |
+|:----:|:--------------------:|:-----------:|
+| `H` | Hero                  | The character you control |
+| `E` | Enemy - *type 1*)     | An opponent who can attack you |
+| `Z` | Enemy - *type 2*      | You can add a second type of enemy |
+| `F` | Finish block          | The block with which the level was successfully completed when touched |
+| `#` | Ground block          | A monolithic block describing the earth |
+| `@` | Unstable block        | A block that the hero can move |
+| `[` | Begin block           | The initial block in the block strip |
+| `_` | Middle block.         | The finite block in the block strip |
+| `]` | End block             | The middle block in the block strip |
+| `+` | Separate block        | A block outside the block strip |
+| `*` | Decoration - *type 1* | Any object not involved in physics |
+| `&` | Decoration - *type 2* | Other type of decoration |
+| `^` | Decoration - *type 3* | Other type of decoration |
+| `.` | Empty                 | You can also use ` ` |
 
 
 ## License
