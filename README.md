@@ -19,6 +19,21 @@ mkdir build
 cmake -S . -B build -DCMAKE_CXX_COMPILER="clang++" -stdlib=libstdc++
 cmake --build build/
 ```
+### Connection to database
+```bash 
+sudo -i -u postgres
+createuser -P --interface
+# here enter your username and empty password
+createdb *username* # your username from the top line
+createdb mad
+```
+
+## Run game
+### Game with default levels
+```bash
+./game_database_example
+```
+### Game with custom levels
 
 ## Usage
 You can create your own level. in order to do this, you need to create two files: `config.json` and text file `map`.\
