@@ -30,6 +30,7 @@ MAD - 2D platformer game with the ability to create your own levels.
 - [Json](https://github.com/nlohmann/json)
 - [libpqxx](https://github.com/jtv/libpqxx)
 - [spdlog](https://github.com/gabime/spdlog)
+- [cpp-httplib](https://github.com/yhirose/cpp-httplib)
 ### Linux
 ```bash
 sudo apt update 
