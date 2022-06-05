@@ -35,8 +35,11 @@ namespace mad::core {
         float zoom = m_config_json["camera"]["zoom"];
         float part_of_window = m_config_json["camera"]["part_of_window"];
 
+#if defined(DEBUG_MODE)
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
-
+#else
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, false);
+#endif
         controllers = {std::make_shared<mad::core::CameraController>(
                 camera)};
 
