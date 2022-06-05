@@ -3,7 +3,7 @@
 MAD - 2D platformer game with the ability to create your own levels.
 ## Features
 * Opportunity to configurate own levels
-  * Blocks - 6 types
+  * Blocks - 7 types
   * Backgrounds - any count of layers with custom parallac ratio
   * Decoration - 3 types
   * Mobs
