@@ -2,6 +2,15 @@
 # MAD
 MAD - 2D platformer game with the ability to create your own levels.
 ## Installation
+### Dependencies and submodules
+- [SFML](https://www.sfml-dev.org)
+- [Box2D](https://github.com/erincatto/box2d)
+- [Googletest](https://github.com/google/googletest)
+- [Imgui](https://github.com/ocornut/imgui)
+- [Imgui-sfml](https://github.com/eliasdaler/imgui-sfml)
+- [Json](https://github.com/nlohmann/json)
+- [libpqxx](https://github.com/jtv/libpqxx)
+- [spdlog](https://github.com/gabime/spdlog)
 ### Linux
 ```bash
 sudo apt update 
