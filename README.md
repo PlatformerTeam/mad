@@ -172,9 +172,15 @@ You can create your own level. in order to do this, you need to create two files
   }
 }
 ```
-To set up physics you may turn on `DEBUG_MODE`. To enable it, you need to build a project with a flag: 
+To set up physics you may turn on `DEBUG_MODE`. To enable it, you need to **build** a project with a flag `-DDEBUG_MODE`: \
+For instance: \
+**Mac OS**
 ```bash
 cmake -S . -B build -DCMAKE_CXX_COMPILER="clang++" -stdlib=libstdc++ -DDEBUG_MODE
+```
+**Linux**
+```bash
+cmake -S . -B build -DCMAKE_CXX_COMPILER="g++-10" -DDEBUG_MODE
 ```
 ### Upload levels
 To add levels in database you must put a directory with your level in a directory `resources`. After that you must **run server**.
