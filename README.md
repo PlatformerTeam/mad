@@ -2,7 +2,7 @@
 # MAD
 MAD - 2D platformer game with the ability to create your own levels.
 ## Features
-* Opportunity to create own levels:
+* Opportunity to configurate own levels
   * Blocks - 6 types
   * Backgrounds - any count of layers with custom parallac ratio
   * Decoration - 3 types
@@ -14,7 +14,10 @@ MAD - 2D platformer game with the ability to create your own levels.
     * Types of following - forward and backward
     * Zoom
     * Location regarding the character
-  * 
+* Opportunity to create level map using text file
+* Opportunity to share your levels ucing database
+* Complete games with 3 levels
+* An expandable game capable of turning into an open-source
 ## Installation
 ### Dependencies and submodules
 - [SFML](https://www.sfml-dev.org)
