@@ -75,6 +75,7 @@ mad::core::HeroStateMachine::HeroStateMachine(std::shared_ptr<LocalWorld> world,
 
 
     machine->add_transition(die_idle, destroy, std::make_shared<mad::core::EndAnimationCondition>(hero_id, ImageStorage::TypeAction::Die));
+    machine->add_transition(destroy, ground_idle, std::make_shared<mad::core::TrueCondition>());
 
 
 
