@@ -35,7 +35,7 @@ createdb mad
 ./game_database_example
 ```
 ### Game with custom levels
-Look [Upload levels](https://github.com/PlatformerTeam/mad/edit/create-readme/README.md?plain=1#L147)
+Look [Upload levels](https://github.com/PlatformerTeam/mad/blob/create-readme/README.md#upload-levels)
 
 ## Usage
 ### Create Levels
