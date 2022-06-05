@@ -38,6 +38,7 @@ createdb mad
 Look [Create levels]
 
 ## Usage
+### Create Levels
 You can create your own level. in order to do this, you need to create two files: `config.json` and text file `map`.\
 `Map` file may contain the following elements: 
 | Sign | Meaning              | Description |
@@ -143,7 +144,15 @@ You can create your own level. in order to do this, you need to create two files
   }
 }
 ```
-
-
+### Upload levels
+To add levels in database you must put a directory with your level in a directory `resources`. After that you must **build** project and run server.
+```bash
+mkdir build
+cmake -S . -B build -DCMAKE_CXX_COMPILER="g++-10"
+cmake --build build/
+./simple-server
+```
+Using server window you must add your level - **enter level name** and **start server**.
+![](https://github.com/PlatformerTeam/mad/blob/main/pictures/server.png)
 ## License
 [MIT License](https://github.com/PlatformerTeam/mad/blob/main/LICENSE)
