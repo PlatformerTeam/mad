@@ -184,6 +184,7 @@ cmake -S . -B build -DCMAKE_CXX_COMPILER="clang++" -stdlib=libstdc++ -DDEBUG_MOD
 ```bash
 cmake -S . -B build -DCMAKE_CXX_COMPILER="g++-10" -DDEBUG_MODE
 ```
+![](https://github.com/PlatformerTeam/mad/blob/main/pictures/debug_mode.png)
 ### Upload levels
 To add levels in database you must put a directory with your level in a directory `resources`. After that you must **run server**.
 ```bash
