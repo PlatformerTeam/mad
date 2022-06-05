@@ -1,6 +1,20 @@
 [![CI](https://github.com/PlatformerTeam/mad/actions/workflows/build_and_run_tests.yml/badge.svg)](https://github.com/PlatformerTeam/mad/actions/workflows/build_and_run_tests.yml)
 # MAD
 MAD - 2D platformer game with the ability to create your own levels.
+## Features
+* Opportunity to create own levels:
+  * Blocks - 6 types
+  * Backgrounds - any count of layers with custom parallac ratio
+  * Decoration - 3 types
+  * Mobs
+    * A lot of types of action
+    * Individual customization for each action - frame time, scale and other
+  * Camera 
+    * Smoothness
+    * Types of following - forward and backward
+    * Zoom
+    * Location regarding the character
+  * 
 ## Installation
 ### Dependencies and submodules
 - [SFML](https://www.sfml-dev.org)
@@ -155,11 +169,8 @@ You can create your own level. in order to do this, you need to create two files
 }
 ```
 ### Upload levels
-To add levels in database you must put a directory with your level in a directory `resources`. After that you must **build** project and run server.
+To add levels in database you must put a directory with your level in a directory `resources`. After that you must **run server**.
 ```bash
-mkdir build
-cmake -S . -B build -DCMAKE_CXX_COMPILER="g++-10"
-cmake --build build/
 ./simple-server
 ```
 Using server window you must add your level - **enter level name** and **start server**.
