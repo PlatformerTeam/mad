@@ -6,7 +6,9 @@ std::unordered_set<mad::core::Event::Type> mad::core::FallDownCondition::trigger
     return {Event::Type::WorldUpdate};
 }
 bool mad::core::FallDownCondition::is_triggered_by(const mad::core::Event &event) {
-    if(enemy_entity->get_position().get_y() > 450) return true;
+    if(enemy_entity->get_position().get_y() < 450) cnt = 0;
+    if(enemy_entity->get_position().get_y() > 450) cnt++;
+    if(enemy_entity->get_position().get_y() > 450 && cnt >= 10000) return true;
     return false;
 }
 void mad::core::FallDownCondition::on_start() {

@@ -16,6 +16,7 @@ namespace mad::core {
     private:
         Entity::Id m_entity_id;
         PhysicalEntity* enemy_entity;
+        int cnt = 0;
 
     };
 }// namespace mad::core
