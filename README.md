@@ -16,7 +16,7 @@ MAD - 2D platformer game with the ability to create your own levels.
     * Zoom
     * Location regarding the character
 * Opportunity to create level map using text file
-* Opportunity to share your levels ucing database
+* Opportunity to share your levels using database
 * Complete games with 3 levels
 * An expandable game capable of turning into an open-source
 ## Installation
