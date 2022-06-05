@@ -3,7 +3,7 @@
 MAD - 2D platformer game with the ability to create your own levels.
 ## Installation
 ### Linux
-```bash
+```console
 sudo apt update 
 sudo apt-get install libsfml-dev xorg-dev libglu1-mesa-dev postgresql-server-dev-all
 git clone https://github.com/PlatformerTeam/mad.git@release_branch --recursive
