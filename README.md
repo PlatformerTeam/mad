@@ -12,6 +12,7 @@ cmake -S . -B build -DCMAKE_CXX_COMPILER="g++-10"
 cmake --build build/
 ```
 ### Mac OS
+If necessary, install [Homebrew](https://brew.sh)
 ```bash
 brew install sfml postgresql
 git clone https://github.com/PlatformerTeam/mad.git@release_branch --recursive
@@ -34,6 +35,9 @@ createdb mad
 ./game_database_example
 ```
 ### Game with custom levels
+```bash
+
+```
 
 ## Usage
 You can create your own level. in order to do this, you need to create two files: `config.json` and text file `map`.\
