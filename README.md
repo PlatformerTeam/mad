@@ -35,7 +35,7 @@ createdb mad
 ./game_database_example
 ```
 ### Game with custom levels
-Look [Create levels]
+Look [Upload levels](https://github.com/PlatformerTeam/mad/edit/create-readme/README.md?plain=1#L147)
 
 ## Usage
 ### Create Levels
@@ -154,5 +154,9 @@ cmake --build build/
 ```
 Using server window you must add your level - **enter level name** and **start server**.
 ![](https://github.com/PlatformerTeam/mad/blob/main/pictures/server.png)
+To launch added levels run client:
+```bash
+./simple-client
+```
 ## License
 [MIT License](https://github.com/PlatformerTeam/mad/blob/main/LICENSE)
