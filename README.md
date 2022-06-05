@@ -3,6 +3,7 @@
 MAD - 2D platformer game with the ability to create your own levels.
 ## Features
 * Opportunity to configurate own levels
+  * Debug mode to set up physics
   * Blocks - 7 types
   * Backgrounds - any count of layers with custom parallax ratios
   * Decoration - 3 types
@@ -170,6 +171,10 @@ You can create your own level. in order to do this, you need to create two files
     }
   }
 }
+```
+To set up physics you may turn on `DEBUG_MODE`. To enable it, you need to build a project with a flag: 
+```bash
+cmake -S . -B build -DCMAKE_CXX_COMPILER="clang++" -stdlib=libstdc++ -DDEBUG_MODE
 ```
 ### Upload levels
 To add levels in database you must put a directory with your level in a directory `resources`. After that you must **run server**.
