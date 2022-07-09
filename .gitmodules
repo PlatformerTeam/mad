@@ -19,3 +19,6 @@
 [submodule "deps/libpqxx"]
 	path = deps/libpqxx
 	url = https://github.com/jtv/libpqxx
+[submodule "deps/cpp-httplib"]
+	path = deps/cpp-httplib
+	url = https://github.com/yhirose/cpp-httplib

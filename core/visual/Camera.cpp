@@ -8,11 +8,12 @@
 namespace mad::core {
 
     void Camera::turn_on(EventDispatcher &event_dispatcher, Entity::Id chased_id, float smoothness,
-                         FollowType type, float minimal_distance) {
+                         FollowType type, float minimal_distance, float part_of_window) {
         m_smoothness = smoothness;
         m_chased_object = chased_id;
         m_type = type;
         m_minimal_distant = minimal_distance;
+        m_part_of_window = part_of_window;
         auto start_appearance = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).appear(event_dispatcher);
         };
@@ -20,6 +21,12 @@ namespace mad::core {
     }
 
     bool Camera::render(sf::RenderWindow &window) {
+        if (m_distance_over_hero == 0) {
+            m_view.setSize(static_cast<float>(window.getSize().x) * *m_zoom, static_cast<float>(window.getSize().y) * *m_zoom);
+            m_distance_over_hero = -static_cast<float>(window.getSize().y) * m_part_of_window * *m_zoom;
+            *m_position += Vec2d{0, m_distance_over_hero};
+            m_view.setCenter(*m_position);
+        }
         auto end_of_render = [](Entity &entity, EventDispatcher &event_dispatcher) {
             const_cast_to<ViewableEntity>(entity).end_of_render_action(event_dispatcher);
         };
@@ -102,7 +109,8 @@ namespace mad::core {
                             pointer_cast_to<BackgroundImage>(image);
                     RenderableBackground renderable_background(background_image,
                                                                m_position,
-                                                               positional_appearance.get_rotation());
+                                                               positional_appearance.get_rotation(),
+                                                               m_zoom);
 
                     insert_renderable_to_scene({positional_appearance.get_z_index(),
                                                 RenderableWithId(std::make_shared<RenderableBackground>(renderable_background),
@@ -133,7 +141,7 @@ namespace mad::core {
     Camera::Camera(Vec2d initial_position, std::shared_ptr<World> world, bool is_debug_mode)
             : m_position(std::make_shared<Vec2d>(initial_position)),
               m_world(std::move(world)),
-              m_view(initial_position, {640, 480}),
+              m_view(initial_position, {0, 0}),
               m_is_debug_mode(is_debug_mode) {
     }
 
@@ -143,9 +151,10 @@ namespace mad::core {
             Vec2d position = entity.get_image_position();
             if (!m_last_position.has_value()) {
                 m_last_position = position;
-                *m_position = position;
+                *m_position = position + Vec2d{0, m_distance_over_hero};
                 m_view.setCenter(*m_position);
             }
+            *m_position -= Vec2d{0, m_distance_over_hero};
             switch (m_type) {
                 case FollowType::Forward: {
                     float move_x;
@@ -184,6 +193,7 @@ namespace mad::core {
                     break;
                 }
             }
+            *m_position += Vec2d{0, m_distance_over_hero};
             m_last_position = position;
         }
     }
@@ -202,6 +212,7 @@ namespace mad::core {
     }
 
     void Camera::set_zoom(float zoom) {
+        *m_zoom = zoom;
         m_view.zoom(zoom);
     }
 

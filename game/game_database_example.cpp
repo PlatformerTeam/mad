@@ -33,7 +33,7 @@ int main() {
 #endif
     spdlog::set_level(log_level);
 
-    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(640, 480), "MAD");
+    auto window = std::make_shared<sf::RenderWindow>(sf::VideoMode(), "MAD", sf::Style::Fullscreen);
     ImGui::SFML::Init(*window);
     window->setFramerateLimit(120);
 
@@ -45,10 +45,9 @@ int main() {
     auto database_storage_driver = std::make_shared<mad::core::DatabaseClientStorageDriver>(database);
 
     std::vector<std::shared_ptr<mad::core::LevelLoader>> level_loaders{
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_01"),
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_02"),
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_03"),
-            std::make_shared<mad::core::LevelLoaderFromFile>("../../game/resources/levels/level_with_finish")
+            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_01"),
+            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_02"),
+            std::make_shared<mad::core::LevelLoaderFromFile>("../../resources/levels/level_03")
     };
 
     auto game_runner = std::make_unique<mad::core::GameRunner>(

@@ -12,7 +12,10 @@ namespace mad::core {
     struct Filter {
         enum class Type {
             Id,
-            True
+            True,
+            EntityTag,
+            Radius,
+            TagRadius
         };
 
         explicit Filter(Type new_type) : type(new_type) {

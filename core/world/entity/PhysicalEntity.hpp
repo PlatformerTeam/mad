@@ -33,7 +33,8 @@ namespace mad::core {
     public:
         explicit PhysicalEntity(Id id, int z_ind, Vec2d initial_position, float initial_rotation,
                                 std::shared_ptr<ImageStorage> image_storage,
-                                b2World &physicalWorld, bool is_fixed, bool is_rotated);
+                                b2World &physicalWorld, bool is_fixed, bool is_rotated,
+                                uint16 categoryBits, uint16 maskBits);
 
         void accept(World &world, const Intent &intent, EventDispatcher &dispatcher) override;
 
@@ -45,6 +46,7 @@ namespace mad::core {
         void apply_angular_impulse(float impulse, EventDispatcher &dispatcher, bool awake = true);
         void apply_torque(float torque, EventDispatcher &dispatcher, bool awake = true);
         void set_linear_velocity(Vec2d velocity, EventDispatcher &dispatcher);
+        void set_linear_horizontal_velocity(float velocity, EventDispatcher &dispatcher);
         void set_angular_velocity(float velocity, EventDispatcher &dispatcher);
         void set_linear_damping(float linear_damping, EventDispatcher &dispatcher);
         void set_angular_damping(float angular_damping, EventDispatcher &dispatcher);
@@ -77,6 +79,8 @@ namespace mad::core {
         void rotate(float angle, EventDispatcher &dispatcher);
 
         void synchronize_position_with_viewable();
+
+        void add_sensor(b2Vec2 offset, float x_size, float y_size);
 
 
     private:

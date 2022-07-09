@@ -1,0 +1,5 @@
+#include "Hurt.hpp"
+mad::core::Hurt::Hurt(std::shared_ptr<mad::core::LocalWorld> world, Entity::Id entity_id, Direction dir, float velocity) : Movement(world, entity_id, dir, velocity) {
+    Move_animation = ImageStorage::TypeAction::Hurt;
+    Idle_animation = ImageStorage::TypeAction::Hurt;
+}

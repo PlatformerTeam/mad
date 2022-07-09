@@ -103,7 +103,7 @@ public:
                 0,
                 mad::core::Vec2d{0.0f, 0.0f},
                 0,
-                std::make_shared<mad::core::StaticImage>("../../game/resources/static/brick.png", 50, 50,
+                std::make_shared<mad::core::StaticImage>("../../resources/static/brick.png", 50, 50,
                                                          mad::core::StaticImage::TransformType::Tile));
 
         mad::core::Entity::Id square_id_2 = world->create_physical_entity(

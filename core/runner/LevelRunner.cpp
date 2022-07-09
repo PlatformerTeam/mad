@@ -41,6 +41,7 @@ namespace mad::core {
                     controller->control();
                 }
                 m_camera->render(window);
+                //m_world->produce(*m_level_event_dispatcher);
             }
             window.display();
         }

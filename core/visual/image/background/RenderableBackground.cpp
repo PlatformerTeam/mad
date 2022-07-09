@@ -7,11 +7,11 @@ namespace mad::core {
 
 
     RenderableBackground::RenderableBackground(const std::shared_ptr<BackgroundImage> &background, std::shared_ptr<Vec2d> position,
-                                               std::shared_ptr<float> rotation) :
+                                               std::shared_ptr<float> rotation, std::shared_ptr<float> zoom) :
                                                m_camera_position(std::move(position)), m_rotation(std::move(rotation)),
                                                m_parallax_ratios(background->get_parallax_ratios()),
                                                m_last_camera_position(*m_camera_position),
-                                               m_scale({background->get_scale(), background->get_scale()}) {
+                                               m_zoom(std::move(zoom)) {
         is_active = background->is_active;
 
         std::set<std::string> sorted_files;
@@ -34,7 +34,8 @@ namespace mad::core {
             sf::Sprite background;
             background.setTexture(m_layers[i]);
             float ratio = m_parallax_ratios[i];
-            background.setScale(m_scale);
+            float scale = static_cast<float>(window.getSize().y) / background.getLocalBounds().height * *m_zoom;
+            background.setScale({scale, scale});
             if (m_layers_positions.size() == i) {
                 m_layers_positions.push_back(*m_camera_position);
                 background.setPosition(m_layers_positions[i]);
@@ -44,6 +45,7 @@ namespace mad::core {
             m_layers_positions[i] += {(*m_camera_position - m_last_camera_position).get_x() * ratio, (*m_camera_position - m_layers_positions[i]).get_y()};
             background.setTextureRect({0, 0, static_cast<int>(background.getLocalBounds().width) * 100, static_cast<int>(background.getLocalBounds().height)});
             background.setOrigin(background.getLocalBounds().width / 2, background.getLocalBounds().height / 2); //static_cast<float>(window.getSize().y) / 2);
+
             window.draw(background);
         }
         m_last_camera_position = *m_camera_position;

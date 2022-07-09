@@ -8,7 +8,7 @@
 #include <utility>
 
 mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d initial_position, float initial_rotation, std::shared_ptr<ImageStorage> image_storage,
-                                          b2World &physicalWorld, bool is_fixed, bool is_rotated)
+                                          b2World &physicalWorld, bool is_fixed, bool is_rotated,  uint16 categoryBits, uint16 maskBits)
     : ViewableEntity(id, z_ind, initial_position, initial_rotation, image_storage) {
 
     //rect.setOrigin(300, 50);
@@ -16,10 +16,19 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
     if(is_fixed)
     {
         b2BodyDef fixedBodyDef;
+        //fixtureDef.filter.categoryBits = categoryBits;
+        //fixtureDef.filter.maskBits = maskBits;
         fixedBodyDef.position.Set(initial_position.get_x(), initial_position.get_y());
         body = physicalWorld.CreateBody(&fixedBodyDef);
         b2PolygonShape groundBox = (image_storage->get_action(ImageStorage::TypeAction::Idle))->as_fixture();
-        body->CreateFixture(&groundBox, 0.0f);
+
+        b2FixtureDef fixtureDef;
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
+        fixtureDef.shape = &groundBox;
+        fixtureDef.density = 0.0f;
+
+        body->CreateFixture(&fixtureDef);
         body->SetTransform(body->GetPosition(), initial_rotation);
     }
     else
@@ -35,10 +44,14 @@ mad::core::PhysicalEntity::PhysicalEntity(std::int32_t id, int z_ind, Vec2d init
         }
 
         b2FixtureDef fixtureDef;
+        fixtureDef.filter.categoryBits = categoryBits;
+        fixtureDef.filter.maskBits = maskBits;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
-        fixtureDef.restitution = 0.2f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+        body->SetLinearDamping(0);
+        body->SetAngularDamping(0);
 
         body->CreateFixture(&fixtureDef);
         body->SetTransform(body->GetPosition(), initial_rotation);
@@ -69,6 +82,10 @@ void mad::core::PhysicalEntity::apply_force_to_center(mad::core::Vec2d force, ma
 void mad::core::PhysicalEntity::set_linear_velocity(mad::core::Vec2d velocity, mad::core::EventDispatcher &dispatcher) {
     body->SetLinearVelocity(velocity);
 }
+void mad::core::PhysicalEntity::set_linear_horizontal_velocity(float velocity, mad::core::EventDispatcher &dispatcher) {
+    body->SetLinearVelocity({velocity, body->GetLinearVelocity().y});
+}
+
 void mad::core::PhysicalEntity::apply_angular_impulse(float impulse, mad::core::EventDispatcher &dispatcher, bool awake) {
     body->ApplyAngularImpulse(impulse, awake);
 }
@@ -153,4 +170,15 @@ mad::core::Vec2d mad::core::PhysicalEntity::get_local_center() {
 }
 mad::core::Vec2d mad::core::PhysicalEntity::get_world_center() {
     return {body->GetWorldCenter().x, body->GetWorldCenter().y};
+}
+void mad::core::PhysicalEntity::add_sensor(b2Vec2 offset, float x_size, float y_size) {
+    b2FixtureDef FixtureDef;
+    FixtureDef.filter.categoryBits = 0x0006;
+    FixtureDef.filter.maskBits = 0x0006;
+    b2PolygonShape fixture;
+    fixture.SetAsBox(x_size, y_size, offset, 0);
+    FixtureDef.shape = &fixture;
+    FixtureDef.isSensor = true;
+    b2Fixture* footSensorFixture = body->CreateFixture(&FixtureDef);
+    footSensorFixture->GetUserData().pointer = m_id;
 }

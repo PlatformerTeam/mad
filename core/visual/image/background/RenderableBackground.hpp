@@ -13,8 +13,8 @@ namespace mad::core {
 
     class RenderableBackground : public Renderable {
     public:
-        RenderableBackground(const std::shared_ptr<BackgroundImage> &background,
-                             std::shared_ptr<Vec2d> position, std::shared_ptr<float> rotation);
+        RenderableBackground(const std::shared_ptr<BackgroundImage> &background, std::shared_ptr<Vec2d> position,
+                             std::shared_ptr<float> rotation, std::shared_ptr<float> zoom);
 
         bool render(sf::RenderWindow &window) override;
 
@@ -31,7 +31,7 @@ namespace mad::core {
 
         std::shared_ptr<float> m_rotation;
 
-        Vec2d m_scale = {1, 1};
+        std::shared_ptr<float> m_zoom;
 
         std::vector<float> m_parallax_ratios;
     };

@@ -1,10 +1,13 @@
 #include "LevelLoaderFromFile.hpp"
-#include <event/management/condition/CollisionCondition.hpp>
 #include "event/management/condition/KeyDownCondition.hpp"
 #include "event/management/condition/KeyPressedCondition.hpp"
 #include "event/management/condition/TimerCondition.hpp"
 #include "event/management/condition/TrueCondition.hpp"
+#include "event/management/controller/statemachine/EnemyStateMachine.hpp"
+#include "event/management/controller/statemachine/HeroStateMachine.hpp"
 #include "event/management/controller/statemachine/StateMachine.hpp"
+#include <../../game/mobs/hero/Hero.hpp>
+#include <event/management/condition/CollisionCondition.hpp>
 
 #include <common/Error.hpp>
 
@@ -19,7 +22,7 @@ namespace mad::core {
 
     std::unique_ptr<LevelRunner> LevelLoaderFromFile::load(std::shared_ptr<EventDispatcher> global_dispatcher,
                                                            std::shared_ptr<SystemListener> system_listener) {
-        auto level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
+        level_dispatcher = std::make_shared<mad::core::ImmediateDispatcher>();
 
         auto world = std::make_shared<mad::core::LocalWorld>(*level_dispatcher);
 
@@ -29,20 +32,31 @@ namespace mad::core {
         Camera::FollowType camera_type = m_config_json["camera"]["follow_type"] == "forward" ?
                                          Camera::FollowType::Forward : Camera::FollowType::Backward;
         float minimal_distance = m_config_json["camera"]["minimal_distance"];
+        float zoom = m_config_json["camera"]["zoom"];
+        float part_of_window = m_config_json["camera"]["part_of_window"];
 
+#if defined(DEBUG_MODE)
         auto camera = std::make_shared<mad::core::Camera>(camera_position, world, true);
+#else
+        auto camera = std::make_shared<mad::core::Camera>(camera_position, world, false);
+#endif
+        controllers = {std::make_shared<mad::core::CameraController>(
+                camera)};
 
+
+        //Entity::Id hero_id = create_world(world);
         auto keys = create_world(world);
 
-        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness, camera_type, minimal_distance);
+        camera->turn_on(*level_dispatcher, keys[LevelLoaderFromFile::IdKeys::Hero], camera_smoothness,
+                        camera_type, minimal_distance, part_of_window);
         level_dispatcher->registry(camera);
-        level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
+        //level_dispatcher->registry(std::make_shared<ArrowController>(world, keys[LevelLoaderFromFile::IdKeys::Hero]));
 
         /* std::vector<std::shared_ptr<mad::core::Controller>> controllers {
                  std::make_shared<mad::core::CameraController>(camera)
          };*/
 
-        ///State Machine
+        /*///State Machine
         struct C1 : mad::core::Controller {
             void control() override {
                 //SPDLOG_DEBUG("controller 1");
@@ -62,7 +76,10 @@ namespace mad::core {
         machine->set_initial_state(0);
         std::vector<std::shared_ptr<mad::core::Controller>> controllers{machine,
                                                                         std::make_shared<mad::core::CameraController>(
-                                                                                camera)};
+                                                                                camera)};*/
+
+        camera->set_zoom(zoom);
+
 
         auto level_runner = std::make_unique<mad::core::LevelRunner>(
                 system_listener,
@@ -71,8 +88,7 @@ namespace mad::core {
                 global_dispatcher,
                 level_dispatcher,
                 world,
-                controllers
-        );
+                controllers);
 
         level_dispatcher->registry(std::make_shared<mad::core::LevelRunnerEventsHandler>(*level_runner, std::make_shared<CollisionCondition>(keys[LevelLoaderFromFile::IdKeys::Hero], keys[LevelLoaderFromFile::IdKeys::FinishBlock])));
         level_dispatcher->registry(std::make_shared<mad::core::PauseMenuEventsHandler>(*level_runner));
@@ -86,12 +102,13 @@ namespace mad::core {
         float current_position_x = object_size / 2;
         float current_position_y = object_size / 2;
         std::unordered_map<LevelLoaderFromFile::IdKeys, Entity::Id> keys;
+        Entity::Id hero_id = 0;
         std::string map_line;
 
         create_background(world);
 
         while (std::getline(m_level_map, map_line)) {
-            for (char object: map_line) {
+            for (char object : map_line) {
                 switch (m_objects[object]) {
                     case Objects::UnstableBlock: {
                         create_block(world,
@@ -149,6 +166,13 @@ namespace mad::core {
                                       m_objects[object]);
                         break;
                     }
+                    case Objects::Decoration3: {
+                        create_decoration(world,
+                                          {current_position_x,
+                                           current_position_y},
+                                          m_objects[object]);
+                        break;
+                    }
                     case Objects::FinishBlock: {
                         keys[LevelLoaderFromFile::IdKeys::FinishBlock] = create_finish_block(
                                 world,
@@ -157,15 +181,16 @@ namespace mad::core {
                         break;
                     }
                     case Objects::Hero: {
-                        keys[LevelLoaderFromFile::IdKeys::Hero] = create_hero(world,
-                                              {current_position_x,
-                                               current_position_y});
+                        // Hero hero(world, {current_position_x, current_position_y}, m_config_json, level_dispatcher, controllers);
+                        hero_id = create_hero(world, {current_position_x, current_position_y});
+                        r_hero_id = keys[LevelLoaderFromFile::IdKeys::Hero] = hero_id;
                         break;
                     }
                     case Objects::Enemy1: {
                         break;
                     }
                     case Objects::Enemy2: {
+                        create_mob(world, {current_position_x, current_position_y});
                         break;
                     }
                     case Objects::Empty: {
@@ -225,8 +250,7 @@ namespace mad::core {
                 position,
                 0,
                 image_storage,
-                is_stable
-        );
+                is_stable);
     }
 
     void LevelLoaderFromFile::create_decoration(std::shared_ptr<LocalWorld> world, Vec2d position, Objects object) {
@@ -251,7 +275,15 @@ namespace mad::core {
                 delta_y = m_config_json["decoration"]["decoration_02"]["delta_y"];
                 break;
             }
+            case Objects::Decoration3 : {
+                source /= m_config_json["decoration"]["decoration_03"]["source"];
+                decoration_scale = m_config_json["decoration"]["decoration_03"]["scale"];
+                delta_x = m_config_json["decoration"]["decoration_03"]["delta_x"];
+                delta_y = m_config_json["decoration"]["decoration_03"]["delta_y"];
+                break;
+            }
         }
+        decoration_scale *= static_cast<float>(m_config_json["camera"]["zoom"]);
 
         auto image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
@@ -284,34 +316,197 @@ namespace mad::core {
 
         image_storage = std::make_shared<ImageStorage>(
                 std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
-                        {{ImageStorage::TypeAction::Idle,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
-                                         physical_size_width, physical_size_height, size_scale,
-                                         delta_x, delta_y)
-                         },
+                        {{ImageStorage::TypeAction::Jump,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["jump"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["jump"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Idle,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["idle"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["idle"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
                          {ImageStorage::TypeAction::Run,
-                                 std::make_shared<AnimatedImageSeveralFiles>(
-                                         source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
-                                         m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
-                                         physical_size_width, physical_size_height, size_scale,
-                                         delta_x, delta_y)
-                         }}
-                )
-        );
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["run"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["run"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Fly_up,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["fly_up"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["fly_up"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Fall,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["fall"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["fall"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_1_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_1_beg"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_1_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_1_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_1_end"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_1_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_2_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_2_beg"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_2_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_2_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_2_end"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_2_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_3_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_3_beg"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_3_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_3_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["attack_3_end"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["attack_3_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Hurt,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["hurt"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["hurt"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Die,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["hero"]["animated"]["actions"]["die"]["source"],
+
+                                  m_config_json["hero"]["animated"]["actions"]["die"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)}
+                        }));
 
         hero_id = world->create_physical_entity(
                 2,
                 position,
                 0,
                 image_storage,
-                false, false
-        );
+                false, false,
+                0x0004, 0x0002);
+
+        /// add sensor
+        auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(hero_id));
+        m_entity->add_sensor({0, 6}, 2.65, 0.05);
+
+        float m_impulse = 2000;
+        float horizontal_velocity = 20;
+
+        auto machine = std::make_shared<mad::core::HeroStateMachine>(world, position, hero_id, level_dispatcher, m_impulse, horizontal_velocity);
+        controllers.push_back(machine);
 
         return hero_id;
     }
 
+
+    void LevelLoaderFromFile::create_mob(std::shared_ptr<LocalWorld> world, Vec2d position) {
+        std::filesystem::path source(m_config_json["animated_resources"]);
+        source /= m_config_json["enemy"]["source"];
+
+        std::shared_ptr<ImageStorage> image_storage;
+
+        float physical_size_width = m_config_json["enemy"]["animated"]["size_width"];
+        float physical_size_height = m_config_json["enemy"]["animated"]["size_height"];
+        float size_scale = m_config_json["enemy"]["animated"]["size_scale"];
+        float delta_x = m_config_json["enemy"]["animated"]["delta_x"];
+        float delta_y = m_config_json["enemy"]["animated"]["delta_y"];
+
+
+        image_storage = std::make_shared<ImageStorage>(
+                std::unordered_map<ImageStorage::TypeAction, std::shared_ptr<Image>>(
+                        {{ImageStorage::TypeAction::Idle,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["idle"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["idle"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Run,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["run"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["run"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_1_beg,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["attack_beg"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["attack_beg"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Attack_1_end,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["attack_end"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["attack_end"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Die,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["die"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["die"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)},
+                         {ImageStorage::TypeAction::Hurt,
+                          std::make_shared<AnimatedImageSeveralFiles>(
+                                  source / m_config_json["enemy"]["animated"]["actions"]["hurt"]["source"],
+
+                                  m_config_json["enemy"]["animated"]["actions"]["hurt"]["delta_time"],
+                                  physical_size_width, physical_size_height, size_scale,
+                                  delta_x, delta_y)}
+                        }));
+
+        Entity::Id enemy_id = world->create_physical_entity(
+                2,
+                position,
+                0,
+                image_storage,
+                false, false,
+                0x0004, 0x0002);
+
+
+        float m_impulse = 2000;
+        float horizontal_velocity = 5.5f;
+        auto m_entity = cast_to_or_null<PhysicalEntity>(world->get_storage().get_entity(enemy_id));
+        m_entity->add_sensor({6, 0}, 2.65, 0.05);
+
+        auto machine = std::make_shared<mad::core::EnemyStateMachine>(world, position, enemy_id, level_dispatcher, m_impulse, horizontal_velocity, r_hero_id);
+        controllers.push_back(machine);
+    }
     Entity::Id LevelLoaderFromFile::create_finish_block(std::shared_ptr<LocalWorld> world, Vec2d position, float block_size) {
         std::filesystem::path source(m_config_json["static_resources"]);
         source /= static_cast<std::string>(m_config_json["texture"]["finish_block"]);
@@ -321,16 +516,14 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<StaticImage>(source, block_size,
                                                         block_size,
-                                                        StaticImage::TransformType::Fit)
-                         }}));
+                                                        StaticImage::TransformType::Fit)}}));
 
         return world->create_physical_entity(
                 1,
                 position,
                 0,
                 image_storage,
-                true
-        );
+                true);
     }
 
     void LevelLoaderFromFile::create_background(std::shared_ptr<LocalWorld> world) {
@@ -344,18 +537,14 @@ namespace mad::core {
                         {{ImageStorage::TypeAction::Idle,
                           std::make_shared<BackgroundImage>(
                                   source,
-                                  parallax_ratios,
-                                  m_config_json["background"]["scale"]
-                                  )
-                        }}
-                )
-        );
+                                  parallax_ratios)
+                                  }}));
         world->create_viewable_entity(
                 -1,
                 {0, 0},
                 0,
-                image_storage
-        );
+                image_storage);
     }
 
-}
+
+}// namespace mad::core

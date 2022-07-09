@@ -18,6 +18,7 @@ function(test_executable EXECUTABLE_TEST_NAME EXECUTABLE_SOURCES)
             ${INCLUDE_IMGUI}
             ${INCLUDE_IMGUI_SFML}
             ${INCLUDE_PQXX}
+            ${INCLUDE_HTTP}
     )
 
     target_link_libraries(
