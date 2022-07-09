@@ -38,6 +38,10 @@ namespace mad::core {
         }
     }
 
+    Database::~Database() {
+        drop_levels();
+    }
+
     bool Database::is_user_exists(const std::string &username) {
         pqxx::work W(m_connector);
         m_query = "SELECT * FROM users WHERE name = '" + W.esc(username) + "';";
@@ -133,5 +137,12 @@ namespace mad::core {
         m_query = "SELECT id FROM levels;";
         auto total_rows = W.exec(m_query);
         return total_rows.size();
+    }
+
+    void Database::drop_levels() {
+        pqxx::work W(m_connector);
+        m_query = "DROP TABLE levels;";
+        W.exec(m_query);
+        W.commit();
     }
 }

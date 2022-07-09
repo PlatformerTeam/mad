@@ -35,6 +35,10 @@ namespace mad::core {
         void reset_progress(std::size_t id);
         void reset_progress(const std::string &username);
 
+        void drop_levels();
+
+        ~Database();
+
     private:
         pqxx::connection m_connector;
         std::string m_query;
