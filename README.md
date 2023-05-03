@@ -1,6 +1,6 @@
 [![CI](https://github.com/PlatformerTeam/mad/actions/workflows/build_and_run_tests.yml/badge.svg)](https://github.com/PlatformerTeam/mad/actions/workflows/build_and_run_tests.yml)
 # MAD
-MAD - 2D platformer game with the ability to create your own levels.
+MAD is a game engine for 2D games. With the architecture solutions we've written, you can easily create complex dynamic entities. A powerful mechanism of handlers, intents, events, state machines, and etc is at your disposal, allowing you to flexibly customize any game scenario. At the same time, the power of C++ and our architecture allows you to create huge scenes, without sacrificing stable frames per second.<br/><br/>
 ![](https://github.com/PlatformerTeam/mad/blob/main/pictures/default.png)
 ## Features
 * Opportunity to configurate own levels
