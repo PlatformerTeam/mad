@@ -1,7 +1,13 @@
 [![CI](https://github.com/PlatformerTeam/mad/actions/workflows/build_and_run_tests.yml/badge.svg)](https://github.com/PlatformerTeam/mad/actions/workflows/build_and_run_tests.yml)
 # MAD
 MAD is a game engine for 2D games. With the architecture solutions we've written, you can easily create complex dynamic entities. A powerful mechanism of handlers, intents, events, state machines, and etc is at your disposal, allowing you to flexibly customize any game scenario. At the same time, the power of C++ and our architecture allows you to create huge scenes, without sacrificing stable frames per second.<br/><br/>
+[Features](#Features)<br/>
+[Installation](#Installation)<br/>
+[Run game](#Run)<br/>
+[Customize](#Customize)<br/><br/>
+
 ![](https://github.com/PlatformerTeam/mad/blob/main/pictures/default.png)
+<a name="Features"></a> 
 ## Features
 * Opportunity to configurate own levels
   * Debug mode to set up physics
@@ -20,6 +26,7 @@ MAD is a game engine for 2D games. With the architecture solutions we've written
 * Opportunity to share your levels using database
 * Complete games with 3 levels
 * An expandable game capable of turning into an open-source
+<a name="Installation"></a> 
 ## Installation
 ### Dependencies and submodules
 - [SFML](https://www.sfml-dev.org)
@@ -58,7 +65,7 @@ createuser -P --interface
 createdb *username* # your username from the top line
 createdb mad
 ```
-
+<a name="Run"></a> 
 ## Run game
 ### Game with default levels
 ```bash
@@ -66,8 +73,8 @@ createdb mad
 ```
 ### Game with custom levels
 Look [`Upload levels`](https://github.com/PlatformerTeam/mad/blob/create-readme/README.md#upload-levels)
-
-## Usage
+<a name="Customize"></a> 
+## Customize
 ### Create Levels
 You can create your own level. in order to do this, you need to create two files: `config.json` and text file `map`.\
 `Map` file may contain the following elements: 
