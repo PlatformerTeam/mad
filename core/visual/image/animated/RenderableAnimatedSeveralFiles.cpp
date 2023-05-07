@@ -1,8 +1,9 @@
 #include "RenderableAnimatedSeveralFiles.hpp"
+#include "spdlog/spdlog.h"
 
-#include <utility>
 #include <algorithm>
 #include <set>
+#include <utility>
 
 namespace mad::core {
 
@@ -26,6 +27,7 @@ namespace mad::core {
             CHECK_THROW(texture.loadFromFile(file_name),
                         FileDoesNotExist, "File with StaticImage doesn't exist");
             m_textures.push_back(texture);
+            debug_m_textures_names.push_back(file_name);
         }
 
         m_current_frame = m_textures.size();
@@ -36,7 +38,7 @@ namespace mad::core {
 
         m_scale = {animated_image->get_size_scale(), animated_image->get_size_scale()};
 
-        float outline = 1;
+        float outline = 0.2;
         m_physical_shape = sf::RectangleShape({animated_image->get_physical_width() - outline,
                                               animated_image->get_physical_height() - outline});
         m_physical_shape.setOrigin((animated_image->get_physical_width() - outline) / 2,
@@ -55,6 +57,10 @@ namespace mad::core {
         }
 
         sf::Sprite render_sprite;
+        if(debug_prev_name != debug_m_textures_names[m_current_frame]){
+            debug_prev_name = debug_m_textures_names[m_current_frame];
+            //SPDLOG_DEBUG("current frame name {}", debug_prev_name);
+        }
         render_sprite.setTexture(m_textures[m_current_frame]);
 
         if (*m_orientation == Image::Orientation::Left && m_scale.get_x() > 0 ||

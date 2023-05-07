@@ -14,7 +14,6 @@ namespace mad::core {
 
         operator sf::Vector2<float>() const;
 
-
         [[nodiscard]] float get_x() const noexcept;
 
         [[nodiscard]] float get_y() const noexcept;

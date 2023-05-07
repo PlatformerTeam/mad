@@ -32,7 +32,7 @@ namespace mad::core {
             }
         }
 
-        float outline = 1;
+        float outline = 0.2;
         m_physical_shape = sf::RectangleShape({static_image->get_width() - outline, static_image->get_height() - outline});
         m_physical_shape.setOrigin((static_image->get_width() - outline) / 2,
                                    (static_image->get_height() - outline) / 2);

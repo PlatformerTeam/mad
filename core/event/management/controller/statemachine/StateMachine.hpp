@@ -19,11 +19,15 @@ namespace mad::core {
 
         StateId add_state(const std::shared_ptr<Controller> &state);
         void add_transition(StateId state_id_from, StateId state_id_to, std::shared_ptr<Condition> transition_condition);
+        void add_transition(StateId state_id_from, StateId state_id_to, std::vector<std::shared_ptr<Condition>> transition_conditions);
         void set_initial_state(StateId state_id);
         void control() override;
+        StateId get_previous_state_id();
+
 
     private:
         StateId m_current_state_id = -1;
+        StateId m_previous_state_id = -1;
         std::vector<std::shared_ptr<Controller>> m_states;
         std::vector<std::vector<std::shared_ptr<Transition>>> m_transitions;
         std::shared_ptr<mad::core::ImmediateDispatcher> m_dispatcher;
@@ -32,17 +36,20 @@ namespace mad::core {
     };
 
     struct Transition : EventHandler {
+        std::vector<std::shared_ptr<Condition>> m_conditions;
+
     public:
         Transition(StateMachine *m_state_machine, StateMachine::StateId current_state, StateMachine::StateId next_state, std::shared_ptr<Condition> m_condition);
+        Transition(StateMachine *m_state_machine, StateMachine::StateId current_state, StateMachine::StateId next_state, std::vector<std::shared_ptr<Condition>> m_conditions);
         std::unordered_set<Event::Type> handled_types() override;
         void handle(const Event &event) override;
         bool is_active = false;
+        int cnt = 0;
 
     private:
         StateMachine *m_state_machine;
         StateMachine::StateId current_state;
         StateMachine::StateId next_state;
-        std::shared_ptr<Condition> m_condition;
     };
 
 }// namespace mad::core
